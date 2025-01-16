@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import { signIn } from 'next-auth/react';
 
 interface FormData {
     firstName: string;
@@ -51,7 +52,7 @@ const Register: React.FC = () => {
         });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const {
@@ -76,13 +77,26 @@ const Register: React.FC = () => {
 
         setError("");
         setIsLoading(true);
+        console.log(formData);
+        
+        const result = await signIn('credentials', {
+            redirect: false,
+            email,
+            password,
+            firstName,
+            lastName,
+            phoneNumber: phone,
+            gender,
+            signUp: 'on',
+        });
 
-        // Simulate API call or add your logic here
-        setTimeout(() => {
-            setIsLoading(false);
-            alert("Signup successful!");
-            router.push("/home");
-        }, 2000);
+        if (result?.error) {
+            setError("User Already Exists");
+            console.log(result.error);
+            return;
+        }
+
+
     };
 
     return (
