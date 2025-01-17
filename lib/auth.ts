@@ -97,18 +97,22 @@ export const authConfig = {
             }
         })
     ],
+    session: {
+        strategy: 'database'
+    },
     callbacks: {
-        async session({ session, user }) {
-            session.user.id = user.id;
-            return session;
-        },
-
         async redirect({ url, baseUrl }) {
             return url.startsWith(baseUrl) ? url : "/home";
         },
+        async session({ session, user }) {
+            if (user) {
+                session.user.id = user.id;
+            }
+            return session;
+        }
     },
     pages: {
-        //signIn: '/auth/register', // Custom sign-in page
+        signIn: '/auth/login', // Custom sign-in page
         error: '/error', // Error page
     }
 } satisfies NextAuthConfig;

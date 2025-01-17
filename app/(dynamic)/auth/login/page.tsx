@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { signIn } from "next-auth/react";
+import { AUTH_ERROR_MESSAGES } from "@/constants/authErrorMessages";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -41,10 +42,14 @@ const Login = () => {
     });
 
     if (result?.error) {
-      setError("User Already Exists");
-      console.log(result.error);
+      setError(AUTH_ERROR_MESSAGES[result.code!]);
+      console.log(result);
+      setIsLoading(false);
       return;
     }
+
+    setIsLoading(false);
+    router.push('/home');
   };
 
   return (

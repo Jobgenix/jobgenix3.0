@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { signIn } from 'next-auth/react';
+import { AUTH_ERROR_MESSAGES } from "@/constants/authErrorMessages";
 
 interface FormData {
     firstName: string;
@@ -91,11 +92,12 @@ const Register: React.FC = () => {
         });
 
         if (result?.error) {
-            setError("User Already Exists");
-            console.log(result.error);
+            setError(AUTH_ERROR_MESSAGES[result.code!]);
             return;
         }
 
+        setIsLoading(false);
+        router.push('/home');
 
     };
 
