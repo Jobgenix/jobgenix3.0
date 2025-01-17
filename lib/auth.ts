@@ -25,7 +25,7 @@ export const authConfig = {
                 },
             },
             async profile(profile, tokens) {
-                profile.access_token=tokens.access_token;
+                profile.access_token = tokens.access_token;
 
                 return profile
             }
@@ -101,6 +101,10 @@ export const authConfig = {
         async session({ session, user }) {
             session.user.id = user.id;
             return session;
+        },
+
+        async redirect({ url, baseUrl }) {
+            return url.startsWith(baseUrl) ? url : "/home";
         },
     },
     pages: {

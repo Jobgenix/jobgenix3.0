@@ -91,10 +91,11 @@ const ForgotPassword: React.FC = () => {
             <div className="hidden md:flex md:w-1/2 lg:w-2/5 justify-center">
                 <Image
                     src="/images/loginImage.png"
-                    alt="Forgot Password Illustration"
+                    alt="Signup Illustration"
                     width={400}
                     height={400}
                     className="w-full max-w-sm md:max-w-md border rounded-2xl"
+                    priority
                 />
             </div>
 
@@ -144,6 +145,8 @@ const ForgotPassword: React.FC = () => {
                                 icon={showNewPassword ? faEyeSlash : faEye}
                                 className="absolute top-3 right-3 text-[#2F8E5B] cursor-pointer"
                                 onClick={toggleNewPasswordVisibility}
+                                width={18}
+                                height={18}
                             />
                         </div>
 
@@ -161,6 +164,8 @@ const ForgotPassword: React.FC = () => {
                                 icon={showConfirmNewPassword ? faEyeSlash : faEye}
                                 className="absolute top-3 right-3 text-[#2F8E5B] cursor-pointer"
                                 onClick={toggleConfirmNewPasswordVisibility}
+                                width={18}
+                                height={18}
                             />
                         </div>
 
@@ -202,7 +207,7 @@ const ForgotPassword: React.FC = () => {
                         Remember your password?{" "}
                         <button
                             className="text-[#2F8E5B] hover:underline"
-                            onClick={() => router.push("/")}
+                            onClick={() => router.push("/auth/login")}
                         >
                             Login
                         </button>

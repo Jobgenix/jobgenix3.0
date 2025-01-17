@@ -78,7 +78,7 @@ const Register: React.FC = () => {
         setError("");
         setIsLoading(true);
         console.log(formData);
-        
+
         const result = await signIn('credentials', {
             redirect: false,
             email,
@@ -108,6 +108,7 @@ const Register: React.FC = () => {
                     width={400}
                     height={400}
                     className="w-full max-w-sm md:max-w-md border rounded-2xl"
+                    priority
                 />
             </div>
 
@@ -194,6 +195,8 @@ const Register: React.FC = () => {
                             icon={showPassword ? faEyeSlash : faEye}
                             className="absolute top-3 right-3 text-[#2F8E5B] cursor-pointer"
                             onClick={togglePasswordVisibility}
+                            width={18}
+                            height={18}
                         />
                     </div>
 
@@ -211,6 +214,8 @@ const Register: React.FC = () => {
                             icon={showConfirmPassword ? faEyeSlash : faEye}
                             className="absolute top-3 right-3 text-[#2F8E5B] cursor-pointer"
                             onClick={toggleConfirmPasswordVisibility}
+                            width={18}
+                            height={18}
                         />
                     </div>
 
@@ -230,7 +235,7 @@ const Register: React.FC = () => {
                     Already have an account?{" "}
                     <button
                         className="text-[#2F8E5B] hover:underline"
-                        onClick={() => router.push("/")}
+                        onClick={() => router.push("/auth/login")}
                     >
                         Login
                     </button>
