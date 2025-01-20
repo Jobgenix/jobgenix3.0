@@ -15,7 +15,7 @@ const FirstTimeSignIn = () => {
     if (session.status === "unauthenticated") {
       router.push("/auth/login");
     }
-    if (session.data?.user.role) {
+    if (session.data?.user.role !== ROLE_IDS.NEW_USER && session.status === "authenticated") {
       router.push("/home");
     }
   }, [session, router]);
