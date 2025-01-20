@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ROLE_IDS } from "@/constants/roles";
 import { useSession } from "next-auth/react";
 import axios from "axios";
@@ -10,6 +10,15 @@ const FirstTimeSignIn = () => {
   const router = useRouter();
   const session = useSession();
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router.push("/auth/login");
+    }
+    if (session.data?.user.role) {
+      router.push("/home");
+    }
+  }, [session, router]);
 
   const handleSelect = (role: string) => {
     setSelectedRole(role);
@@ -96,8 +105,8 @@ const FirstTimeSignIn = () => {
       <button
         onClick={handleContinue}
         className={`mt-6 w-64 py-2 font-bold rounded-xl transition ${selectedRole
-            ? "bg-[#2F8E5B] text-white hover:bg-[#329761]"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          ? "bg-[#2F8E5B] text-white hover:bg-[#329761]"
+          : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         disabled={!selectedRole}
       >

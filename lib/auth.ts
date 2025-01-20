@@ -62,7 +62,7 @@ export const authConfig = {
                             phoneNumber: phoneNumber,
                             salt,
                             id: userId,
-                            roleId: ROLE_IDS.CANDIDATE,
+                            roleId: ROLE_IDS.NEW_USER,
                         }).returning();
 
                         return user[0];

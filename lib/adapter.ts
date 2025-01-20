@@ -35,7 +35,7 @@ export function CustomDrizzleAdapter(drizzle: typeof db, schema: DefaultPostgres
                 phoneNumber: data.phoneNumber,
                 password: null, // OAuth login doesn't use a password
                 salt: null, // No salt needed for OAuth
-                roleId: ROLE_IDS.CANDIDATE,
+                roleId: ROLE_IDS.NEW_USER,
             }).returning();
             return savedUser[0]
         },
