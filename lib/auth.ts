@@ -10,6 +10,7 @@ import { signInSchema, signUpSchema } from "./zod";
 import { ZodError } from "zod";
 import { CustomError } from "./authError";
 import { CustomDrizzleAdapter } from "./adapter";
+import { ROLE_IDS } from "@/constants/roles";
 
 export const authConfig = {
     adapter: CustomDrizzleAdapter(db, {
@@ -60,7 +61,8 @@ export const authConfig = {
                             gender: gender,
                             phoneNumber: phoneNumber,
                             salt,
-                            id: userId
+                            id: userId,
+                            roleId: ROLE_IDS.CANDIDATE,
                         }).returning();
 
                         return user[0];
@@ -107,6 +109,7 @@ export const authConfig = {
         async session({ session, user }) {
             if (user) {
                 session.user.id = user.id;
+                session.user.role = user.roleId!;
             }
             return session;
         }
@@ -114,6 +117,7 @@ export const authConfig = {
     pages: {
         signIn: '/auth/login', // Custom sign-in page
         error: '/error', // Error page
+        newUser: '/auth/first-login', // New user sign-up page
     }
 } satisfies NextAuthConfig;
 

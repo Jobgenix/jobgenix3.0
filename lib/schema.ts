@@ -4,6 +4,7 @@ import {
     text,
     primaryKey,
     integer,
+    varchar,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
@@ -17,6 +18,7 @@ export const users = pgTable("user", {
     phoneNumber: text("phoneNumber").notNull(), // New field for phone number
     password: text("password"),
     salt: text("passwordSalt"),
+    roleId: text("role_id").references(() => roles.id),
 });
 
 export const accounts = pgTable(
@@ -62,3 +64,9 @@ export const verificationTokens = pgTable(
         compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
     })
 );
+
+export const roles = pgTable("roles", {
+    id: text("id").primaryKey(),
+    role: varchar("role", { length: 50 }).unique().notNull(), // 'candidate', 'employer'
+    permissions: text("permissions").notNull(), // Comma-separated permissions
+  });

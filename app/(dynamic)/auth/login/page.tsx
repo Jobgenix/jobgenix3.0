@@ -48,8 +48,10 @@ const Login = () => {
       return;
     }
 
-    setIsLoading(false);
-    router.push('/home');
+    else if(result?.ok){
+      setIsLoading(false);
+      router.push("/home");
+    }
   };
 
   return (
@@ -71,7 +73,7 @@ const Login = () => {
           Welcome Back to <span className="text-[#2F8E5B]">JobGenix!</span>
         </h1>
 
-        <button onClick={() => signIn('google')} className="w-full text-center justify-center py-2 mb-3 bg-white text-gray-600 font-bold border-2 border-slate-100 flex items-center hover:bg-gray-100 transition">
+        <button onClick={()=>signIn('google')} className="w-full text-center justify-center py-2 mb-3 bg-white text-gray-600 font-bold border-2 border-slate-100 flex items-center hover:bg-gray-100 transition">
           <Image
             src="/images/googlelcon.svg"
             alt="Google logomark"

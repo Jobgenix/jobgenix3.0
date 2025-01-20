@@ -4,18 +4,9 @@ import { db } from "./db";
 import { accounts, sessions, users, verificationTokens } from "./schema";
 import { v4 as uuidv4 } from "uuid";
 import { getUserAdditionalInfo } from "@/utils/getUserInfo";
+import { ROLE_IDS } from "@/constants/roles";
+import { eq } from "drizzle-orm";
 
-interface CustomUser {
-    id: string;
-    email: string;
-    emailVerified: Date | null;
-    name: string;
-    gender: string;
-    phoneNumber: string;
-    picture: string;
-    email_verified: boolean;
-    access_token: string | null;
-}
 
 type DefaultPostgresSchema = {
     usersTable: typeof users
@@ -29,7 +20,7 @@ export function CustomDrizzleAdapter(drizzle: typeof db, schema: DefaultPostgres
 
     return {
         ...baseAdapter,
-        createUser: async (data: CustomUser) => {
+        createUser: async (data) => {
             console.log(data);
             const profileData = await getUserAdditionalInfo(data.access_token!)
             data.gender = profileData.gender!;
@@ -44,8 +35,50 @@ export function CustomDrizzleAdapter(drizzle: typeof db, schema: DefaultPostgres
                 phoneNumber: data.phoneNumber,
                 password: null, // OAuth login doesn't use a password
                 salt: null, // No salt needed for OAuth
+                roleId: ROLE_IDS.CANDIDATE,
             }).returning();
             return savedUser[0]
+        },
+
+        getUser: async (id) => {
+            const user = await db.select().from(users).where(eq(users.id, id));
+            if(user.length > 0)
+                return user[0];
+            return null;
+        },
+
+        getUserByEmail: async (email) => {
+            const user = await db.select().from(users).where(eq(users.email, email));
+            if(user.length > 0)
+                return user[0];
+            return null;
+        },
+
+        getUserByAccount: async (accountId) => {
+            const account = await db.select().from(accounts).where(eq(accounts.providerAccountId, accountId.providerAccountId));
+            if(account.length > 0) {
+                const user = await db.select().from(users).where(eq(users.id, account[0].userId));
+                return user[0];
+            }
+            return null;
+        },
+
+        updateUser: async (user) => {
+            const updatedUser = await db.update(users).set(user).where(eq(users.id, user.id)).returning();
+            return updatedUser[0];
+        },
+        
+        deleteUser: async (id) => {
+            await db.delete(users).where(eq(users.id, id));
+        },
+
+        getSessionAndUser: async (sessionToken) => {
+            const session = await db.select().from(sessions).where(eq(sessions.sessionToken, sessionToken));
+            if(session.length > 0) {
+                const user = await db.select().from(users).where(eq(users.id, session[0].userId));
+                return { session: session[0], user: user[0] };
+            }
+            return null;
         }
     };
 }
