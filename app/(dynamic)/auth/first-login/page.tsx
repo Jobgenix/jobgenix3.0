@@ -112,12 +112,11 @@ const FirstTimeSignIn = () => {
 
       <button
         onClick={handleContinue}
-        className={`mt-6 w-64 py-2 font-bold rounded-xl transition ${
-          selectedRole
-            ? "bg-[#2F8E5B] text-white hover:bg-[#329761]"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed"
-        }`}
-        disabled={!selectedRole}
+        className={`mt-6 w-64 py-2 font-bold rounded-xl transition ${selectedRole
+          ? "bg-[#2F8E5B] text-white hover:bg-[#329761]"
+          : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+          disabled={!(selectedRole && session.status === "authenticated")}
       >
         Continue
       </button>

@@ -5,6 +5,7 @@ import {
     primaryKey,
     integer,
     varchar,
+    pgEnum,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
@@ -76,4 +77,39 @@ export const companies = pgTable("companies", {
     name: text("name").notNull().unique(),
     logo: text("logo"),
     website: text("website").notNull(),
+   
+});
+
+export const jobTypeEnum = pgEnum("type",["full-time", "part-time", "internship"]);
+export const workplaceTypeEnum = pgEnum("workplaceType",["remote", "office", "hybrid"]);
+export const stipendTypeEnum = pgEnum("stipendType",["fixed", "performance-based", "unpaid", "fixed + performance-based"]);
+export const diversityTypeEnum = pgEnum("diversityType",["female", "male", "transgender", "intersex", "non-binary", "other"]);
+export const experienceTypeEnum = pgEnum("experienceType",["fresher", "experienced", "both"]);
+export const degreeTypeEnum = pgEnum("degreeType",["bachelor", "master", "dual", "other"]);
+export const benefitsTypeEnum = pgEnum("benefitsType",["health-insurance", "paid-leave", "work-from-home", "flexible-hours", "performance-bonus", "other"]);
+export const jobStatusEnum = pgEnum("status",["active", "inactive", "filled"]);
+export const passoutYearEnum = pgEnum("passoutYear",["2025", "2026", "2027", "2028", "2029", "2030"]);
+
+export const opportunities = pgTable("opportunities", {
+    id: text("id").primaryKey(),
+    companyId: text("companyId").references(() => companies.id),
+    title: text("title").notNull(),
+    description: text("description").notNull(),
+    location: text("location").notNull(),
+    type: jobTypeEnum('type').notNull(),
+    workplaceType: workplaceTypeEnum("workplaceType").notNull(),
+    stipendType: stipendTypeEnum("stipendType").notNull(),
+    diversityType: diversityTypeEnum("diversityType").array(),
+    experience: experienceTypeEnum("experience").notNull(),
+    yearsOfExperience: text("yearsOfExperience").notNull(),
+    degree: degreeTypeEnum("degree"), // Add a degree table and reference it here
+    benfits: benefitsTypeEnum("benefits").array(),
+    salary: text("salary"),
+    graduadtionYear: text("graduadtionYear"),
+    status: jobStatusEnum("status").notNull().default("active"),
+    jobLink: text("jobLink").notNull(),
+    passoutYear: passoutYearEnum("passoutYear").array(),
+    category: text("category").array(),//Add a category table and reference it here
+    deadline: timestamp("deadline", { mode: "date" }).notNull(),
+    postedAt: timestamp("postedAt", { mode: "date" }).notNull(),
 });
