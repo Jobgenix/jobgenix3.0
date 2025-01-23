@@ -30,7 +30,6 @@ const Login = () => {
 
     if (!email || !password) {
       setError("All fields are required.");
-      alert("All fields are required.");
       return;
     }
 
@@ -70,27 +69,8 @@ const Login = () => {
       <div className="p-6 w-full max-w-sm sm:max-w-md lg:max-w-lg md:w-1/2 lg:w-2/5">
         <h5>👋Hi, Unbeatable</h5>
         <h1 className="text-2xl font-bold text-slate-700 mb-6">
-          Welcome Back to <span className="text-[#2F8E5B]">JobGenix!</span>
+          Welcome Back to <span className="text-[#2F8E5B]">Jobgenix!</span>
         </h1>
-
-        <button onClick={()=>signIn('google')} className="w-full text-center justify-center py-2 mb-3 bg-white text-gray-600 font-bold border-2 border-slate-100 flex items-center hover:bg-gray-100 transition">
-          <Image
-            src="/images/googlelcon.svg"
-            alt="Google logomark"
-            width={20}
-            height={20}
-          />
-          <span className="w-11/12">Continue with Google</span>
-        </button>
-
-        <button className="w-full py-2 mb-6 bg-white text-gray-600 font-bold border-2 border-slate-100 flex items-center justify-center hover:bg-gray-100 transition">
-          <FontAwesomeIcon icon={faLinkedin} className="text-blue-500 text-xl" width={20} height={20} />
-          <span className="w-11/12">Login with LinkedIn</span>
-        </button>
-
-        <div className="flex items-center justify-center my-4">
-          <span className="px-4 text-gray-500 text-sm">Or sign in with email</span>
-        </div>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -133,6 +113,25 @@ const Login = () => {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        <div className="flex items-center justify-center my-4">
+          <span className="px-4 text-gray-500 text-sm">Or sign in with</span>
+        </div>
+
+        <button onClick={()=>signIn('google')} className="w-full text-center justify-center py-2 mb-3 bg-white text-gray-600 font-bold border-2 border-slate-100 flex items-center hover:bg-gray-100 transition">
+          <Image
+            src="/images/googlelcon.svg"
+            alt="Google logomark"
+            width={20}
+            height={20}
+          />
+          <span className="w-11/12">Login with Google</span>
+        </button>
+
+        <button className="w-full py-2 mb-6 bg-white text-gray-600 font-bold border-2 border-slate-100 flex items-center justify-center hover:bg-gray-100 transition">
+          <FontAwesomeIcon icon={faLinkedin} className="text-blue-500 text-xl" width={20} height={20} />
+          <span className="w-11/12">Login with LinkedIn</span>
+        </button>
 
         <p className="mt-4 text-center text-sm text-gray-600 rounded-xl border py-2">
           Don&apos;t have an account?{" "}

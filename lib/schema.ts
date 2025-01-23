@@ -69,4 +69,12 @@ export const roles = pgTable("roles", {
     id: text("id").primaryKey(),
     role: varchar("role", { length: 50 }).unique().notNull(), // 'candidate', 'employer'
     permissions: text("permissions").notNull(), // Comma-separated permissions
-  });
+});
+
+export const companies = pgTable("companies", {
+    id: text("id").primaryKey(),
+    name: text("name").notNull().unique(),
+    logo: text("logo"),
+    website: text("website").notNull(),
+    description: text("description"),
+});
