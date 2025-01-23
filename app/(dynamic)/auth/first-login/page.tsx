@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -15,7 +15,10 @@ const FirstTimeSignIn = () => {
     if (session.status === "unauthenticated") {
       router.push("/auth/login");
     }
-    if (session.data?.user.role !== ROLE_IDS.NEW_USER && session.status === "authenticated") {
+    if (
+      session.data?.user.role !== ROLE_IDS.NEW_USER &&
+      session.status === "authenticated"
+    ) {
       router.push("/home");
     }
   }, [session, router]);
@@ -31,7 +34,7 @@ const FirstTimeSignIn = () => {
         return;
       }
 
-      if (session.status !== "authenticated") {
+      if (session.status === "unauthenticated") {
         console.error("User is not authenticated");
         return;
       }
@@ -57,7 +60,6 @@ const FirstTimeSignIn = () => {
     }
   };
 
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-bold text-slate-700 mb-6 text-center">
@@ -66,8 +68,11 @@ const FirstTimeSignIn = () => {
 
       <div className="flex gap-6">
         <div
-          className={`p-6 w-64 border rounded-2xl cursor-pointer transition transform hover:scale-105 hover:shadow-lg ${selectedRole === ROLE_IDS.EMPLOYER ? "border-[#2F8E5B]" : "border-gray-300"
-            }`}
+          className={`p-6 w-64 border rounded-2xl cursor-pointer transition transform hover:scale-105 hover:shadow-lg ${
+            selectedRole === ROLE_IDS.EMPLOYER
+              ? "border-[#2F8E5B]"
+              : "border-gray-300"
+          }`}
           onClick={() => handleSelect(ROLE_IDS.EMPLOYER)}
         >
           <Image
@@ -84,8 +89,11 @@ const FirstTimeSignIn = () => {
         </div>
 
         <div
-          className={`p-6 w-64 border rounded-2xl cursor-pointer transition transform hover:scale-105 hover:shadow-lg ${selectedRole === ROLE_IDS.CANDIDATE ? "border-[#2F8E5B]" : "border-gray-300"
-            }`}
+          className={`p-6 w-64 border rounded-2xl cursor-pointer transition transform hover:scale-105 hover:shadow-lg ${
+            selectedRole === ROLE_IDS.CANDIDATE
+              ? "border-[#2F8E5B]"
+              : "border-gray-300"
+          }`}
           onClick={() => handleSelect(ROLE_IDS.CANDIDATE)}
         >
           <Image
@@ -104,10 +112,11 @@ const FirstTimeSignIn = () => {
 
       <button
         onClick={handleContinue}
-        className={`mt-6 w-64 py-2 font-bold rounded-xl transition ${selectedRole
-          ? "bg-[#2F8E5B] text-white hover:bg-[#329761]"
-          : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
+        className={`mt-6 w-64 py-2 font-bold rounded-xl transition ${
+          selectedRole
+            ? "bg-[#2F8E5B] text-white hover:bg-[#329761]"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+        }`}
         disabled={!selectedRole}
       >
         Continue

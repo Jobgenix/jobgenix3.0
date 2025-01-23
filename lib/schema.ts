@@ -76,5 +76,4 @@ export const companies = pgTable("companies", {
     name: text("name").notNull().unique(),
     logo: text("logo"),
     website: text("website").notNull(),
-    description: text("description"),
 });

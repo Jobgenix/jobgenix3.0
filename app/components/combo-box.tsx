@@ -3,9 +3,13 @@
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import Image from "next/image";
+import { ImageUpload } from "@/app/components/image-preview";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
+import axios from "axios";
 import {
   Command,
   CommandEmpty,
@@ -19,6 +23,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/app/components/ui/popover";
+
+import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
+
+import { useSession } from "next-auth/react";
+import { SingleStoreColumnWithAutoIncrement } from "drizzle-orm/singlestore-core";
 
 const companies = [
   {
@@ -62,7 +71,87 @@ export function Combobox() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
+  const [file, setFile] = React.useState<File | null>(null);
+  const [uploading, setUploading] = React.useState(false);
+  const [imageUrl, setImageUrl] = React.useState<string | null>(null);
+
+  const [name, setName] = React.useState<string | null>(null);
+  const [website, setWebsite] = React.useState<string | null>(null);
+  const [description, setDescription] = React.useState<string | null>(null);
+
+  const session = useSession();
+
   const selectedCompany = companies.find((company) => company.value === value);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFile(event.target.files[0]);
+    }
+  };
+
+  async function fetchSignedUrl() {
+    const res = await fetch("/api/job/get-upload-link");
+    const signedUrl: CloudinaryUploadReturnObject = await res.json();
+    return signedUrl;
+  }
+
+  async function uploadLogo() {
+    if (!file) {
+      return;
+    }
+    try {
+      // Generate signed URL
+      const signedUrl = await fetchSignedUrl();
+
+      // Create FormData for upload
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("api_key", signedUrl.api_key);
+      formData.append("timestamp", signedUrl.timestamp.toString());
+      formData.append("signature", signedUrl.signature);
+      formData.append("folder", signedUrl.folder);
+
+      // Upload to Cloudinary
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${signedUrl.cloud_name}/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      console.log(data.secure_url);
+      setImageUrl(data.secure_url); // Store uploaded image URL
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function handleFormUpload(e) {
+    e.preventDefault();
+    const userId = session.data.user?.id;
+    if (!userId) {
+      console.error("User ID is missing in session data");
+      return;
+    }
+
+    await uploadLogo();
+
+    console.log("image done", imageUrl);
+
+    const response = await axios.post("/api/job/add-company", {
+      userId,
+      name,
+      website,
+      logo: imageUrl,
+    });
+
+    if (response.status !== 200) {
+      console.error("Failed to upload into database:", response.data);
+    }
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -94,12 +183,54 @@ export function Combobox() {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-96 scale-150 mt-20 p-0">
+      <PopoverContent className="w-[40rem] overflow-auto  p-0 flex flex-col gap-6">
         <Command>
           <CommandInput placeholder="Search company..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No company found.</CommandEmpty>
-            <CommandGroup className="flex flex-col gap-2 grp">
+            <CommandEmpty>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline">Open popover</Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[30rem]">
+                  <form className="grid gap-4" onSubmit={handleFormUpload}>
+                    <div className="space-y-2">
+                      <h4 className="font-medium leading-none">Add company</h4>
+                      <section className="text-sm text-muted-foreground flex justify-center gap-8 ">
+                        <ImageUpload handleFileChange={handleFileChange} />
+                        <div className=" flex flex-col gap-6 w-full">
+                          <div className="flex flex-col gap-4">
+                            <Label htmlFor="Name">Name</Label>
+                            <Input
+                              id="Name"
+                              className="col-span-2 h-8"
+                              onChange={(event) => {
+                                setName(event.target.value);
+                              }}
+                            />
+                          </div>
+                          <div className="flex flex-col gap-4">
+                            <Label htmlFor="website">Website</Label>
+                            <Input
+                              id="maxWidth"
+                              className="col-span-2 h-8"
+                              onChange={(e) => {
+                                setWebsite(e.target.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+
+                    <button type="submit" value={`Add`}>
+                      Add
+                    </button>
+                  </form>
+                </PopoverContent>
+              </Popover>
+            </CommandEmpty>
+            <CommandGroup className="space-y-14 p-2 flex flex-col gap-8 ">
               {companies.map((company) => (
                 <CommandItem
                   key={company.value}
@@ -108,13 +239,13 @@ export function Combobox() {
                     const newValue = currentValue === value ? "" : currentValue;
                     setValue(newValue);
                     setOpen(false);
-                    const selectedCompany = companies.find(
-                      (company) => company.value === newValue
-                    );
+                    // const selectedCompany = companies.find(
+                    //   (company) => company.value === newValue
+                    // );
                     // onValueChange?.(newValue, selectedCompany);
                   }}
                   className={cn(
-                    "flex items-center relative justify-center gap-2 test bg-[#FFFCEF] text-black",
+                    "flex items-center relative justify-center gap-2 test bg-[#FFFCEF] text-black p-2 rounded-lg shadow-md  mb-2 h-16 text-xl cursor-pointer",
                     value === company.value && "bg-[#FFEFAA] "
                   )}
                 >

@@ -10,11 +10,11 @@ async function addCompany(req: NextRequest) {
 
     if (!requestBody.userId) return new NextResponse(JSON.stringify({ err: "Unauthorised request" }), { status: 400 });
     try {
-        const { name, description, website, logo } = await addCompanySchema.parseAsync(requestBody);
+        const { name,website, logo } = await addCompanySchema.parseAsync(requestBody);
         const company = await db.insert(companies).values({
             id: uuid(),
             name,
-            description,
+            
             website,
             logo,
         }).returning();
