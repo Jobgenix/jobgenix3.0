@@ -1,3 +1,4 @@
+// /*eslint-disable*/
 "use client";
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
@@ -13,6 +14,8 @@ import {
   TabsTrigger,
 } from "@/app/components/ui/tabs";
 
+import { Combobox } from "./combo-box";
+
 export default function InternshipForm() {
   const [selectedDuration, setSelectedDuration] = useState<{
     type: "weeks" | "months";
@@ -25,18 +28,20 @@ export default function InternshipForm() {
         {/* Form Section */}
         <div className="space-y-6">
           {/* Company Selection */}
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col">
             <Label htmlFor="company">
               Company you are hiring for <span style={{ color: "red" }}>*</span>
             </Label>
-            <div className="flex items-center gap-2 w-full max-w-sm border rounded-lg p-2 bg-white">
+
+            {/* <div className="flex items-center gap-2 w-full max-w-sm border rounded-lg p-2 bg-white">
               <Input
                 type="text"
                 id="company"
                 placeholder="Enter company name"
                 className="border-0 p-0 focus-visible:ring-0"
-              />
-            </div>
+                />
+                </div> */}
+            <Combobox />
           </div>
 
           {/* Internship Title */}
