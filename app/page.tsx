@@ -101,7 +101,12 @@
 // }
 "use client";
 import InternshipForm from "@/app/components/internship-form";
-
+import Footer from "./components/footer";
 export default function Page() {
-  return <InternshipForm />;
+  return (
+    <>
+      <InternshipForm />
+      <Footer />
+    </>
+  );
 }
