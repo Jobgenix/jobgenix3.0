@@ -108,7 +108,7 @@ const FirstTimeSignIn = () => {
           ? "bg-[#2F8E5B] text-white hover:bg-[#329761]"
           : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
-        disabled={!selectedRole}
+          disabled={!(selectedRole && session.status === "authenticated")}
       >
         Continue
       </button>
