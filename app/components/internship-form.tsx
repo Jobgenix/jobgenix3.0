@@ -1,12 +1,10 @@
 // /*eslint-disable*/
 "use client";
 import { useState } from "react";
-import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
 import { Button } from "@/app/components/ui/button";
-import { Lightbulb } from "lucide-react";
 import {
   Tabs,
   TabsContent,
@@ -23,7 +21,7 @@ export default function InternshipForm() {
   } | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white p-4 md:p-8">
+    <div className="min-h-screen p-4 md:p-8">
       <div className="mx-auto max-w-7xl grid gap-6 md:grid-cols-[2fr,1fr]">
         {/* Form Section */}
         <div className="space-y-6">
@@ -129,66 +127,6 @@ export default function InternshipForm() {
         </div>
 
         {/* Guidelines Section */}
-        <div className="space-y-6">
-          <Card className="bg-green-100 border-none">
-            <CardHeader className="flex flex-row items-start space-x-2">
-              <Lightbulb className="h-6 w-6 text-green-600" />
-              <div>
-                <h3 className="font-semibold">Guidelines</h3>
-                <p className="text-sm text-muted-foreground">
-                  Adhere to these guidelines for quicker approval:
-                </p>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  • Choose a suitable role from the suggestions to automatically
-                  fill in other fields.
-                </li>
-                <li className="flex items-start gap-2">
-                  • Clearly define the minimum requirements to receive relevant
-                  applications.
-                </li>
-                <li className="flex items-start gap-2">
-                  • Avoid matching applicants based on caste, religion, or other
-                  discriminatory factors.
-                </li>
-                <li className="flex items-start gap-2">
-                  • Do not charge any application fees.
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-green-100 border-none">
-            <CardHeader className="flex flex-row items-start space-x-2">
-              <Lightbulb className="h-6 w-6 text-green-600" />
-              <div>
-                <h3 className="font-semibold">Shortlist Faster & accurately</h3>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <h4 className="font-medium">
-                Include screening questions and define the stages in the next
-                step:
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  • Incorporate an assessment round, such as a quiz or code
-                  contest.
-                </li>
-                <li className="flex items-start gap-2">
-                  • Accept submissions in various formats, including PPT, DOC,
-                  PDF, CSV, Excel, and others.
-                </li>
-                <li className="flex items-start gap-2">
-                  • Include personal interview rounds for final selection.
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   );

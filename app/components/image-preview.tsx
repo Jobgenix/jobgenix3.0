@@ -8,7 +8,7 @@ export function ImageUpload({
 }: {
   handleFileChange:(event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  // const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   
@@ -16,14 +16,14 @@ export function ImageUpload({
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setSelectedImage(file);
+      // setSelectedImage(file);
       setPreviewUrl(URL.createObjectURL(file));
       handleFileChange(event);
     }
   };
 
   const clearImage = () => {
-    setSelectedImage(null);
+    // setSelectedImage(null);
     setPreviewUrl(null);
   };
 
