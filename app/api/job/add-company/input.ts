@@ -9,6 +9,6 @@ export const addCompanySchema = object({
 
     logo: string({ required_error: "Logo is required" }).min(1, "Logo is required").url("Invalid URL").optional(),
 
-    description: string({ required_error: "Description is required" })
-        .min(1, "Description is required"),
+    // description: string({ required_error: "Description is required" })
+    //     .min(1, "Description is required"),
 });

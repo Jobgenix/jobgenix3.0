@@ -46,7 +46,10 @@
     "next": "15.1.4",
     "next-auth": "^5.0.0-beta.25",
     "next-cloudinary": "^6.16.0",
+<<<<<<< HEAD
     "quill": "^2.0.3",
+=======
+>>>>>>> 1594c0c8bf3cf969d32d0a737b3b898efb48ac17
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.6.0",
@@ -61,7 +64,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/ws": "^8.5.13",
-    "drizzle-kit": "^0.30.1",
+    "drizzle-kit": "^0.30.2",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
     "postcss": "^8",
