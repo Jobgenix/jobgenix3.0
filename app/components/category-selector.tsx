@@ -19,11 +19,8 @@ import {
 } from "@/app/components/ui/popover";
 
 const cities = [
-  { value: "bangalore", label: "Bangalore" },
-  { value: "mumbai", label: "Mumbai" },
-  { value: "delhi", label: "Delhi" },
-  { value: "hyderabad", label: "Hyderabad" },
-  { value: "chennai", label: "Chennai" },
+  { value: "it-management/it-support", label: "IT Management/IT Support" },
+  { value: "Business", label: "Business" },
 ];
 
 export default function CategorySelector({}) {
@@ -66,7 +63,7 @@ export default function CategorySelector({}) {
               aria-expanded={open}
               className="w-full justify-between h-16 text-xl text-gray-600 bg-[#FFFCEF] border-none rounded-lg shadow-lg shadow-black/20 tracking-wide"
             >
-              City
+              Select Categories Name
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>

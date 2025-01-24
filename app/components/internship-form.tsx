@@ -12,7 +12,6 @@ import {
   TabsTrigger,
 } from "@/app/components/ui/tabs";
 
-import { Combobox } from "./combo-box";
 
 export default function InternshipForm() {
   const [selectedDuration, setSelectedDuration] = useState<{
@@ -26,21 +25,7 @@ export default function InternshipForm() {
         {/* Form Section */}
         <div className="space-y-6">
           {/* Company Selection */}
-          <div className="space-y-2 flex flex-col">
-            <Label htmlFor="company">
-              Company you are hiring for <span style={{ color: "red" }}>*</span>
-            </Label>
-
-            {/* <div className="flex items-center gap-2 w-full max-w-sm border rounded-lg p-2 bg-white">
-              <Input
-                type="text"
-                id="company"
-                placeholder="Enter company name"
-                className="border-0 p-0 focus-visible:ring-0"
-                />
-                </div> */}
-            <Combobox />
-          </div>
+          
 
           {/* Internship Title */}
           <div className="space-y-2">
@@ -56,7 +41,7 @@ export default function InternshipForm() {
           {/* Internship Type */}
           <div className="space-y-2">
             <Label>
-              Internship Type <span className="text-red-500">*</span>
+              Type <span className="text-red-500">*</span>
             </Label>
             <RadioGroup defaultValue="internship" className="flex gap-4">
               <div className="flex items-center space-x-2">
