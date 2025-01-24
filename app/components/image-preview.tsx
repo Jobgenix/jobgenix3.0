@@ -6,7 +6,7 @@ import Image from "next/image";
 export function ImageUpload({
   handleFileChange,
 }: {
-  handleFileChange: React.ChangeEvent<HTMLInputElement>;
+  handleFileChange:(event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);

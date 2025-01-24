@@ -39,7 +39,7 @@ const FirstTimeSignIn = () => {
         return;
       }
 
-      const userId = session.data.user?.id;
+      const userId = session.data?.user?.id;
       if (!userId) {
         console.error("User ID is missing in session data");
         return;

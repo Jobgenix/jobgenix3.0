@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import Image from "next/image";
@@ -23,11 +22,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/app/components/ui/popover";
-
 import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
-
 import { useSession } from "next-auth/react";
-import { SingleStoreColumnWithAutoIncrement } from "drizzle-orm/singlestore-core";
+
 
 const companies = [
   {
@@ -73,13 +70,12 @@ export function Combobox() {
 
   const [file, setFile] = React.useState<File | null>(null);
   const [uploading, setUploading] = React.useState(false);
-  const [imageUrl, setImageUrl] = React.useState<string | null>(null);
 
   const [name, setName] = React.useState<string | null>(null);
   const [website, setWebsite] = React.useState<string | null>(null);
   const [description, setDescription] = React.useState<string | null>(null);
-
   const session = useSession();
+
 
   const selectedCompany = companies.find((company) => company.value === value);
 
@@ -120,8 +116,7 @@ export function Combobox() {
         }
       );
       const data = await response.json();
-      console.log(data.secure_url);
-      setImageUrl(data.secure_url); // Store uploaded image URL
+      return data.secure_url;
     } catch (error) {
       console.error(error);
     } finally {
@@ -129,27 +124,25 @@ export function Combobox() {
     }
   }
 
-  async function handleFormUpload(e) {
+  async function handleFormUpload(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const userId = session.data.user?.id;
+    const userId = session.data?.user?.id;
     if (!userId) {
       console.error("User ID is missing in session data");
       return;
     }
 
-    await uploadLogo();
-
-    console.log("image done", imageUrl);
+    const logoUrl = await uploadLogo();
 
     const response = await axios.post("/api/job/add-company", {
       userId,
       name,
       website,
-      logo: imageUrl,
+      logo: logoUrl,
     });
 
     if (response.status !== 200) {
-      console.error("Failed to upload into database:", response.data);
+      console.error("Failed to upload into database:", response);
     }
   }
 
