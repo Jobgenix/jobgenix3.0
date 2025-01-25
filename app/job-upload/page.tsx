@@ -1,5 +1,4 @@
-'use client'
-import InternshipForm from "@/app/components/internship-form";
+"use client";
 import LocationSelector from "@/app/components/location-selector";
 import CategorySelector from "@/app/components/category-selector";
 import SkillsRequired from "../components/skills-required";
@@ -13,9 +12,12 @@ import OtherBenifits from "../components/other-benifits";
 import { TypeSelector } from "../components/type-selector";
 import { useEffect, useState } from "react";
 import { Opportunity } from "@/types/opportunityType";
+import AdvancedSettings from "../components/advanced-settings";
 
 export default function Page() {
   const [formData, setFormData] = useState<Partial<Opportunity>>({});
+
+  const [advanced, setAdvanced] = useState(false);
 
   const updateField = <K extends keyof Opportunity>(
     field: K,
@@ -31,7 +33,6 @@ export default function Page() {
     console.log(formData);
   }, [formData]);
 
-
   return (
     <>
       <section className=" flex flex-col gap-4 px-8">
@@ -43,7 +44,7 @@ export default function Page() {
             <CompanySelector />
             {/* <InternshipForm /> */}
             <TypeSelector setFormData={updateField} />
-            <LocationSelector setFormData={updateField}/>
+            <LocationSelector setFormData={updateField} />
             <CategorySelector setFormData={updateField} />
             <SkillsRequired setFormData={updateField} />
             <ExperienceSettings setFormData={updateField} />
@@ -51,6 +52,13 @@ export default function Page() {
             <DiversityBenefits setFormData={updateField} />
             <OtherBenifits />
             <InternshipDescription setFormData={updateField} />
+            <button
+              className="px-4 py-2 bg-emerald-500 text-white flex justify-center items-center w-32 rounded-full font-semibold tracking-wider"
+              onClick={() => setAdvanced(!advanced)}
+            >
+              Next
+            </button>
+            {advanced && <AdvancedSettings />}
           </div>
           <div>
             <Infocard />
