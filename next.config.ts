@@ -11,7 +11,37 @@ const nextConfig: NextConfig = {
         pathname: '/a/**',
       }
     ],
+    domains: [
+      "hebbkx1anhila5yf.public.blob.vercel-storage.com",
+      "s3-alpha-sig.figma.com",
+      "d8it4huxumps7.cloudfront.net"
+    ],
   }
 };
 
 export default nextConfig;
+
+// import type { NextConfig } from "next";
+
+// const nextConfig: NextConfig = {
+//     "type": "setting",
+//     "settings": {
+//       "images.domains": ["hebbkx1anhila5yf.public.blob.vercel-storage.com",'s3-alpha-sig.figma.com',"d8it4huxumps7.cloudfront.net","hebbkx1anhila5yf.public.blob.vercel-storage.com"]
+//     }
+//   };
+
+// export default nextConfig;
+
+// import type { NextConfig } from "next";
+
+// const nextConfig: NextConfig = {
+//   images: {
+//     domains: [
+//       "hebbkx1anhila5yf.public.blob.vercel-storage.com",
+//       "s3-alpha-sig.figma.com",
+//       "d8it4huxumps7.cloudfront.net"
+//     ],
+//   },
+// };
+
+// export default nextConfig;
