@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreditCard, Gauge, Trophy, Ban } from "lucide-react";
 import {
   Select,
@@ -11,20 +11,27 @@ import {
 } from "@/app/components/ui/select";
 import { Input } from "@/app/components/ui/input";
 import { Checkbox } from "@/app/components/ui/checkbox";
+import { StipendType } from "@/types/opportunityType";
+import { stipendTypeSchema } from "@/constants/jobOpportunities";
+import { formSectionProps } from "@/types/formSectionProps";
 
-export default function StipendDetailsPage() {
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+export default function StipendDetailsPage({ setFormData }: formSectionProps) {
+  const [selectedType, setSelectedType] = useState<StipendType | null>(null);
   const [hideStipend, setHideStipend] = useState(false);
 
+  useEffect(()=>{
+    setFormData("stipendType", selectedType!);
+  },[selectedType])
+
   const stipendTypes = [
-    { id: "fixed", label: "Fixed", icon: <CreditCard className="w-4 h-4" /> },
-    { id: "range", label: "Range", icon: <Gauge className="w-4 h-4" /> },
+    { id: stipendTypeSchema.Enum.fixed, label: "Fixed", icon: <CreditCard className="w-4 h-4" /> },
+    { id: stipendTypeSchema.Enum["performance-based"], label: "Range", icon: <Gauge className="w-4 h-4" /> },
     {
-      id: "fixed-incentive",
+      id: stipendTypeSchema.Enum["fixed + performance-based"],
       label: "Fixed + Incentive",
       icon: <Trophy className="w-4 h-4" />,
     },
-    { id: "unpaid", label: "Unpaid", icon: <Ban className="w-4 h-4" /> },
+    { id: stipendTypeSchema.Enum.unpaid, label: "Unpaid", icon: <Ban className="w-4 h-4" /> },
   ];
 
   return (
@@ -50,11 +57,10 @@ export default function StipendDetailsPage() {
               key={type.id}
               onClick={() => setSelectedType(type.id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-colors
-                  ${
-                    type.id === selectedType
-                      ? "bg-emerald-200 text-emerald-800"
-                      : "border border-dashed border-gray-300 hover:border-emerald-500 hover:text-emerald-600"
-                  }`}
+                  ${type.id === selectedType
+                  ? "bg-emerald-200 text-emerald-800"
+                  : "border border-dashed border-gray-300 hover:border-emerald-500 hover:text-emerald-600"
+                }`}
             >
               {type.icon}
               {type.label}

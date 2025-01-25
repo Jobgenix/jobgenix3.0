@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "@/app/components/ui/switch";
+import { ExperienceType } from "@/types/opportunityType";
+import { experienceTypeSchema } from "@/constants/jobOpportunities";
+import { formSectionProps } from "@/types/formSectionProps";
 
-export default function ExperienceSettings() {
-  const [experienceType, setExperienceType] = useState<
-    "fresher" | "experienced"
-  >("fresher");
+export default function ExperienceSettings({ setFormData }: formSectionProps) {
+  const [experienceType, setExperienceType] = useState<ExperienceType>("fresher");
   const [specificOrg, setSpecificOrg] = useState(false);
   const [specificNationalities, setSpecificNationalities] = useState(false);
+
+  useEffect(()=>{
+    setFormData('experience',experienceType);
+  },[experienceType])
 
   return (
     <div className="flex flex-col gap-6">
@@ -19,7 +24,7 @@ export default function ExperienceSettings() {
         </h3>
         <div className="flex gap-3">
           <button
-            onClick={() => setExperienceType("fresher")}
+            onClick={() => setExperienceType(experienceTypeSchema.Enum.fresher)}
             className={`px-6 py-2 rounded-full transition-colors  text-[15px]
               ${
                 experienceType === "fresher"
@@ -30,7 +35,7 @@ export default function ExperienceSettings() {
             Freshers
           </button>
           <button
-            onClick={() => setExperienceType("experienced")}
+            onClick={() => setExperienceType(experienceTypeSchema.Enum.experienced)}
             className={`px-6 py-2 rounded-full transition-colors  text-[15px]
               ${
                 experienceType === "experienced"

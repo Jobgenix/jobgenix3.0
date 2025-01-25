@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "@/app/components/ui/switch";
 import { Checkbox } from "@/app/components/ui/checkbox";
 import {
@@ -9,23 +9,39 @@ import {
   TabsTrigger,
   TabsContent,
 } from "@/app/components/ui/tabs";
+import { formSectionProps } from "@/types/formSectionProps";
+import { DegreeType } from "@/types/opportunityType";
+import { degreeTypeSchema } from "@/constants/jobOpportunities";
 
-export default function SkillsRequired() {
+interface coursesProps {
+  id: DegreeType;
+  label: string;
+}
+
+export default function SkillsRequired({ setFormData }: formSectionProps) {
   const [openForCollege, setOpenForCollege] = useState(false);
   const [specificCourse, setSpecificCourse] = useState(false);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
+  const [selectedCourses, setSelectedCourses] = useState<DegreeType[]>([]);
+
+  useEffect(() => {
+    if (selectedYear !== null) {
+      setFormData('graduationYear', selectedYear); // Ensure correct field name
+    }
+    setFormData('degree', [...selectedCourses]);
+  }, [selectedYear, selectedCourses]);
+  
 
   const years = ["All", "2024", "2025", "2026", "2027", "2028", "2029"];
-  const courses = [
-    { id: "all", label: "All Courses" },
-    { id: "btech", label: "B.Tech" },
-    { id: "mtech", label: "M.Tech" },
-    { id: "integrated", label: "Intergrated / Dual Degree" },
-    { id: "others", label: "Others" },
+  const courses: coursesProps[] = [
+    { id: degreeTypeSchema.Enum.all, label: "All Courses" },
+    { id: degreeTypeSchema.Enum.bachelor, label: "B.Tech" },
+    { id: degreeTypeSchema.Enum.master, label: "M.Tech" },
+    { id: degreeTypeSchema.Enum.dual, label: "Intergrated / Dual Degree" },
+    { id: degreeTypeSchema.Enum.other, label: "Others" },
   ];
 
-  const handleCourseChange = (courseId: string) => {
+  const handleCourseChange = (courseId: DegreeType) => {
     setSelectedCourses((prev) => {
       if (courseId === "all") {
         return prev.length === courses.length ? [] : courses.map((c) => c.id);

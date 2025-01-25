@@ -36,8 +36,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
+import { formSectionProps } from "@/types/formSectionProps";
 
-export default function InternshipDescription() {
+export default function InternshipDescription({ setFormData }: formSectionProps) {
   const [imageUrl, setImageUrl] = useState("");
   const [charCount, setCharCount] = useState(0);
 
@@ -59,8 +60,17 @@ export default function InternshipDescription() {
           "prose prose-sm sm:prose lg:prose-lg mx-auto focus:outline-none min-h-[390px] text-gray-600",
       },
     },
+    onCreate: ({ editor }) => {
+      // Listen for the first user input and remove the placeholder
+      editor.on("transaction", () => {
+        if (editor.getHTML().includes("Start typing the Description...")) {
+          editor.commands.clearContent(); // Clears the placeholder content
+        }
+      });
+    },
     onUpdate: ({ editor }) => {
       const text = editor.state.doc.textContent;
+      setFormData("description", editor.getHTML());
       setCharCount(text.length);
     },
   });

@@ -1,3 +1,4 @@
+'use client'
 import InternshipForm from "@/app/components/internship-form";
 import LocationSelector from "@/app/components/location-selector";
 import CategorySelector from "@/app/components/category-selector";
@@ -10,8 +11,27 @@ import CompanySelector from "../components/company-selector";
 import InternshipDescription from "../components/Internship-desc";
 import OtherBenifits from "../components/other-benifits";
 import { TypeSelector } from "../components/type-selector";
+import { useEffect, useState } from "react";
+import { Opportunity } from "@/types/opportunityType";
 
-export default function page() {
+export default function Page() {
+  const [formData, setFormData] = useState<Partial<Opportunity>>({});
+
+  const updateField = <K extends keyof Opportunity>(
+    field: K,
+    value: Opportunity[K]
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+
   return (
     <>
       <section className=" flex flex-col gap-4 px-8">
@@ -22,15 +42,15 @@ export default function page() {
           <div className="w-[70%] px-12 py-8 bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] rounded-md shadow-md shadow-black/20 flex flex-col gap-20">
             <CompanySelector />
             {/* <InternshipForm /> */}
-            <TypeSelector />
-            <LocationSelector />
-            <CategorySelector />
-            <SkillsRequired />
-            <ExperienceSettings />
-            <StipendDetailsPage />
-            <DiversityBenefits />
+            <TypeSelector setFormData={updateField} />
+            <LocationSelector setFormData={updateField}/>
+            <CategorySelector setFormData={updateField} />
+            <SkillsRequired setFormData={updateField} />
+            <ExperienceSettings setFormData={updateField} />
+            <StipendDetailsPage setFormData={updateField} />
+            <DiversityBenefits setFormData={updateField} />
             <OtherBenifits />
-            <InternshipDescription />
+            <InternshipDescription setFormData={updateField} />
           </div>
           <div>
             <Infocard />

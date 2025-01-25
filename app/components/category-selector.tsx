@@ -17,29 +17,34 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/app/components/ui/popover";
+import { formSectionProps } from "@/types/formSectionProps";
 
-const cities = [
+const category = [
   { value: "it-management/it-support", label: "IT Management/IT Support" },
   { value: "Business", label: "Business" },
 ];
 
-export default function CategorySelector({}) {
+export default function CategorySelector({ setFormData }: formSectionProps) {
   const [open, setOpen] = React.useState(false);
-  const [selectedCities, setSelectedCities] = React.useState<typeof cities>([]);
+  const [selectedCategories, setselectedCategories] = React.useState<typeof category>([]);
+
+  React.useEffect(() => {
+    setFormData("category", selectedCategories.map(category => category.value));
+  }, [selectedCategories]);
 
   const handleSelect = (currentValue: string) => {
-    const selected = cities.find((city) => city.value === currentValue);
+    const selected = category.find((city) => city.value === currentValue);
     if (
       selected &&
-      !selectedCities.some((city) => city.value === currentValue)
+      !selectedCategories.some((city) => city.value === currentValue)
     ) {
-      setSelectedCities((prev) => [...prev, selected]);
+      setselectedCategories((prev) => [...prev, selected]);
     }
     setOpen(false);
   };
 
   const handleRemove = (valueToRemove: string) => {
-    setSelectedCities((prev) =>
+    setselectedCategories((prev) =>
       prev.filter((city) => city.value !== valueToRemove)
     );
   };
@@ -69,11 +74,11 @@ export default function CategorySelector({}) {
           </PopoverTrigger>
           <PopoverContent className="w-full p-0">
             <Command>
-              <CommandInput placeholder="Search cities..." />
+              <CommandInput placeholder="Search category..." />
               <CommandList>
                 <CommandEmpty>No city found.</CommandEmpty>
                 <CommandGroup>
-                  {cities.map((city) => (
+                  {category.map((city) => (
                     <CommandItem
                       key={city.value}
                       value={city.value}
@@ -82,7 +87,7 @@ export default function CategorySelector({}) {
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          selectedCities.some((c) => c.value === city.value)
+                          selectedCategories.some((c) => c.value === city.value)
                             ? "opacity-100"
                             : "opacity-0"
                         )}
@@ -97,9 +102,9 @@ export default function CategorySelector({}) {
         </Popover>
       </div>
 
-      {selectedCities.length > 0 && (
+      {selectedCategories.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {selectedCities.map((city) => (
+          {selectedCategories.map((city) => (
             <div
               key={city.value}
               className="flex items-center gap-1 rounded-full bg-[#FFFFFFB2] px-3 py-1 text-sm border border-[#96999C] text-md tracking-wide"

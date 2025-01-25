@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { InternshipType } from "./internship-type"
 // import { InternshipDuration } from "./internship-duration"
 import { Label } from "@/app/components/ui/label";
@@ -8,11 +8,16 @@ import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
 import { Input } from "@/app/components/ui/input";
 
 import { Monitor, Briefcase, FileText } from "lucide-react";
+import { formSectionProps } from "@/types/formSectionProps";
 
-export function TypeSelector() {
+export function TypeSelector({ setFormData }: formSectionProps) {
   const [type, setType] = useState("");
   const [unit, setUnit] = useState<"weeks" | "months">("months");
   const [duration, setDuration] = useState("");
+  
+  useEffect(() => {
+    setFormData('duration', duration)
+  }, [duration])
 
   return (
     <div className="space-y-6">

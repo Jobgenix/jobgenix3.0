@@ -17,6 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/app/components/ui/popover";
+import { formSectionProps } from "@/types/formSectionProps";
 
 const cities = [
   { value: "bangalore", label: "Bangalore" },
@@ -26,9 +27,14 @@ const cities = [
   { value: "chennai", label: "Chennai" },
 ];
 
-export default function LocationSelector({}) {
+
+
+export default function LocationSelector({ setFormData }: formSectionProps) {
   const [open, setOpen] = React.useState(false);
   const [selectedCities, setSelectedCities] = React.useState<typeof cities>([]);
+  React.useEffect(() => {
+    setFormData("location", selectedCities.map((city) => city.value));
+  }, [selectedCities]);
 
   const handleSelect = (currentValue: string) => {
     const selected = cities.find((city) => city.value === currentValue);

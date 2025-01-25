@@ -1,21 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Switch } from "@/app/components/ui/switch";
+import { DiversityType } from "@/types/opportunityType";
+import { diversityTypeSchema } from "@/constants/jobOpportunities";
+import { formSectionProps } from "@/types/formSectionProps";
 
-export default function DiversityBenefits() {
+export default function DiversityBenefits({ setFormData }: formSectionProps) {
   const diversityOptions = [
-    { id: "all", label: "All" },
-    { id: "male", label: "Male" },
-    { id: "female", label: "Female" },
-    { id: "transgender", label: "Transgender" },
-    { id: "intersex", label: "Intersex" },
-    { id: "non-binary", label: "Non-Binary" },
-    { id: "others", label: "Others" },
+    { id: null, label: "All" },
+    { id: diversityTypeSchema.Enum.male, label: "Male" },
+    { id: diversityTypeSchema.Enum.female, label: "Female" },
+    { id: diversityTypeSchema.Enum.transgender, label: "Transgender" },
+    { id: diversityTypeSchema.Enum.intersex, label: "Intersex" },
+    { id: diversityTypeSchema.Enum["non-binary"], label: "Non-Binary" },
+    { id: diversityTypeSchema.Enum.other, label: "Others" },
   ];
 
-  const [selectedOption, setSelectedOption] = useState("all");
+  const [selectedOption, setSelectedOption] = useState<DiversityType|null>(null);
+
+  useEffect(()=>{
+    setFormData("diversityType", selectedOption!);
+  },[selectedOption])
 
   return (
     <div className="p-6 bg-[#FFFCEF] rounded-lg space-y-4 shadow-black/40 shadow-lg">
