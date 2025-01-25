@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { companies } from "@/lib/schema";
 import { db } from "@/lib/db";
-import { and, eq, gt } from "drizzle-orm";
+import { and, gt, ilike } from "drizzle-orm";
 import { z } from "zod";
 import { ZodError } from "zod";
 
@@ -15,15 +15,8 @@ const querySchema = z.object({
 
 async function getCompanies(req: NextRequest) {
     try {
-        // Parse query params
-        const { searchParams } = new URL(req.url);
-        const { userId } = await req.json();
-        const validatedQuery = querySchema.parse({
-            lastCompanyId: searchParams.get("lastCompanyId"),
-            limit: searchParams.get("limit"),
-            name: searchParams.get("name"),
-            userId: userId,
-        });
+        const requestBody = await req.json();
+        const validatedQuery = querySchema.parse(requestBody);
 
         const limit = parseInt(validatedQuery.limit, 10);
         const lastCompanyId = validatedQuery.lastCompanyId;
@@ -38,10 +31,10 @@ async function getCompanies(req: NextRequest) {
         }
         else if(name){
             if(lastCompanyId){
-                const result = await query.where(and(eq(companies.name, name), gt(companies.id, lastCompanyId)));
+                const result = await query.where(and(ilike(companies.name, `%${name}%`), gt(companies.id, lastCompanyId)));
                 return new NextResponse(JSON.stringify({ companies: result, hasMore: result.length === limit }), { status: 200 });
             }
-            const result = await query.where(eq(companies.name, name));
+            const result = await query.where(ilike(companies.name, `%${name}%`));
             return new NextResponse(JSON.stringify({ companies: result, hasMore: result.length === limit }), { status: 200 });
         }
 

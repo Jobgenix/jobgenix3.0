@@ -28,7 +28,7 @@ export default function JobDetails({
 }: JobProps) {
   const formatTimeAgo = (datestring: string) => {
     // In a real app, implement proper time ago formatting
-    console.info(datestring);
+    // console.info(datestring);
     return "2 Hours ago";
   };
 

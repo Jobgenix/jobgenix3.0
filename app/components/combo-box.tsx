@@ -24,44 +24,7 @@ import {
 } from "@/app/components/ui/popover";
 import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
 import { useSession } from "next-auth/react";
-
-const companies = [
-  {
-    value: "google",
-    label: "Google",
-    logo: "/company-logos/google.svg",
-  },
-  {
-    value: "amazon",
-    label: "Amazon",
-    logo: "/company-logos/amazon.svg",
-  },
-  {
-    value: "microsoft",
-    label: "Microsoft",
-    logo: "/company-logos/microsoft.svg",
-  },
-  {
-    value: "accenture",
-    label: "Accenture",
-    logo: "/company-logos/accenture.svg",
-  },
-  {
-    value: "deloitte",
-    label: "Deloitte",
-    logo: "/company-logos/deloitte.svg",
-  },
-  {
-    value: "capgemini",
-    label: "Capgemini",
-    logo: "/company-logos/capgemini.svg",
-  },
-  {
-    value: "coinbase",
-    label: "Coinbase",
-    logo: "/company-logos/coinbase.svg",
-  },
-];
+import { CompanyType } from "@/types/companyType";
 
 export function Combobox() {
   const [open, setOpen] = React.useState(false);
@@ -74,7 +37,7 @@ export function Combobox() {
 
   const [companyName, setCompanyName] = React.useState<string>("");
 
-  const [companies, setCompanies] = React.useState([]);
+  const [companies, setCompanies] = React.useState<CompanyType[]>();
 
   const session = useSession();
 
@@ -140,7 +103,7 @@ export function Combobox() {
       logo: logoUrl,
     });
 
-    if (response.status !== 200) {
+    if (response.statusText !== "OK") {
       console.error("Failed to upload into database:", response);
     }
   }
@@ -162,13 +125,13 @@ export function Combobox() {
     // console.log(userId);
 
     axios
-      .post("/api/job/get-companies", {
+      .post(`/api/job/get-companies`, {
         userId,
         name: companyName,
       })
       .then((response) => {
-        // console.log(response.data);
-        setCompanies(response.data);
+        console.log(response.data);
+        setCompanies([...response.data.companies]);
       });
   }, [companyName, session]);
 
@@ -259,10 +222,10 @@ export function Combobox() {
               </Popover>
             </CommandEmpty>
             <CommandGroup className="space-y-14 p-2 flex flex-col gap-8 ">
-              {companies.map((company) => (
+              {companies?.map((company) => (
                 <CommandItem
-                  key={company.value}
-                  value={company.value}
+                  key={company.name}
+                  value={company.name}
                   onSelect={(currentValue) => {
                     const newValue = currentValue === value ? "" : currentValue;
                     setValue(newValue);
@@ -274,25 +237,25 @@ export function Combobox() {
                   }}
                   className={cn(
                     "flex items-center relative justify-center gap-2 test bg-[#FFFCEF] text-black p-2 rounded-lg shadow-md  mb-2 h-16 text-xl cursor-pointer",
-                    value === company.value && "bg-[#FFEFAA] "
+                    value === company.name && "bg-[#FFEFAA] "
                   )}
                 >
                   <div className=" h-6 w-6 flex justify-center  gap-4">
                     <Image
                       src={company.logo || "/placeholder.svg"}
-                      alt={company.label}
+                      alt={company.name}
                       className="rounded-sm object-contain !relative -left-4"
                       fill
                       sizes="24px"
                     />
-                    <span>{company.label}</span>
+                    <span>{company.name}</span>
                   </div>
-                  <Check
+                  {/* <Check
                     className={cn(
                       "ml-auto h-4 w-4 absolute right-4 ",
                       value === company.value ? "opacity-100" : "opacity-0"
                     )}
-                  />
+                  /> */}
                 </CommandItem>
               ))}
             </CommandGroup>
