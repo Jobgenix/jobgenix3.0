@@ -26,44 +26,6 @@ import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
 import { useSession } from "next-auth/react";
 import { CompanyType } from "@/types/companyType";
 
-// const companies = [
-//   {
-//     value: "google",
-//     label: "Google",
-//     logo: "/company-logos/google.svg",
-//   },
-//   {
-//     value: "amazon",
-//     label: "Amazon",
-//     logo: "/company-logos/amazon.svg",
-//   },
-//   {
-//     value: "microsoft",
-//     label: "Microsoft",
-//     logo: "/company-logos/microsoft.svg",
-//   },
-//   {
-//     value: "accenture",
-//     label: "Accenture",
-//     logo: "/company-logos/accenture.svg",
-//   },
-//   {
-//     value: "deloitte",
-//     label: "Deloitte",
-//     logo: "/company-logos/deloitte.svg",
-//   },
-//   {
-//     value: "capgemini",
-//     label: "Capgemini",
-//     logo: "/company-logos/capgemini.svg",
-//   },
-//   {
-//     value: "coinbase",
-//     label: "Coinbase",
-//     logo: "/company-logos/coinbase.svg",
-//   },
-// ];
-
 export function Combobox() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -159,8 +121,8 @@ export function Combobox() {
       return;
     }
 
-    console.log(companyName);
-    console.log(userId);
+    // console.log(companyName);
+    // console.log(userId);
 
     axios
       .post(`/api/job/get-companies`, {
@@ -211,7 +173,7 @@ export function Combobox() {
             placeholder="Search company..."
             className="h-9"
             value={companyName}
-            onValueChange={(value) => {
+            onValueChange={(value:string) => {
               setCompanyName(value);
             }}
           />

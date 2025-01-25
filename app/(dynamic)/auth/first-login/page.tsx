@@ -15,12 +15,12 @@ const FirstTimeSignIn = () => {
     if (session.status === "unauthenticated") {
       router.push("/auth/login");
     }
-    if (
-      session.data?.user.role !== ROLE_IDS.NEW_USER &&
-      session.status === "authenticated"
-    ) {
-      router.push("/home");
-    }
+    // if (
+    //   session.data?.user.role !== ROLE_IDS.NEW_USER &&
+    //   session.status === "authenticated"
+    // ) {
+    //   router.push("/");
+    // }
   }, [session, router]);
 
   const handleSelect = (role: string) => {
@@ -51,7 +51,7 @@ const FirstTimeSignIn = () => {
       });
 
       if (response.status === 200) {
-        router.push("/home");
+        router.push("/");
       } else {
         console.error("Failed to update user role:", response.data);
       }

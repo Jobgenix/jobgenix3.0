@@ -2,10 +2,9 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import {Landing} from "@/app/components/landingPage"
+import { Landing } from "@/app/components/landingPage";
 
 export default function Page() {
-
   const session = useSession();
   const router = useRouter();
 
@@ -19,7 +18,7 @@ export default function Page() {
   return (
     <>
       {/* <InternshipForm /> */}
-      <Landing/>
+      <Landing />
     </>
   );
 }
