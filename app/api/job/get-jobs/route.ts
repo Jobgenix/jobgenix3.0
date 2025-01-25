@@ -34,10 +34,17 @@ async function getJobs(req: NextRequest) {
         const limit = parseInt(validatedQuery.limit);
         const lastJobId = validatedQuery.lastJobId;
 
-        const query = db.select().from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id));
+        const query = db.select({ 
+            companyName: companies.name,
+            companyLogo: companies.logo,
+            jobTitle: opportunities.title,
+            jobId: opportunities.id,
+            jobLocation: opportunities.location,
+            jobType: opportunities.workplaceType,
+         }).from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id));
 
         if (jobId) {
-            const result = await query.where(eq(opportunities.id, jobId));
+            const result = await db.select().from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id)).where(eq(opportunities.id, jobId));
             return new NextResponse(JSON.stringify({ job: result[0] }), { status: 200 });
         }
         else if (name) {
