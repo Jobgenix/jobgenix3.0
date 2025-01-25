@@ -13,7 +13,11 @@ import {
 import { Calendar as CalendarComponent } from "@/app/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
-export default function AdvancedSettings() {
+export default function AdvancedSettings({
+  setAdvanced,
+}: {
+  setAdvanced: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [externalPlatform, setExternalPlatform] = useState(false);
   const [invitationOnly, setInvitationOnly] = useState(false);
   const [applicationType, setApplicationType] = useState<"url" | "email">(
@@ -96,7 +100,7 @@ export default function AdvancedSettings() {
 
         <div className="space-y-4">
           <div>
-            <h3 className="text-lg font-medium text-green-700">
+            <h3 className="text-xl font-semibold  text-[#27724A]">
               Auto-close this job
             </h3>
             <p className="text-sm text-muted-foreground">

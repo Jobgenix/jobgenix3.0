@@ -38,7 +38,9 @@ import {
 } from "@/app/components/ui/dialog";
 import { formSectionProps } from "@/types/formSectionProps";
 
-export default function InternshipDescription({ setFormData }: formSectionProps) {
+export default function InternshipDescription({
+  setFormData,
+}: formSectionProps) {
   const [imageUrl, setImageUrl] = useState("");
   const [charCount, setCharCount] = useState(0);
 
@@ -87,12 +89,12 @@ export default function InternshipDescription({ setFormData }: formSectionProps)
   };
 
   return (
-    <div className="w-full  mx-auto p-4">
+    <div className="w-full  mx-auto ">
       <div className="flex items-baseline gap-2 mb-2">
-        <h2 className="text-lg font-medium">Description</h2>
+        <h2 className="text-xl font-medium text-[#27724A]">Description</h2>
         <span className="text-gray-500 text-sm">({charCount}/3000)</span>
       </div>
-      <Card className="border border-gray-200 rounded-lg overflow-hidden">
+      <Card className="border border-gray-200 rounded-lg overflow-hidden shadow-black/40 shadow-md">
         <CardContent className="p-0">
           {/* Editor Toolbar */}
           <div className="flex flex-wrap items-center gap-1 p-2 border-b border-gray-200 bg-white">

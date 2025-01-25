@@ -52,13 +52,15 @@ export default function Page() {
             <DiversityBenefits setFormData={updateField} />
             <OtherBenifits />
             <InternshipDescription setFormData={updateField} />
-            <button
-              className="px-4 py-2 bg-emerald-500 text-white flex justify-center items-center w-32 rounded-full font-semibold tracking-wider"
-              onClick={() => setAdvanced(!advanced)}
-            >
-              Next
-            </button>
-            {advanced && <AdvancedSettings />}
+            {!advanced && (
+              <button
+                className="px-4 py-2 bg-emerald-500 text-white flex justify-center items-center w-32 rounded-full font-semibold tracking-wider"
+                onClick={() => setAdvanced(!advanced)}
+              >
+                Next
+              </button>
+            )}
+            {advanced && <AdvancedSettings setAdvanced={setAdvanced} />}
           </div>
           <div>
             <Infocard />
