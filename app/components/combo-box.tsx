@@ -26,43 +26,43 @@ import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
 import { useSession } from "next-auth/react";
 
 
-const companies = [
-  {
-    value: "google",
-    label: "Google",
-    logo: "/company-logos/google.svg",
-  },
-  {
-    value: "amazon",
-    label: "Amazon",
-    logo: "/company-logos/amazon.svg",
-  },
-  {
-    value: "microsoft",
-    label: "Microsoft",
-    logo: "/company-logos/microsoft.svg",
-  },
-  {
-    value: "accenture",
-    label: "Accenture",
-    logo: "/company-logos/accenture.svg",
-  },
-  {
-    value: "deloitte",
-    label: "Deloitte",
-    logo: "/company-logos/deloitte.svg",
-  },
-  {
-    value: "capgemini",
-    label: "Capgemini",
-    logo: "/company-logos/capgemini.svg",
-  },
-  {
-    value: "coinbase",
-    label: "Coinbase",
-    logo: "/company-logos/coinbase.svg",
-  },
-];
+// const companies = [
+//   {
+//     value: "google",
+//     label: "Google",
+//     logo: "/company-logos/google.svg",
+//   },
+//   {
+//     value: "amazon",
+//     label: "Amazon",
+//     logo: "/company-logos/amazon.svg",
+//   },
+//   {
+//     value: "microsoft",
+//     label: "Microsoft",
+//     logo: "/company-logos/microsoft.svg",
+//   },
+//   {
+//     value: "accenture",
+//     label: "Accenture",
+//     logo: "/company-logos/accenture.svg",
+//   },
+//   {
+//     value: "deloitte",
+//     label: "Deloitte",
+//     logo: "/company-logos/deloitte.svg",
+//   },
+//   {
+//     value: "capgemini",
+//     label: "Capgemini",
+//     logo: "/company-logos/capgemini.svg",
+//   },
+//   {
+//     value: "coinbase",
+//     label: "Coinbase",
+//     logo: "/company-logos/coinbase.svg",
+//   },
+// ];
 
 export function Combobox() {
   const [open, setOpen] = React.useState(false);
@@ -72,8 +72,11 @@ export function Combobox() {
 
   const [name, setName] = React.useState<string | null>(null);
   const [website, setWebsite] = React.useState<string | null>(null);
-  const session = useSession();
 
+  const [companyName, setCompanyName] = React.useState<string>("");
+  const [companies, setCompanies] = React.useState([]);
+  
+  const session = useSession();
 
   const selectedCompany = companies.find((company) => company.value === value);
 
@@ -142,6 +145,32 @@ export function Combobox() {
     }
   }
 
+  
+  //fetch companies from the database
+  React.useEffect(() => {
+    if (session.status === "loading") {
+      return; // Wait until the session status is not "loading"
+    }
+
+    const userId = session.data?.user?.id;
+    if (!userId) {
+      console.error("User ID is missing in session data");
+      console.log(session);
+      return;
+    }
+
+    axios
+      .post("/api/job/get-companies", {
+        userId,
+        name: companyName,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  }, [companyName, session]);
+
+
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -174,7 +203,11 @@ export function Combobox() {
       </PopoverTrigger>
       <PopoverContent className="w-[40rem] overflow-auto  p-0 flex flex-col gap-6">
         <Command>
-          <CommandInput placeholder="Search company..." className="h-9" />
+          <CommandInput placeholder="Search company..." className="h-9" 
+          value={companyName}
+            onValueChange={(value) => {
+              setCompanyName(value)
+            }} />
           <CommandList>
             <CommandEmpty>
               <Popover>

@@ -1,5 +1,5 @@
 import JobCard from "../components/Job-components";
-// import JobCardList from "../components/demo-job-components";
+
 import JobDetails from "../components/job-display-components/job-details";
 
 export default function page() {

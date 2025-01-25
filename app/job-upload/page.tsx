@@ -4,7 +4,6 @@ import CategorySelector from "@/app/components/category-selector";
 import SkillsRequired from "../components/skills-required";
 import ExperienceSettings from "../components/ExperienceSettings";
 import { Infocard } from "../components/info-card";
-// import JobCard from "../components/Job-components";
 import StipendDetailsPage from "../components/stipend-details";
 import DiversityBenefits from "../components/diversity";
 import CompanySelector from "../components/company-selector";
@@ -61,7 +60,7 @@ export default function Page() {
                 Next
               </button>
             )}
-            {advanced && <AdvancedSettings setAdvanced={setAdvanced} />}
+            {advanced && <AdvancedSettings setFormData={updateField} setAdvanced={setAdvanced} />}
           </div>
           <div>
             <Infocard />

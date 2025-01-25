@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "lucide-react";
 import { Switch } from "@/app/components/ui/switch";
 import { Button } from "@/app/components/ui/button";
@@ -12,19 +12,29 @@ import {
 } from "@/app/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/app/components/ui/calendar";
 import { cn } from "@/lib/utils";
+import { Opportunity } from "@/types/opportunityType";
 
 export default function AdvancedSettings({
   setAdvanced,
+  setFormData,
 }: {
   setAdvanced: React.Dispatch<React.SetStateAction<boolean>>;
+  setFormData: <K extends keyof Opportunity>(field: K, value: Opportunity[K]) => void;
 }) {
   const [externalPlatform, setExternalPlatform] = useState(false);
   const [invitationOnly, setInvitationOnly] = useState(false);
   const [applicationType, setApplicationType] = useState<"url" | "email">(
     "url"
   );
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date | undefined>(new Date);
+  const [endDate, setEndDate] = useState<Date | undefined>();
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      setFormData('postedAt', startDate.toDateString())
+      setFormData('deadline', endDate.toDateString())
+    }
+  }, [startDate, endDate,])
 
   return (
     <div className="flex flex-col gap-4">

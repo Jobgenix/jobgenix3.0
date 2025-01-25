@@ -97,8 +97,7 @@ const Register: React.FC = () => {
         }
 
         setIsLoading(false);
-        router.push('/home');
-
+        router.push('/auth/first-login');
     };
 
     return (
@@ -163,10 +162,35 @@ const Register: React.FC = () => {
                             name="phone"
                             placeholder="Phone"
                             value={formData.phone}
-                            onChange={handleInputChange}
+                            onFocus={() => {
+                                if (!formData.phone) {
+                                    handleInputChange({
+                                        target: { name: "phone", value: "+91 " }
+                                    } as React.ChangeEvent<HTMLInputElement>);
+                                }
+                            }}
+                            onBlur={() => {
+                                if (formData.phone.trim() === "+91") {
+                                    handleInputChange({
+                                        target: { name: "phone", value: "" }
+                                    } as React.ChangeEvent<HTMLInputElement>);
+                                }
+                            }}
+                            onChange={(e) => {
+                                let input = e.target.value;
+                                if (!input.startsWith("+91 ")) {
+                                    input = `+91 ${input.replace(/^\+91\s*/, "")}`;
+                                }
+                                handleInputChange({
+                                    target: { name: "phone", value: input }
+                                } as React.ChangeEvent<HTMLInputElement>);
+                            }}
                             className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none"
                         />
                     </div>
+
+
+
 
                     {/* Gender */}
                     <div className="mb-4">

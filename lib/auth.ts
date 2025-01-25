@@ -100,7 +100,9 @@ export const authConfig = {
         })
     ],
     session: {
-        strategy: 'database'
+        strategy: 'database',
+        maxAge: 30 * 24 * 60 * 60, // 30 days to session expiry
+        updateAge: 24 * 60 * 60, // 24 hours to update session data into database
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
@@ -112,7 +114,7 @@ export const authConfig = {
                 session.user.role = user.roleId!;
             }
             return session;
-        }
+        },
     },
     pages: {
         signIn: '/auth/login', // Custom sign-in page
