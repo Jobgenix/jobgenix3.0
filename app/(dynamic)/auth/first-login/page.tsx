@@ -19,7 +19,7 @@ const FirstTimeSignIn = () => {
       session.data?.user.role !== ROLE_IDS.NEW_USER &&
       session.status === "authenticated"
     ) {
-      router.push("/home");
+      router.push("/");
     }
   }, [session, router]);
 
@@ -51,7 +51,7 @@ const FirstTimeSignIn = () => {
       });
 
       if (response.status === 200) {
-        router.push("/home");
+        router.push("/");
       } else {
         console.error("Failed to update user role:", response.data);
       }
