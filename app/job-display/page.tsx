@@ -1,19 +1,24 @@
 import JobCard from "../components/Job-components";
-<<<<<<< HEAD
-import { Navbar } from "../components/LandingPageComponents/navbar";
-import JobCardList from "../components/demo-job-components";
-export default function page() {
-    return (
-        <>
-        <Navbar/>
-        <JobCard/>
-        <JobCardList/>
-        </>
-    )
-}
-=======
+import { Input } from "@/app/components/ui/input";
+
+import { Search } from "lucide-react";
 
 import JobDetails from "../components/job-display-components/job-details";
+
+
+const passingYears = Array.from({ length: 10 }, (_, i) => {
+  const year = 2024 + i
+  return { value: year.toString(), label: year.toString() }
+})
+
+const streams = [
+  { value: "btech", label: "B.Tech" },
+  { value: "be", label: "B.E." },
+  { value: "bsc", label: "B.Sc" },
+  { value: "bca", label: "BCA" },
+  { value: "mca", label: "MCA" },
+  { value: "mtech", label: "M.Tech" },
+]
 
 export default function page() {
   const jobListings = [
@@ -52,6 +57,18 @@ export default function page() {
     <>
       <section className="flex gap-4 px-16 py-8 justify-evenly items-center">
         <div className="flex flex-col gap-4 h-screen bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[30%]">
+          <section className="p-4">
+            <div className="relative hidden md:block">
+              <Input
+                type="search"
+                placeholder="Search Opportunities"
+                className="w-[250px] pl-10 text-[#646A66] rounded-3xl border-gray-300"
+              />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
+            </div>
+            
+          </section>
+
           {jobListings.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
@@ -81,4 +98,3 @@ export default function page() {
     </>
   );
 }
->>>>>>> 32e4fbcbcf02b11886821c4b90bb126037024afb
