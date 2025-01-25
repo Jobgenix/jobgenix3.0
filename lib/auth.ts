@@ -100,7 +100,7 @@ export const authConfig = {
         })
     ],
     session: {
-        strategy: 'database',
+        strategy: 'jwt',
         maxAge: 30 * 24 * 60 * 60, // 30 days to session expiry
         updateAge: 24 * 60 * 60, // 24 hours to update session data into database
     },
@@ -108,10 +108,16 @@ export const authConfig = {
         async redirect({ url, baseUrl }) {
             return url.startsWith(baseUrl) ? url : "/home";
         },
-        async session({ session, user }) {
+        async jwt({ token, user }) {
             if (user) {
-                session.user.id = user.id;
-                session.user.role = user.roleId!;
+                return { ...token, id: user.id, roleId: user.roleId };
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (token) {
+                session.user.id = token.id as string;
+                session.user.role = token.roleId as string;
             }
             return session;
         },
