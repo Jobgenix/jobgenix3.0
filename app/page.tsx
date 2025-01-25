@@ -4,6 +4,7 @@ import { ROLE_IDS } from "@/constants/roles";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import {Landing} from "@/app/components/landingPage"
 
 export default function Page() {
 
@@ -22,8 +23,8 @@ export default function Page() {
 
   return (
     <>
-      <InternshipForm />
-
+      {/* <InternshipForm /> */}
+      <Landing/>
     </>
   );
 }
