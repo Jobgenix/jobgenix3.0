@@ -85,7 +85,7 @@ export const workplaceTypeEnum = pgEnum("workplaceType",["remote", "office", "hy
 export const stipendTypeEnum = pgEnum("stipendType",["fixed", "performance-based", "unpaid", "fixed + performance-based"]);
 export const diversityTypeEnum = pgEnum("diversityType",["female", "male", "transgender", "intersex", "non-binary", "other"]);
 export const experienceTypeEnum = pgEnum("experienceType",["fresher", "experienced", "both"]);
-export const degreeTypeEnum = pgEnum("degreeType",["bachelor", "master", "dual", "other"]);
+export const degreeTypeEnum = pgEnum("degreeType",["bachelor", "master", "dual", "other", "all"]);
 export const benefitsTypeEnum = pgEnum("benefitsType",["health-insurance", "paid-leave", "work-from-home", "flexible-hours", "performance-bonus", "other"]);
 export const jobStatusEnum = pgEnum("status",["active", "inactive", "filled"]);
 export const passoutYearEnum = pgEnum("passoutYear",["2025", "2026", "2027", "2028", "2029", "2030"]);
@@ -95,14 +95,15 @@ export const opportunities = pgTable("opportunities", {
     companyId: text("companyId").references(() => companies.id),
     title: text("title").notNull(),
     description: text("description").notNull(),
-    location: text("location").notNull(),
+    duration: text("duration").notNull(),
+    location: text("location").array().notNull(),
     type: jobTypeEnum('type').notNull(),
     workplaceType: workplaceTypeEnum("workplaceType").notNull(),
     stipendType: stipendTypeEnum("stipendType").notNull(),
-    diversityType: diversityTypeEnum("diversityType").array(),
+    diversityType: diversityTypeEnum("diversityType"),
     experience: experienceTypeEnum("experience").notNull(),
     yearsOfExperience: text("yearsOfExperience").notNull(),
-    degree: degreeTypeEnum("degree"), // Add a degree table and reference it here
+    degree: degreeTypeEnum("degree").array(), // Add a degree table and reference it here
     benfits: benefitsTypeEnum("benefits").array(),
     salary: text("salary"),
     graduadtionYear: text("graduadtionYear"),

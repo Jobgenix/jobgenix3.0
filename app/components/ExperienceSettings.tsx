@@ -1,22 +1,31 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Switch } from "@/app/components/ui/switch"
+import { useEffect, useState } from "react";
+import { Switch } from "@/app/components/ui/switch";
+import { ExperienceType } from "@/types/opportunityType";
+import { experienceTypeSchema } from "@/constants/jobOpportunities";
+import { formSectionProps } from "@/types/formSectionProps";
 
-export default function ExperienceSettings() {
-  const [experienceType, setExperienceType] = useState<"fresher" | "experienced">("fresher")
-  const [specificOrg, setSpecificOrg] = useState(false)
-  const [specificNationalities, setSpecificNationalities] = useState(false)
+export default function ExperienceSettings({ setFormData }: formSectionProps) {
+  const [experienceType, setExperienceType] = useState<ExperienceType>("fresher");
+  const [specificOrg, setSpecificOrg] = useState(false);
+  const [specificNationalities, setSpecificNationalities] = useState(false);
+
+  useEffect(()=>{
+    setFormData('experience',experienceType);
+  },[experienceType])
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-6 p-4 bg-[#F3FFF4]">
+    <div className="flex flex-col gap-6">
       {/* Experience Required Section */}
       <div className="bg-[#FFFDF7] rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
-        <h3 className="text-[17px] font-medium text-gray-800 mb-4 font-['Inter']">Experienced Required:</h3>
+        <h3 className="text-[17px] font-medium text-gray-800 mb-4 ">
+          Experienced Required:
+        </h3>
         <div className="flex gap-3">
           <button
-            onClick={() => setExperienceType("fresher")}
-            className={`px-6 py-2 rounded-full transition-colors font-['Inter'] text-[15px]
+            onClick={() => setExperienceType(experienceTypeSchema.Enum.fresher)}
+            className={`px-6 py-2 rounded-full transition-colors  text-[15px]
               ${
                 experienceType === "fresher"
                   ? "border-[#4CAF50] bg-[#4CAF50] text-white border-2"
@@ -26,8 +35,8 @@ export default function ExperienceSettings() {
             Freshers
           </button>
           <button
-            onClick={() => setExperienceType("experienced")}
-            className={`px-6 py-2 rounded-full transition-colors font-['Inter'] text-[15px]
+            onClick={() => setExperienceType(experienceTypeSchema.Enum.experienced)}
+            className={`px-6 py-2 rounded-full transition-colors  text-[15px]
               ${
                 experienceType === "experienced"
                   ? "border-[#4CAF50] bg-[#4CAF50] text-white border-2"
@@ -42,7 +51,9 @@ export default function ExperienceSettings() {
       {/* Specific Organization Section */}
       <div className="bg-[#FFFDF7] rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
         <div className="flex items-center justify-between">
-          <h3 className="text-[17px] font-medium text-gray-800 font-['Inter']">Any Specific Organization(s)</h3>
+          <h3 className="text-[17px] font-medium text-gray-800 ">
+            Any Specific Organization(s)
+          </h3>
           <Switch
             checked={specificOrg}
             onCheckedChange={setSpecificOrg}
@@ -54,7 +65,9 @@ export default function ExperienceSettings() {
       {/* Specific Nationalities Section */}
       <div className="bg-[#FFFDF7] rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
         <div className="flex items-center justify-between">
-          <h3 className="text-[17px] font-medium text-gray-800 font-['Inter']">Any Specific nationalities</h3>
+          <h3 className="text-[17px] font-medium text-gray-800 ">
+            Any Specific nationalities
+          </h3>
           <Switch
             checked={specificNationalities}
             onCheckedChange={setSpecificNationalities}
@@ -63,6 +76,5 @@ export default function ExperienceSettings() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

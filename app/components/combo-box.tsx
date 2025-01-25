@@ -69,11 +69,9 @@ export function Combobox() {
   const [value, setValue] = React.useState("");
 
   const [file, setFile] = React.useState<File | null>(null);
-  const [uploading, setUploading] = React.useState(false);
 
   const [name, setName] = React.useState<string | null>(null);
   const [website, setWebsite] = React.useState<string | null>(null);
-  const [description, setDescription] = React.useState<string | null>(null);
   const session = useSession();
 
 
@@ -119,9 +117,7 @@ export function Combobox() {
       return data.secure_url;
     } catch (error) {
       console.error(error);
-    } finally {
-      setUploading(false);
-    }
+    } 
   }
 
   async function handleFormUpload(e: React.FormEvent<HTMLFormElement>) {
@@ -183,7 +179,7 @@ export function Combobox() {
             <CommandEmpty>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline">Open popover</Button>
+                  <Button variant="outline">Add Company</Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-[30rem]">
                   <form className="grid gap-4" onSubmit={handleFormUpload}>
