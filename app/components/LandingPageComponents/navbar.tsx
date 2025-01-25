@@ -1,20 +1,27 @@
-
-
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
+// import { Button } from "../LandingPageComponents/ui/button";
+// import { Input } from "../LandingPageComponents/ui/input";
 // import {
 //   DropdownMenu,
 //   DropdownMenuContent,
 //   DropdownMenuItem,
 //   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
-// import { Search, Menu } from "lucide-react";
+// } from "../LandingPageComponents/ui/dropdown-menu";
+// import { Search, Menu, ChevronDown } from "lucide-react";
 // import Link from "next/link";
-// import { Plus, Bell,AlignJustify  } from "lucide-react";
+// import { Plus, Bell, AlignJustify } from "lucide-react";
 
 // export function Navbar() {
+//   const opportunityOptions = [
+//     "Internships",
+//     "Jobs",
+//     "Government Jobs",
+//     "Freshers",
+//     "Remote Jobs",
+//     "Part-time Jobs",
+//   ];
+
 //   return (
-//     <nav className="sticky h-[10vh] flex items-center justify-center top-0 w-full border-b bg-white">
+//     <nav className="sticky h-[10vh] flex z-[9999] items-center justify-center top-0 w-full border-b bg-white">
 //       <div className="w-full mx-auto flex items-center gap-3 justify-between">
 //         {/* Left Section: Logo */}
 //         <div className="flex items-center gap-2">
@@ -49,9 +56,26 @@
 //           <Link href="#" className="text-sm text-[#646A66] font-bold">
 //             Practice
 //           </Link>
-//           <Link href="#" className="text-sm text-[#646A66] font-bold">
-//             Opportunities
-//           </Link>
+
+//           {/* Opportunities Dropdown (Desktop) */}
+//           <DropdownMenu>
+//             <DropdownMenuTrigger asChild>
+//               <Link href="#" className="text-sm text-[#646A66] font-bold flex justify-center items-center">
+//                 Opportunities
+//                 <ChevronDown className="h-4 w-4" />
+//               </Link>
+//             </DropdownMenuTrigger>
+
+//             <DropdownMenuContent className="w-48 bg-gray-300">
+//               {opportunityOptions.map((option) => (
+//                 <DropdownMenuItem key={option}>
+//                   <Link href={`/opportunities?type=${option}`} className="text-sm text-[#646A66] font-bold">
+//                     {option}
+//                   </Link>
+//                 </DropdownMenuItem>
+//               ))}
+//             </DropdownMenuContent>
+//           </DropdownMenu>
 //         </div>
 
 //         <div className="hidden xl:flex items-center gap-3 px-3">
@@ -61,12 +85,14 @@
 //           </Button>
 //           <span className="text-gray-400">|</span>
 //           <Bell />
-//           <Button
-//             variant="outline"
-//             className="h-9 px-4 font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
-//           >
-//             <Plus className="mr-1 h-4 w-4" /> Host
-//           </Button>
+//           <Link href="/job-upload">
+//             <Button
+//               variant="outline"
+//               className="h-9 px-4 font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
+//             >
+//               <Plus className="mr-1 h-4 w-4" /> Host
+//             </Button>
+//           </Link>
 //           <Button
 //             variant="ghost"
 //             className="h-9 px-4 bg-[#DFE2FF] text-[#383838] font-extrabold hover:bg-gray-100 rounded-[18px]"
@@ -79,22 +105,24 @@
 //         <div className="xl:hidden">
 //           <DropdownMenu>
 //             <DropdownMenuTrigger asChild>
-//             <Button variant="ghost" className="flex flex-col gap-1">
-//             <span className="block w-6 h-0.5 bg-gray-800"></span>
-//         <span className="block w-6 h-0.5 bg-gray-800"></span>
-//         <span className="block w-6 h-0.5 bg-gray-800"></span>
-//             </Button>
-
+//               <Button variant="ghost" className="flex flex-col gap-1">
+//                 <span className="block w-6 h-0.5 bg-gray-800"></span>
+//                 <span className="block w-6 h-0.5 bg-gray-800"></span>
+//                 <span className="block w-6 h-0.5 bg-gray-800"></span>
+//               </Button>
 //             </DropdownMenuTrigger>
 //             <DropdownMenuContent className="w-60 bg-gray-300 mr-0 flex flex-col justify-center align-center">
 //               {[
-//                 "Internships",
-//                 "Govt Jobs",
-//                 "Jobs",
-//                 "Resource",
+//                 "Resources",
 //                 "Mentorship",
 //                 "Courses",
 //                 "Practice",
+//                 "Internships",
+//                 "Jobs",
+//                 "Government Jobs",
+//                 "Freshers",
+//                 "Remote Jobs",
+//                 "Part-time Jobs",
 //               ].map((link) => (
 //                 <DropdownMenuItem key={link}>
 //                   <Link href="#" className="text-sm text-[#646A66] font-bold">
@@ -108,12 +136,14 @@
 //                 </Button>
 //               </DropdownMenuItem>
 //               <DropdownMenuItem>
-//                 <Button
-//                   variant="outline"
-//                   className="w-full font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
-//                 >
-//                   <Plus className="mr-1 h-4 w-4" /> Host
-//                 </Button>
+//                 <Link href="/job-upload">
+//                   <Button
+//                     variant="outline"
+//                     className="w-full font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
+//                   >
+//                     <Plus className="mr-1 h-4 w-4" /> Host
+//                   </Button>
+//                 </Link>
 //               </DropdownMenuItem>
 //               <DropdownMenuItem>
 //                 <Button
@@ -130,7 +160,6 @@
 //     </nav>
 //   );
 // }
-
 import { Button } from "../LandingPageComponents/ui/button";
 import { Input } from "../LandingPageComponents/ui/input";
 import {
@@ -145,12 +174,12 @@ import { Plus, Bell, AlignJustify } from "lucide-react";
 
 export function Navbar() {
   const opportunityOptions = [
-    "Internships",
-    "Jobs",
-    "Government Jobs",
-    "Freshers",
-    "Remote Jobs",
-    "Part-time Jobs",
+    { name: "Internships", route: "/opportunities?type=Internships" },
+    { name: "Jobs", route: "/job-display" },
+    { name: "Government Jobs", route: "/opportunities?type=Government Jobs" },
+    { name: "Freshers", route: "/opportunities?type=Freshers" },
+    { name: "Remote Jobs", route: "/opportunities?type=Remote Jobs" },
+    { name: "Part-time Jobs", route: "/opportunities?type=Part-time Jobs" },
   ];
 
   return (
@@ -199,13 +228,12 @@ export function Navbar() {
               </Link>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-48 bg-gray-300"> {/* Adjust width as needed */}
+            <DropdownMenuContent className="w-48 bg-gray-300">
               {opportunityOptions.map((option) => (
-                <DropdownMenuItem key={option}>
-                  <Link href={`/opportunities?type=${option}`} className="text-sm text-[#646A66] font-bold"> {/* Example link */}
-                    {option}
+                <DropdownMenuItem key={option.name}>
+                  <Link href={option.route} className="text-sm text-[#646A66] font-bold">
+                    {option.name}
                   </Link>
-
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -219,12 +247,14 @@ export function Navbar() {
           </Button>
           <span className="text-gray-400">|</span>
           <Bell />
-          <Button
-            variant="outline"
-            className="h-9 px-4 font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
-          >
-            <Plus className="mr-1 h-4 w-4" /> Host
-          </Button>
+          <Link href="/job-upload">
+            <Button
+              variant="outline"
+              className="h-9 px-4 font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
+            >
+              <Plus className="mr-1 h-4 w-4" /> Host
+            </Button>
+          </Link>
           <Button
             variant="ghost"
             className="h-9 px-4 bg-[#DFE2FF] text-[#383838] font-extrabold hover:bg-gray-100 rounded-[18px]"
@@ -244,21 +274,10 @@ export function Navbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-60 bg-gray-300 mr-0 flex flex-col justify-center align-center">
-              {[
-                "Resources",
-                "Mentorship",
-                "Courses",
-                "Practice",
-                "Internships",
-                "Jobs",
-                "Government Jobs",
-                "Freshers",
-                "Remote Jobs",
-                "Part-time Jobs", // Added Opportunities to the mobile menu
-              ].map((link) => (
-                <DropdownMenuItem key={link}>
-                  <Link href="#" className="text-sm text-[#646A66] font-bold">
-                    {link}
+              {opportunityOptions.map((option) => (
+                <DropdownMenuItem key={option.name}>
+                  <Link href={option.route} className="text-sm text-[#646A66] font-bold">
+                    {option.name}
                   </Link>
                 </DropdownMenuItem>
               ))}
@@ -268,12 +287,14 @@ export function Navbar() {
                 </Button>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Button
-                  variant="outline"
-                  className="w-full font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
-                >
-                  <Plus className="mr-1 h-4 w-4" /> Host
-                </Button>
+                <Link href="/job-upload">
+                  <Button
+                    variant="outline"
+                    className="w-full font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
+                  >
+                    <Plus className="mr-1 h-4 w-4" /> Host
+                  </Button>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Button

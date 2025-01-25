@@ -1,17 +1,4 @@
 import JobCard from "../components/Job-components";
-<<<<<<< HEAD
-import { Navbar } from "../components/LandingPageComponents/navbar";
-import JobCardList from "../components/demo-job-components";
-export default function page() {
-    return (
-        <>
-        <Navbar/>
-        <JobCard/>
-        <JobCardList/>
-        </>
-    )
-}
-=======
 
 import JobDetails from "../components/job-display-components/job-details";
 
@@ -81,4 +68,3 @@ export default function page() {
     </>
   );
 }
->>>>>>> 32e4fbcbcf02b11886821c4b90bb126037024afb
