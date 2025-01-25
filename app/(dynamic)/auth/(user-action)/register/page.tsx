@@ -97,8 +97,7 @@ const Register: React.FC = () => {
         }
 
         setIsLoading(false);
-        router.push('/home');
-
+        router.push('/auth/first-login');
     };
 
     return (
