@@ -2,6 +2,7 @@ import InternshipForm from "@/app/components/internship-form";
 import LocationSelector from "@/app/components/location-selector";
 import CategorySelector from "@/app/components/category-selector";
 import { Infocard } from "../components/info-card";
+// import JobCard from "../components/Job-components";
 
 export default function page() {
   return (
@@ -19,6 +20,7 @@ export default function page() {
           <div>
             <Infocard />
           </div>
+          {/* <JobCard/> */}
         </div>
       </section>
       {/*  */}
