@@ -4,9 +4,7 @@ import CategorySelector from "@/app/components/category-selector";
 import SkillsRequired from "../components/skills-required";
 import ExperienceSettings from "../components/ExperienceSettings";
 import { Infocard } from "../components/info-card";
-<<<<<<< HEAD
 // import JobCard from "../components/Job-components";
-=======
 import StipendDetailsPage from "../components/stipend-details";
 import DiversityBenefits from "../components/diversity";
 import CompanySelector from "../components/company-selector";
@@ -35,7 +33,6 @@ export default function Page() {
   useEffect(() => {
     console.log(formData);
   }, [formData]);
->>>>>>> 8fcb8a3854fd24d959549077b95a313e7e047057
 
   return (
     <>
