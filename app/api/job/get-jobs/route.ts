@@ -3,7 +3,7 @@ import { companies, opportunities } from "@/lib/schema";
 import { db } from "@/lib/db";
 import { z } from "zod";
 import { ZodError } from "zod";
-import { and, eq, gt } from "drizzle-orm";
+import { and, eq, gt, ilike } from "drizzle-orm";
 
 const getJobsSchema = z.object({
     jobId: z.string().uuid().optional(),
@@ -19,15 +19,8 @@ const getJobsSchema = z.object({
 
 async function getJobs(req: NextRequest) {
     try {
-        const { searchParams } = new URL(req.url);
-        const { userId } = await req.json();
-        const validatedQuery = getJobsSchema.parse({
-            jobId: searchParams.get("jobId"),
-            limit: searchParams.get("limit"),
-            name: searchParams.get("name"),
-            lastJobId: searchParams.get("lastJobId"),
-            userId: userId,
-        });
+        const requestBody = await req.json();
+        const validatedQuery = getJobsSchema.parse(requestBody);
 
         const jobId = validatedQuery.jobId;
         const name = validatedQuery.name;
@@ -49,11 +42,11 @@ async function getJobs(req: NextRequest) {
         }
         else if (name) {
             if (lastJobId) {
-                const result = await query.orderBy(opportunities.id).where(and(eq(opportunities.title, name), gt(opportunities.id, lastJobId))).limit(limit);
+                const result = await query.orderBy(opportunities.id).where(and(ilike(opportunities.title, `%${name}%`), gt(opportunities.id, lastJobId))).limit(limit);
                 return new NextResponse(JSON.stringify({ jobs: result, hasMore: result.length === limit }), { status: 200 });
             }
 
-            const result = await query.orderBy(opportunities.id).where(eq(opportunities.title, name)).limit(limit);
+            const result = await query.orderBy(opportunities.id).where(ilike(opportunities.title, `%${name}%`)).limit(limit);
             return new NextResponse(JSON.stringify({ jobs: result, hasMore: result.length === limit }), { status: 200 });
         }
 

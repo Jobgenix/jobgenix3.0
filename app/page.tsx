@@ -1,6 +1,4 @@
 "use client";
-import InternshipForm from "@/app/components/internship-form";
-import { ROLE_IDS } from "@/constants/roles";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -15,9 +13,6 @@ export default function Page() {
 
     if (session.status === 'unauthenticated') {
       router.push('/auth/login');
-    }
-    if (session.data?.user.role !== ROLE_IDS.EMPLOYER && session.status === 'authenticated') {
-      router.push('/home');
     }
   }, [session, router]);
 
