@@ -19,7 +19,7 @@ const Login = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const user = localStorage.getItem("user");
-      if (user) router.push("/home");
+      if (user) router.push("/");
     }
   }, [router]);
 
@@ -49,7 +49,7 @@ const Login = () => {
 
     else if(result?.ok){
       setIsLoading(false);
-      router.push("/home");
+      router.push("/");
     }
   };
 
