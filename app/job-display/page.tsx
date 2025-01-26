@@ -8,13 +8,14 @@ import JobDetails from "../components/job-display-components/job-details";
 import { useState, useEffect } from "react";
 
 import { EducationSelect } from "@/app/components/education-select";
-
+import { TrustedCompanies } from "../components/LandingPageComponents/trusted-companies";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { degreeTypeSchema } from "@/constants/jobOpportunities";
 import { JobCardProps } from "@/types/job";
 import { CompanyType } from "@/types/companyType";
 import { Opportunity } from "@/types/opportunityType";
+import { Navbar } from "../components/LandingPageComponents/navbar";
 
 const passingYears = Array.from({ length: 10 }, (_, i) => {
   const year = 2024 + i;
@@ -125,6 +126,9 @@ export default function Page() {
 
   return (
     <>
+    <div><Navbar/></div>
+    <p>Get Hired in <span style={{ color: "green" }}>Dream Companies:</span> </p>
+    <div><TrustedCompanies/></div>
       <section className="flex gap-4 px-16 py-8 justify-evenly items-center">
         <div className="flex flex-col gap-4 h-screen bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[30%]">
           <section className="p-4 flex flex-col gap-4">
