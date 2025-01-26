@@ -1,4 +1,4 @@
-import { Button } from "../LandingPageComponents/ui/button"
+import { Button } from "@/app/components/ui/button"
 import Image from "next/image"
 
 export function HostSection() {

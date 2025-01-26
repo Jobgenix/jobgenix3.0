@@ -1,7 +1,7 @@
-import { Button } from "../LandingPageComponents/ui/button"
+import { Button } from "@/app/components/ui/button"
 import { Check } from 'lucide-react'
 import Image from "next/image"
-import learnImage from "../../Images/1000+ students.png"
+// import learnImage from "../../Images/1000+ students.png"
 
 export function LearnSection() {
   const features = [
@@ -16,7 +16,7 @@ export function LearnSection() {
         <div className="grid gap-8 md:grid-cols-2">
           <div className="relative">
             <Image
-              src={learnImage}
+              src="/LandingPageImages/1000+ students.png"
               alt="Learn & Level Up"
               width={500}
               height={300}

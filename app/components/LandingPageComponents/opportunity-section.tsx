@@ -1,4 +1,4 @@
-import { Card, CardContent } from "../LandingPageComponents/ui/card"
+import { Card, CardContent } from "@/app/components/ui/card"
 import Image from "next/image"
 
 export function OpportunitySection() {

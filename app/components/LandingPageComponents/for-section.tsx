@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Button } from "../LandingPageComponents/ui/button";
-import img1 from "../../Images/image1.png";
-import img2 from "../../Images/image2.png"
+import { Button } from "@/app/components/ui/button";
+// import img1 from "././../Images/image1.png";
+// import img2 from "../../Images/image2.png";
 
 export function ForSection() {
   return (
@@ -21,23 +21,37 @@ export function ForSection() {
             </Button>
           </div>
           <div className="mt-6 hidden xl:flex">
-            <Image src={img2} alt="For Employees" width={500} height={500} className="rounded-lg " />
+            <Image
+              src="/LandingPageImages/image2.png"
+              alt="For Employees"
+              width={500}
+              height={500}
+              className="rounded-lg "
+            />
           </div>
         </div>
 
         {/* For Candidates Section */}
         <div className="rounded-3xl flex justify-center items-center bg-[#F8DBDC] p-8 shadow-lg transition-transform hover:scale-105">
           <div>
-          <h2 className="mb-4 text-4xl font-semibold text-gray-800">For Candidates</h2>
-          <p className="mb-8 text-xl text-gray-600">
-            Build your professional profile, find new opportunities.
-          </p>
-          <Button className="rounded-full bg-[#2E7D32] text-white px-8 py-6 text-lg font-medium hover:bg-[#1B5E20]">
-            Upload Your CV
-          </Button>
+            <h2 className="mb-4 text-4xl font-semibold text-gray-800">
+              For Candidates
+            </h2>
+            <p className="mb-8 text-xl text-gray-600">
+              Build your professional profile, find new opportunities.
+            </p>
+            <Button className="rounded-full bg-[#2E7D32] text-white px-8 py-6 text-lg font-medium hover:bg-[#1B5E20]">
+              Upload Your CV
+            </Button>
           </div>
           <div className="mt-6 hidden xl:flex">
-            <Image src={img1} alt="For Employees" width={500} height={500} className="rounded-lg" />
+            <Image
+              src="/LandingPageImages/image1.png"
+              alt="For Employees"
+              width={500}
+              height={500}
+              className="rounded-lg"
+            />
           </div>
         </div>
       </div>

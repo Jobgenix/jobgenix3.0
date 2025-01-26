@@ -1,6 +1,6 @@
 //import { Card } from "../LandingPageComponents/ui/card";
 import Image from "next/image";
-import heroImage from "../../Images/heroSection.png";
+// import heroImage from "../../Images/";
 
 export function HeaderSection() {
   return (
@@ -8,7 +8,7 @@ export function HeaderSection() {
       {/* Left Side - Image */}
       <div className="flex-1 flex justify-center items-center p-4 lg:p-0">
         <Image
-          src={heroImage}
+          src="/LandingPageImages/heroSection.png"
           alt="Student with study materials"
           width={510}
           height={475}
