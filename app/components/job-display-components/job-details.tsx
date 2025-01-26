@@ -34,6 +34,7 @@ export default function JobDetails({
     postedAt,
     status,
     jobLink,
+    description,
   } = opportunities;
   const isVerified = status === "active";
 
@@ -118,7 +119,7 @@ export default function JobDetails({
         <section className="space-y-4">
           <h2 className="text-xl font-medium">About the job</h2>
 
-          <div className="space-y-4">{children}</div>
+          <div className="space-y-4" dangerouslySetInnerHTML={{ __html: description }}/>
         </section>
       </CardContent>
     </Card>
