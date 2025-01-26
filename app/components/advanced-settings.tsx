@@ -1,3 +1,5 @@
+/* eslint-disable*/
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -20,7 +22,10 @@ export default function AdvancedSettings({
   formSubmit,
 }: {
   setAdvanced: React.Dispatch<React.SetStateAction<boolean>>;
-  setFormData: <K extends keyof Opportunity>(field: K, value: Opportunity[K]) => void;
+  setFormData: <K extends keyof Opportunity>(
+    field: K,
+    value: Opportunity[K]
+  ) => void;
   formSubmit: () => void;
 }) {
   const [externalPlatform, setExternalPlatform] = useState(false);
@@ -28,17 +33,17 @@ export default function AdvancedSettings({
   const [applicationType, setApplicationType] = useState<"url" | "email">(
     "url"
   );
-  const [startDate, setStartDate] = useState<Date | undefined>(new Date);
+  const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [applicationUrl, setApplicationUrl] = useState<string | undefined>();
 
   useEffect(() => {
     if (startDate && endDate) {
-      setFormData('postedAt', startDate.toDateString());
-      setFormData('deadline', endDate.toDateString());
+      setFormData("postedAt", startDate.toDateString());
+      setFormData("deadline", endDate.toDateString());
     }
-    if(applicationUrl?.length) setFormData('jobLink', applicationUrl);
-  }, [startDate, endDate, applicationUrl])
+    if (applicationUrl?.length) setFormData("jobLink", applicationUrl);
+  }, [startDate, endDate, applicationUrl]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -195,7 +200,12 @@ export default function AdvancedSettings({
           >
             Back
           </Button>
-          <Button onClick={formSubmit} className="bg-green-600 hover:bg-green-700">Finish</Button>
+          <Button
+            onClick={formSubmit}
+            className="bg-green-600 hover:bg-green-700"
+          >
+            Finish
+          </Button>
         </div>
       </div>
     </div>

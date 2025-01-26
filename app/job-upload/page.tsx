@@ -17,6 +17,7 @@ import { opportunitySchema } from "./jobFormValidator";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import WorkplaceTypeSelector from "../components/workplace-type";
 
 export default function Page() {
   const [formData, setFormData] = useState<Partial<Opportunity>>({});
@@ -37,25 +38,26 @@ export default function Page() {
 
   const submitForm = async () => {
     try {
-      if(session.status === 'unauthenticated'|| session.status === 'loading') return;
+      if (session.status === "unauthenticated" || session.status === "loading")
+        return;
       //if(session.data?.user.role !== "EMPLOYER") return;
       const validatedFormData = opportunitySchema.parse(formData);
       const res = await axios.post("/api/jobs/create-job", {
         validatedFormData,
         userId: session.data?.user.id,
       });
-      
-      if(res.statusText === "Created") {
+
+      if (res.statusText === "Created") {
         console.log("Job created successfully");
       }
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
-    if(session.status === 'unauthenticated') {
-      console.log("You are not authenticated");
+    if (session.status === "unauthenticated") {
+      // console.log("You are not authenticated");
       //router.push('/auth/login');
     }
   }, [session, router]);
@@ -71,6 +73,7 @@ export default function Page() {
             <CompanySelector setFormData={updateField} />
             {/* <InternshipForm /> */}
             <TypeSelector setFormData={updateField} />
+            <WorkplaceTypeSelector setFormData={updateField} />
             <LocationSelector setFormData={updateField} />
             <CategorySelector setFormData={updateField} />
             <SkillsRequired setFormData={updateField} />
@@ -87,7 +90,13 @@ export default function Page() {
                 Next
               </button>
             )}
-            {advanced && <AdvancedSettings setFormData={updateField} setAdvanced={setAdvanced} formSubmit={submitForm} />}
+            {advanced && (
+              <AdvancedSettings
+                setFormData={updateField}
+                setAdvanced={setAdvanced}
+                formSubmit={submitForm}
+              />
+            )}
           </div>
           <div>
             <Infocard />
