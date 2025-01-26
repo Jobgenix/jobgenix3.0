@@ -6,7 +6,7 @@ export type ExperienceType = "fresher" | "experienced" | "both";
 export type DegreeType = "bachelor" | "master" | "dual" | "other" | "all";
 export type BenefitsType = "health-insurance" | "paid-leave" | "work-from-home" | "flexible-hours" | "performance-bonus" | "other";
 export type JobStatus = "active" | "inactive" | "filled";
-export type PassoutYear = "2025" | "2026" | "2027" | "2028" | "2029" | "2030";
+export type PassoutYear = "2024"|"2025" | "2026" | "2027" | "2028" | "2029" | "2030";
 
 export type Opportunity = {
     id: string;
