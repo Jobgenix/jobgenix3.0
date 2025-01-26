@@ -17,7 +17,7 @@ import { stipendTypeSchema } from "@/constants/jobOpportunities";
 import { formSectionProps } from "@/types/formSectionProps";
 
 export default function StipendDetailsPage({ setFormData }: formSectionProps) {
-  const [selectedType, setSelectedType] = useState<StipendType | null>(null);
+  const [selectedType, setSelectedType] = useState<StipendType | undefined>(undefined);
   const [hideStipend, setHideStipend] = useState(false);
   const [currency, setCurrency] = useState<string>("INR");
   const [max, setMax] = useState<number | null>(null);

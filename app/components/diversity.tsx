@@ -9,7 +9,7 @@ import { formSectionProps } from "@/types/formSectionProps";
 
 export default function DiversityBenefits({ setFormData }: formSectionProps) {
   const diversityOptions = [
-    { id: null, label: "All" },
+    { id: undefined, label: "All" },
     { id: diversityTypeSchema.Enum.male, label: "Male" },
     { id: diversityTypeSchema.Enum.female, label: "Female" },
     { id: diversityTypeSchema.Enum.transgender, label: "Transgender" },
@@ -18,7 +18,7 @@ export default function DiversityBenefits({ setFormData }: formSectionProps) {
     { id: diversityTypeSchema.Enum.other, label: "Others" },
   ];
 
-  const [selectedOption, setSelectedOption] = useState<DiversityType|null>(null);
+  const [selectedOption, setSelectedOption] = useState<DiversityType|undefined>(undefined);
 
   useEffect(()=>{
     setFormData("diversityType", selectedOption!);
@@ -35,7 +35,7 @@ export default function DiversityBenefits({ setFormData }: formSectionProps) {
       <div className="flex flex-wrap gap-3">
         {diversityOptions.map((option) => (
           <button
-            key={option.id}
+            key={option.label}
             onClick={() => setSelectedOption(option.id)}
             className={`px-4 py-2 rounded-full text-sm transition-colors
               ${

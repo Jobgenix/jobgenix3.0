@@ -2,7 +2,6 @@ import { z } from "zod";
 import { jobTypeSchema, workplaceTypeSchema, stipendTypeSchema, diversityTypeSchema, experienceTypeSchema, degreeTypeSchema, jobStatusSchema, passoutYearSchema, benefitsTypeSchema } from "@/constants/jobOpportunities";
 
 export const opportunitySchema = z.object({
-    id: z.string(),
     companyId: z.string(),
     title: z.string(),
     description: z.string(),
