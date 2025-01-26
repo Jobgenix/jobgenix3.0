@@ -29,7 +29,9 @@ export const authConfig = {
                 profile.access_token = tokens.access_token;
 
                 return profile
-            }
+            },
+            allowDangerousEmailAccountLinking: true,             
+              
         }),
         Credentials({
             credentials: {
