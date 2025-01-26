@@ -1,6 +1,6 @@
-'use client'
+
 import { Code, Users, Building2, Trophy } from 'lucide-react'
-import { Card, CardContent } from "../LandingPageComponents/ui/card"
+import { Card, CardContent } from "@/app/components/ui/card"
 
 export function CampusSection() {
   const features = [

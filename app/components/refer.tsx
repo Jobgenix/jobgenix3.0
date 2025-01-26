@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const ReferAndWin: React.FC = () => {
@@ -8,7 +9,7 @@ const ReferAndWin: React.FC = () => {
         <p className="text-gray-700">MacBook, iPhone, Apple Watch, AirPods, Cash Rewards and more!</p>
       </div>
       <div className="w-1/2 flex justify-end">
-        <img src="" alt="Refer and Win" className="max-h-32 object-contain" />
+        <Image src="" alt="Refer and Win" className="max-h-32 object-contain" />
       </div>
       
       <a

@@ -1,6 +1,6 @@
-import { Button } from "../LandingPageComponents/ui/button"
-import Image from "next/image"
-import img3 from "../../Images/image3.jpeg"
+import { Button } from "@/app/components/ui/button";
+import Image from "next/image";
+// import img3 from "../../Images/image3.jpeg"
 
 export function MentorSection() {
   return (
@@ -17,23 +17,24 @@ export function MentorSection() {
             <Button className="bg-[#2E7D32] rounded-2xl text-white hover:bg-[#1B5E20]">
               Find a Mentor
             </Button>
-            <Button variant="outline" className="border-[#2E7D32] rounded-2xl bg-white">
+            <Button
+              variant="outline"
+              className="border-[#2E7D32] rounded-2xl bg-white"
+            >
               Become a Mentor
             </Button>
           </div>
         </div>
         <div className="relative rounded-lg  flex justify-center items-center p-6">
           <Image
-            src={img3}
+            src="/LandingPageImages/image3.jpeg"
             alt="Mentor Support"
             width={1000}
             height={500}
             className="rounded-xl"
           />
-
         </div>
       </div>
     </section>
-  )
+  );
 }
-

@@ -61,7 +61,7 @@ export default function Page() {
       description: "Google is hiring software engineers to work on the next generation of search algorithms.",
       location: ["Bangalore"],
       duration: "6 months",
-      type: "full-time",
+      type: "internships",
       workplaceType: "remote",
       stipendType: "fixed",
       experience: "fresher",
@@ -96,7 +96,7 @@ export default function Page() {
         stream: mapStreamToDegreeType(stream),
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setJobListings(res.data.jobs);
       });
   }, [searchQuery, passingYear, stream, session]);

@@ -1,7 +1,7 @@
-import { Button } from "../LandingPageComponents/ui/button"
-import { Card } from "../LandingPageComponents/ui/card"
+import { Button } from "@/app/components/ui/button"
+import { Card } from "@/app/components/ui/card"
 import { Search } from 'lucide-react'
-import Image from "next/image"
+// import Image from "next/image"
 
 export function JobSection() {
   const jobs = [
