@@ -13,11 +13,17 @@ import { TypeSelector } from "../components/type-selector";
 import { useEffect, useState } from "react";
 import { Opportunity } from "@/types/opportunityType";
 import AdvancedSettings from "../components/advanced-settings";
+import { opportunitySchema } from "./jobFormValidator";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [formData, setFormData] = useState<Partial<Opportunity>>({});
 
   const [advanced, setAdvanced] = useState(false);
+  const session = useSession();
+  const router = useRouter();
 
   const updateField = <K extends keyof Opportunity>(
     field: K,
@@ -29,9 +35,30 @@ export default function Page() {
     }));
   };
 
+  const submitForm = async () => {
+    try {
+      if(session.status === 'unauthenticated'|| session.status === 'loading') return;
+      //if(session.data?.user.role !== "EMPLOYER") return;
+      const validatedFormData = opportunitySchema.parse(formData);
+      const res = await axios.post("/api/jobs/create-job", {
+        validatedFormData,
+        userId: session.data?.user.id,
+      });
+      
+      if(res.statusText === "Created") {
+        console.log("Job created successfully");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+    if(session.status === 'unauthenticated') {
+      console.log("You are not authenticated");
+      //router.push('/auth/login');
+    }
+  }, [session, router]);
 
   return (
     <>
@@ -41,7 +68,7 @@ export default function Page() {
         </h2>
         <div className=" flex gap-4">
           <div className="w-[70%] px-12 py-8 bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] rounded-md shadow-md shadow-black/20 flex flex-col gap-20">
-            <CompanySelector />
+            <CompanySelector setFormData={updateField} />
             {/* <InternshipForm /> */}
             <TypeSelector setFormData={updateField} />
             <LocationSelector setFormData={updateField} />
@@ -60,7 +87,7 @@ export default function Page() {
                 Next
               </button>
             )}
-            {advanced && <AdvancedSettings setFormData={updateField} setAdvanced={setAdvanced} />}
+            {advanced && <AdvancedSettings setFormData={updateField} setAdvanced={setAdvanced} formSubmit={submitForm} />}
           </div>
           <div>
             <Infocard />

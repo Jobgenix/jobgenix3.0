@@ -9,15 +9,20 @@ import { Input } from "@/app/components/ui/input";
 
 import { Monitor, Briefcase, FileText } from "lucide-react";
 import { formSectionProps } from "@/types/formSectionProps";
+import { jobTypeSchema } from "@/constants/jobOpportunities";
+import { JobType } from "@/types/opportunityType";
 
 export function TypeSelector({ setFormData }: formSectionProps) {
-  const [type, setType] = useState("");
+  const [type, setType] = useState<JobType>(jobTypeSchema.Enum.internships);
   const [unit, setUnit] = useState<"weeks" | "months">("months");
   const [duration, setDuration] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
   
   useEffect(() => {
-    setFormData('duration', duration)
-  }, [duration])
+    if(duration.length) setFormData('duration', duration);
+    if(jobTitle.length) setFormData("title", jobTitle);
+    if(type.length) setFormData("type", type);
+  }, [duration, jobTitle, type]);
 
   return (
     <div className="space-y-6">
@@ -26,6 +31,7 @@ export function TypeSelector({ setFormData }: formSectionProps) {
           Title/Role <span className="text-red-500">*</span>
         </Label>
         <Input
+          onChange={(e) => setJobTitle(e.target.value)}
           placeholder=""
           className="w-full justify-between h-16 sm:text-xl md:text-xl text-gray-600 bg-[#FFFCEF] border-none rounded-lg shadow-lg shadow-black/20 "
         />
@@ -44,8 +50,8 @@ export function TypeSelector({ setFormData }: formSectionProps) {
 }
 
 interface InternshipTypeProps {
-  value: string;
-  onChange: (value: string) => void;
+  value: JobType;
+  onChange: (value: JobType) => void;
 }
 
 function InternshipType({ value, onChange }: InternshipTypeProps) {
@@ -67,7 +73,7 @@ function InternshipType({ value, onChange }: InternshipTypeProps) {
               : "border border-dashed  hover:border-emerald-500 hover:text-emerald-600 bg-white border-emerald-500"
           }`}
         >
-          <RadioGroupItem value="jobs" id="jobs" className="sr-only" />
+          <RadioGroupItem value={jobTypeSchema.Enum.jobs} id="jobs" className="sr-only" />
           <Briefcase className="h-4 w-4" />
           <Label htmlFor="jobs" className="cursor-pointer text-lg">
             Jobs
@@ -82,7 +88,7 @@ function InternshipType({ value, onChange }: InternshipTypeProps) {
           }`}
         >
           <RadioGroupItem
-            value="internships"
+            value={jobTypeSchema.Enum.internships}
             id="internships"
             className="sr-only"
           />
@@ -100,7 +106,7 @@ function InternshipType({ value, onChange }: InternshipTypeProps) {
           }`}
         >
           <RadioGroupItem
-            value="contracts"
+            value={jobTypeSchema.Enum.contracts}
             id="contracts"
             className="sr-only"
           />

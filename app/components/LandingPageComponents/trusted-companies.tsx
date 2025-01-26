@@ -25,6 +25,9 @@
 // }
 
 import Image from "next/image";
+import Marquee from "react-fast-marquee";
+
+
 
 // const brands = [
 
@@ -61,22 +64,20 @@ const brands = [
 
 export function TrustedCompanies() {
   return (
-    <marquee className="bg-white px-4 py-8 md:px-6 lg:px-8">
-      <div className="container mx-auto">
-        <div className="flex  items-center justify-around gap-8">
-          {brands.map((brand, index) => (
-            <div key={index} className="flex-shrink-0">
-              <Image
-                src={brand}
-                alt={`Brand ${index + 1}`}
-                width={85} // Adjust width based on your design
-                height={60} // Adjust height based on your design
-                className="object-contain"
-              />
-            </div>
-          ))}
-        </div>
+    <Marquee className="bg-white px-4 py-8 md:px-6 lg:px-8">
+      <div className="flex items-center justify-around gap-8 min-w-max">
+        {brands.map((brand, index) => (
+          <div key={index} className="flex-shrink-0">
+            <Image
+              src={brand}
+              alt={`Brand ${index + 1}`}
+              width={85}
+              height={60}
+              className="object-contain"
+            />
+          </div>
+        ))}
       </div>
-    </marquee>
+    </Marquee>
   );
 }

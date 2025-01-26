@@ -1,4 +1,4 @@
-export type JobType = "full-time" | "part-time" | "internship";
+export type JobType = "jobs" | "contracts" | "internships";
 export type WorkplaceType = "remote" | "office" | "hybrid";
 export type StipendType = "fixed" | "performance-based" | "unpaid" | "fixed + performance-based";
 export type DiversityType = "female" | "male" | "transgender" | "intersex" | "non-binary" | "other";

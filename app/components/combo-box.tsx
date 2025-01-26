@@ -25,8 +25,9 @@ import {
 import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
 import { useSession } from "next-auth/react";
 import { CompanyType } from "@/types/companyType";
+import { formSectionProps } from "@/types/formSectionProps";
 
-export function Combobox() {
+export function Combobox({ setFormData }: formSectionProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
@@ -38,8 +39,13 @@ export function Combobox() {
   const [companyName, setCompanyName] = React.useState<string>("");
 
   const [companies, setCompanies] = React.useState<CompanyType[]>();
+  const [selectedCompany, setSelectedCompany] = React.useState<CompanyType>();
 
   const session = useSession();
+
+  React.useEffect(()=>{
+    setFormData("companyId", value);
+  },[value])
 
   // const selectedCompany = companies.find((company) => company.value === value);
 
@@ -145,24 +151,23 @@ export function Combobox() {
           className="w-full bg-[#FFFCEF] justify-between h-16 text-xl"
         >
           <div className="flex items-center gap-2 w-full">
-            {/* {
+            {
             selectedCompany ? (
               <>
                 <div className="relative h-6 w-6 shrink-0">
                   <Image
                     src={selectedCompany.logo || "/placeholder.svg"}
-                    alt={selectedCompany.label}
+                    alt={selectedCompany.name}
                     className="rounded-sm object-contain"
                     fill
                     sizes="24px"
                   />
                 </div>
-                <span>{selectedCompany.label}</span>
+                <span>{selectedCompany.name}</span>
               </>
             ) : (
               "Select company..."
-            )} */}
-            {"select company"}
+            )}
           </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -225,15 +230,15 @@ export function Combobox() {
               {companies?.map((company) => (
                 <CommandItem
                   key={company.name}
-                  value={company.name}
-                  onSelect={(currentValue) => {
+                  value={company.id}
+                  onSelect={(currentValue:string) => {
                     const newValue = currentValue === value ? "" : currentValue;
                     setValue(newValue);
                     setOpen(false);
-                    // const selectedCompany = companies.find(
-                    //   (company) => company.value === newValue
-                    // );
-                    // onValueChange?.(newValue, selectedCompany);
+                    const selectCompany = companies.find(
+                      (company) => company.id === newValue
+                    );
+                    setSelectedCompany(selectCompany);
                   }}
                   className={cn(
                     "flex items-center relative justify-center gap-2 test bg-[#FFFCEF] text-black p-2 rounded-lg shadow-md  mb-2 h-16 text-xl cursor-pointer",

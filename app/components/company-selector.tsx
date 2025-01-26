@@ -1,7 +1,8 @@
+import { formSectionProps } from "@/types/formSectionProps";
 import { Combobox } from "./combo-box";
 import { Label } from "@/app/components/ui/label";
 
-export default function CompanySelector(){
+export default function CompanySelector({ setFormData }: formSectionProps){
     return(
         <div className="space-y-2 flex flex-col">
             <Label htmlFor="company" className="text-xl text-[#2F8E5B]">
@@ -16,7 +17,7 @@ export default function CompanySelector(){
                 className="border-0 p-0 focus-visible:ring-0"
                 />
                 </div> */}
-            <Combobox />
+            <Combobox setFormData={setFormData} />
           </div>
     )
 }

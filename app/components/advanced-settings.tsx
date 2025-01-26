@@ -17,9 +17,11 @@ import { Opportunity } from "@/types/opportunityType";
 export default function AdvancedSettings({
   setAdvanced,
   setFormData,
+  formSubmit,
 }: {
   setAdvanced: React.Dispatch<React.SetStateAction<boolean>>;
   setFormData: <K extends keyof Opportunity>(field: K, value: Opportunity[K]) => void;
+  formSubmit: () => void;
 }) {
   const [externalPlatform, setExternalPlatform] = useState(false);
   const [invitationOnly, setInvitationOnly] = useState(false);
@@ -28,13 +30,15 @@ export default function AdvancedSettings({
   );
   const [startDate, setStartDate] = useState<Date | undefined>(new Date);
   const [endDate, setEndDate] = useState<Date | undefined>();
+  const [applicationUrl, setApplicationUrl] = useState<string | undefined>();
 
   useEffect(() => {
     if (startDate && endDate) {
-      setFormData('postedAt', startDate.toDateString())
-      setFormData('deadline', endDate.toDateString())
+      setFormData('postedAt', startDate.toDateString());
+      setFormData('deadline', endDate.toDateString());
     }
-  }, [startDate, endDate,])
+    if(applicationUrl?.length) setFormData('jobLink', applicationUrl);
+  }, [startDate, endDate, applicationUrl])
 
   return (
     <div className="flex flex-col gap-4">
@@ -85,6 +89,7 @@ export default function AdvancedSettings({
                 <Input
                   placeholder="https://iboards.greenhouse.ioigleanwork/jobs!45D6504005"
                   className="bg-[#FDF8F3]"
+                  onChange={(e) => setApplicationUrl(e.target.value)}
                 />
               </div>
             </div>
@@ -190,7 +195,7 @@ export default function AdvancedSettings({
           >
             Back
           </Button>
-          <Button className="bg-green-600 hover:bg-green-700">Finish</Button>
+          <Button onClick={formSubmit} className="bg-green-600 hover:bg-green-700">Finish</Button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Card } from "../LandingPageComponents/ui/card";
+//import { Card } from "../LandingPageComponents/ui/card";
 import Image from "next/image";
 import heroImage from "../../Images/heroSection.png";
 

@@ -18,10 +18,16 @@ import { formSectionProps } from "@/types/formSectionProps";
 export default function StipendDetailsPage({ setFormData }: formSectionProps) {
   const [selectedType, setSelectedType] = useState<StipendType | null>(null);
   const [hideStipend, setHideStipend] = useState(false);
+  const [currency, setCurrency] = useState<string>("INR");
+  const [max, setMax] = useState<number | null>(null);
+  const [min, setMin] = useState<number | null>(null);
 
   useEffect(()=>{
     setFormData("stipendType", selectedType!);
-  },[selectedType])
+    if(max && min){
+      setFormData("salary", `${currency} ${min} - ${max}`);
+    }
+  },[selectedType, min, max, currency])
 
   const stipendTypes = [
     { id: stipendTypeSchema.Enum.fixed, label: "Fixed", icon: <CreditCard className="w-4 h-4" /> },
@@ -77,7 +83,7 @@ export default function StipendDetailsPage({ setFormData }: formSectionProps) {
           Stipend on the internship page will be shown in months only.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Select defaultValue="INR">
+          <Select defaultValue={currency} onValueChange={setCurrency}>
             <SelectTrigger className="w-full sm:w-[180px] bg-white">
               <SelectValue placeholder="Select Currency" />
             </SelectTrigger>
@@ -94,6 +100,7 @@ export default function StipendDetailsPage({ setFormData }: formSectionProps) {
                 type="number"
                 placeholder="Min"
                 className="pl-12 bg-white"
+                onChange={(e) => setMin(Number(e.target.value))}
               />
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
                 Min
@@ -104,6 +111,7 @@ export default function StipendDetailsPage({ setFormData }: formSectionProps) {
                 type="number"
                 placeholder="Max"
                 className="pl-12 bg-white"
+                onChange={(e) => setMax(Number(e.target.value))}
               />
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
                 Max

@@ -80,7 +80,7 @@ export const companies = pgTable("companies", {
    
 });
 
-export const jobTypeEnum = pgEnum("type",["full-time", "part-time", "internship"]);
+export const jobTypeEnum = pgEnum("type",["contracts", "jobs", "internships"]);
 export const workplaceTypeEnum = pgEnum("workplaceType",["remote", "office", "hybrid"]);
 export const stipendTypeEnum = pgEnum("stipendType",["fixed", "performance-based", "unpaid", "fixed + performance-based"]);
 export const diversityTypeEnum = pgEnum("diversityType",["female", "male", "transgender", "intersex", "non-binary", "other"]);
@@ -95,7 +95,7 @@ export const opportunities = pgTable("opportunities", {
     companyId: text("companyId").references(() => companies.id),
     title: text("title").notNull(),
     description: text("description").notNull(),
-    duration: text("duration").notNull(),
+    duration: text("duration").notNull().default("not-declared"),
     location: text("location").array().notNull(),
     type: jobTypeEnum('type').notNull(),
     workplaceType: workplaceTypeEnum("workplaceType").notNull(),

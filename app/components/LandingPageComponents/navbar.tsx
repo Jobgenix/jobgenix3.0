@@ -171,6 +171,7 @@ import {
 import { Search, Menu, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { Plus, Bell, AlignJustify } from "lucide-react";
+import Image from "next/image";
 
 export function Navbar() {
   const opportunityOptions = [
@@ -188,7 +189,9 @@ export function Navbar() {
         {/* Left Section: Logo */}
         <div className="flex items-center gap-2">
           <Link href="/" className="text-xl ">
-            <img
+            <Image
+              height={100}
+              width={150}
               className="h-[10vh]"
               src="https://s3-alpha-sig.figma.com/img/ec08/93e5/253cb74fcc4215a86fb3f64054477aeb?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bMAGEPXumU8iJkjthX2EwOhg483Ql6ACOMFUliXGpmQmlbM4SZNnpKThhXg6UunXxbQwX26rnlv5PIFGKxdf8HW52a0SvuwEvBQ7BJg-qq1mb0jAhnehRAtoXYSLcFVVgoQHx5avcZ3JcIPPiSvbkRr9hFwJsHbDP3-1opqfAjh0Cvf-QDd0oijXstnT-HDUeoYDyUSPe3F4dMUr6Dv8Y4I9K2RR~wCKFgVgrlspHyBi~Vna~zBZbsjJEK5P8RLLXYNGlzZLcKP4jla4mwLKuEpjZHUu0gb6vWTkulIiTWsK8PFyGPaQpJ4BWcfPEBdB1mUSbPGlzMdYYZMPytRzNQ__"
               alt="Logo"
