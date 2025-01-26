@@ -12,23 +12,34 @@ import {
   Home,
   ArrowLeftRight,
 } from "lucide-react";
-import type { JobProps } from "@/types/job";
+import type { JobDetailsProps } from "@/types/job";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function JobDetails({
-  logo,
-  companyName,
-  title,
-  location,
-  postedAt,
-  workplaceType,
-  type,
+  companies,
+  opportunities,
   children,
-  isVerified = false,
-}: JobProps) {
+}: JobDetailsProps) {
+  const {
+    name: companyName,
+    logo,
+  } = companies;
+
+  const {
+    title,
+    location,
+    workplaceType,
+    type,
+    postedAt,
+    status,
+    jobLink,
+  } = opportunities;
+  const isVerified = status === "active";
+
   const formatTimeAgo = (datestring: string) => {
     // In a real app, implement proper time ago formatting
-    // console.info(datestring);
+    console.info(datestring);
     return "2 Hours ago";
   };
 
@@ -71,7 +82,7 @@ export default function JobDetails({
           </div>
 
           <div className="flex flex-wrap gap-2 font-bold text-black/60">
-            {workplaceType === "onsite" && <Briefcase className="h-6 w-6" />}
+            {workplaceType === "office" && <Briefcase className="h-6 w-6" />}
             {workplaceType === "remote" && <Home className="h-6 w-6" />}
             {workplaceType === "hybrid" && (
               <ArrowLeftRight className="h-6 w-6" />
@@ -87,9 +98,13 @@ export default function JobDetails({
         </div>
 
         <div className="flex gap-5 mt-8">
-          <Button className="bg-emerald-600 hover:bg-emerald-700 rounded-full  text-lg font-medium px-6 shadow-md shadow-black/30">
-            Apply
-          </Button>
+          <Link href={jobLink} passHref legacyBehavior>
+            <a target="_blank">
+              <Button className="bg-emerald-600 hover:bg-emerald-700 rounded-full  text-lg font-medium px-6 shadow-md shadow-black/30">
+                Apply
+              </Button>
+            </a>
+          </Link>
           <Button
             variant="outline"
             className="flex items-center gap-2 bg-white border border-[#01A768] text-[#01A768] hover:bg-emerald-700 rounded-full  text-lg font-medium px-6 shadow-md shadow-black/30"

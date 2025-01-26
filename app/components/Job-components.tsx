@@ -3,20 +3,11 @@
 // import { Badge } from "@/app/components/ui/badge"
 import { Button } from "@/app/components/ui/button";
 import { Card } from "@/app/components/ui/card";
+import { JobCardProps } from "@/types/job";
 import { CheckCircle, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 
 // Types for our job listing
-interface JobListing {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  workplaceType: string;
-  logoUrl: string;
-  isVerified: boolean;
-  applyUrl: string;
-}
 
 // Dummy data to simulate database
 // const jobListings: JobListing[] = [
@@ -34,22 +25,22 @@ interface JobListing {
 //   // Add more dummy data as needed
 // ];
 
-interface JobCardProps {
-  job?: JobListing;
+interface JobCardElementProps {
+  job?: JobCardProps;
+  onClick: (id: string) => void;
 }
 
 export default function JobCard({
   job = {
-    id: "",
-    title: "Job Title",
-    company: "Company Name",
-    location: "Location",
-    workplaceType: "Remote",
-    logoUrl: "/placeholder.svg",
-    isVerified: false,
-    applyUrl: "#",//id of the job based on the database
+    jobId: "",
+    jobTitle: "Job Title",
+    companyName: "Company Name",
+    jobLocation: "Location",
+    jobType: "remote",
+    companyLogo: "/placeholder.svg",
   },
-}: JobCardProps) {
+  onClick,
+}: JobCardElementProps) {
   if (!job) {
     return null;
   }
@@ -58,8 +49,8 @@ export default function JobCard({
       <div className="flex gap-4">
         <div className="flex-shrink-0">
           <Image
-            src={job.logoUrl || "/placeholder.svg"}
-            alt={`${job.company} logo`}
+            src={job.companyLogo || "/placeholder.svg"}
+            alt={`${job.companyName} logo`}
             width={70}
             height={70}
             draggable={false}
@@ -70,26 +61,26 @@ export default function JobCard({
           <div className="">
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-semibold text-black/60">
-                {job.title}
+                {job.jobTitle}
               </h2>
-              {job.isVerified && (
+              {true && (
                 <CheckCircle className="w-5 h-5 text-blue-500" />
               )}
             </div>
-            <p className="text-black font-semibold">{job.company}</p>
+            <p className="text-black font-semibold">{job.companyName}</p>
           </div>
           <div className="space-y-1">
             <p className="text-gray-600 font-bold">
-              {job.location} ({job.workplaceType})
+              {job.jobLocation} ({job.jobType})
             </p>
           </div>
           <Button
             asChild
             variant="outline"
             className="rounded-full hover:bg-blue-600 hover:text-white shadow-md shadow-black/30"
+            onClick={() => onClick(job.jobId)}
           >
             <a
-              href={job.applyUrl}
               className="flex items-center gap-2 text-blue-600 sm:font-bold sm:!text-base"
             >
               Apply

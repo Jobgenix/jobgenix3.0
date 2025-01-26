@@ -11,6 +11,10 @@ import { EducationSelect } from "@/app/components/education-select";
 
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { degreeTypeSchema } from "@/constants/jobOpportunities";
+import { JobCardProps } from "@/types/job";
+import { CompanyType } from "@/types/companyType";
+import { Opportunity } from "@/types/opportunityType";
 
 const passingYears = Array.from({ length: 10 }, (_, i) => {
   const year = 2024 + i;
@@ -26,48 +30,51 @@ const streams = [
   { value: "mtech", label: "M.Tech" },
 ];
 
+function mapStreamToDegreeType(stream: string) {
+  const bachelorDegrees = ["btech", "be", "bsc", "bca"];
+  const masterDegrees = ["mca", "mtech"];
+  if (bachelorDegrees.includes(stream.toLowerCase())) {
+    return degreeTypeSchema.Enum.bachelor;
+  } else if (masterDegrees.includes(stream.toLowerCase())) {
+    return degreeTypeSchema.Enum.master;
+  }
+  return null; // If stream doesn't match, return null or handle accordingly
+}
+
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState("");
   const [passingYear, setPassingYear] = useState("2025");
   const [stream, setStream] = useState("btech");
 
-  const [jobListings, setJobListings] = useState([]);
+  const [jobListings, setJobListings] = useState<JobCardProps[]>([]);
+  const [jobDetails, setJobDetails] = useState<{companies: CompanyType, opportunities: Opportunity}>({
+    companies: {
+      name: "Google",
+      logo: "/company-logos/google.svg",
+      website: "https://google.com",
+      id: "1",
+    },
+    opportunities: {
+      id: "1",
+      title: "Software Development",
+      description: "Google is hiring software engineers to work on the next generation of search algorithms.",
+      location: ["Bangalore"],
+      duration: "6 months",
+      type: "full-time",
+      workplaceType: "remote",
+      stipendType: "fixed",
+      experience: "fresher",
+      yearsOfExperience: "0",
+      jobLink: "link",
+      category: ["Software Development"],
+      status: "active",
+      postedAt: "2021-10-10T10:00:00Z",
+      deadline: "2021-10-10T10:00:00Z",
+      companyId: "1",
+    },
+  });
 
   const session = useSession();
-  // const [jobDetails, setJobDetails] = useState({});
-
-  // const jobListings = [
-  //   {
-  //     id: "1",
-  //     title: "Software Development",
-  //     company: "Coinbase",
-  //     location: "Bengaluru, Karnataka, India",
-  //     workplaceType: "On-site",
-  //     logoUrl: "/company-logos/coinbase.svg",
-  //     isVerified: true,
-  //     applyUrl: "#",
-  //   },
-  //   {
-  //     id: "2",
-  //     title: "UX Designer",
-  //     company: "Google",
-  //     location: "San Francisco, CA, USA",
-  //     workplaceType: "Hybrid",
-  //     logoUrl: "/company-logos/google.svg",
-  //     isVerified: true,
-  //     applyUrl: "#",
-  //   },
-  //   {
-  //     id: "3",
-  //     title: "Data Scientist",
-  //     company: "Amazon",
-  //     location: "Seattle, WA, USA",
-  //     workplaceType: "Remote",
-  //     logoUrl: "/company-logos/amazon.svg",
-  //     isVerified: false,
-  //     applyUrl: "#",
-  //   },
-  // ];
   useEffect(() => {
     if (session.status === "loading") {
       return; // Wait until the session status is not "loading"
@@ -85,15 +92,15 @@ export default function Page() {
         userId,
         name: searchQuery,
         passingYear: passingYear,
-        stream: stream,
+        stream: mapStreamToDegreeType(stream),
       })
       .then((res) => {
         console.log(res.data);
-        // setJobListings(res.data.jobs);
+        setJobListings(res.data.jobs);
       });
   }, [searchQuery, passingYear, stream, session]);
 
-  const applyChange = (id) => {
+  const applyChange = (id: string) => {
     if (session.status === "loading") {
       return; // Wait until the session status is not "loading"
     }
@@ -108,11 +115,11 @@ export default function Page() {
     axios
       .post("/api/job/get-jobs", {
         userId,
-        id: id,
+        jobId: id,
       })
       .then((res) => {
         console.log(res.data);
-        // setJobListings(res.data.jobs);
+        setJobDetails({ companies: res.data.companies, opportunities: res.data.opportunities });
       });
   };
 
@@ -148,28 +155,12 @@ export default function Page() {
           </section>
 
           {jobListings.map((job, i) => (
-            <JobCard key={i} job={job} applyChange={applyChange} />
+            <JobCard key={i} job={job} onClick={applyChange} />
           ))}
         </div>
         <JobDetails
-          id="1"
-          duration="6 months"
-          stipendType="Fixed"
-          deadline="2021-10-10T10:00:00Z"
-          experience="Fresher"
-          yearsOfExperience="0"
-          jobLink="link"
-          category={["Software Development"]}
-          status="active"
-          title="Software Development Intern"
-          companyName="Google"
-          location={["Bangalore"]}
-          postedAt="2021-10-10T10:00:00Z"
-          workplaceType="remote"
-          type="Full-time"
-          description="Google is hiring software engineers to work on the next generation of search algorithms."
-          isVerified={true}
-          logo="/company-logos/google.svg"
+          companies={jobDetails.companies}
+          opportunities={jobDetails.opportunities}
         />
       </section>
       {/* <JobCard /> */}
