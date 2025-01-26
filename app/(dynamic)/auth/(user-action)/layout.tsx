@@ -10,7 +10,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     // If the user is authenticated, redirect them to the /home page
     if (session.status === 'authenticated') {
-      router.push('/home');
+      router.push('/');
     }
   }, [session, router]);
 
