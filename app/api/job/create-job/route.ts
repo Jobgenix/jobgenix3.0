@@ -5,6 +5,7 @@ import { opportunities, users } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
+import { v4 as uuidv4 } from "uuid";
 
 async function createJob(req: NextRequest) {
     const requestBody = await req.json();
@@ -15,7 +16,7 @@ async function createJob(req: NextRequest) {
         if(userRole[0].roleId !== ROLE_IDS.EMPLOYER)
             return new NextResponse(JSON.stringify({ err: "Unauthorised request" }), { status: 401 });
         const opportunity = opportunitySchema.parse(requestBody);
-        await db.insert(opportunities).values(opportunity);
+        await db.insert(opportunities).values({ id: uuidv4(), ...opportunity, postedAt: new Date(opportunity.postedAt), deadline: new Date(opportunity.deadline)});
 
         return new NextResponse(JSON.stringify({ success: "Job created successfully" }), { status: 201 });
     } catch (error) {

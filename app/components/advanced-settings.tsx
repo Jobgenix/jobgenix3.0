@@ -16,6 +16,14 @@ import { Calendar as CalendarComponent } from "@/app/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { Opportunity } from "@/types/opportunityType";
 
+function formatDate(date: Date) {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are 0-indexed
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 export default function AdvancedSettings({
   setAdvanced,
   setFormData,
@@ -39,8 +47,8 @@ export default function AdvancedSettings({
 
   useEffect(() => {
     if (startDate && endDate) {
-      setFormData("postedAt", startDate.toDateString());
-      setFormData("deadline", endDate.toDateString());
+      setFormData("postedAt", formatDate(startDate));
+      setFormData("deadline", formatDate(endDate));
     }
     if (applicationUrl?.length) setFormData("jobLink", applicationUrl);
   }, [startDate, endDate, applicationUrl]);

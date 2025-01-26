@@ -120,7 +120,7 @@ export default function Page() {
       })
       .then((res) => {
         console.log(res.data);
-        setJobDetails({ companies: res.data.companies, opportunities: res.data.opportunities });
+        setJobDetails({ companies: res.data.job.companies, opportunities: res.data.job.opportunities });
       });
   };
 

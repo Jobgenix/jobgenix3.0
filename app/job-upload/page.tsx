@@ -42,8 +42,8 @@ export default function Page() {
         return;
       //if(session.data?.user.role !== "EMPLOYER") return;
       const validatedFormData = opportunitySchema.parse(formData);
-      const res = await axios.post("/api/jobs/create-job", {
-        validatedFormData,
+      const res = await axios.post("/api/job/create-job", {
+        ...validatedFormData,
         userId: session.data?.user.id,
       });
 
@@ -60,7 +60,8 @@ export default function Page() {
       // console.log("You are not authenticated");
       //router.push('/auth/login');
     }
-  }, [session, router]);
+    console.log(formData);
+  }, [session, router, formData]);
 
   return (
     <>

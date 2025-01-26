@@ -1,5 +1,5 @@
 "use client";
-
+/*eslint-disable*/
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
@@ -22,7 +22,7 @@ export default function JobDetails({
   children,
 }: JobDetailsProps) {
   const {
-    name: companyName,
+    name,
     logo,
   } = companies;
 
@@ -39,7 +39,6 @@ export default function JobDetails({
 
   const formatTimeAgo = (datestring: string) => {
     // In a real app, implement proper time ago formatting
-    console.info(datestring);
     return "2 Hours ago";
   };
 
@@ -49,7 +48,7 @@ export default function JobDetails({
         <div className="flex justify-between items-start">
           <Image
             src={logo || "/placeholder.svg"}
-            alt={`${companyName} logo`}
+            alt={`${name} logo`}
             width={52}
             height={52}
             className="object-contain"

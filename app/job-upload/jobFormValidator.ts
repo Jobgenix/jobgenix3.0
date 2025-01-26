@@ -12,7 +12,7 @@ export const opportunitySchema = z.object({
     stipendType: stipendTypeSchema,
     diversityType: diversityTypeSchema.optional(),
     experience: experienceTypeSchema,
-    yearsOfExperience: z.string(),
+    yearsOfExperience: z.string().default('0'),
     degree: degreeTypeSchema.array().optional(),
     benefits: benefitsTypeSchema.array().optional(),
     salary: z.string().optional(),
@@ -21,7 +21,7 @@ export const opportunitySchema = z.object({
     jobLink: z.string(),
     passoutYear: passoutYearSchema.array().optional(),
     category: z.string().array().optional(),
-    deadline: z.date(),
-    postedAt: z.date(),
+    deadline: z.string().date(),
+    postedAt: z.string().date(),
 });
 
