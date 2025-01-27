@@ -5,6 +5,7 @@ import { z } from "zod";
 import { ZodError } from "zod";
 import { and, eq, gt, ilike, sql } from "drizzle-orm";
 import { degreeTypeSchema, passoutYearSchema } from "@/constants/jobOpportunities";
+import { getJobsById, setJobsById } from "@/utils/jobCache";
 
 const getJobsSchema = z.object({
     jobId: z.string().uuid().optional(),
@@ -42,8 +43,13 @@ async function getJobs(req: NextRequest) {
         }).from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id));
 
         if (jobId) {
-            const result = await db.select().from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id)).where(eq(opportunities.id, jobId));
-            return new NextResponse(JSON.stringify({ job: result[0] }), { status: 200 });
+            const cachedJob = await getJobsById(jobId);
+            if(!cachedJob){
+                const result = await db.select().from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id)).where(eq(opportunities.id, jobId));
+                await setJobsById(result[0])
+                return new NextResponse(JSON.stringify({ job: result[0] }), { status: 200 });
+            }
+            return new NextResponse(JSON.stringify({ job: cachedJob }), { status: 200 });
         }
         const filters = [];
         if (name) filters.push(ilike(opportunities.title, `%${name}%`));

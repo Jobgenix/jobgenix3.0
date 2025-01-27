@@ -51,6 +51,7 @@ const FirstTimeSignIn = () => {
       });
 
       if (response.status === 200) {
+        await session.update({ role: selectedRole });
         router.push("/");
       } else {
         console.error("Failed to update user role:", response.data);

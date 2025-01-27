@@ -11,6 +11,7 @@ import { ZodError } from "zod";
 import { CustomError } from "./authError";
 import { CustomDrizzleAdapter } from "./adapter";
 import { ROLE_IDS } from "@/constants/roles";
+import { getUserFromCache, setUserInCache } from "@/utils/userByEmailOrId";
 
 export const authConfig = {
     adapter: CustomDrizzleAdapter(db, {
@@ -30,8 +31,8 @@ export const authConfig = {
 
                 return profile
             },
-            allowDangerousEmailAccountLinking: true,             
-              
+            allowDangerousEmailAccountLinking: true,
+
         }),
         Credentials({
             credentials: {
@@ -45,12 +46,14 @@ export const authConfig = {
             },
             authorize: async (credentials) => {
                 try {
-
                     if (credentials.signUp === 'on') {
                         const { email, password, firstName, lastName, gender, phoneNumber } = await signUpSchema.parseAsync(credentials)
-                        const foundUser = await db.select().from(users).where(eq(users.email, email));
-                        if (foundUser.length > 0) {
-                            throw new CustomError("user_exists", "User already exists.");
+                        const foundUser = await getUserFromCache(email);
+                        if (!foundUser) {
+                            const dbUser = await db.select().from(users).where(eq(users.email, email));
+                            if (dbUser.length > 0) {
+                                throw new CustomError("user_exists", "User already exists.");
+                            }
                         }
 
                         const salt = generateSalt();
@@ -66,20 +69,25 @@ export const authConfig = {
                             id: userId,
                             roleId: ROLE_IDS.NEW_USER,
                         }).returning();
+                        await setUserInCache(user[0]);
 
                         return user[0];
                     } else {
                         const { email, password } = await signInSchema.parseAsync(credentials);
-                        const foundUser = await db.select().from(users).where(eq(users.email, email));
-                        if (foundUser.length === 0) {
-                            throw new CustomError("user_not_found", "User not found. Please check your email.");
+                        let foundUser = await getUserFromCache(email);
+                        if (!foundUser) {
+                            const dbUser = await db.select().from(users).where(eq(users.email, email));
+                            if (dbUser.length === 0) {
+                                throw new CustomError("user_not_found", "User not found. Please check your email.");
+                            }
+                            else foundUser = dbUser[0];
                         }
 
-                        if (!verifyPassword(password, foundUser[0].password!, foundUser[0].salt!)) {
+                        if (!verifyPassword(password, foundUser.password!, foundUser.salt!)) {
                             throw new CustomError("incorrect_password", "Incorrect password. Please try again.");
                         }
 
-                        return foundUser[0];
+                        return foundUser;
                     }
 
                 } catch (error: unknown) {
@@ -110,9 +118,12 @@ export const authConfig = {
         async redirect({ url, baseUrl }) {
             return url.startsWith(baseUrl) ? url : "/home";
         },
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger, session }) {
             if (user) {
                 return { ...token, id: user.id, roleId: user.roleId };
+            }
+            if(trigger === 'update' && session?.role){
+                return { ...token, roleId: session.role }
             }
             return token;
         },

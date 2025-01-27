@@ -20,5 +20,7 @@ declare module "next-auth" {
         picture?: string;  // If 'image' should map to 'picture'
         email_verified?: boolean; // If needed, add an appropriate default
         access_token?: string; // If needed, add an appropriate default
+        password: string | null;
+        salt: string | null;
     }
 }

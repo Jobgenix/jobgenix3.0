@@ -20,10 +20,10 @@ import { Navbar } from "../components/LandingPageComponents/navbar";
 
 import JobCardSkeleton from "@/app/components/skeletons/job-card-skeleton";
 
-const passingYears = Array.from({ length: 10 }, (_, i) => {
+const passingYears = [...Array.from({ length: 10 }, (_, i) => {
   const year = 2024 + i;
   return { value: year.toString(), label: year.toString() };
-});
+}), { value: "all", label: "All" }];
 
 const streams = [
   { value: "btech", label: "B.Tech" },
@@ -32,6 +32,7 @@ const streams = [
   { value: "bca", label: "BCA" },
   { value: "mca", label: "MCA" },
   { value: "mtech", label: "M.Tech" },
+  { value: "all", label: "All" },
 ];
 
 function mapStreamToDegreeType(stream: string) {
@@ -78,8 +79,8 @@ const placeholderDetails: {
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [passingYear, setPassingYear] = useState("2025");
-  const [stream, setStream] = useState("btech");
+  const [passingYear, setPassingYear] = useState("all");
+  const [stream, setStream] = useState("all");
 
   const [jobListings, setJobListings] = useState<JobCardProps[]>([]);
   const [jobDetails, setJobDetails] = useState<{
@@ -107,8 +108,8 @@ export default function Page() {
       .post("/api/job/get-jobs", {
         userId,
         name: searchQuery,
-        passingYear: passingYear,
-        stream: mapStreamToDegreeType(stream),
+        passingYear: passingYear !== 'all' ? passingYear : undefined,
+        stream: stream !== 'all' ? mapStreamToDegreeType(stream) : undefined,
       })
       .then((res) => {
         // console.log(res.data);
@@ -141,7 +142,6 @@ export default function Page() {
         jobId: id,
       })
       .then((res) => {
-        // console.log(res.data);
         setJobDetails({
           companies: res.data.job.companies,
           opportunities: res.data.job.opportunities,
@@ -193,14 +193,15 @@ export default function Page() {
               />
             </div>
           </section>
-
-          {isLoading
-            ? Array(5)
+          <div className=" overflow-auto custom-scrollbar">
+            {isLoading
+              ? Array(5)
                 .fill(0)
                 .map((_, index) => <JobCardSkeleton key={index} />)
-            : jobListings.map((job, i) => (
+              : jobListings.map((job, i) => (
                 <JobCard key={i} job={job} onClick={applyChange} />
               ))}
+          </div>
         </div>
         <JobDetails
           companies={jobDetails.companies}

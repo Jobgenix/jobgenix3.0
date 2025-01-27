@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { users } from "@/lib/schema";
 import { ROLE_IDS } from "@/constants/roles";
+import { setUserInCache } from "@/utils/userByEmailOrId";
 
 async function updateUserRole(req: NextRequest) {
     const { userId, newRoleId } = await req.json();
@@ -12,7 +13,8 @@ async function updateUserRole(req: NextRequest) {
         return new NextResponse(JSON.stringify({ error: "Invalid Role ID" }), { status: 400 });
     }
     try {
-        await db.update(users).set({ roleId: newRoleId }).where(eq(users.id, userId));
+        const user = await db.update(users).set({ roleId: newRoleId }).where(eq(users.id, userId)).returning();
+        await setUserInCache(user[0]);
         return new NextResponse(JSON.stringify({ success: "Role Updated" }), { status: 200 });
     } catch (error) {
         return new NextResponse(JSON.stringify({ err: `Server Error: ${error}` }), { status: 500 });
