@@ -1,3 +1,4 @@
+/* eslint-disable*/
 "use client";
 import JobCard from "../components/Job-components";
 import { Input } from "@/app/components/ui/input";
@@ -16,6 +17,8 @@ import { JobCardProps } from "@/types/job";
 import { CompanyType } from "@/types/companyType";
 import { Opportunity } from "@/types/opportunityType";
 import { Navbar } from "../components/LandingPageComponents/navbar";
+
+import JobCardSkeleton from "@/app/components/skeletons/job-card-skeleton";
 
 const passingYears = Array.from({ length: 10 }, (_, i) => {
   const year = 2024 + i;
@@ -42,7 +45,10 @@ function mapStreamToDegreeType(stream: string) {
   return null; // If stream doesn't match, return null or handle accordingly
 }
 
-const placeholderDetails: { companies: CompanyType, opportunities: Opportunity } = {
+const placeholderDetails: {
+  companies: CompanyType;
+  opportunities: Opportunity;
+} = {
   companies: {
     name: "Google",
     logo: "/company-logos/google.svg",
@@ -52,7 +58,8 @@ const placeholderDetails: { companies: CompanyType, opportunities: Opportunity }
   opportunities: {
     id: "1",
     title: "Software Development",
-    description: "Google is hiring software engineers to work on the next generation of search algorithms.",
+    description:
+      "Google is hiring software engineers to work on the next generation of search algorithms.",
     location: ["Bangalore"],
     duration: "6 months",
     type: "internships",
@@ -67,7 +74,7 @@ const placeholderDetails: { companies: CompanyType, opportunities: Opportunity }
     deadline: "2021-10-10T10:00:00Z",
     companyId: "1",
   },
-}
+};
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -75,7 +82,13 @@ export default function Page() {
   const [stream, setStream] = useState("btech");
 
   const [jobListings, setJobListings] = useState<JobCardProps[]>([]);
-  const [jobDetails, setJobDetails] = useState<{ companies: CompanyType, opportunities: Opportunity }>(placeholderDetails);
+  const [jobDetails, setJobDetails] = useState<{
+    companies: CompanyType;
+    opportunities: Opportunity;
+  }>(placeholderDetails);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
 
   const session = useSession();
   useEffect(() => {
@@ -89,7 +102,7 @@ export default function Page() {
       // console.log(session);
       return;
     }
-
+    setIsLoading(true);
     axios
       .post("/api/job/get-jobs", {
         userId,
@@ -102,6 +115,11 @@ export default function Page() {
         if (res.data.jobs.length) applyChange(res.data.jobs[0].jobId);
         else setJobDetails(placeholderDetails);
         setJobListings(res.data.jobs);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching job listings:", error);
+        setIsLoading(false);
       });
   }, [searchQuery, passingYear, stream, session]);
 
@@ -116,23 +134,37 @@ export default function Page() {
       // console.log(session);
       return;
     }
-
+    setIsLoadingDetails(true);
     axios
       .post("/api/job/get-jobs", {
         userId,
         jobId: id,
       })
       .then((res) => {
-        console.log(res.data);
-        setJobDetails({ companies: res.data.job.companies, opportunities: res.data.job.opportunities });
+        // console.log(res.data);
+        setJobDetails({
+          companies: res.data.job.companies,
+          opportunities: res.data.job.opportunities,
+        });
+        setIsLoadingDetails(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching job details:", error);
+        setIsLoadingDetails(false);
       });
   };
 
   return (
     <>
-      <div><Navbar /></div>
-      <p>Get Hired in <span style={{ color: "green" }}>Dream Companies:</span> </p>
-      <div><TrustedCompanies /></div>
+      <div>
+        <Navbar />
+      </div>
+      <p>
+        Get Hired in <span style={{ color: "green" }}>Dream Companies:</span>{" "}
+      </p>
+      <div>
+        <TrustedCompanies />
+      </div>
       <section className="flex gap-4 px-16 py-8 justify-evenly items-center">
         <div className="flex flex-col gap-4 h-screen bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[30%]">
           <section className="p-4 flex flex-col gap-4">
@@ -162,13 +194,18 @@ export default function Page() {
             </div>
           </section>
 
-          {jobListings.map((job, i) => (
-            <JobCard key={i} job={job} onClick={applyChange} />
-          ))}
+          {isLoading
+            ? Array(5)
+                .fill(0)
+                .map((_, index) => <JobCardSkeleton key={index} />)
+            : jobListings.map((job, i) => (
+                <JobCard key={i} job={job} onClick={applyChange} />
+              ))}
         </div>
         <JobDetails
           companies={jobDetails.companies}
           opportunities={jobDetails.opportunities}
+          isLoading={isLoadingDetails}
         />
       </section>
       {/* <JobCard /> */}

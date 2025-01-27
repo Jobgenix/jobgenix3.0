@@ -16,12 +16,18 @@ import type { JobDetailsProps } from "@/types/job";
 import Image from "next/image";
 import Link from "next/link";
 import { capitalizeWords } from "@/utils/stringUtility";
+import JobDetailsSkeleton from "../skeletons/job-details-skeleton";
 
 export default function JobDetails({
   companies,
   opportunities,
   children,
-}: JobDetailsProps) {
+  isLoading
+}: JobDetailsProps & { isLoading: boolean }) {
+
+  if (isLoading) {
+    return <JobDetailsSkeleton />
+  }
   const {
     name,
     logo,
