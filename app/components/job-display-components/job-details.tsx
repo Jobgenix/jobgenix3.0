@@ -17,21 +17,64 @@ import Image from "next/image";
 import Link from "next/link";
 import { capitalizeWords } from "@/utils/stringUtility";
 import JobDetailsSkeleton from "../skeletons/job-details-skeleton";
+// import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
+import axios from "axios";
+import { CompanyType } from "@/types/companyType";
+import { Opportunity } from "@/types/opportunityType";
+import { useSearchParams, usePathname } from "next/navigation";
 
-export default function JobDetails({
-  companies,
-  opportunities,
-  children,
-  isLoading
-}: JobDetailsProps & { isLoading: boolean }) {
+const placeholderDetails: {
+  companies: CompanyType;
+  opportunities: Opportunity;
+} = {
+  companies: {
+    name: "Google",
+    logo: "/company-logos/google.svg",
+    website: "https://google.com",
+    id: "1",
+  },
+  opportunities: {
+    id: "1",
+    title: "Software Development",
+    description:
+      "Google is hiring software engineers to work on the next generation of search algorithms.",
+    location: ["Bangalore"],
+    duration: "6 months",
+    type: "internships",
+    workplaceType: "remote",
+    stipendType: "fixed",
+    experience: "fresher",
+    yearsOfExperience: "0",
+    jobLink: "link",
+    category: ["Software Development"],
+    status: "active",
+    postedAt: "2021-10-10T10:00:00Z",
+    deadline: "2021-10-10T10:00:00Z",
+    companyId: "1",
+  },
+};
 
-  if (isLoading) {
-    return <JobDetailsSkeleton />
-  }
-  const {
-    name,
-    logo,
-  } = companies;
+export default function JobDetails() {
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [jobDetails, setJobDetails] = useState<{
+    companies: CompanyType;
+    opportunities: Opportunity;
+  }>(placeholderDetails);
+
+  const [url, setUrl] = useState("");
+
+  const searchParams = useSearchParams();
+  const query = searchParams.get("id");
+  // const query = { id: "3c597a7f-d093-41c3-9b1e-cab8f83dff40" };
+
+  const session = useSession();
+
+  const pathName = usePathname();
+
+  const { name, logo } = jobDetails.companies;
 
   const {
     title,
@@ -42,13 +85,53 @@ export default function JobDetails({
     status,
     jobLink,
     description,
-  } = opportunities;
+  } = jobDetails.opportunities;
   const isVerified = status === "active";
 
   const formatTimeAgo = (datestring: string) => {
     // In a real app, implement proper time ago formatting
     return "2 Hours ago";
   };
+
+  useEffect(() => {
+    if (session.status === "loading") return;
+
+    const userId = session.data?.user?.id;
+    if (!userId) {
+      console.error("User ID is missing in session data");
+      toast.error("E:4001 - user ID missing");
+      return;
+    }
+
+    // Fetch job details based on query.id
+    setIsLoadingDetails(true);
+    axios
+      .post("/api/job/get-jobs", {
+        userId,
+        jobId: query, // Dynamically use the query param
+      })
+      .then((res) => {
+        setJobDetails({
+          companies: res.data.job.companies,
+          opportunities: res.data.job.opportunities,
+        });
+        setUrl(
+          `${
+            typeof window !== "undefined" ? window.location.origin : ""
+          }${pathName}?${searchParams.toString()}`
+        );
+        setIsLoadingDetails(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching job details:", error);
+        toast.error("E:4002 - error fetching job details");
+        setIsLoadingDetails(false);
+      });
+  }, [query, session]);
+
+  if (session.status === "loading" || isLoadingDetails) {
+    return <JobDetailsSkeleton />;
+  }
 
   return (
     <Card className="w-[70%] mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar">
@@ -63,7 +146,13 @@ export default function JobDetails({
           />
 
           <div className="flex gap-2">
-            <Button variant="ghost">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                navigator.clipboard.writeText(url);
+                toast.success("Copied to clipboard");
+              }}
+            >
               <Share2 className="h-8 w-8" />
             </Button>
             <Button variant="ghost">
@@ -126,7 +215,10 @@ export default function JobDetails({
         <section className="space-y-4">
           <h2 className="text-xl font-medium">About the job</h2>
 
-          <div className="space-y-4" dangerouslySetInnerHTML={{ __html: description }}/>
+          <div
+            className="space-y-4"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
         </section>
       </CardContent>
     </Card>

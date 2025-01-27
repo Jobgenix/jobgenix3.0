@@ -1,11 +1,6 @@
-
-
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
-
-
-
-
+import { twMerge } from "tailwind-merge";
 
 const brands = [
   "https://d8it4huxumps7.cloudfront.net/images/partners/partners125/6267c59c0bd2b_Optum-logo-ora-RGB.png?d=206x60",
@@ -28,9 +23,11 @@ const brands = [
   "https://d8it4huxumps7.cloudfront.net/images/partners/partners125/5c7d138408595_image__15_.png?d=200x200",
 ];
 
-export function TrustedCompanies() {
+export function TrustedCompanies({ className }: { className?: string }) {
   return (
-    <Marquee className="bg-white px-4 py-8 md:px-6 lg:px-8">
+    <Marquee
+      className={twMerge(`bg-white px-4 py-8 md:px-6 lg:px-8`, className)}
+    >
       <div className="flex items-center justify-around gap-8 min-w-max">
         {brands.map((brand, index) => (
           <div key={index} className="flex-shrink-0">
@@ -39,6 +36,7 @@ export function TrustedCompanies() {
               alt={`Brand ${index + 1}`}
               width={85}
               height={60}
+              draggable={false}
               className="object-contain"
             />
           </div>

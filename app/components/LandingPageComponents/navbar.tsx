@@ -40,7 +40,7 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="sticky h-[10vh] flex z-[9999] items-center justify-center top-0 w-full border-b bg-white">
+    <nav className="sticky h-[10vh] flex z-[9999] items-center justify-center top-0 w-full border-b bg-white shadow-md shadow-black/30">
       <div className="w-full mx-auto flex items-center gap-3 justify-between">
         {/* Left Section: Logo */}
         <div className="flex items-center gap-2">
@@ -108,15 +108,13 @@ export function Navbar() {
         <div className="hidden xl:flex items-center gap-3 px-3">
           <span className="text-gray-400">|</span>
           <Button
-                  className="w-full bg-[#01A768] hover:bg-[#018e59] text-white rounded-[18px] font-medium"
-                  onClick={() =>
-                    loginStatus
-                      ? router.push("/home")
-                      : router.push("/auth/login")
-                  }
-                >
-                  {loginStatus ? "logout" : "Login"}
-                </Button>
+            className="w-full bg-[#01A768] hover:bg-[#018e59] text-white rounded-[18px] font-medium"
+            onClick={() =>
+              loginStatus ? router.push("/home") : router.push("/auth/login")
+            }
+          >
+            {loginStatus ? "logout" : "Login"}
+          </Button>
           <span className="text-gray-400">|</span>
           <Bell />
           <Link href="/job-upload">
