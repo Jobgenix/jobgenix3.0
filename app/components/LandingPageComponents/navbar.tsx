@@ -90,7 +90,7 @@ export function Navbar() {
               </Link>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-48 bg-gray-300">
+            <DropdownMenuContent className="w-48 mt-4 py-2 bg-gray-300">
               {opportunityOptions.map((option) => (
                 <DropdownMenuItem key={option.name}>
                   <Link
@@ -145,7 +145,7 @@ export function Navbar() {
                 <span className="block w-6 h-0.5 bg-gray-800"></span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-60 bg-gray-300 mr-0 flex flex-col justify-center align-center">
+            <DropdownMenuContent className="w-60 bg-gray-300 mr-0 mt-4 md:mt-8  flex flex-col justify-center align-center">
               {opportunityOptions.map((option) => (
                 <DropdownMenuItem key={option.name}>
                   <Link
@@ -169,12 +169,12 @@ export function Navbar() {
                 </Button>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/job-upload">
+                <Link href="/job-upload" className="w-full">
                   <Button
                     variant="outline"
                     className="w-full font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
                   >
-                    <Plus className="mr-1 h-4 w-4" /> Host
+                    <Plus className="mr-1 h-4" /> Host
                   </Button>
                 </Link>
               </DropdownMenuItem>
