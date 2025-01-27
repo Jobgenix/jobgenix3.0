@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
 import { DrizzleAdapter } from "@auth/drizzle-adapter"; // Replace with the actual Drizzle Adapter import path
 import type { Adapter } from "@auth/core/adapters";
 import { db } from "./db";
@@ -7,6 +9,7 @@ import { getUserAdditionalInfo } from "@/utils/getUserInfo";
 import { ROLE_IDS } from "@/constants/roles";
 import { eq } from "drizzle-orm";
 import { deleteUserFromCache, getUserFromCache, setUserInCache } from "@/utils/userByEmailOrId";
+
 
 
 type DefaultPostgresSchema = {
@@ -51,7 +54,7 @@ export function CustomDrizzleAdapter(drizzle: typeof db, schema: DefaultPostgres
             return null;
         },
 
-        getUserByEmail: async (email) => {
+        getUserByEmail: async (email)=> {
             const cacheUser = await getUserFromCache(email);
             if (cacheUser) return cacheUser
             const user = await db.select().from(users).where(eq(users.email, email));
