@@ -1,5 +1,5 @@
 import { Code, Users, Building2, Trophy } from 'lucide-react'
-import { Card, CardContent } from "../LandingPageComponents/ui/card"
+import { Card, CardContent } from '../ui/card';
 
 export function HeroSection() {
   const features = [

@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { Suspense } from "react";
 
 const ErrorLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -16,7 +17,9 @@ const ErrorLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <p className="text-gray-600">Something went wrong.</p>
       </header>
       <main className="w-full max-w-md p-6 bg-white shadow-lg rounded-xl">
-        {children}
+        <Suspense>
+          {children}
+        </Suspense>
       </main>
       <footer className="mt-8">
         <button

@@ -9,10 +9,8 @@ export async function getUserFromCache(identifier: string) {
             const user = await redis.get(keys[0]) as User; // Get the first matched key
             return user;
         }
-        return null;
     } catch (error) {
         console.error("Error fetching user from cache:", error);
-        return null;
     }
 }
 
