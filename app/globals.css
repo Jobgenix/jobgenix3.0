@@ -82,12 +82,34 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px; /* Narrower scrollbar width */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05); /* Very light background for the track */
+    border-radius: 5px; /* Slightly rounded track edges */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1); /* Slightly darker, very subtle thumb */
+    border-radius: 5px; /* Rounded thumb */
+    opacity: 0; /* Invisible by default */
+    transition: opacity 0.2s ease; /* Smooth transition for visibility */
+  }
+
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    opacity: 0.4; /* Subtle thumb appearance on hover */
+  }
+
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -95,7 +117,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont,'Roboto','Hanuman', 'Segoe UI', 'Oxygen', 
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Hanuman', 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

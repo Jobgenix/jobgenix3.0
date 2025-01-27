@@ -48,7 +48,7 @@ export default function Page() {
   const [stream, setStream] = useState("btech");
 
   const [jobListings, setJobListings] = useState<JobCardProps[]>([]);
-  const [jobDetails, setJobDetails] = useState<{companies: CompanyType, opportunities: Opportunity}>({
+  const [jobDetails, setJobDetails] = useState<{ companies: CompanyType, opportunities: Opportunity }>({
     companies: {
       name: "Google",
       logo: "/company-logos/google.svg",
@@ -97,6 +97,7 @@ export default function Page() {
       })
       .then((res) => {
         // console.log(res.data);
+        applyChange(res.data.jobs[0].jobId)
         setJobListings(res.data.jobs);
       });
   }, [searchQuery, passingYear, stream, session]);
@@ -126,9 +127,9 @@ export default function Page() {
 
   return (
     <>
-    <div><Navbar/></div>
-    <p>Get Hired in <span style={{ color: "green" }}>Dream Companies:</span> </p>
-    <div><TrustedCompanies/></div>
+      <div><Navbar /></div>
+      <p>Get Hired in <span style={{ color: "green" }}>Dream Companies:</span> </p>
+      <div><TrustedCompanies /></div>
       <section className="flex gap-4 px-16 py-8 justify-evenly items-center">
         <div className="flex flex-col gap-4 h-screen bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[30%]">
           <section className="p-4 flex flex-col gap-4">

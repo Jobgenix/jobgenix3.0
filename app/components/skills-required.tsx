@@ -11,8 +11,8 @@ import {
   TabsContent,
 } from "@/app/components/ui/tabs";
 import { formSectionProps } from "@/types/formSectionProps";
-import { DegreeType } from "@/types/opportunityType";
-import { degreeTypeSchema } from "@/constants/jobOpportunities";
+import { DegreeType, PassoutYear } from "@/types/opportunityType";
+import { degreeTypeSchema, passoutYearSchema } from "@/constants/jobOpportunities";
 
 interface coursesProps {
   id: DegreeType;
@@ -22,18 +22,18 @@ interface coursesProps {
 export default function SkillsRequired({ setFormData }: formSectionProps) {
   const [openForCollege, setOpenForCollege] = useState(false);
   const [specificCourse, setSpecificCourse] = useState(false);
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<PassoutYear | null>(null);
   const [selectedCourses, setSelectedCourses] = useState<DegreeType[]>([]);
 
   useEffect(() => {
     if (selectedYear !== null) {
-      setFormData('graduationYear', selectedYear); // Ensure correct field name
+      setFormData("passoutYear", [selectedYear]); // Ensure correct field name
     }
     setFormData('degree', [...selectedCourses]);
   }, [selectedYear, selectedCourses]);
   
 
-  const years = ["All", "2024", "2025", "2026", "2027", "2028", "2029"];
+  const years = passoutYearSchema.options;
   const courses: coursesProps[] = [
     { id: degreeTypeSchema.Enum.all, label: "All Courses" },
     { id: degreeTypeSchema.Enum.bachelor, label: "B.Tech" },

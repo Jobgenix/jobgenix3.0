@@ -3,7 +3,7 @@ import { companies, opportunities } from "@/lib/schema";
 import { db } from "@/lib/db";
 import { z } from "zod";
 import { ZodError } from "zod";
-import { and, arrayContains, eq, gt, ilike } from "drizzle-orm";
+import { eq, gt, ilike, or, sql } from "drizzle-orm";
 import { degreeTypeSchema, passoutYearSchema } from "@/constants/jobOpportunities";
 
 const getJobsSchema = z.object({
@@ -32,46 +32,34 @@ async function getJobs(req: NextRequest) {
         const stream = validatedQuery.stream;
         const passingYear = validatedQuery.passingYear;
 
-        const query = db.select({ 
+        const query = db.select({
             companyName: companies.name,
             companyLogo: companies.logo,
             jobTitle: opportunities.title,
             jobId: opportunities.id,
             jobLocation: opportunities.location,
             jobType: opportunities.workplaceType,
-         }).from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id));
+        }).from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id));
 
         if (jobId) {
             const result = await db.select().from(opportunities).innerJoin(companies, eq(opportunities.companyId, companies.id)).where(eq(opportunities.id, jobId));
             return new NextResponse(JSON.stringify({ job: result[0] }), { status: 200 });
         }
-        else if (name) {
-            if (lastJobId) {
-                const result = await query.orderBy(opportunities.id).where(and(ilike(opportunities.title, `%${name}%`), gt(opportunities.id, lastJobId))).limit(limit);
-                return new NextResponse(JSON.stringify({ jobs: result, hasMore: result.length === limit }), { status: 200 });
-            }
-            else if (stream?.length || passingYear?.length) {
-                const filters = [ilike(opportunities.title, `%${name}%`)];
-                if (stream) filters.push(arrayContains(opportunities.degree, [stream]));
-                if (passingYear) filters.push(arrayContains(opportunities.passoutYear, [passingYear]));
-            
-                const result = await query
-                    .orderBy(opportunities.id)
-                    .where(and(...filters))
-                    .limit(limit);
-            
-                return new NextResponse(
-                    JSON.stringify({ jobs: result, hasMore: result.length === limit }),
-                    { status: 200 }
-                );
-            }
-            
+        const filters = [];
+        if (name) filters.push(ilike(opportunities.title, `%${name}%`));
+        if (lastJobId) filters.push(gt(opportunities.id, lastJobId));
+        if (stream) filters.push(sql`${stream} = ANY(${opportunities.degree})`);
+        if (passingYear) filters.push(sql`${passingYear} = ANY(${opportunities.passoutYear})`);
 
-            const result = await query.orderBy(opportunities.id).where(ilike(opportunities.title, `%${name}%`)).limit(limit);
-            return new NextResponse(JSON.stringify({ jobs: result, hasMore: result.length === limit }), { status: 200 });
-        }
-        const result = await query.orderBy(opportunities.id).limit(limit);
-        return new NextResponse(JSON.stringify({ jobs: result, hasMore: result.length === limit }), { status: 200 });
+
+
+        const result = await query.orderBy(opportunities.id).where(filters.length ? or(...filters) : undefined).limit(limit);
+
+        return new NextResponse(
+            JSON.stringify({ jobs: result, hasMore: result.length === limit }),
+            { status: 200 }
+        );
+
 
     } catch (error) {
         if (error instanceof ZodError) {

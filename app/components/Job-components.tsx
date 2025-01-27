@@ -4,6 +4,7 @@
 import { Button } from "@/app/components/ui/button";
 import { Card } from "@/app/components/ui/card";
 import { JobCardProps } from "@/types/job";
+import { capitalizeWords } from "@/utils/stringUtility";
 import { CheckCircle, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 
@@ -71,7 +72,7 @@ export default function JobCard({
           </div>
           <div className="space-y-1">
             <p className="text-gray-600 font-bold">
-              {job.jobLocation} ({job.jobType})
+              {capitalizeWords(job.jobLocation)} ({capitalizeWords(job.jobType)})
             </p>
           </div>
           <Button

@@ -24,7 +24,6 @@ export type Opportunity = {
     degree?: DegreeType[];
     benefits?: BenefitsType[]; // Array of benefits (optional)
     salary?: string;
-    graduationYear?: string;
     status: JobStatus;
     jobLink: string;
     passoutYear?: PassoutYear[]; // Array of passout years (optional)

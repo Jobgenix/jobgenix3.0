@@ -15,6 +15,7 @@ import {
 import type { JobDetailsProps } from "@/types/job";
 import Image from "next/image";
 import Link from "next/link";
+import { capitalizeWords } from "@/utils/stringUtility";
 
 export default function JobDetails({
   companies,
@@ -44,7 +45,7 @@ export default function JobDetails({
   };
 
   return (
-    <Card className="w-[70%] mx-auto h-screen bg-[#E5F7EB]">
+    <Card className="w-[70%] mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar">
       <CardHeader className="space-y-4">
         <div className="flex justify-between items-start">
           <Image
@@ -70,7 +71,7 @@ export default function JobDetails({
         </h1>
         <div className="space-y-5">
           <div className="flex items-center gap-2 text-base font-bold text-muted-foreground">
-            <span>{location}</span>
+            <span>{capitalizeWords(location)}</span>
             <span className="text-emerald-600">
               • {formatTimeAgo(postedAt)}
             </span>
@@ -91,7 +92,7 @@ export default function JobDetails({
               variant="secondary"
               className="bg-[#AAFEC4] text-black/50 hover:bg-emerald-100 rounded-none px-3 text-base tracking-wide capitalize"
             >
-              {workplaceType}
+              {capitalizeWords(workplaceType)}
             </Badge>
             • {type}
           </div>

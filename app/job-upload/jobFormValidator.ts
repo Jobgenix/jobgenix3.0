@@ -16,7 +16,6 @@ export const opportunitySchema = z.object({
     degree: degreeTypeSchema.array().optional(),
     benefits: benefitsTypeSchema.array().optional(),
     salary: z.string().optional(),
-    graduadtionYear: z.string().optional(),
     status: jobStatusSchema.default("active"),
     jobLink: z.string(),
     passoutYear: passoutYearSchema.array().optional(),
