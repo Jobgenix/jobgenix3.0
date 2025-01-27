@@ -3,7 +3,7 @@ import { companies, opportunities } from "@/lib/schema";
 import { db } from "@/lib/db";
 import { z } from "zod";
 import { ZodError } from "zod";
-import { eq, gt, ilike, or, sql } from "drizzle-orm";
+import { and, eq, gt, ilike, sql } from "drizzle-orm";
 import { degreeTypeSchema, passoutYearSchema } from "@/constants/jobOpportunities";
 
 const getJobsSchema = z.object({
@@ -53,7 +53,7 @@ async function getJobs(req: NextRequest) {
 
 
 
-        const result = await query.orderBy(opportunities.id).where(filters.length ? or(...filters) : undefined).limit(limit);
+        const result = await query.orderBy(opportunities.id).where(filters.length ? and(...filters) : undefined).limit(limit);
 
         return new NextResponse(
             JSON.stringify({ jobs: result, hasMore: result.length === limit }),

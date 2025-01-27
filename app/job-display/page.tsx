@@ -42,38 +42,40 @@ function mapStreamToDegreeType(stream: string) {
   return null; // If stream doesn't match, return null or handle accordingly
 }
 
+const placeholderDetails: { companies: CompanyType, opportunities: Opportunity } = {
+  companies: {
+    name: "Google",
+    logo: "/company-logos/google.svg",
+    website: "https://google.com",
+    id: "1",
+  },
+  opportunities: {
+    id: "1",
+    title: "Software Development",
+    description: "Google is hiring software engineers to work on the next generation of search algorithms.",
+    location: ["Bangalore"],
+    duration: "6 months",
+    type: "internships",
+    workplaceType: "remote",
+    stipendType: "fixed",
+    experience: "fresher",
+    yearsOfExperience: "0",
+    jobLink: "link",
+    category: ["Software Development"],
+    status: "active",
+    postedAt: "2021-10-10T10:00:00Z",
+    deadline: "2021-10-10T10:00:00Z",
+    companyId: "1",
+  },
+}
+
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState("");
   const [passingYear, setPassingYear] = useState("2025");
   const [stream, setStream] = useState("btech");
 
   const [jobListings, setJobListings] = useState<JobCardProps[]>([]);
-  const [jobDetails, setJobDetails] = useState<{ companies: CompanyType, opportunities: Opportunity }>({
-    companies: {
-      name: "Google",
-      logo: "/company-logos/google.svg",
-      website: "https://google.com",
-      id: "1",
-    },
-    opportunities: {
-      id: "1",
-      title: "Software Development",
-      description: "Google is hiring software engineers to work on the next generation of search algorithms.",
-      location: ["Bangalore"],
-      duration: "6 months",
-      type: "internships",
-      workplaceType: "remote",
-      stipendType: "fixed",
-      experience: "fresher",
-      yearsOfExperience: "0",
-      jobLink: "link",
-      category: ["Software Development"],
-      status: "active",
-      postedAt: "2021-10-10T10:00:00Z",
-      deadline: "2021-10-10T10:00:00Z",
-      companyId: "1",
-    },
-  });
+  const [jobDetails, setJobDetails] = useState<{ companies: CompanyType, opportunities: Opportunity }>(placeholderDetails);
 
   const session = useSession();
   useEffect(() => {
@@ -97,7 +99,8 @@ export default function Page() {
       })
       .then((res) => {
         // console.log(res.data);
-        applyChange(res.data.jobs[0].jobId)
+        if (res.data.jobs.length) applyChange(res.data.jobs[0].jobId);
+        else setJobDetails(placeholderDetails);
         setJobListings(res.data.jobs);
       });
   }, [searchQuery, passingYear, stream, session]);
