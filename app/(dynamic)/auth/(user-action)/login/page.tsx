@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash ,faLock} from "@fortawesome/free-solid-svg-icons";
 import { signIn } from "next-auth/react";
 import { AUTH_ERROR_MESSAGES } from "@/constants/authErrorMessages";
+import * as AspectRatio from '@radix-ui/react-aspect-ratio';
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -54,21 +56,23 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="hidden md:flex md:w-1/2 lg:w-2/5 justify-center">
-        <Image
-          src="/images/loginImage.png"
+    <div className="flex h-[100vh] w-screen justify-center bg-[#E5F7EB] items-center">
+      <div className="md:h-[98vh] h-[80vh] md:w-[85vw]  lg:w-[48vw]   p-2 rounded-lg bg-white flex flex-col md:flex-row items-center justify-between ">
+      <div className="hidden h-full  md:flex md:w-2/5  lg:w-[20vw] justify-center">
+        
+      <Image
+          src="/LandingPageImages/login page.png"
           alt="Login Illustration"
-          className="w-full max-w-sm md:max-w-md border rounded-2xl"
+          className="lg:w-full  rounded-2xl"
           width={400}
-          height={400}
-          priority
+          height={200}
+          
         />
       </div>
 
-      <div className="p-6 w-full max-w-sm sm:max-w-md lg:max-w-lg md:w-1/2 lg:w-2/5">
-        <h5>👋Hi, Unbeatable</h5>
-        <h1 className="text-2xl font-bold text-slate-700 mb-6">
+      <div className="h-full   flex justify-center px-4 flex-col   max-w-sm sm:max-w-md  md:w-1/2 lg:w-1/2">
+    
+        <h1 className="text-xl text-center text-slate-700 mb-6">
           Welcome Back to <span className="text-[#2F8E5B]">Jobgenix!</span>
         </h1>
 
@@ -85,7 +89,7 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col justify-center gap-1">
             <div className="flex items-center border border-gray-300 rounded-xl relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -102,6 +106,9 @@ const Login = () => {
                 height={18}
               />
             </div>
+            <div className="text-[#01A768] text-[12px] px-1 cursor-pointer">
+            <FontAwesomeIcon icon={faLock}  className=" w-[22px]"/>
+              Forgot password?</div>
           </div>
 
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
@@ -118,7 +125,7 @@ const Login = () => {
           <span className="px-4 text-gray-500 text-sm">Or sign in with</span>
         </div>
 
-        <button onClick={()=>signIn('google')} className="w-full text-center justify-center py-2 mb-3 bg-white text-gray-600 font-bold border-2 border-slate-100 flex items-center hover:bg-gray-100 transition">
+        <button onClick={()=>signIn('google')} className="w-full text-center justify-center px-1 py-2 mb-3 bg-white text-gray-600  border-2 border-slate-200 flex items-center hover:bg-gray-100 transition">
           <Image
             src="/images/googlelcon.svg"
             alt="Google logomark"
@@ -128,18 +135,19 @@ const Login = () => {
           <span className="w-11/12">Login with Google</span>
         </button>
 
-        <button className="w-full py-2 mb-6 bg-white text-gray-600 font-bold border-2 border-slate-100 flex items-center justify-center hover:bg-gray-100 transition">
-          <FontAwesomeIcon icon={faLinkedin} className="text-blue-500 text-xl" width={20} height={20} />
+        <button className="w-full py-2 mb-6 bg-white text-gray-600   border-2 border-slate-200 flex items-center justify-center hover:bg-gray-100 transition">
+          <FontAwesomeIcon icon={faLinkedin} className="text-blue-500  px-1 text-xl" width={20} height={20} />
           <span className="w-11/12">Login with LinkedIn</span>
         </button>
 
-        <p className="mt-4 text-center text-sm text-gray-600 rounded-xl border py-2">
+        <p className="mt-4 text-center text-sm text-gray-600 rounded-xl border-2 border-slate-200 py-2">
           Don&apos;t have an account?{" "}
           <button className="text-[#2F8E5B] hover:underline" onClick={() => router.push("/auth/register")}>
             Sign up
           </button>
         </p>
       </div>
+    </div>
     </div>
   );
 };
