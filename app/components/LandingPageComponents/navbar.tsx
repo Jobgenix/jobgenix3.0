@@ -118,7 +118,7 @@ export function Navbar() {
                   {loginStatus ? "logout" : "Login"}
                 </Button>
           <span className="text-gray-400">|</span>
-          <Bell />
+          {/* <Bell /> */}
           <Link href="/job-upload">
             <Button
               variant="outline"
