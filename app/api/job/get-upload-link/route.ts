@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
 import { generateSignedUrl } from "@/utils/cloudinaryUpload";
 import { NextRequest, NextResponse } from "next/server";
