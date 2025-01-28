@@ -18,6 +18,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import WorkplaceTypeSelector from "../components/workplace-type";
+import { ROLE_IDS } from "@/constants/roles";
 
 export default function Page() {
   const [formData, setFormData] = useState<Partial<Opportunity>>({});
@@ -48,7 +49,7 @@ export default function Page() {
       });
 
       if (res.statusText === "Created") {
-        console.log("Job created successfully");
+        router.push('/job-display');
       }
     } catch (error) {
       console.error(error);
@@ -57,8 +58,10 @@ export default function Page() {
 
   useEffect(() => {
     if (session.status === "unauthenticated") {
-      // console.log("You are not authenticated");
-      //router.push('/auth/login');
+      router.push('/auth/login');
+    }
+    if(session.data?.user.role !== ROLE_IDS.EMPLOYER && session.status === 'authenticated'){
+      router.push('/job-display');
     }
     console.dir(formData);
   }, [session, router, formData]);
