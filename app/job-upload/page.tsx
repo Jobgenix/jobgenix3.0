@@ -60,7 +60,7 @@ export default function Page() {
       // console.log("You are not authenticated");
       //router.push('/auth/login');
     }
-    console.log(formData);
+    console.dir(formData);
   }, [session, router, formData]);
 
   return (

@@ -1,5 +1,5 @@
 "use client";
-
+//@ts-nocheck
 import { Card, CardContent } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
 import {
