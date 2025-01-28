@@ -6,7 +6,7 @@ export const opportunitySchema = z.object({
     title: z.string(),
     description: z.string(),
     location: z.string().array(),
-    duration: z.string(),
+    duration: z.string().optional(),
     type: jobTypeSchema,
     workplaceType: workplaceTypeSchema,
     stipendType: stipendTypeSchema,

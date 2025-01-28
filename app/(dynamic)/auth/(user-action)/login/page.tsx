@@ -7,7 +7,6 @@ import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash ,faLock} from "@fortawesome/free-solid-svg-icons";
 import { signIn } from "next-auth/react";
 import { AUTH_ERROR_MESSAGES } from "@/constants/authErrorMessages";
-import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 
 
 const Login = () => {
@@ -57,16 +56,15 @@ const Login = () => {
 
   return (
     <div className="flex h-[100vh] w-screen justify-center bg-[#E5F7EB] items-center">
-      <div className="md:h-[98vh] h-[80vh] md:w-[85vw]  lg:w-[48vw]   p-2 rounded-lg bg-white flex flex-col md:flex-row items-center justify-between ">
+      <div className="md:h-[98vh] h-[80vh] md:w-[85vw]  lg:w-[48vw]   p-2 rounded-lg rounded-bl-[50px] bg-white flex flex-col md:flex-row items-center justify-between ">
       <div className="hidden h-full  md:flex md:w-2/5  lg:w-[20vw] justify-center">
         
       <Image
           src="/LandingPageImages/login page.png"
           alt="Login Illustration"
-          className="lg:w-full  rounded-2xl"
+          className="lg:w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
           width={400}
-          height={200}
-          
+          height={200 / (9/16)}
         />
       </div>
 
@@ -106,8 +104,8 @@ const Login = () => {
                 height={18}
               />
             </div>
-            <div className="text-[#01A768] text-[12px] px-1 cursor-pointer">
-            <FontAwesomeIcon icon={faLock}  className=" w-[22px]"/>
+            <div className="text-[#01A768] text-[12px] px-1 cursor-pointer" onClick={()=>router.push('/auth/forgot-password')}>
+            <FontAwesomeIcon icon={faLock} width={22} height={22} className="w-[22px]"/>
               Forgot password?</div>
           </div>
 

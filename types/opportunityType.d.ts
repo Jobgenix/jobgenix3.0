@@ -14,7 +14,7 @@ export type Opportunity = {
   title: string;
   description: string;
   location: string[];
-  duration: string;
+  duration?: string;
   type: JobType;
   workplaceType: WorkplaceType;
   stipendType: StipendType;
