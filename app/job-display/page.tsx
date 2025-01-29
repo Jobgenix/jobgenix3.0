@@ -1,54 +1,84 @@
 "use client";
-import JobCard from "../components/Job-components";
-import { Input } from "@/app/components/ui/input";
-import { Search } from "lucide-react";
-import JobDetails from "../components/job-display-components/job-details";
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { EducationSelect } from "@/app/components/education-select";
-import { TrustedCompanies } from "../components/LandingPageComponents/trusted-companies";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { degreeTypeSchema } from "@/constants/jobOpportunities";
-import { JobCardProps } from "@/types/job";
-import { CompanyType } from "@/types/companyType";
-import { Opportunity } from "@/types/opportunityType";
-import { Navbar } from "../components/LandingPageComponents/navbar";
-import JobCardSkeleton from "@/app/components/skeletons/job-card-skeleton";
-import { toast } from "sonner";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Search } from "lucide-react";
+import { toast } from "sonner";
+
+import type { JobCardProps } from "@/types/job";
+import type { CompanyType } from "@/types/companyType";
+import type { Opportunity } from "@/types/opportunityType";
+import { degreeTypeSchema } from "@/constants/jobOpportunities";
 import { prioritizeById } from "@/utils/setToFirst";
 
+import { Input } from "@/app/components/ui/input";
+import { EducationSelect } from "@/app/components/education-select";
+import JobCardSkeleton from "@/app/components/skeletons/job-card-skeleton";
+import JobCard from "../components/Job-components";
+import JobDetails from "../components/job-display-components/job-details";
+import { TrustedCompanies } from "../components/LandingPageComponents/trusted-companies";
+import { Navbar } from "../components/LandingPageComponents/navbar";
 
-const mapStreamToDegreeType = (stream: string) => {
-  const bachelorDegrees = ["btech", "be", "bsc", "bca"];
-  const masterDegrees = ["mca", "mtech"];
-  return bachelorDegrees.includes(stream.toLowerCase())
-    ? degreeTypeSchema.Enum.bachelor
-    : masterDegrees.includes(stream.toLowerCase())
-      ? degreeTypeSchema.Enum.master
-      : null;
+const DEGREE_TYPE_MAP = {
+  bachelor: ["btech", "be", "bsc", "bca"],
+  master: ["mca", "mtech"]
+} as const;
+
+// Create union types for streams
+type BachelorStream = typeof DEGREE_TYPE_MAP.bachelor[number];
+type MasterStream = typeof DEGREE_TYPE_MAP.master[number];
+type StreamType = BachelorStream | MasterStream;
+
+// Create type guard for stream validation
+const isStreamType = (stream: string): stream is StreamType => {
+  return ([...DEGREE_TYPE_MAP.bachelor, ...DEGREE_TYPE_MAP.master] as string[]).includes(stream);
 };
 
-export default function Page() {
+// Create type guard for bachelor streams
+const isBachelorStream = (stream: StreamType): stream is BachelorStream => {
+  return DEGREE_TYPE_MAP.bachelor.includes(stream as BachelorStream);
+};
+
+const mapStreamToDegreeType = (stream: string) => {
+  const normalizedStream = stream.toLowerCase();
+
+  if (!isStreamType(normalizedStream)) {
+    return null;
+  }
+
+  return isBachelorStream(normalizedStream)
+    ? degreeTypeSchema.Enum.bachelor
+    : degreeTypeSchema.Enum.master;
+};
+
+const generatePassingYears = () => {
+  const currentYear = new Date().getFullYear();
+  return [
+    ...Array.from({ length: 10 }, (_, i) => ({
+      value: (currentYear + i).toString(),
+      label: (currentYear + i).toString()
+    })),
+    { value: "all", label: "All" }
+  ];
+};
+
+export default function JobsPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
+  const jobId = searchParams.get("id");
+
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
   const [passingYear, setPassingYear] = useState("all");
   const [stream, setStream] = useState("all");
   const [jobListings, setJobListings] = useState<JobCardProps[]>([]);
-  const [jobDetails, setJobDetails] = useState<{ companies: CompanyType; opportunities: Opportunity }>({} as { companies: CompanyType; opportunities: Opportunity });
+  const [jobDetails, setJobDetails] = useState<{ companies: CompanyType; opportunities: Opportunity } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDetailsLoading, setIsDetailsLoading] = useState(false);
 
-  const session = useSession();
-  const searchParams = useSearchParams();
-  const jobId = searchParams.get("id");
-  const router = useRouter();
-
-  const passingYears = useMemo(() => [
-    ...Array.from({ length: 10 }, (_, i) => {
-      const year = 2024 + i;
-      return { value: year.toString(), label: year.toString() };
-    }),
-    { value: "all", label: "All" },
-  ], []);
+  const abortControllerRef = useRef<AbortController>(null);
 
   const streams = useMemo(() => [
     { value: "btech", label: "B.Tech" },
@@ -60,59 +90,115 @@ export default function Page() {
     { value: "all", label: "All" },
   ], []);
 
-  const applyChange = useCallback(async (id: string) => {
-    const userId = session.data?.user?.id;
-    if (!userId) return;
+  const passingYears = useMemo(generatePassingYears, []);
 
+  // Debounce search input
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedQuery(searchQuery), 300);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
+
+  const fetchJobListings = useCallback(async (signal?: AbortSignal) => {
     try {
-      const res = await axios.post("/api/job/get-jobs", { userId, jobId: id });
-      setJobDetails({
-        companies: res.data.job.companies,
-        opportunities: res.data.job.opportunities,
-      });
+      const response = await axios.post("/api/job/get-jobs", {
+        userId: session?.user?.id,
+        name: debouncedQuery,
+        passingYear: passingYear !== "all" ? passingYear : undefined,
+        stream: stream !== "all" ? mapStreamToDegreeType(stream) : undefined,
+      }, { signal });
+
+      return response.data.jobs as JobCardProps[];
     } catch (error) {
-      console.error("Error fetching job details:", error);
-      toast.error("E:4002 - error fetching job details");
+      if (!axios.isCancel(error)) {
+        console.error("Error fetching job listings:", error);
+        toast.error("Failed to load job listings");
+      }
+      return [];
     }
-  }, [session.data?.user?.id]);
+  }, [session?.user?.id, debouncedQuery, passingYear, stream]);
+
+  const fetchJobDetails = useCallback(async (jobId: string, signal?: AbortSignal) => {
+    try {
+      setIsDetailsLoading(true);
+      const response = await axios.post("/api/job/get-jobs", {
+        userId: session?.user?.id,
+        jobId,
+      }, { signal });
+
+      return response.data.job;
+    } catch (error) {
+      if (!axios.isCancel(error)) {
+        console.error("Error fetching job details:", error);
+        toast.error("Failed to load job details");
+      }
+      return null;
+    } finally {
+      setIsDetailsLoading(false);
+    }
+  }, [session?.user?.id]);
 
   useEffect(() => {
-    if (session.status === "loading") return;
-    if (session.status === "unauthenticated") return router.push('/auth/login');
-
-    const userId = session.data?.user?.id;
-    if (!userId) {
-      toast.error("E:4001 - user id missing");
+    if (status === "unauthenticated") {
+      router.push('/auth/login');
       return;
     }
 
-    setIsLoading(true);
+    if (status !== "authenticated") return;
 
-    axios
-      .post("/api/job/get-jobs", {
-        userId,
-        name: searchQuery,
-        passingYear: passingYear !== "all" ? passingYear : undefined,
-        stream: stream !== "all" ? mapStreamToDegreeType(stream) : undefined,
-      })
-      .then(async (res) => {
-        if (res.data.jobs.length) {
-          const selectedJobId = jobId || res.data.jobs[0].jobId;
-          await applyChange(selectedJobId);
-          setJobListings(prioritizeById(res.data.jobs, selectedJobId));
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    const loadJobs = async () => {
+      setIsLoading(true);
+      try {
+        const jobs = await fetchJobListings(controller.signal);
+
+        if (jobs.length === 0) {
+          setJobListings([]);
+          setJobDetails(null);
+          return;
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching job listings:", error);
-      })
-      .finally(() => setIsLoading(false));
-  }, [searchQuery, passingYear, stream, session.status, jobId, applyChange, router, session.data?.user.id]);
+
+        const selectedJobId = jobId || jobs[0]?.jobId;
+        const prioritizedJobs = prioritizeById(jobs, selectedJobId);
+
+        if (selectedJobId) {
+          const details = await fetchJobDetails(selectedJobId, controller.signal);
+          if (details) setJobDetails(details);
+        }
+
+        setJobListings(prioritizedJobs);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadJobs();
+
+    return () => controller.abort();
+  }, [status, jobId, fetchJobListings, fetchJobDetails, router]);
+
+  const handleJobCardClick = useCallback(async (jobId: string) => {
+    const details = await fetchJobDetails(jobId);
+    if (details) {
+      setJobDetails(details);
+      router.replace(`/jobs?id=${jobId}`, { scroll: false });
+    }
+  }, [fetchJobDetails, router]);
 
   const memoizedJobListings = useMemo(() => (
     isLoading
-      ? Array(5).fill(0).map((_, index) => <JobCardSkeleton key={index} />)
-      : jobListings.map((job, i) => <JobCard key={i} job={job} onClick={() => applyChange(job.jobId)} />)
-  ), [isLoading, jobListings, applyChange]);
+      ? Array.from({ length: 5 }).map((_, index) => <JobCardSkeleton key={index} />)
+      : jobListings.map((job) => (
+        <JobCard
+          key={job.jobId}
+          job={job}
+          onClick={() => handleJobCardClick(job.jobId)}
+        />
+      ))
+  ), [isLoading, jobListings, handleJobCardClick]);
+
+  if (status === "loading") return null;
 
   return (
     <>
@@ -147,7 +233,7 @@ export default function Page() {
               {memoizedJobListings}
             </div>
           </div>
-          <JobDetails jobDetails={jobDetails} isLoadingDetails={isLoading} />
+          <JobDetails jobDetails={jobDetails!} isLoadingDetails={isDetailsLoading} />
         </section>
       </section>
     </>

@@ -30,10 +30,10 @@ type JobDetailsProps = {
 }
 
 export default function JobDetails({ jobDetails, isLoadingDetails }: JobDetailsProps) {
-  if (isLoadingDetails) {
+  if (isLoadingDetails || !jobDetails) {
     return <JobDetailsSkeleton />;
   }
-  else if(jobDetails && Object.keys(jobDetails!).length) {
+  if(jobDetails && Object.keys(jobDetails!).length) {
     console.log(jobDetails);
     const { name, logo } = jobDetails.companies;
 
