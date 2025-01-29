@@ -15,12 +15,12 @@ const FirstTimeSignIn = () => {
     if (session.status === "unauthenticated") {
       router.push("/auth/login");
     }
-    // if (
-    //   session.data?.user.role !== ROLE_IDS.NEW_USER &&
-    //   session.status === "authenticated"
-    // ) {
-    //   router.push("/");
-    // }
+    if (
+      session.data?.user.role !== ROLE_IDS.NEW_USER &&
+      session.status === "authenticated"
+    ) {
+      router.push("/");
+    }
   }, [session, router]);
 
   const handleSelect = (role: string) => {
