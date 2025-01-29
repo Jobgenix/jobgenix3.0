@@ -74,7 +74,7 @@ const FirstTimeSignIn = () => {
               ? "border-[#2F8E5B]"
               : "border-gray-300"
           }`}
-          onClick={() => handleSelect(ROLE_IDS.EMPLOYER)}
+          //onClick={() => handleSelect(ROLE_IDS.EMPLOYER)}
         >
           <Image
             src="/images/EmployerIcon.svg"
