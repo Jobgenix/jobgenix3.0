@@ -182,7 +182,7 @@ export default function JobsPage() {
     const details = await fetchJobDetails(jobId);
     if (details) {
       setJobDetails(details);
-      router.replace(`/job-display?id=${jobId}`, { scroll: false });
+      //router.replace(`/job-display?id=${jobId}`, { scroll: false });
     }
   }, [fetchJobDetails, router]);
 
