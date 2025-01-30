@@ -45,9 +45,10 @@ export function Combobox({ setFormData }: formSectionProps) {
 
   const session = useSession();
 
-  React.useEffect(()=>{
-    setFormData("companyId", value);
-  },[value])
+  React.useEffect(() => {
+    const id = companies?.find(c => c.name === value)?.id;
+    setFormData("companyId", id!);
+  }, [value])
 
   // const selectedCompany = companies.find((company) => company.value === value);
 
@@ -154,22 +155,22 @@ export function Combobox({ setFormData }: formSectionProps) {
         >
           <div className="flex items-center gap-2 w-full">
             {
-            selectedCompany ? (
-              <>
-                <div className="relative h-6 w-6 shrink-0">
-                  <Image
-                    src={selectedCompany.logo || "/placeholder.svg"}
-                    alt={selectedCompany.name}
-                    className="rounded-sm object-contain"
-                    fill
-                    sizes="24px"
-                  />
-                </div>
-                <span>{selectedCompany.name}</span>
-              </>
-            ) : (
-              "Select company..."
-            )}
+              selectedCompany ? (
+                <>
+                  <div className="relative h-6 w-6 shrink-0">
+                    <Image
+                      src={selectedCompany.logo || "/placeholder.svg"}
+                      alt={selectedCompany.name}
+                      className="rounded-sm object-contain"
+                      fill
+                      sizes="24px"
+                    />
+                  </div>
+                  <span>{selectedCompany.name}</span>
+                </>
+              ) : (
+                "Select company..."
+              )}
           </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -180,7 +181,7 @@ export function Combobox({ setFormData }: formSectionProps) {
             placeholder="Search company..."
             className="h-9"
             value={companyName}
-            onValueChange={(value:string) => {
+            onValueChange={(value: string) => {
               setCompanyName(value);
             }}
           />
@@ -232,13 +233,13 @@ export function Combobox({ setFormData }: formSectionProps) {
               {companies?.map((company) => (
                 <CommandItem
                   key={company.name}
-                  value={company.id}
-                  onSelect={(currentValue:string) => {
+                  value={company.name}
+                  onSelect={(currentValue: string) => {
                     const newValue = currentValue === value ? "" : currentValue;
                     setValue(newValue);
                     setOpen(false);
                     const selectCompany = companies.find(
-                      (company) => company.id === newValue
+                      (company) => company.name === newValue
                     );
                     setSelectedCompany(selectCompany);
                   }}
