@@ -19,6 +19,9 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import WorkplaceTypeSelector from "../components/workplace-type";
 import { ROLE_IDS } from "@/constants/roles";
+import { toast } from "sonner";
+import { ZodError } from "zod";
+import { parseZodError } from "@/utils/parseZodError";
 
 export default function Page() {
   const [formData, setFormData] = useState<Partial<Opportunity>>({});
@@ -39,18 +42,34 @@ export default function Page() {
   const submitForm = useCallback(async () => {
     try {
       if (status !== "authenticated" || session.user.role !== ROLE_IDS.EMPLOYER) return;
-      
+
       const validatedFormData = opportunitySchema.parse(formData);
-      const { data } = await axios.post("/api/job/create-job", {
+      const response = await axios.post("/api/job/create-job", {
         ...validatedFormData,
         userId: session.user.id,
       });
 
-      if (data.status === "success") {
+      if (response.status === 201) {
         router.push('/job-display');
       }
     } catch (error) {
-      console.error("Submission error:", error);
+      if (error instanceof ZodError) {
+        const errorMessages = parseZodError(error);
+        console.log(errorMessages);
+        toast.error(
+          <div>
+            <p>Form Submission Errors:</p>
+            <ul className="mt-2">
+              {errorMessages.map((msg, index) => (
+                <li key={index}>- {msg}</li>
+              ))}
+            </ul>
+          </div>
+        );
+      } else {
+        console.log("An unexpected error occurred:", error);
+        toast.error("Network Error");
+      }
     }
   }, [formData, router, session, status]);
 

@@ -1,7 +1,7 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
@@ -15,7 +15,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   }, [session, router]);
 
   // Render the children only if the user is not authenticated
-  return <>{children}</>;
+  return <Suspense>{children}</Suspense>;
 };
 
 export default AuthLayout;

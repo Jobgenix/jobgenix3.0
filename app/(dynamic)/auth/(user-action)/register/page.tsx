@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
@@ -34,6 +34,8 @@ const Register: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callback");
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -97,26 +99,27 @@ const Register: React.FC = () => {
         }
 
         setIsLoading(false);
-        router.push('/auth/first-login');
+        if(callbackUrl?.length) setTimeout(() => router.push(callbackUrl), 0);
+        else router.push('/auth/first-login');
     };
 
     return (
         <div className="flex h-[100vh] w-screen justify-center bg-[#E5F7EB] items-center">
-           <div className="md:h-[98vh] h-[80vh] md:w-[85vw]  lg:w-[48vw]   p-2 rounded-lg rounded-bl-[50px] bg-white flex flex-col md:flex-row items-center justify-between ">
+            <div className="md:h-[98vh] h-[80vh] md:w-[85vw]  lg:w-[48vw]   p-2 rounded-lg rounded-bl-[50px] bg-white flex flex-col md:flex-row items-center justify-between ">
                 <div className="hidden h-full  md:flex md:w-2/5  lg:w-[20vw] justify-center">
-                        
-                      <Image
-                          src="/LandingPageImages/login page.png"
-                          alt="Login Illustration"
-                          className="lg:w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
-                          width={400}
-                          height={200 / (9/16)}
-                        />
-                      </div>
-                
+
+                    <Image
+                        src="/LandingPageImages/login page.png"
+                        alt="Login Illustration"
+                        className="lg:w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
+                        width={400}
+                        height={200 / (9 / 16)}
+                    />
+                </div>
+
 
                 <div className="h-full   flex justify-center px-4 flex-col   max-w-sm sm:max-w-md  md:w-1/2 lg:w-1/2">
-                {/* <h1 className="text-xl text-center text-slate-700 mb-4">
+                    {/* <h1 className="text-xl text-center text-slate-700 mb-4">
           Welcome Back to <span className="text-[#2F8E5B]">Jobgenix!</span>
         </h1> */}
 
@@ -263,7 +266,7 @@ const Register: React.FC = () => {
                         Already have an account?{" "}
                         <button
                             className="text-[#2F8E5B] hover:underline"
-                            onClick={() => router.push("/auth/login")}
+                            onClick={() =>callbackUrl? router.push(`/auth/login?callback=${callbackUrl}`) : router.push("/auth/login")}
                         >
                             Login
                         </button>

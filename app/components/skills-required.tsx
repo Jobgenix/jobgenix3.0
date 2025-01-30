@@ -22,12 +22,12 @@ interface coursesProps {
 export default function SkillsRequired({ setFormData }: formSectionProps) {
   const [openForCollege, setOpenForCollege] = useState(false);
   const [specificCourse, setSpecificCourse] = useState(false);
-  const [selectedYear, setSelectedYear] = useState<PassoutYear | null>(null);
+  const [selectedYear, setSelectedYear] = useState<PassoutYear[]>([]);
   const [selectedCourses, setSelectedCourses] = useState<DegreeType[]>([]);
 
   useEffect(() => {
     if (selectedYear !== null) {
-      setFormData("passoutYear", [selectedYear]); // Ensure correct field name
+      setFormData("passoutYear", [...selectedYear]); // Ensure correct field name
     }
     setFormData('degree', [...selectedCourses]);
   }, [selectedYear, selectedCourses]);
@@ -159,10 +159,10 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
                   {years.map((year) => (
                     <button
                       key={year}
-                      onClick={() => setSelectedYear(year)}
+                      onClick={() => setSelectedYear(prev=>[...prev, year])}
                       className={`px-4 py-2 rounded-full text-sm transition-colors
                           ${
-                            selectedYear === year
+                            selectedYear.includes(year)
                               ? "bg-[#4CAF50] text-white"
                               : "border border-dashed border-gray-400 hover:border-[#4CAF50]"
                           }`}

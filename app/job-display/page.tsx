@@ -139,7 +139,11 @@ export default function JobsPage() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push('/auth/login');
+      if(jobId){
+        const callbackUrl = `/job-display?id=${jobId}`
+        router.push(`/auth/login?callback=${encodeURI(callbackUrl)}`);
+      }
+      else router.push('/auth/login');
       return;
     }
 

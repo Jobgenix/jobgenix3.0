@@ -116,13 +116,19 @@ export const authConfig = {
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
-            return url.startsWith(baseUrl) ? url : "/home";
+            // Allows relative callback URLs
+            if (url.startsWith("/")) return `${baseUrl}${url}`
+
+            // Allows callback URLs on the same origin
+            if (new URL(url).origin === baseUrl) return url
+
+            return baseUrl
         },
         async jwt({ token, user, trigger, session }) {
             if (user) {
                 return { ...token, id: user.id, roleId: user.roleId };
             }
-            if(trigger === 'update' && session?.role){
+            if (trigger === 'update' && session?.role) {
                 return { ...token, roleId: session.role }
             }
             return token;
