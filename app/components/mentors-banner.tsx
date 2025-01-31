@@ -1,5 +1,5 @@
 import Image from "next/image"
-import mentorBg from "@/public/images/mentorBg.png"
+// import mentorBg from "@/public/images/mentorBg.png"
 
 export default function MentorBanner() {
   return (
@@ -9,7 +9,7 @@ export default function MentorBanner() {
           {/* Image container with full height */}
           <div className="h-full w-1/5  shrink-0">
             <Image
-              src={mentorBg}
+              src={`/images/mentorBg.png`}
               alt="Mentor"
               fill
               className="object-cover"
