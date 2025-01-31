@@ -20,8 +20,8 @@ import JobDetails from "../components/job-display-components/job-details";
 import { TrustedCompanies } from "../components/LandingPageComponents/trusted-companies";
 import { Navbar } from "../components/LandingPageComponents/navbar";
 import CompanyPreparation from "../components/company-prep";
-import { PostSection } from "../components/LandingPageComponents/post-section"
-import { Footer } from "../components/LandingPageComponents/Footer"
+import { PostSection } from "../components/LandingPageComponents/post-section";
+import { Footer } from "../components/LandingPageComponents/Footer";
 import MentorBanner from "../components/mentors-banner";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -76,12 +76,18 @@ export default function JobsPage() {
   const searchParams = useSearchParams();
   const jobId = searchParams.get("id");
 
+  const filter_type = searchParams.get("type") || "all";
+
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
   const [passingYear, setPassingYear] = useState("all");
   const [stream, setStream] = useState("all");
-  const [type, setType] = useState("all");
+  const [type, setType] = useState(filter_type);
+
+  //state to update the jobs
   const [jobListings, setJobListings] = useState<JobCardProps[]>([]);
+
+  //state to update the specific job details
   const [jobDetails, setJobDetails] = useState<{
     companies: CompanyType;
     opportunities: Opportunity;
@@ -89,6 +95,7 @@ export default function JobsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDetailsLoading, setIsDetailsLoading] = useState(false);
 
+  //state to toggle the infinite scroll
   const [hasMore, setHasMore] = useState(true);
 
   const abortControllerRef = useRef<AbortController>(null);
@@ -186,7 +193,7 @@ export default function JobsPage() {
   useEffect(() => {
     if (status === "unauthenticated") {
       if (jobId) {
-        const callbackUrl = `/job-display?id=${jobId}`;
+        const callbackUrl = `/opportunities?id=${jobId}`;
         toast.error("You need to login first");
         router.push(`/auth/login?callback=${encodeURI(callbackUrl)}`);
       } else router.push("/auth/login");
@@ -242,7 +249,7 @@ export default function JobsPage() {
     [fetchJobDetails]
   );
 
-  // function to fetch jobs when scroll hits bottom or bottom div comes into view
+  // function to fetch jobs when scroll hits bottom
   const fetchMoreJobs = useCallback(
     async (lastJobId: string) => {
       try {
@@ -298,9 +305,9 @@ export default function JobsPage() {
         </p>
         <TrustedCompanies className="py-2" />
       </div>
-      <section className="px-16">
+      <section className="px-16 pb-6">
         <section className="flex gap-4 justify-evenly items-center">
-          <div className="flex flex-col gap-4 h-screen bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[30%]">
+          <div className="flex flex-col gap-4 h-screen bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[30%] shadow-lg shadow-black/20 rounded-md">
             <section className="p-4 flex flex-col gap-4">
               <div className="relative hidden md:block">
                 <Input
@@ -355,10 +362,10 @@ export default function JobsPage() {
           />
         </section>
       </section>
-      <CompanyPreparation/>
-      <MentorBanner/>
-      <PostSection/>
-      <Footer/>
+      <CompanyPreparation />
+      <MentorBanner />
+      <PostSection />
+      <Footer />
     </>
   );
 }

@@ -83,24 +83,11 @@
     --chart-5: 340 75% 55%;
   }
 
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 4px; /* Narrower scrollbar width */
-  }
 
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05); /* Very light background for the track */
-    border-radius: 5px; /* Slightly rounded track edges */
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1); /* Slightly darker, very subtle thumb */
-    border-radius: 5px; /* Rounded thumb */
-    opacity: 0; /* Invisible by default */
-    transition: opacity 0.2s ease; /* Smooth transition for visibility */
-  }
 
   .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-    opacity: 0.4; /* Subtle thumb appearance on hover */
+    opacity: 0.4;
+    /* Subtle thumb appearance on hover */
   }
 
 }
@@ -125,4 +112,27 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  /* Narrower scrollbar width */
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  /* Very light background for the track */
+  border-radius: 5px;
+  /* Slightly rounded track edges */
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  /* Slightly darker, very subtle thumb */
+  border-radius: 9999px;
+  /* Rounded thumb */
+  opacity: 0;
+  /* Invisible by default */
+  transition: opacity 0.2s ease;
+  /* Smooth transition for visibility */
 }

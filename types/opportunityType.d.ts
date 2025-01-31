@@ -1,12 +1,38 @@
 export type JobType = "jobs" | "contracts" | "internships";
 export type WorkplaceType = "remote" | "office" | "hybrid";
-export type StipendType = "fixed" | "performance-based" | "unpaid" | "fixed + performance-based";
-export type DiversityType = "female" | "male" | "transgender" | "intersex" | "non-binary" | "other";
+export type StipendType =
+  | "fixed"
+  | "performance-based"
+  | "unpaid"
+  | "fixed + performance-based";
+export type DiversityType =
+  | "female"
+  | "male"
+  | "transgender"
+  | "intersex"
+  | "non-binary"
+  | "other";
 export type ExperienceType = "fresher" | "experienced" | "both";
 export type DegreeType = "bachelor" | "master" | "dual" | "other" | "all";
-export type BenefitsType = "health-insurance" | "paid-leave" | "work-from-home" | "flexible-hours" | "performance-bonus" | "other";
+export type BenefitsType =
+  | "health-insurance"
+  | "paid-leave"
+  | "work-from-home"
+  | "flexible-hours"
+  | "performance-bonus"
+  | "other";
 export type JobStatus = "active" | "inactive" | "filled";
-export type PassoutYear = "2024" | "2025" | "2026" | "2027" | "2028" | "2029" | "2030";
+export type PassoutYear =
+  | "2019"
+  | "2020"
+  | "2021"
+  | "2022"
+  | "2023"
+  | "2024"
+  | "2025"
+  | "2026"
+  | "2027"
+  | "2028";
 
 export type Opportunity = {
   id: string;

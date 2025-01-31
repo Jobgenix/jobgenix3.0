@@ -31,9 +31,9 @@ export function Navbar() {
   }, [session]);
 
   const opportunityOptions = [
-    { name: "Internships", route: "/opportunities?type=Internships" },
-    { name: "Jobs", route: "/job-display" },
-    { name: "Government Jobs", route: "/opportunities?type=Government Jobs" },
+    { name: "Internships", route: "/opportunities?type=internships" },
+    { name: "Jobs", route: "/opportunities?type=jobs" },
+    { name: "Government Jobs", route: "/opportunities?type=government-jobs" },
     { name: "Freshers", route: "/opportunities?type=Freshers" },
     { name: "Remote Jobs", route: "/opportunities?type=Remote Jobs" },
     { name: "Part-time Jobs", route: "/opportunities?type=Part-time Jobs" },
@@ -64,75 +64,76 @@ export function Navbar() {
         </div>
 
         {/* Middle and Right Sections: Hidden on small/medium screens */}
-        <div className="hidden xl:flex items-center gap-4">
-          <Link href="#" className="text-sm text-[#646A66] font-bold">
-            Resources
-          </Link>
-          <Link href="#" className="text-sm text-[#646A66] font-bold">
-            Mentorship
-          </Link>
-          <Link href="#" className="text-sm text-[#646A66] font-bold">
-            Courses
-          </Link>
-          <Link href="#" className="text-sm text-[#646A66] font-bold">
-            Practice
-          </Link>
+        <div className="flex gap-4">
+          <div className="hidden xl:flex items-center gap-4">
+            <Link href="#" className="text-sm text-[#646A66] font-bold">
+              Resources
+            </Link>
+            <Link href="#" className="text-sm text-[#646A66] font-bold">
+              Mentorship
+            </Link>
+            <Link href="#" className="text-sm text-[#646A66] font-bold">
+              Courses
+            </Link>
+            <Link href="#" className="text-sm text-[#646A66] font-bold">
+              Practice
+            </Link>
 
-          {/* Opportunities Dropdown (Desktop) */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Link
-                href="#"
-                className="text-sm text-[#646A66] font-bold flex justify-center items-center"
-              >
-                Opportunities
-                <ChevronDown className="h-4 w-4" />
-              </Link>
-            </DropdownMenuTrigger>
+            {/* Opportunities Dropdown (Desktop) */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Link
+                  href="#"
+                  className="text-sm text-[#646A66] font-bold flex justify-center items-center"
+                >
+                  Opportunities
+                  <ChevronDown className="h-4 w-4" />
+                </Link>
+              </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-48 mt-4 py-2 bg-gray-300">
-              {opportunityOptions.map((option) => (
-                <DropdownMenuItem key={option.name}>
-                  <Link
-                    href={option.route}
-                    className="text-sm text-[#646A66] font-bold"
-                  >
-                    {option.name}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+              <DropdownMenuContent className="w-48 mt-4 py-2 bg-gray-300">
+                {opportunityOptions.map((option) => (
+                  <DropdownMenuItem key={option.name}>
+                    <Link
+                      href={option.route}
+                      className="text-sm text-[#646A66] font-bold"
+                    >
+                      {option.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
 
-        <div className="hidden xl:flex items-center gap-3 px-3">
-          <span className="text-gray-400">|</span>
-          <Button
-            className="w-full bg-[#01A768] hover:bg-[#018e59] text-white rounded-[18px] font-medium"
-            onClick={() =>
-              loginStatus ? router.push("/home") : router.push("/auth/login")
-            }
-          >
-            {loginStatus ? "logout" : "Login"}
-          </Button>
-          <span className="text-gray-400">|</span>
-          {/* <Bell /> */}
-          <Link href="/job-upload">
+          <div className="hidden xl:flex items-center gap-3 px-3">
+            <span className="text-gray-400">|</span>
             <Button
-              variant="outline"
-              className="h-9 px-4 font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
+              className="w-full bg-[#01A768] hover:bg-[#018e59] text-white rounded-[18px] font-medium"
+              onClick={() =>
+                loginStatus ? router.push("/home") : router.push("/auth/login")
+              }
             >
-              <Plus className="mr-1 h-4 w-4" /> Host
+              {loginStatus ? "logout" : "Login"}
             </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            className="h-9 px-4 bg-[#DFE2FF] text-[#383838] font-extrabold hover:bg-gray-100 rounded-[18px]"
-          >
-            For Business
-          </Button>
+            <span className="text-gray-400">|</span>
+            {/* <Bell /> */}
+            <Link href="/job-upload">
+              <Button
+                variant="outline"
+                className="h-9 px-4 font-bold text-[#646A66] text-center border-gray-200 rounded-[18px]"
+              >
+                <Plus className="mr-1 h-4 w-4" /> Host
+              </Button>
+            </Link>
+            <Button
+              variant="ghost"
+              className="h-9 px-4 bg-[#DFE2FF] text-[#383838] font-extrabold hover:bg-gray-100 rounded-[18px]"
+            >
+              For Business
+            </Button>
+          </div>
         </div>
-
         {/* Hamburger Menu for Small/Medium Screens */}
         <div className="xl:hidden">
           <DropdownMenu>

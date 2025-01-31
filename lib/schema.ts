@@ -88,7 +88,7 @@ export const experienceTypeEnum = pgEnum("experienceType",["fresher", "experienc
 export const degreeTypeEnum = pgEnum("degreeType",["bachelor", "master", "dual", "other", "all"]);
 export const benefitsTypeEnum = pgEnum("benefitsType",["health-insurance", "paid-leave", "work-from-home", "flexible-hours", "performance-bonus", "other"]);
 export const jobStatusEnum = pgEnum("status",["active", "inactive", "filled"]);
-export const passoutYearEnum = pgEnum("passoutYear",["2024","2025", "2026", "2027", "2028", "2029", "2030"]);
+export const passoutYearEnum = pgEnum("passoutYear",["2019", "2020", "2021", "2022","2023","2024","2025", "2026", "2027", "2028"]);
 
 export const opportunities = pgTable("opportunities", {
     id: text("id").primaryKey(),

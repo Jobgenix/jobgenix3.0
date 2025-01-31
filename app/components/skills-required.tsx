@@ -159,13 +159,19 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
                   {years.map((year) => (
                     <button
                       key={year}
-                      onClick={() => setSelectedYear(prev=>[...prev, year])}
-                      className={`px-4 py-2 rounded-full text-sm transition-colors
-                          ${
-                            selectedYear.includes(year)
-                              ? "bg-[#4CAF50] text-white"
-                              : "border border-dashed border-gray-400 hover:border-[#4CAF50]"
-                          }`}
+                      onClick={() =>
+                      setSelectedYear((prev) =>
+                        prev.includes(year)
+                        ? prev.filter((y) => y !== year)
+                        : [...prev, year]
+                      )
+                      }
+                      className={`px-4 py-2 rounded-full text-sm transition-colors border
+                        ${
+                        selectedYear.includes(year)
+                          ? "bg-[#4CAF50] text-white"
+                          : " border-dashed border-gray-400 hover:border-[#4CAF50]"
+                        }`}
                     >
                       {year}
                     </button>

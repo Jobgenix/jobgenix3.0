@@ -62,7 +62,7 @@ export default function JobDetails({
     };
 
     return (
-      <Card className="w-[70%] mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar">
+      <Card className="w-[70%] mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar shadow-lg shadow-black/20 rounded-md">
         <CardHeader className="space-y-4">
           <div className="flex justify-between items-start">
             <Image
