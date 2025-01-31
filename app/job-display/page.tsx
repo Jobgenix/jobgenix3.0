@@ -19,20 +19,23 @@ import JobCard from "../components/Job-components";
 import JobDetails from "../components/job-display-components/job-details";
 import { TrustedCompanies } from "../components/LandingPageComponents/trusted-companies";
 import { Navbar } from "../components/LandingPageComponents/navbar";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const DEGREE_TYPE_MAP = {
   bachelor: ["btech", "be", "bsc", "bca"],
-  master: ["mca", "mtech"]
+  master: ["mca", "mtech"],
 } as const;
 
 // Create union types for streams
-type BachelorStream = typeof DEGREE_TYPE_MAP.bachelor[number];
-type MasterStream = typeof DEGREE_TYPE_MAP.master[number];
+type BachelorStream = (typeof DEGREE_TYPE_MAP.bachelor)[number];
+type MasterStream = (typeof DEGREE_TYPE_MAP.master)[number];
 type StreamType = BachelorStream | MasterStream;
 
 // Create type guard for stream validation
 const isStreamType = (stream: string): stream is StreamType => {
-  return ([...DEGREE_TYPE_MAP.bachelor, ...DEGREE_TYPE_MAP.master] as string[]).includes(stream);
+  return (
+    [...DEGREE_TYPE_MAP.bachelor, ...DEGREE_TYPE_MAP.master] as string[]
+  ).includes(stream);
 };
 
 // Create type guard for bachelor streams
@@ -57,9 +60,9 @@ const generatePassingYears = () => {
   return [
     ...Array.from({ length: 10 }, (_, i) => ({
       value: (currentYear + i).toString(),
-      label: (currentYear + i).toString()
+      label: (currentYear + i).toString(),
     })),
-    { value: "all", label: "All" }
+    { value: "all", label: "All" },
   ];
 };
 
@@ -73,22 +76,44 @@ export default function JobsPage() {
   const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
   const [passingYear, setPassingYear] = useState("all");
   const [stream, setStream] = useState("all");
+  const [type, setType] = useState("all");
   const [jobListings, setJobListings] = useState<JobCardProps[]>([]);
-  const [jobDetails, setJobDetails] = useState<{ companies: CompanyType; opportunities: Opportunity } | null>(null);
+  const [jobDetails, setJobDetails] = useState<{
+    companies: CompanyType;
+    opportunities: Opportunity;
+  } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isDetailsLoading, setIsDetailsLoading] = useState(false);
 
+  const [hasMore, setHasMore] = useState(true);
+
   const abortControllerRef = useRef<AbortController>(null);
 
-  const streams = useMemo(() => [
-    { value: "btech", label: "B.Tech" },
-    { value: "be", label: "B.E." },
-    { value: "bsc", label: "B.Sc" },
-    { value: "bca", label: "BCA" },
-    { value: "mca", label: "MCA" },
-    { value: "mtech", label: "M.Tech" },
-    { value: "all", label: "All" },
-  ], []);
+  // div to trigger paginated api call for jobs
+  // const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  const streams = useMemo(
+    () => [
+      { value: "btech", label: "B.Tech" },
+      { value: "be", label: "B.E." },
+      { value: "bsc", label: "B.Sc" },
+      { value: "bca", label: "BCA" },
+      { value: "mca", label: "MCA" },
+      { value: "mtech", label: "M.Tech" },
+      { value: "all", label: "All" },
+    ],
+    []
+  );
+
+  const types = useMemo(
+    () => [
+      { value: "contracts", label: "Contracts" },
+      { value: "jobs", label: "Jobs" },
+      { value: "internships", label: "Internships" },
+      { value: "all", label: "All" },
+    ],
+    []
+  );
 
   const passingYears = useMemo(generatePassingYears, []);
 
@@ -98,52 +123,69 @@ export default function JobsPage() {
     return () => clearTimeout(handler);
   }, [searchQuery]);
 
-  const fetchJobListings = useCallback(async (signal?: AbortSignal) => {
-    try {
-      const response = await axios.post("/api/job/get-jobs", {
-        userId: session?.user?.id,
-        name: debouncedQuery,
-        passingYear: passingYear !== "all" ? passingYear : undefined,
-        stream: stream !== "all" ? mapStreamToDegreeType(stream) : undefined,
-      }, { signal });
+  const fetchJobListings = useCallback(
+    async (signal?: AbortSignal) => {
+      try {
+        const response = await axios.post(
+          "/api/job/get-jobs",
+          {
+            userId: session?.user?.id,
+            name: debouncedQuery,
+            passingYear: passingYear !== "all" ? passingYear : undefined,
+            stream:
+              stream !== "all" ? mapStreamToDegreeType(stream) : undefined,
+            type: type !== "all" ? type : undefined,
+          },
+          { signal }
+        );
+        setHasMore(response.data.hasMore);
 
-      return response.data.jobs as JobCardProps[];
-    } catch (error) {
-      if (!axios.isCancel(error)) {
-        console.error("Error fetching job listings:", error);
-        toast.error("Failed to load job listings");
+        return response.data.jobs as JobCardProps[];
+      } catch (error) {
+        if (!axios.isCancel(error)) {
+          console.error("Error fetching job listings:", error);
+          toast.error("Failed to load job listings");
+        }
+        return [];
       }
-      return [];
-    }
-  }, [session?.user?.id, debouncedQuery, passingYear, stream]);
+    },
+    [session?.user?.id, debouncedQuery, passingYear, stream, type]
+  );
 
-  const fetchJobDetails = useCallback(async (jobId: string, signal?: AbortSignal) => {
-    try {
-      setIsDetailsLoading(true);
-      const response = await axios.post("/api/job/get-jobs", {
-        userId: session?.user?.id,
-        jobId,
-      }, { signal });
+  const fetchJobDetails = useCallback(
+    async (jobId: string, signal?: AbortSignal) => {
+      try {
+        setIsDetailsLoading(true);
+        const response = await axios.post(
+          "/api/job/get-jobs",
+          {
+            userId: session?.user?.id,
+            jobId,
+          },
+          { signal }
+        );
 
-      return response.data.job;
-    } catch (error) {
-      if (!axios.isCancel(error)) {
-        console.error("Error fetching job details:", error);
-        toast.error("Failed to load job details");
+        return response.data.job;
+      } catch (error) {
+        if (!axios.isCancel(error)) {
+          console.error("Error fetching job details:", error);
+          toast.error("Failed to load job details");
+        }
+        return null;
+      } finally {
+        setIsDetailsLoading(false);
       }
-      return null;
-    } finally {
-      setIsDetailsLoading(false);
-    }
-  }, [session?.user?.id]);
+    },
+    [session?.user?.id]
+  );
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      if(jobId){
-        const callbackUrl = `/job-display?id=${jobId}`
+      if (jobId) {
+        const callbackUrl = `/job-display?id=${jobId}`;
+        toast.error("You need to login first");
         router.push(`/auth/login?callback=${encodeURI(callbackUrl)}`);
-      }
-      else router.push('/auth/login');
+      } else router.push("/auth/login");
       return;
     }
 
@@ -167,7 +209,10 @@ export default function JobsPage() {
         const prioritizedJobs = prioritizeById(jobs, selectedJobId);
 
         if (selectedJobId) {
-          const details = await fetchJobDetails(selectedJobId, controller.signal);
+          const details = await fetchJobDetails(
+            selectedJobId,
+            controller.signal
+          );
           if (details) setJobDetails(details);
         }
 
@@ -182,25 +227,61 @@ export default function JobsPage() {
     return () => controller.abort();
   }, [status, jobId, fetchJobListings, fetchJobDetails, router]);
 
-  const handleJobCardClick = useCallback(async (jobId: string) => {
-    const details = await fetchJobDetails(jobId);
-    if (details) {
-      setJobDetails(details);
-      //router.replace(`/job-display?id=${jobId}`, { scroll: false });
-    }
-  }, [fetchJobDetails, router]);
+  const handleJobCardClick = useCallback(
+    async (jobId: string) => {
+      const details = await fetchJobDetails(jobId);
+      if (details) {
+        setJobDetails(details);
+        //router.replace(`/job-display?id=${jobId}`, { scroll: false });
+      }
+    },
+    [fetchJobDetails]
+  );
 
-  const memoizedJobListings = useMemo(() => (
-    isLoading
-      ? Array.from({ length: 5 }).map((_, index) => <JobCardSkeleton key={index} />)
-      : jobListings.map((job) => (
-        <JobCard
-          key={job.jobId}
-          job={job}
-          onClick={() => handleJobCardClick(job.jobId)}
-        />
-      ))
-  ), [isLoading, jobListings, handleJobCardClick]);
+  // function to fetch jobs when scroll hits bottom or bottom div comes into view
+  const fetchMoreJobs = useCallback(
+    async (lastJobId: string) => {
+      try {
+        setIsLoading(true);
+        const response = await axios.post("/api/job/get-jobs", {
+          userId: session?.user?.id,
+          lastJobId,
+          name: debouncedQuery,
+          passingYear: passingYear !== "all" ? passingYear : undefined,
+          stream: stream !== "all" ? mapStreamToDegreeType(stream) : undefined,
+          type: type !== "all" ? type : undefined,
+        });
+        // console.log(response.data.jobs);
+        setHasMore(response.data.hasMore);
+        setJobListings((prevJobs) => [...prevJobs, ...response.data.jobs]);
+        setIsLoading(false);
+      } catch (error) {
+        if (!axios.isCancel(error)) {
+          console.error("Error fetching more jobs:", error);
+          //creative pop up
+          toast.error("Wait for more opportinuty");
+        }
+        setIsLoading(false);
+      }
+    },
+    [session?.user?.id, debouncedQuery, passingYear, stream, type]
+  );
+
+  const memoizedJobListings = useMemo(
+    () =>
+      isLoading
+        ? Array.from({ length: 5 }).map((_, index) => (
+            <JobCardSkeleton key={index} />
+          ))
+        : jobListings.map((job) => (
+            <JobCard
+              key={job.jobId}
+              job={job}
+              onClick={() => handleJobCardClick(job.jobId)}
+            />
+          )),
+    [isLoading, jobListings, handleJobCardClick]
+  );
 
   if (status === "loading") return null;
 
@@ -209,8 +290,7 @@ export default function JobsPage() {
       <Navbar />
       <div className="flex px-6 py-0">
         <p className="text-lg font-bold flex flex-col gap-1 w-64 justify-center">
-          Get Hired in{" "}
-          <span style={{ color: "green" }}>Dream Companies:</span>
+          Get Hired in <span style={{ color: "green" }}>Dream Companies:</span>
         </p>
         <TrustedCompanies className="py-2" />
       </div>
@@ -228,16 +308,47 @@ export default function JobsPage() {
                 />
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
               </div>
-              <div className="flex gap-8">
-                <EducationSelect label="Passing Year" value={passingYear} onValueChange={setPassingYear} options={passingYears} />
-                <EducationSelect label="Stream" value={stream} onValueChange={setStream} options={streams} />
+              <div className="flex gap-8 flex-wrap">
+                <EducationSelect
+                  label="Passing Year"
+                  value={passingYear}
+                  onValueChange={setPassingYear}
+                  options={passingYears}
+                />
+                <EducationSelect
+                  label="Stream"
+                  value={stream}
+                  onValueChange={setStream}
+                  options={streams}
+                />
+                <EducationSelect
+                  label="Type"
+                  value={type}
+                  onValueChange={setType}
+                  options={types}
+                />
               </div>
             </section>
             <div className="overflow-auto custom-scrollbar">
-              {memoizedJobListings}
+              <InfiniteScroll
+                dataLength={10}
+                next={() =>
+                  fetchMoreJobs(jobListings[jobListings.length - 1].jobId)
+                }
+                hasMore={hasMore}
+                loader={<JobCardSkeleton />}
+                scrollableTarget="scrollableDiv"
+              >
+                {memoizedJobListings}
+              </InfiniteScroll>
+
+              {/* <div ref={bottomRef} style={{ height: "300px" }}></div> */}
             </div>
           </div>
-          <JobDetails jobDetails={jobDetails!} isLoadingDetails={isDetailsLoading} />
+          <JobDetails
+            jobDetails={jobDetails!}
+            isLoadingDetails={isDetailsLoading}
+          />
         </section>
       </section>
     </>

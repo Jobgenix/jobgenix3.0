@@ -20,21 +20,27 @@ import { toast } from "sonner";
 import { CompanyType } from "@/types/companyType";
 import { Opportunity } from "@/types/opportunityType";
 
-
 type JobDetailsProps = {
-  jobDetails: {
-    companies: CompanyType;
-    opportunities: Opportunity;
-  } | undefined;
+  jobDetails:
+    | {
+        companies: CompanyType;
+        opportunities: Opportunity;
+      }
+    | undefined;
   isLoadingDetails: boolean;
-}
+};
 
-export default function JobDetails({ jobDetails, isLoadingDetails }: JobDetailsProps) {
+export default function JobDetails({
+  jobDetails,
+  isLoadingDetails,
+}: JobDetailsProps) {
   if (isLoadingDetails || !jobDetails) {
     return <JobDetailsSkeleton />;
   }
-  if(jobDetails && Object.keys(jobDetails!).length) {
-    console.log(jobDetails);
+  if (jobDetails && Object.keys(jobDetails!).length) {
+    // console.log(jobDetails);
+    // console.log(jobDetails.opportunities.id);
+
     const { name, logo } = jobDetails.companies;
 
     const {
@@ -46,7 +52,7 @@ export default function JobDetails({ jobDetails, isLoadingDetails }: JobDetailsP
       status,
       jobLink,
       description,
-      id
+      id,
     } = jobDetails.opportunities;
     const isVerified = status === "active";
 
@@ -71,7 +77,13 @@ export default function JobDetails({ jobDetails, isLoadingDetails }: JobDetailsP
               <Button
                 variant="ghost"
                 onClick={() => {
-                  navigator.clipboard.writeText(`${typeof window !== "undefined" ? window.location.origin : ""}/job-display/?id=${id}`);
+                  navigator.clipboard.writeText(
+                    `${
+                      typeof window !== "undefined"
+                        ? window.location.origin
+                        : ""
+                    }/job-display/?id=${id}`
+                  );
                   toast.success("Copied to clipboard");
                 }}
               >
