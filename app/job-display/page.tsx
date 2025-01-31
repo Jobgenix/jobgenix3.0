@@ -19,6 +19,10 @@ import JobCard from "../components/Job-components";
 import JobDetails from "../components/job-display-components/job-details";
 import { TrustedCompanies } from "../components/LandingPageComponents/trusted-companies";
 import { Navbar } from "../components/LandingPageComponents/navbar";
+import CompanyPreparation from "../components/company-prep";
+import { PostSection } from "../components/LandingPageComponents/post-section"
+import { Footer } from "../components/LandingPageComponents/Footer"
+import MentorBanner from "../components/mentors-banner";
 
 const DEGREE_TYPE_MAP = {
   bachelor: ["btech", "be", "bsc", "bca"],
@@ -240,6 +244,10 @@ export default function JobsPage() {
           <JobDetails jobDetails={jobDetails!} isLoadingDetails={isDetailsLoading} />
         </section>
       </section>
+      <CompanyPreparation/>
+      <MentorBanner/>
+      <PostSection/>
+      <Footer/>
     </>
   );
 }
