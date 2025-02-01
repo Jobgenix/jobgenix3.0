@@ -90,6 +90,8 @@ export const benefitsTypeEnum = pgEnum("benefitsType",["health-insurance", "paid
 export const jobStatusEnum = pgEnum("status",["active", "inactive", "filled"]);
 export const passoutYearEnum = pgEnum("passoutYear",["2019", "2020", "2021", "2022","2023","2024","2025", "2026", "2027", "2028"]);
 
+export const fieldEnum = pgEnum("field",["engineering", "business", "design", "arts", "science", "commerce", "medical", "law", "other"]);
+
 export const opportunities = pgTable("opportunities", {
     id: text("id").primaryKey(),
     companyId: text("companyId").references(() => companies.id),
@@ -103,13 +105,19 @@ export const opportunities = pgTable("opportunities", {
     diversityType: diversityTypeEnum("diversityType"),
     experience: experienceTypeEnum("experience").notNull(),
     yearsOfExperience: text("yearsOfExperience").notNull(),
-    degree: degreeTypeEnum("degree").array(), // Add a degree table and reference it here
-    benfits: benefitsTypeEnum("benefits").array(),
+    degree: text("degree").array(), // Reference degree table
+    benfits: benefitsTypeEnum("benefitsType").array(),
     salary: text("salary"),
     status: jobStatusEnum("status").notNull().default("active"),
     jobLink: text("jobLink").notNull(),
     passoutYear: passoutYearEnum("passoutYear").array(),
-    category: text("category").array(),//Add a category table and reference it here
+    category: text("category").array(), // Add a category table and reference it here
     deadline: timestamp("deadline", { mode: "date" }).notNull(),
     postedAt: timestamp("postedAt", { mode: "date" }).notNull(),
+});
+
+export const degrees = pgTable("degrees", {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    field: fieldEnum("field").notNull(),
 });

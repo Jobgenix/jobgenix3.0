@@ -82,7 +82,7 @@ export default function JobDetails({
                       typeof window !== "undefined"
                         ? window.location.origin
                         : ""
-                    }/job-display/?id=${id}`
+                    }/opportunities/?id=${id}`
                   );
                   toast.success("Copied to clipboard");
                 }}

@@ -28,6 +28,7 @@ import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
 import { useSession } from "next-auth/react";
 import { CompanyType } from "@/types/companyType";
 import { formSectionProps } from "@/types/formSectionProps";
+import { toast } from "sonner";
 
 export function Combobox({ setFormData }: formSectionProps) {
   const [open, setOpen] = React.useState(false);
@@ -43,12 +44,14 @@ export function Combobox({ setFormData }: formSectionProps) {
   const [companies, setCompanies] = React.useState<CompanyType[]>();
   const [selectedCompany, setSelectedCompany] = React.useState<CompanyType>();
 
+  const [render, setRender] = React.useState(false);
+
   const session = useSession();
 
   React.useEffect(() => {
-    const id = companies?.find(c => c.name === value)?.id;
+    const id = companies?.find((c) => c.name === value)?.id;
     setFormData("companyId", id!);
-  }, [value])
+  }, [value]);
 
   // const selectedCompany = companies.find((company) => company.value === value);
 
@@ -97,25 +100,79 @@ export function Combobox({ setFormData }: formSectionProps) {
 
   async function handleFormUpload(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const submitButton = e.currentTarget.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.disabled = true;
+    }
     const userId = session.data?.user?.id;
     if (!userId) {
       console.error("User ID is missing in session data");
       return;
     }
+    //variable to store the logourl from the cloudinary
+    let logoUrl: string | undefined;
 
-    const logoUrl = await uploadLogo();
+    // custom function to store the returned value from the uploadLogo function
+    const uploadTask = async () => {
+      const response = await uploadLogo();
+      logoUrl = response;
+      return response;
+    };
 
-    const response = await axios.post("/api/job/add-company", {
-      userId,
-      name,
-      website,
-      logo: logoUrl,
+    //reference of the async function to add condition
+    let uploadPromise = uploadTask();
+
+    //toast to show the progress
+    await toast.promise(uploadPromise, {
+      loading: "Uploading logo...",
+      success: "Logo uploaded successfully",
+      error: "Failed to upload logo",
     });
 
-    if (response.statusText !== "OK") {
-      console.error("Failed to upload into database:", response);
-    }
+    //condition to wait for the logo upload to finish
+    await uploadPromise;
+
+    const uploadCompany = async () => {
+      const response = await axios.post("/api/job/add-company", {
+        userId,
+        name,
+        website,
+        logo: logoUrl,
+      });
+    };
+
+    uploadPromise = uploadCompany();
+
+    //toast to show the progress of adding company
+    toast.promise(uploadPromise, {
+      loading: "Adding company...",
+      success: "Company added successfully",
+      error: "Failed to add",
+    });
+
+    await uploadPromise;
+
+    setRender(!render);
+
+    // console.log("This line got executed");
+
+    //
+
+    // if (response.statusText !== "OK") {
+    //   console.error("Failed to upload into database:", response);
+    // }
   }
+
+  //function to fetch companies from the database
+  const fetchCompanies = async (userId: string) => {
+    const response = await axios.post(`/api/job/get-companies`, {
+      userId,
+      name: companyName,
+    });
+    // console.log(response.data);
+    setCompanies([...response.data.companies]);
+    return "Companies Fetched Successfully";
+  };
 
   //fetch companies from the database
   React.useEffect(() => {
@@ -133,16 +190,16 @@ export function Combobox({ setFormData }: formSectionProps) {
     // console.log(companyName);
     // console.log(userId);
 
-    axios
-      .post(`/api/job/get-companies`, {
-        userId,
-        name: companyName,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setCompanies([...response.data.companies]);
-      });
-  }, [companyName, session]);
+    toast.promise(() => fetchCompanies(userId), {
+      loading: "Please wait while we fetch companies",
+      success: (data) => {
+        return `${data}`;
+      },
+      error: "Failed to fetch companies",
+    });
+  }, [companyName, session, render]);
+
+  
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -154,23 +211,22 @@ export function Combobox({ setFormData }: formSectionProps) {
           className="w-full bg-[#FFFCEF] justify-between h-16 text-xl"
         >
           <div className="flex items-center gap-2 w-full">
-            {
-              selectedCompany ? (
-                <>
-                  <div className="relative h-6 w-6 shrink-0">
-                    <Image
-                      src={selectedCompany.logo || "/placeholder.svg"}
-                      alt={selectedCompany.name}
-                      className="rounded-sm object-contain"
-                      fill
-                      sizes="24px"
-                    />
-                  </div>
-                  <span>{selectedCompany.name}</span>
-                </>
-              ) : (
-                "Select company..."
-              )}
+            {selectedCompany ? (
+              <>
+                <div className="relative h-6 w-6 shrink-0">
+                  <Image
+                    src={selectedCompany.logo || "/placeholder.svg"}
+                    alt={selectedCompany.name}
+                    className="rounded-sm object-contain"
+                    fill
+                    sizes="24px"
+                  />
+                </div>
+                <span>{selectedCompany.name}</span>
+              </>
+            ) : (
+              "Select company..."
+            )}
           </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -204,7 +260,8 @@ export function Combobox({ setFormData }: formSectionProps) {
                               id="Name"
                               className="col-span-2 h-8"
                               onChange={(event) => {
-                                setName(event.target.value);
+                                // const name = event.target.value;
+                                setName(event.target.value.trim());
                               }}
                             />
                           </div>
@@ -214,7 +271,7 @@ export function Combobox({ setFormData }: formSectionProps) {
                               id="maxWidth"
                               className="col-span-2 h-8"
                               onChange={(e) => {
-                                setWebsite(e.target.value);
+                                setWebsite(e.target.value.trim());
                               }}
                             />
                           </div>
@@ -222,8 +279,11 @@ export function Combobox({ setFormData }: formSectionProps) {
                       </section>
                     </div>
 
-                    <button type="submit" value={`Add`}>
-                      Add
+                    <button
+                      type="submit"
+                      className="bg-[#2F8E5B] text-white p-2 rounded-lg"
+                    >
+                      Add Company
                     </button>
                   </form>
                 </PopoverContent>
@@ -241,6 +301,7 @@ export function Combobox({ setFormData }: formSectionProps) {
                     const selectCompany = companies.find(
                       (company) => company.name === newValue
                     );
+                    // console.log(selectCompany);
                     setSelectedCompany(selectCompany);
                   }}
                   className={cn(
@@ -248,13 +309,14 @@ export function Combobox({ setFormData }: formSectionProps) {
                     value === company.name && "bg-[#FFEFAA] "
                   )}
                 >
-                  <div className=" h-6 w-6 flex justify-center  gap-4">
+                  <div className=" h-6 flex justify-center  gap-4">
                     <Image
                       src={company.logo || "/placeholder.svg"}
                       alt={company.name}
-                      className="rounded-sm object-contain !relative -left-4"
-                      fill
-                      sizes="24px"
+                      className="rounded-sm object-contain !relative"
+                      // fill
+                      height={24}
+                      width={24}
                     />
                     <span>{company.name}</span>
                   </div>

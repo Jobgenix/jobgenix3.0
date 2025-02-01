@@ -26,6 +26,8 @@ import UnderlineExtension from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import SuperscriptExtension from "@tiptap/extension-superscript";
 import SubscriptExtension from "@tiptap/extension-subscript";
+import BulletList from "@tiptap/extension-bullet-list";
+import OrderedList from "@tiptap/extension-ordered-list";
 import Image from "@tiptap/extension-image";
 import { useState } from "react";
 import { Input } from "@/app/components/ui/input";
@@ -51,6 +53,8 @@ export default function InternshipDescription({
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
+      BulletList,
+      OrderedList,
       SuperscriptExtension,
       SubscriptExtension,
       Image,
@@ -218,9 +222,7 @@ export default function InternshipDescription({
                   ? "text-[#0095FF] bg-gray-100"
                   : "text-[#0095FF] hover:text-[#0095FF]/90"
               }`}
-              onClick={() =>
-                editor.chain().focus().toggleList("bulletList", "").run()
-              }
+              onClick={() => editor.chain().focus().toggleBulletList().run()}
             >
               <List className="h-4 w-4" />
             </Button>
@@ -232,9 +234,7 @@ export default function InternshipDescription({
                   ? "text-[#0095FF] bg-gray-100"
                   : "text-[#0095FF] hover:text-[#0095FF]/90"
               }`}
-              onClick={() =>
-                editor.chain().focus().toggleList("orderedList", "").run()
-              }
+              onClick={() => editor.chain().focus().toggleOrderedList().run()}
             >
               <ListOrdered className="h-4 w-4" />
             </Button>

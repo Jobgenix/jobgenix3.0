@@ -1,14 +1,10 @@
-import { Button } from "@/app/components/ui/button"
-import { Check } from 'lucide-react'
-import Image from "next/image"
+import { Button } from "@/app/components/ui/button";
+import { Check } from "lucide-react";
+import Image from "next/image";
 // import learnImage from "../../Images/1000+ students.png"
 
 export function LearnSection() {
-  const features = [
-    "50+ Courses",
-    "Certificate",
-    "Projects & Assignments"
-  ]
+  const features = ["5+ Courses", "Certificate", "Projects & Assignments"];
 
   return (
     <section className="bg-[#E5F7EB]  py-12 border  lg:px-8">
@@ -25,12 +21,13 @@ export function LearnSection() {
           </div>
           <div>
             <h2 className="mb-2 text-4xl font-bold">
-              Learn & 
-              <br/>
+              Learn &
+              <br />
               <span className="text-[#2E7D32]"> Level Up Your Skills</span>
             </h2>
             <p className="mb-6 text-gray-600">
-              Select from a wide range of courses to upskill and advance your career!
+              Select from a wide range of courses to upskill and advance your
+              career!
             </p>
             <div className="mb-8 space-y-4">
               {features.map((feature, index) => (
@@ -49,6 +46,5 @@ export function LearnSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

@@ -60,7 +60,7 @@ const mapStreamToDegreeType = (stream: string) => {
 };
 
 const generatePassingYears = () => {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2019;
   return [
     ...Array.from({ length: 10 }, (_, i) => ({
       value: (currentYear + i).toString(),
