@@ -208,12 +208,15 @@ export default function AdvancedSettings({
           >
             Back
           </Button>
-          <Button
-            onClick={formSubmit}
+            <Button
+            onClick={(e) => {
+              e.currentTarget.disabled = true;
+              formSubmit();
+            }}
             className="bg-green-600 hover:bg-green-700"
-          >
+            >
             Finish
-          </Button>
+            </Button>
         </div>
       </div>
     </div>

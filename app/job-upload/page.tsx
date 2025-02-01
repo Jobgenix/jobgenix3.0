@@ -29,19 +29,20 @@ export default function Page() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const updateField = useCallback(<K extends keyof Opportunity>(
-    field: K,
-    value: Opportunity[K]
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  }, []);
+  const updateField = useCallback(
+    <K extends keyof Opportunity>(field: K, value: Opportunity[K]) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    },
+    []
+  );
 
   const submitForm = useCallback(async () => {
     try {
-      if (status !== "authenticated" || session.user.role !== ROLE_IDS.EMPLOYER) return;
+      if (status !== "authenticated" || session.user.role !== ROLE_IDS.EMPLOYER)
+        return;
 
       const validatedFormData = opportunitySchema.parse(formData);
       const response = await axios.post("/api/job/create-job", {
@@ -50,10 +51,11 @@ export default function Page() {
       });
 
       if (response.status === 201) {
-        router.push('/opportunities');
+        router.push("/opportunities");
       }
     } catch (error) {
       if (error instanceof ZodError) {
+        setAdvanced(false);
         const errorMessages = parseZodError(error);
         console.log(errorMessages);
         toast.error(
@@ -75,26 +77,29 @@ export default function Page() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push('/auth/login');
+      router.push("/auth/login");
     }
-    if (status === 'authenticated' && session.user.role !== ROLE_IDS.EMPLOYER) {
-      router.push('/job-display');
+    if (status === "authenticated" && session.user.role !== ROLE_IDS.EMPLOYER) {
+      router.push("/job-display");
     }
   }, [status, session, router]);
 
-  const formComponents = useMemo(() => [
-    { Component: CompanySelector, props: { setFormData: updateField } },
-    { Component: TypeSelector, props: { setFormData: updateField } },
-    { Component: WorkplaceTypeSelector, props: { setFormData: updateField } },
-    { Component: LocationSelector, props: { setFormData: updateField } },
-    { Component: CategorySelector, props: { setFormData: updateField } },
-    { Component: SkillsRequired, props: { setFormData: updateField } },
-    { Component: ExperienceSettings, props: { setFormData: updateField } },
-    { Component: StipendDetailsPage, props: { setFormData: updateField } },
-    { Component: DiversityBenefits, props: { setFormData: updateField } },
-    { Component: OtherBenifits },
-    { Component: InternshipDescription, props: { setFormData: updateField } },
-  ], [updateField]);
+  const formComponents = useMemo(
+    () => [
+      { Component: CompanySelector, props: { setFormData: updateField } },
+      { Component: TypeSelector, props: { setFormData: updateField } },
+      { Component: WorkplaceTypeSelector, props: { setFormData: updateField } },
+      { Component: LocationSelector, props: { setFormData: updateField } },
+      { Component: CategorySelector, props: { setFormData: updateField } },
+      { Component: SkillsRequired, props: { setFormData: updateField } },
+      { Component: ExperienceSettings, props: { setFormData: updateField } },
+      { Component: StipendDetailsPage, props: { setFormData: updateField } },
+      { Component: DiversityBenefits, props: { setFormData: updateField } },
+      { Component: OtherBenifits },
+      { Component: InternshipDescription, props: { setFormData: updateField } },
+    ],
+    [updateField]
+  );
 
   return (
     <section className="flex flex-col gap-4 px-8">

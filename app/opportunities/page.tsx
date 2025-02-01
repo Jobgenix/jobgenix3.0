@@ -46,7 +46,7 @@ export default function JobsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
   const [passingYear, setPassingYear] = useState("all");
-  const [stream, setStream] = useState("4");
+  const [stream, setStream] = useState("1");
   const [type, setType] = useState(filter_type);
 
   //state to update the jobs
@@ -68,22 +68,23 @@ export default function JobsPage() {
   // div to trigger paginated api call for jobs
   // const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  const [streams, setStreams] = useState<{ value: string; label: string }[]>([]);
+  const [streams, setStreams] = useState<{ value: string; label: string }[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchDegrees = async () => {
       try {
         const response = await axios.get("/api/job/get-degree");
         console.log(response.data);
-        setStreams([...response.data])
+        setStreams([...response.data]);
       } catch (error) {
         console.log("Error While Fetching Degrees: ", error);
       }
     };
-  
+
     fetchDegrees();
   }, []);
-  
 
   const types = useMemo(
     () => [
@@ -249,15 +250,15 @@ export default function JobsPage() {
     () =>
       isLoading
         ? Array.from({ length: 5 }).map((_, index) => (
-          <JobCardSkeleton key={index} />
-        ))
+            <JobCardSkeleton key={index} />
+          ))
         : jobListings.map((job) => (
-          <JobCard
-            key={job.jobId}
-            job={job}
-            onClick={() => handleJobCardClick(job.jobId)}
-          />
-        )),
+            <JobCard
+              key={job.jobId}
+              job={job}
+              onClick={() => handleJobCardClick(job.jobId)}
+            />
+          )),
     [isLoading, jobListings, handleJobCardClick]
   );
 
@@ -266,10 +267,9 @@ export default function JobsPage() {
   return (
     <>
       <Navbar />
-      
-        
-        <TrustedCompanies className="py-2" />
-      
+
+      <TrustedCompanies className="py-2" />
+
       <section className="px-16 pb-6">
         <section className="flex gap-4 justify-evenly items-center">
           <div className="flex flex-col gap-4 h-screen bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[30%] shadow-lg shadow-black/20 rounded-md">
