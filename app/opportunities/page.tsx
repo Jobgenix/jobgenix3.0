@@ -266,12 +266,10 @@ export default function JobsPage() {
   return (
     <>
       <Navbar />
-      <div className="flex px-6 py-0">
-        <p className="text-lg font-bold flex flex-col gap-1 w-64 justify-center">
-          Get Hired in <span style={{ color: "green" }}>Dream Companies:</span>
-        </p>
+      
+        
         <TrustedCompanies className="py-2" />
-      </div>
+      
       <section className="px-16 pb-6">
         <section className="flex gap-4 justify-evenly items-center">
           <div className="flex flex-col gap-4 h-screen bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[30%] shadow-lg shadow-black/20 rounded-md">

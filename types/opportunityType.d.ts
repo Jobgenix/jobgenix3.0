@@ -47,7 +47,7 @@ export type Opportunity = {
   diversityType?: DiversityType; // Array of diversity types (optional)
   experience: ExperienceType;
   yearsOfExperience: string;
-  degree?: DegreeType[];
+  degree?: string[];
   benefits?: BenefitsType[]; // Array of benefits (optional)
   salary?: string;
   status: JobStatus;
@@ -56,4 +56,10 @@ export type Opportunity = {
   category?: string[]; // Array of categories (optional)
   deadline: string; // Date as a string (or use `Date` type)
   postedAt: string; // Date as a string (or use `Date` type)
+};
+
+export type Degree = {
+  id: string;
+  name: string;
+  field: string;
 };
