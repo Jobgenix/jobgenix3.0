@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { companies, opportunities } from "@/lib/schema";
 import { db } from "@/lib/db";
-import { z } from "zod";
+import { string, z } from "zod";
 import { ZodError } from "zod";
 import { and, eq, gt, ilike, sql } from "drizzle-orm";
 import {
-  degreeTypeSchema,
   jobTypeSchema,
   passoutYearSchema,
 } from "@/constants/jobOpportunities";
@@ -23,7 +22,7 @@ const getJobsSchema = z
     userId: z.string().uuid(),
     lastJobId: z.string().uuid().optional(),
     passingYear: passoutYearSchema.optional(),
-    stream: degreeTypeSchema.optional(),
+    stream: string().optional(),
     type: jobTypeSchema.optional(),
   })
   .refine((data) => !(data.jobId && data.name), {

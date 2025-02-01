@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import type { JobCardProps } from "@/types/job";
 import type { CompanyType } from "@/types/companyType";
 import type { Opportunity } from "@/types/opportunityType";
-import { degreeTypeSchema } from "@/constants/jobOpportunities";
 import { prioritizeById } from "@/utils/setToFirst";
 
 import { Input } from "@/app/components/ui/input";
@@ -24,40 +23,6 @@ import { PostSection } from "../components/LandingPageComponents/post-section";
 import { Footer } from "../components/LandingPageComponents/Footer";
 import MentorBanner from "../components/mentors-banner";
 import InfiniteScroll from "react-infinite-scroll-component";
-
-const DEGREE_TYPE_MAP = {
-  bachelor: ["btech", "be", "bsc", "bca"],
-  master: ["mca", "mtech"],
-} as const;
-
-// Create union types for streams
-type BachelorStream = (typeof DEGREE_TYPE_MAP.bachelor)[number];
-type MasterStream = (typeof DEGREE_TYPE_MAP.master)[number];
-type StreamType = BachelorStream | MasterStream;
-
-// Create type guard for stream validation
-const isStreamType = (stream: string): stream is StreamType => {
-  return (
-    [...DEGREE_TYPE_MAP.bachelor, ...DEGREE_TYPE_MAP.master] as string[]
-  ).includes(stream);
-};
-
-// Create type guard for bachelor streams
-const isBachelorStream = (stream: StreamType): stream is BachelorStream => {
-  return DEGREE_TYPE_MAP.bachelor.includes(stream as BachelorStream);
-};
-
-const mapStreamToDegreeType = (stream: string) => {
-  const normalizedStream = stream.toLowerCase();
-
-  if (!isStreamType(normalizedStream)) {
-    return null;
-  }
-
-  return isBachelorStream(normalizedStream)
-    ? degreeTypeSchema.Enum.bachelor
-    : degreeTypeSchema.Enum.master;
-};
 
 const generatePassingYears = () => {
   const currentYear = 2019;
@@ -81,7 +46,7 @@ export default function JobsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
   const [passingYear, setPassingYear] = useState("all");
-  const [stream, setStream] = useState("all");
+  const [stream, setStream] = useState("4");
   const [type, setType] = useState(filter_type);
 
   //state to update the jobs
@@ -103,18 +68,22 @@ export default function JobsPage() {
   // div to trigger paginated api call for jobs
   // const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  const streams = useMemo(
-    () => [
-      { value: "btech", label: "B.Tech" },
-      { value: "be", label: "B.E." },
-      { value: "bsc", label: "B.Sc" },
-      { value: "bca", label: "BCA" },
-      { value: "mca", label: "MCA" },
-      { value: "mtech", label: "M.Tech" },
-      { value: "all", label: "All" },
-    ],
-    []
-  );
+  const [streams, setStreams] = useState<{ value: string; label: string }[]>([]);
+
+  useEffect(() => {
+    const fetchDegrees = async () => {
+      try {
+        const response = await axios.get("/api/job/get-degree");
+        console.log(response.data);
+        setStreams([...response.data])
+      } catch (error) {
+        console.log("Error While Fetching Degrees: ", error);
+      }
+    };
+  
+    fetchDegrees();
+  }, []);
+  
 
   const types = useMemo(
     () => [
@@ -143,8 +112,7 @@ export default function JobsPage() {
             userId: session?.user?.id,
             name: debouncedQuery,
             passingYear: passingYear !== "all" ? passingYear : undefined,
-            stream:
-              stream !== "all" ? mapStreamToDegreeType(stream) : undefined,
+            stream: stream,
             type: type !== "all" ? type : undefined,
           },
           { signal }
@@ -243,7 +211,6 @@ export default function JobsPage() {
       const details = await fetchJobDetails(jobId);
       if (details) {
         setJobDetails(details);
-        //router.replace(`/job-display?id=${jobId}`, { scroll: false });
       }
     },
     [fetchJobDetails]
@@ -259,7 +226,7 @@ export default function JobsPage() {
           lastJobId,
           name: debouncedQuery,
           passingYear: passingYear !== "all" ? passingYear : undefined,
-          stream: stream !== "all" ? mapStreamToDegreeType(stream) : undefined,
+          stream,
           type: type !== "all" ? type : undefined,
         });
         // console.log(response.data.jobs);
@@ -282,15 +249,15 @@ export default function JobsPage() {
     () =>
       isLoading
         ? Array.from({ length: 5 }).map((_, index) => (
-            <JobCardSkeleton key={index} />
-          ))
+          <JobCardSkeleton key={index} />
+        ))
         : jobListings.map((job) => (
-            <JobCard
-              key={job.jobId}
-              job={job}
-              onClick={() => handleJobCardClick(job.jobId)}
-            />
-          )),
+          <JobCard
+            key={job.jobId}
+            job={job}
+            onClick={() => handleJobCardClick(job.jobId)}
+          />
+        )),
     [isLoading, jobListings, handleJobCardClick]
   );
 

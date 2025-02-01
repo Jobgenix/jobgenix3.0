@@ -13,6 +13,8 @@ import {
 import { formSectionProps } from "@/types/formSectionProps";
 import { DegreeType, PassoutYear } from "@/types/opportunityType";
 import { degreeTypeSchema, passoutYearSchema } from "@/constants/jobOpportunities";
+import axios from "axios";
+import { DegreesGroupedByField } from "@/utils/redisDegrees";
 
 interface coursesProps {
   id: DegreeType;
@@ -24,6 +26,7 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
   const [specificCourse, setSpecificCourse] = useState(false);
   const [selectedYear, setSelectedYear] = useState<PassoutYear[]>([]);
   const [selectedCourses, setSelectedCourses] = useState<DegreeType[]>([]);
+  const [allCourses, setAllCourses] = useState<DegreesGroupedByField[]>([])
 
   useEffect(() => {
     if (selectedYear !== null) {
@@ -31,6 +34,20 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
     }
     setFormData('degree', [...selectedCourses]);
   }, [selectedYear, selectedCourses]);
+
+  useEffect(()=>{
+    const fetchDegrees = async () => {
+      try {
+        const response = await axios.get("/api/job/get-degree?upload=1");
+        console.log(response.data);
+        setAllCourses([...response.data]);
+      } catch (error) {
+        console.log("Error While Fetching Degrees: ", error);
+      }
+    };
+  
+    fetchDegrees();
+  },[])
   
 
   const years = passoutYearSchema.options;

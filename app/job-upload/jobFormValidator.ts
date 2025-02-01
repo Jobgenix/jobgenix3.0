@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { jobTypeSchema, workplaceTypeSchema, stipendTypeSchema, diversityTypeSchema, experienceTypeSchema, degreeTypeSchema, jobStatusSchema, passoutYearSchema, benefitsTypeSchema } from "@/constants/jobOpportunities";
+import { string, z } from "zod";
+import { jobTypeSchema, workplaceTypeSchema, stipendTypeSchema, diversityTypeSchema, experienceTypeSchema, jobStatusSchema, passoutYearSchema, benefitsTypeSchema } from "@/constants/jobOpportunities";
 
 export const opportunitySchema = z.object({
     companyId: z.string(),
@@ -13,7 +13,7 @@ export const opportunitySchema = z.object({
     diversityType: diversityTypeSchema.optional(),
     experience: experienceTypeSchema,
     yearsOfExperience: z.string().default('0'),
-    degree: degreeTypeSchema.array().optional(),
+    degree: string().array().optional(),
     benefits: benefitsTypeSchema.array().optional(),
     salary: z.string().optional(),
     status: jobStatusSchema.default("active"),
