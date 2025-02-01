@@ -128,7 +128,7 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
               {courses.map((course) => (
                 <TabsTrigger
                   value={course.field}
-                  className="relative px-4 py-2 text-gray-700 data-[state=active]:text-[#2E7D32] data-[state=active]:font-medium after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#2E7D32] after:transform after:scale-x-0 data-[state=active]:after:scale-x-100 after:transition-transform"
+                  className="relative px-4 py-2 text-gray-700 data-[state=active]:text-[#2E7D32] data-[state=active]:font-medium after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#2E7D32] after:transform after:scale-x-0 data-[state=active]:after:scale-x-100 after:transition-transform capitalize"
                 >
                   {course.field}
                 </TabsTrigger>
@@ -153,7 +153,7 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
                         />
                         <label
                           htmlFor={degree.id}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize"
                         >
                           {degree.name}
                         </label>
