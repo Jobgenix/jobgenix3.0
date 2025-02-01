@@ -66,7 +66,7 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
 
     (async () => {
       const fetchDegrees = async () => {
-        const response = await axios.get("/api/job/get-degree");
+        const response = await axios.get("/api/job/get-degree?upload=1");
         const data = await response.data;
         console.log(data);
         setCourses(data);
@@ -125,8 +125,9 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
         <div className="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] overflow-hidden">
           <Tabs defaultValue="engineering" className="w-full">
             <TabsList className="w-full justify-start h-auto bg-white border-b">
-              {courses.map((course) => (
+              {courses.map((course, i) => (
                 <TabsTrigger
+                  key={i}
                   value={course.field}
                   className="relative px-4 py-2 text-gray-700 data-[state=active]:text-[#2E7D32] data-[state=active]:font-medium after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#2E7D32] after:transform after:scale-x-0 data-[state=active]:after:scale-x-100 after:transition-transform capitalize"
                 >
@@ -136,7 +137,11 @@ export default function SkillsRequired({ setFormData }: formSectionProps) {
             </TabsList>
 
             {courses.map((course) => (
-              <TabsContent value={course.field} className="p-4">
+              <TabsContent
+                value={course.field}
+                className="p-4"
+                key={course.field}
+              >
                 <div className="grid md:grid-cols-[300px,1fr] gap-6">
                   {/* Courses Checkboxes */}
                   <div className="space-y-4 border-r pr-4">

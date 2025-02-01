@@ -50,7 +50,7 @@ export default function Page() {
       });
 
       if (response.status === 201) {
-        router.push('/job-display');
+        router.push('/opportunities');
       }
     } catch (error) {
       if (error instanceof ZodError) {
