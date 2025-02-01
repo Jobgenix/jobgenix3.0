@@ -1,6 +1,6 @@
 ## Hi there 👋
 
-merge-commit-from @nabeel
+merge-commit-from @Nabeel
 
 merge-commit-from @bidyut
 
