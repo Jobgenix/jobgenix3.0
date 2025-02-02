@@ -54,7 +54,7 @@ export function CustomDrizzleAdapter(drizzle: typeof db, schema: DefaultPostgres
             return null;
         },
 
-        getUserByEmail: async (email)=> {
+        getUserByEmail: async (email) => {
             const cacheUser = await getUserFromCache(email);
             if (cacheUser) return cacheUser
             const user = await db.select().from(users).where(eq(users.email, email));
@@ -94,6 +94,54 @@ export function CustomDrizzleAdapter(drizzle: typeof db, schema: DefaultPostgres
                 return { session: session[0], user: user[0] };
             }
             return null;
-        }
+        },
+
+        linkAccount: async (account) => {
+            const existingAccount = await db
+                .select()
+                .from(accounts)
+                .where(
+                    eq(accounts.provider, account.provider),
+                    eq(accounts.userId, account.userId)
+                )
+                .limit(1);
+
+            if (existingAccount.length > 0) {
+                const newAccount = await db
+                    .update(accounts)
+                    .set({
+                        refresh_token: account.refresh_token ?? null,
+                        access_token: account.access_token ?? null,
+                        expires_at: account.expires_at ?? null,
+                        token_type: account.token_type ?? null,
+                        scope: account.scope ?? null,
+                        id_token: account.id_token ?? null,
+                        session_state: account.session_state ?? null,
+                    })
+                    .where(
+                        eq(accounts.provider, account.provider),
+                        eq(accounts.userId, account.userId)
+                    ).returning();
+                
+                return newAccount[0];
+            }
+            else{
+                const newAccount = await db.insert(accounts).values({
+                    userId: account.userId,
+                    provider: account.provider,
+                    providerAccountId: account.providerAccountId,
+                    type: account.type,
+                    refresh_token: account.refresh_token ?? null,
+                    access_token: account.access_token ?? null,
+                    expires_at: account.expires_at ?? null,
+                    token_type: account.token_type ?? null,
+                    scope: account.scope ?? null,
+                    id_token: account.id_token ?? null,
+                    session_state: account.session_state ?? null,
+                }).returning();
+
+                return newAccount[0];
+            }
+        },
     };
 }
