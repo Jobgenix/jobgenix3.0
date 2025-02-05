@@ -29,22 +29,24 @@ const SignOut = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-8">
-            <div className="hidden md:flex md:w-1/2 lg:w-2/5 justify-center">
-                <Image
-                    src="/images/loginImage.png"
-                    alt="Sign Out Illustration"
-                    className="w-full max-w-sm md:max-w-md border rounded-2xl"
-                    width={400}
-                    height={400}
-                    priority
-                />
-            </div>
+        <div className="flex min-h-screen w-screen justify-center bg-[#E5F7EB] items-center">
+           <div className="md:h-[90vh] h-[85vh] max-md:w-4/5 lg:w-[50vw] p-2 rounded-lg md:rounded-bl-[50px] bg-white flex flex-col-reverse md:flex-row items-center justify-between">
+             <div className="hidden md:flex h-full w-2/5 justify-center">
+                      <Image
+                        src="/LandingPageImages/login page.png"
+                        alt="Login Illustration"
+                        className="w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
+                        width={400}
+                        height={200 / (9 / 16)}
+                      />
+                    </div>
 
-            <div className="p-6 w-full max-w-sm sm:max-w-md lg:max-w-lg md:w-1/2 lg:w-2/5">
-                <h1 className="text-2xl font-bold text-slate-700 mb-6 text-center">
+                    <div className="h-full w-full flex justify-center px-6 flex-col max-w-sm sm:max-w-md md:w-3/5">
+                <h1 className="text-xl text-center text-slate-700 mb-6">
                     Ready to leave? <span className="text-[#2F8E5B]">Sign Out!</span>
                 </h1>
+
+                
 
                 <button
                     onClick={handleSignOut}
@@ -54,6 +56,8 @@ const SignOut = () => {
                 </button>
             </div>
         </div>
+        </div>
+        
     );
 };
 

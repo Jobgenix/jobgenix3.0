@@ -104,24 +104,24 @@ const Register: React.FC = () => {
     };
 
     return (
-        <div className="flex h-[100vh] w-screen justify-center bg-[#E5F7EB] items-center">
-            <div className="md:h-[98vh] h-[80vh] md:w-[85vw]  lg:w-[48vw]   p-2 rounded-lg rounded-bl-[50px] bg-white flex flex-col md:flex-row items-center justify-between ">
-                <div className="hidden h-full  md:flex md:w-2/5  lg:w-[20vw] justify-center">
+        <div className="flex min-h-screen w-screen justify-center bg-[#E5F7EB] items-center">
+            <div className="md:h-[9/10 * 100] h-[90vh]   max-md:w-4/5 lg:w-1/2    p-2 rounded-lg md:rounded-bl-[50px] bg-white flex flex-col md:flex-row items-center justify-between ">
+                <div className="hidden h-full  md:flex md:w-2/5   justify-center">
+                
+                          <Image
+                            src="/LandingPageImages/login page.png"
+                            alt="Login Illustration"
+                            className="lg:w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
+                            width={400}
+                            height={200 / (9 / 16)}
+                          />
+                        </div>
 
-                    <Image
-                        src="/LandingPageImages/login page.png"
-                        alt="Login Illustration"
-                        className="lg:w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
-                        width={400}
-                        height={200 / (9 / 16)}
-                    />
-                </div>
 
-
-                <div className="h-full   flex justify-center px-4 flex-col   max-w-sm sm:max-w-md  md:w-1/2 lg:w-1/2">
-                    {/* <h1 className="text-xl text-center text-slate-700 mb-4">
+                        <div className="h-full  w-full  flex justify-center px-4 flex-col    max-w-sm sm:max-w-md  md:w-3/5">
+                    <h1 className="text-xl text-center text-slate-700 mb-4">
           Welcome Back to <span className="text-[#2F8E5B]">Jobgenix!</span>
-        </h1> */}
+        </h1>
 
                     <form onSubmit={handleSubmit}>
                         {/* First Name */}
@@ -132,7 +132,7 @@ const Register: React.FC = () => {
                                 placeholder="First Name"
                                 value={formData.firstName}
                                 onChange={handleInputChange}
-                                className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none"
+                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                             />
                         </div>
 
@@ -144,7 +144,7 @@ const Register: React.FC = () => {
                                 placeholder="Last Name"
                                 value={formData.lastName}
                                 onChange={handleInputChange}
-                                className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none"
+                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                             />
                         </div>
 
@@ -156,7 +156,7 @@ const Register: React.FC = () => {
                                 placeholder="Email"
                                 value={formData.email}
                                 onChange={handleInputChange}
-                                className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none"
+                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                             />
                         </div>
 
@@ -190,7 +190,7 @@ const Register: React.FC = () => {
                                         target: { name: "phone", value: input }
                                     } as React.ChangeEvent<HTMLInputElement>);
                                 }}
-                                className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none"
+                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                             />
                         </div>
 
@@ -203,7 +203,7 @@ const Register: React.FC = () => {
                                 name="gender"
                                 value={formData.gender}
                                 onChange={handleInputChange}
-                                className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none"
+                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                             >
                                 <option value="">Select Gender</option>
                                 <option value="male">Male</option>
@@ -220,7 +220,7 @@ const Register: React.FC = () => {
                                 placeholder="Password"
                                 value={formData.password}
                                 onChange={handleInputChange}
-                                className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none pr-10"
+                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none pr-10"
                             />
                             <FontAwesomeIcon
                                 icon={showPassword ? faEyeSlash : faEye}
@@ -239,7 +239,7 @@ const Register: React.FC = () => {
                                 placeholder="Confirm Password"
                                 value={formData.confirmPassword}
                                 onChange={handleInputChange}
-                                className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none pr-10"
+                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none pr-10"
                             />
                             <FontAwesomeIcon
                                 icon={showConfirmPassword ? faEyeSlash : faEye}
@@ -256,7 +256,7 @@ const Register: React.FC = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full py-2 bg-[#2F8E5B] text-white font-bold rounded-xl hover:bg-[#329761] transition"
+                            className="w-full py-2 bg-[#2F8E5B] text-white font-bold rounded-md hover:bg-[#329761] transition"
                         >
                             {isLoading ? "Signing up..." : "Sign Up"}
                         </button>

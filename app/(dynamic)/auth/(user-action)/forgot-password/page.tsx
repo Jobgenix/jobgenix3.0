@@ -87,24 +87,25 @@ const ForgotPassword: React.FC = () => {
 
     return (
 
-        <div className="flex h-[100vh] w-screen justify-center bg-[#E5F7EB] items-center">
-            <div className="md:h-[98vh] h-[80vh] md:w-[85vw]  lg:w-[48vw]   p-2 rounded-lg rounded-bl-[50px] bg-white flex flex-col md:flex-row items-center justify-between ">
+        <div className="flex min-h-screen w-screen justify-center bg-[#E5F7EB] items-center">
+            <div className="md:h-[9/10 * 100] h-[90vh]   max-md:w-4/5 lg:w-1/2    p-2 rounded-lg md:rounded-bl-[50px] bg-white flex flex-col md:flex-row items-center justify-between ">
                 {/* Left Section: Image */}
-                <div className="hidden h-full  md:flex md:w-2/5  lg:w-[20vw] justify-center">
-                    <Image
-                        src="/LandingPageImages/login page.png"
-                        alt="Signup Illustration"
-                        width={400}
-                        height={400}
-                        className="w-full max-w-sm md:max-w-md border rounded-2xl"
-                        priority
-                    />
-                </div>
+               <div className="hidden h-full  md:flex md:w-2/5   justify-center">
+               
+                         <Image
+                           src="/LandingPageImages/login page.png"
+                           alt="Login Illustration"
+                           className="lg:w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
+                           width={400}
+                           height={200 / (9 / 16)}
+                         />
+                       </div>
+                
 
                 {/* Right Section: Forgot Password Form */}
-                <div className="h-full  flex justify-center px-1 flex-col   max-w-sm sm:max-w-md  md:w-1/2 lg:w-1/2">
-                    <div className="p-6 w-full max-w-sm sm:max-w-md lg:max-w-lg">
-                        <h1 className="text-xl  text-slate-700 mb-6">
+                <div className="h-full  w-full  flex justify-center px-4 flex-col    max-w-sm sm:max-w-md  md:w-3/5">
+                    <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg">
+                        <h1 className="text-xl text-center  text-slate-700 mb-6">
                             Forgot Your <span className="text-[#2F8E5B]">Password?</span>
                         </h1>
 
@@ -117,7 +118,7 @@ const ForgotPassword: React.FC = () => {
                                     placeholder="Email"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none"
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                                 />
                             </div>
 
@@ -129,7 +130,7 @@ const ForgotPassword: React.FC = () => {
                                     placeholder="OTP"
                                     value={formData.otp}
                                     onChange={handleInputChange}
-                                    className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none"
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                                 />
                             </div>
 
@@ -141,7 +142,7 @@ const ForgotPassword: React.FC = () => {
                                     placeholder="New Password"
                                     value={formData.newPassword}
                                     onChange={handleInputChange}
-                                    className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none pr-10"
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none pr-10"
                                 />
                                 <FontAwesomeIcon
                                     icon={showNewPassword ? faEyeSlash : faEye}
@@ -160,7 +161,7 @@ const ForgotPassword: React.FC = () => {
                                     placeholder="Confirm New Password"
                                     value={formData.confirmNewPassword}
                                     onChange={handleInputChange}
-                                    className="w-full p-2 border border-gray-300 rounded-xl focus:outline-none pr-10"
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none pr-10"
                                 />
                                 <FontAwesomeIcon
                                     icon={showConfirmNewPassword ? faEyeSlash : faEye}
@@ -175,7 +176,7 @@ const ForgotPassword: React.FC = () => {
                             <div className="mb-4">
                                 <span
                                     onClick={handleSendOtp}
-                                    className="text-[#2F8E5B] text-sm underline cursor-pointer"
+                                    className="text-[#2F8E5B] text-sm  cursor-pointer"
                                 >
                                     {otpSending ? "Sending..." : otpSent ? "Resend OTP" : "Send OTP"}
                                 </span>
@@ -199,7 +200,7 @@ const ForgotPassword: React.FC = () => {
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className="w-full py-2 bg-[#2F8E5B] text-white font-bold rounded-xl hover:bg-[#329761] transition"
+                                className="w-full py-2 bg-[#2F8E5B] text-white font-bold rounded-md hover:bg-[#329761] transition"
                             >
                                 {isLoading ? "Resetting..." : "Reset Password"}
                             </button>
