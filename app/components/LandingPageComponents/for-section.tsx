@@ -5,7 +5,7 @@ import { Button } from "@/app/components/ui/button";
 
 export function ForSection() {
   return (
-    <section className="px-4 py-12 md:px-6 lg:px-8 bg-[linear-gradient(90.05deg,#FFF8DF_0.05%,#C6F7D5_100.93%)]">
+    <section className="px-4 hidden md:flex py-12 md:px-6 lg:px-8 bg-[linear-gradient(90.05deg,#FFF8DF_0.05%,#C6F7D5_100.93%)]">
       <div className="container mx-auto grid gap-6 md:grid-cols-2">
         {/* For Employees Section */}
         <div className="rounded-3xl bg-[#E0DCF2] flex justify-center items-center p-8 shadow-lg transition-transform hover:scale-105">
