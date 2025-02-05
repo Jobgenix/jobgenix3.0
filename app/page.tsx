@@ -14,14 +14,13 @@ export default function Page() {
       router.push("/auth/login");
     }
 
-    if(session.status === 'authenticated' && session.data?.user.role === ROLE_IDS.NEW_USER){
+    if (session.status === 'authenticated' && session.data?.user.role === ROLE_IDS.NEW_USER) {
       router.push("/auth/first-login");
     }
   }, [session, router]);
 
   return (
-    <>
-      {/* <InternshipForm /> */}
+    < >
       <Landing />
     </>
   );

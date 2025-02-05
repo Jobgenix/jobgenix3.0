@@ -136,3 +136,9 @@ code {
   transition: opacity 0.2s ease;
   /* Smooth transition for visibility */
 }
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

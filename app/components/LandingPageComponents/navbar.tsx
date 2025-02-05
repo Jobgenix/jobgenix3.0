@@ -15,6 +15,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+
+
 export function Navbar() {
   const [loginStatus, setLoginStatus] = useState(false);
 
@@ -49,7 +51,7 @@ export function Navbar() {
               height={100}
               width={150}
               className="h-[10vh]"
-              src="https://s3-alpha-sig.figma.com/img/ec08/93e5/253cb74fcc4215a86fb3f64054477aeb?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bMAGEPXumU8iJkjthX2EwOhg483Ql6ACOMFUliXGpmQmlbM4SZNnpKThhXg6UunXxbQwX26rnlv5PIFGKxdf8HW52a0SvuwEvBQ7BJg-qq1mb0jAhnehRAtoXYSLcFVVgoQHx5avcZ3JcIPPiSvbkRr9hFwJsHbDP3-1opqfAjh0Cvf-QDd0oijXstnT-HDUeoYDyUSPe3F4dMUr6Dv8Y4I9K2RR~wCKFgVgrlspHyBi~Vna~zBZbsjJEK5P8RLLXYNGlzZLcKP4jla4mwLKuEpjZHUu0gb6vWTkulIiTWsK8PFyGPaQpJ4BWcfPEBdB1mUSbPGlzMdYYZMPytRzNQ__"
+              src="https://s3-alpha-sig.figma.com/img/ec08/93e5/253cb74fcc4215a86fb3f64054477aeb?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=evZfmBKIz~rd~nakZOf0JRY237J9x8-5z5pahi~ct5BIW4iksla1YvpBtbTqQTt780fd~-iP8fJLu0AyQRWrNSN-L6SoxSDUm~FZI4yL87D51kFEQjFp9V~xsPBR57zwEWezJffsNzsEKuemITj~3KX5hMWA~i1qo9Cly7RllmlVCGn9YTB4j~OFAAINUZUT3IhLbqthAU9b6JkZ-4gBWbMqpj0fNMY2yVWvWnMr2yGpbJZ1-jfaq6ESBZesPvOo~erBHp9t9ymCgMQD1fDPUGdNApYHMle6YtwcX3Bu8GIKfOgJ1tT-1P1UzObgqJs5UoLRTZtK2SuqsdtLU3InYQ__"
               alt="Logo"
             />
           </Link>

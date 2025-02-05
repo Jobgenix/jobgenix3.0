@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function HeaderSection() {
   return (
-    <div className="w-full h-full lg:h-[90vh] flex flex-col md:flex-row bg-[#F3F9F3]">
+    <div className="w-full h-[full] lg:h-[90vh] flex flex-col md:flex-row bg-[#F3F9F3]">
       {/* Left Side - Image */}
       <div className="flex-1 flex justify-center items-center p-4 lg:p-0">
         <Image

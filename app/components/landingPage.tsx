@@ -11,6 +11,7 @@ import { HostSection } from "../components/LandingPageComponents/host-section"
 import { Footer } from "../components/LandingPageComponents/Footer"
 import { ReferAndWin } from "../components/LandingPageComponents/ReferAndWin"
 import {StatsSection} from "../components/LandingPageComponents/statsSection"
+import CareerButtons from "../components/LandingPageComponents/CareerButtons"
 
 export function Landing() {
     return (
@@ -19,6 +20,7 @@ export function Landing() {
             <main>
             <HeaderSection />
         <TrustedCompanies/>
+        <CareerButtons/>
         <ForSection />
         <LearnSection />
         <CampusSection />
