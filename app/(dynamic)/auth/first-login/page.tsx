@@ -62,14 +62,14 @@ const FirstTimeSignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center ">
+    <div className="min-h-screen bg-gray-200 flex flex-col p-2 items-center justify-center ">
       <h1 className="md:text-2xl text-xl font-bold text-slate-700 mb-6 text-center">
         Choose Your Role to Get Started
       </h1>
 
-      <div className="flex gap-6 flex-col  items-center md:flex-row">
+      <div className="flex gap-4 flex-col  items-center md:flex-row">
         <div
-          className={`md:w-64 w-full p-2  border rounded-2xl cursor-pointer transition transform hover:scale-105 hover:shadow-lg ${
+          className={`md:w-64 w-3/5 p-2  border rounded-2xl cursor-pointer transition transform hover:scale-105 hover:shadow-lg ${
             selectedRole === ROLE_IDS.EMPLOYER
               ? "border-[#2F8E5B]"
               : "border-gray-300"
@@ -79,8 +79,8 @@ const FirstTimeSignIn = () => {
           <Image
             src="/images/EmployerIcon.svg"
             alt="Employer"
-            width={200}
-            height={200}
+            width={100}
+            height={100}
             className="mx-auto mb-4"
           />
           <h2 className="text-2xl font-semibold text-center">Employer</h2>
@@ -90,7 +90,7 @@ const FirstTimeSignIn = () => {
         </div>
 
         <div
-          className={`md:w-64 w-full p-2 border  rounded-2xl cursor-pointer transition transform hover:scale-105 hover:shadow-lg ${
+          className={`md:w-64 w-3/5 p-2 border  rounded-2xl cursor-pointer transition transform hover:scale-105 hover:shadow-lg ${
             selectedRole === ROLE_IDS.CANDIDATE
               ? "border-[#2F8E5B]"
               : "border-gray-300"
@@ -100,8 +100,8 @@ const FirstTimeSignIn = () => {
           <Image
             src="/images/StudentIcon.svg"
             alt="Candidate"
-            width={200}
-            height={200}
+            width={100}
+            height={100}
             className="mx-auto mb-4"
           />
           <h2 className="text-2xl font-semibold text-center">Candidate</h2>
