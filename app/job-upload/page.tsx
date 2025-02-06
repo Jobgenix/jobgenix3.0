@@ -45,6 +45,8 @@ export default function Page() {
         return;
 
       const validatedFormData = opportunitySchema.parse(formData);
+
+      console.dir(validatedFormData);
       const response = await axios.post("/api/job/create-job", {
         ...validatedFormData,
         userId: session.user.id,

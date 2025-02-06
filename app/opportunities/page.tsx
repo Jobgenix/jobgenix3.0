@@ -221,6 +221,7 @@ export default function JobsPage() {
   const fetchMoreJobs = useCallback(
     async (lastJobId: string) => {
       try {
+        console.log("fetching more jobs");
         setIsLoading(true);
         const response = await axios.post("/api/job/get-jobs", {
           userId: session?.user?.id,
@@ -305,14 +306,20 @@ export default function JobsPage() {
                 />
               </div>
             </section>
-            <div className="overflow-auto custom-scrollbar">
+            <div className="overflow-auto custom-scrollbar" id="scrollableDiv">
               <InfiniteScroll
-                dataLength={10}
-                next={() =>
-                  fetchMoreJobs(jobListings[jobListings.length - 1].jobId)
-                }
+                dataLength={jobListings.length}
                 hasMore={hasMore}
+                next={() => {
+                  console.log("triggered", hasMore);
+                  fetchMoreJobs(jobListings[jobListings.length - 1].jobId);
+                }}
                 loader={<JobCardSkeleton />}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>Yay! You have seen it all</b>
+                  </p>
+                }
                 scrollableTarget="scrollableDiv"
               >
                 {memoizedJobListings}
