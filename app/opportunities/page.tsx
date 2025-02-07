@@ -23,7 +23,7 @@ import { PostSection } from "../components/LandingPageComponents/post-section";
 import { Footer } from "../components/LandingPageComponents/Footer";
 import MentorBanner from "../components/mentors-banner";
 import InfiniteScroll from "react-infinite-scroll-component";
-import ApplyPage from "../components/job-display-components/job-mobile";
+
 
 
 const generatePassingYears = () => {
