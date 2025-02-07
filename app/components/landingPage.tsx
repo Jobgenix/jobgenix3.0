@@ -10,28 +10,27 @@ import { OpportunitySection } from "../components/LandingPageComponents/opportun
 import { HostSection } from "../components/LandingPageComponents/host-section"
 import { Footer } from "../components/LandingPageComponents/Footer"
 import { ReferAndWin } from "../components/LandingPageComponents/ReferAndWin"
-import {StatsSection} from "../components/LandingPageComponents/statsSection"
+import { StatsSection } from "../components/LandingPageComponents/statsSection"
 import CareerButtons from "../components/LandingPageComponents/CareerButtons"
 
 export function Landing() {
     return (
         <div className="min-h-screen bg-[#E8F5E9]">
             <Navbar />
-            <main>
             <HeaderSection />
-        <TrustedCompanies/>
-        <CareerButtons/>
-        <ForSection />
-        <LearnSection />
-        <CampusSection />
-        <MentorSection />
-        <JobSection />
-        <OpportunitySection />
-        <HostSection /> 
-        <ReferAndWin/>
-        <StatsSection/>
-        <Footer/>
-            </main>
+            <TrustedCompanies />
+            <CareerButtons />
+            <ForSection />
+            <LearnSection />
+            <CampusSection />
+            <MentorSection />
+            <JobSection />
+            <OpportunitySection />
+            <HostSection />
+            <ReferAndWin />
+            <StatsSection />
+            <Footer />
+
         </div>
     )
 }

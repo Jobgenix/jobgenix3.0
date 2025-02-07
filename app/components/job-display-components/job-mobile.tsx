@@ -9,19 +9,6 @@ export default function ApplyPage() {
 
     return (
         <div className="w-full min-h-screen sm:hidden">
-            
-            {/* Navbar */}
-            <div className="Nav fixed top-0 left-0 w-full bg-white shadow-2xl z-50 py-1 flex justify-between items-center px-4">
-                <Image
-                    src="/list-symbol-of-three-items-with-dots.png"
-                    alt="menu"
-                    width={40}
-                    height={40}
-                    className="cursor-pointer"
-                    onClick={() => setOpen(!open)}
-                />
-            </div>
-
             {/* Search Section */}
             <div className="min-h-screen w-full pt-20 mt-[-30%] bg-[#EFF7EB]">
                 <div className="flex relative mt-16 px-3">
