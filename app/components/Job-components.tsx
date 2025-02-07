@@ -7,6 +7,7 @@ import { JobCardProps } from "@/types/job";
 import { capitalizeWords } from "@/utils/stringUtility";
 import { CheckCircle, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 // Types for our job listing
 
@@ -39,12 +40,15 @@ export default function JobCard({
     jobLocation: "Location",
     jobType: "remote",
     companyLogo: "/placeholder.svg",
+    jobLink: "#",
   },
   onClick,
 }: JobCardElementProps) {
+  const router = useRouter();
   if (!job) {
     return null;
   }
+  // console.log(job);
   return (
     <Card className="w-full p-6 bg-transparent hover:shadow-lg transition-all border-b-black/20 rounded-none border-t-black/20 select-none cursor-pointer hover:bg-blue-400/20 ">
       <div className="flex gap-4">
@@ -64,26 +68,34 @@ export default function JobCard({
               <h2 className="text-xl font-semibold text-black/60">
                 {job.jobTitle}
               </h2>
-              {true && (
-                <CheckCircle className="w-5 h-5 text-blue-500" />
-              )}
+              {true && <CheckCircle className="w-5 h-5 text-blue-500" />}
             </div>
             <p className="text-black font-semibold">{job.companyName}</p>
           </div>
           <div className="space-y-1">
             <p className="text-gray-600 font-bold">
-              {capitalizeWords(job.jobLocation)} ({capitalizeWords(job.jobType)})
+              {capitalizeWords(job.jobLocation)} ({capitalizeWords(job.jobType)}
+              )
             </p>
           </div>
           <Button
             asChild
             variant="outline"
-            className="rounded-full hover:bg-blue-600 hover:text-white shadow-md shadow-black/30"
+            className="rounded-full hover:bg-blue-600 hover:text-white shadow-md shadow-black/30 hidden lg:inline-flex "
             onClick={() => onClick(job.jobId)}
           >
-            <a
-              className="flex items-center gap-2 text-blue-600 sm:font-bold sm:!text-base"
-            >
+            <a className="flex items-center gap-2 text-blue-600 sm:font-bold sm:!text-base">
+              Apply
+              <ArrowUpRight className="w-4 h-4 sm:font-bold" />
+            </a>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="rounded-full hover:bg-blue-600 hover:text-white shadow-md shadow-black/30 lg:hidden"
+            onClick={() => router.push(job.jobLink)}
+          >
+            <a className="flex items-center gap-2 text-blue-600 sm:font-bold sm:!text-base">
               Apply
               <ArrowUpRight className="w-4 h-4 sm:font-bold" />
             </a>

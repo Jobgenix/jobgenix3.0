@@ -14,4 +14,5 @@ export type JobCardProps = {
   jobId: string;
   jobLocation: string;
   jobType: WorkplaceType; // Adjust based on actual enum values
+  jobLink: string;
 };
