@@ -1,4 +1,4 @@
-## Hi there......👋
+## Hi there.......👋
 
 merge-commit-from @Nabeel
 
@@ -8,5 +8,5 @@ merge-commit-from @Asmita
 
 merge-commit-from @aditya
 
-merge-commit-from @swarnava
+
 
