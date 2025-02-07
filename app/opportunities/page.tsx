@@ -275,13 +275,13 @@ export default function JobsPage() {
 
       <section className="md:px-16  pb-6">
         <section className="flex gap-4  justify-evenly items-center">
-          <div className="flex flex-col gap-4 h-screen  bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-4/5 md:w-[60%] lg:w-[30%] shadow-lg shadow-black/20 rounded-md">
+          <div className="flex flex-col gap-4 h-screen  bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[96%] md:w-[60%] lg:w-[30%] shadow-lg shadow-black/20 rounded-md">
             <section className="p-4 flex flex-col gap-4 ">
               <div className="relative">
                 <Input
                   type="search"
                   placeholder="Search Opportunities"
-                  className="w-3/5 lg:w-full pl-10 text-[#646A66] rounded-3xl border-gray-300"
+                  className="w-full lg:w-full pl-10 text-[#646A66] rounded-3xl border-gray-300"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
