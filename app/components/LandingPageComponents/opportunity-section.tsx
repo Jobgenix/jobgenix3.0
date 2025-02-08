@@ -36,6 +36,7 @@ export function OpportunitySection() {
             <p className="text-gray-400">
               Explore opportunities that best suits your skills and interests!
             </p>
+            <h2 className="text-2xl mb-2 text-black">Coming Soon</h2>
           </div>
           <a href="#" className="text-blue-400 hover:underline">
             Explore all →

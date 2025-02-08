@@ -13,6 +13,7 @@ export function ForSection() {
             <h2 className="mb-4 text-4xl font-semibold text-gray-800">
               For Employees
             </h2>
+            <h2 className="text-2xl mb-2">Coming Soon</h2>
             <p className="mb-8 text-xl text-gray-600">
               Find professionals from around the country and across all skills.
             </p>
@@ -37,6 +38,7 @@ export function ForSection() {
             <h2 className="mb-4 text-4xl font-semibold text-gray-800">
               For Candidates
             </h2>
+            <h2 className="text-2xl mb-2">Coming Soon</h2>
             <p className="mb-8 text-xl text-gray-600">
               Build your professional profile, find new opportunities.
             </p>
