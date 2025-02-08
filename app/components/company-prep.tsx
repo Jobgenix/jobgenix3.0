@@ -19,7 +19,7 @@ const companies = [
   {
     name: "Apple",
     logo: "https://s3-alpha-sig.figma.com/img/5472/7d2f/25e44d1495bf730f9b234ced5348d619?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=e0AX1ZZ3rRhMEVDvr~ISI9OS9kekeagPLvNViivJopsQcvKl79kQbwAfUpKlF-HHKl51oUM~NS0SRW2RcPHwyTpwYPZHTU32DzIU1BEmiFn9wxql6mPt73wyus~6vY7Bdyevk2qDr5Qp8PEENND5UVHDbw41aqJCRYAb2DXjMLHL4T6lrX14NbqdFhgv9oTUmqBg0qINyq3X0RUqYdNnRKuBoKeyk4A4IPfBZs5YzSyDeq689h~cFsyeQIcUFqS7b4Q0BWIpvf5i0wgQyvGo3W-IDIi~2DB0cDD8JUULY5kIFi93IQHhajGsnLCQt5MUdeZY7NTdJ-KTcWepHnzvyQ__",
-    description: "Apple Inc. is a global leader in technology, specializing in electronics, software, and services.",
+    description: "Apple Inc. is a global leader in technology, specializing in electronics, software etc",
   },
   {
     name: "Adobe",
@@ -65,7 +65,7 @@ export default function CompanyPreparation() {
                 <h3 className="font-semibold text-lg mb-2">{company.name}</h3>
                 <p className="text-sm text-gray-600 mb-4">{company.description}</p>
                 <button className="flex items-center gap-1 text-white bg-[#2F8E5B] px-6 py-2.5 rounded-full hover:bg-[#059669] transition-colors mx-auto shadow-md">
-                  Start now
+                  Coming Soon
                   <ArrowUpRight className="w-4 h-4" />
                 </button>
               </div>

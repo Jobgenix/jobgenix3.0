@@ -140,7 +140,7 @@ export default function JobDetails({
               className="flex items-center gap-2 bg-white border border-[#01A768] text-[#01A768] hover:bg-emerald-700 rounded-full  text-lg font-medium px-6 shadow-md shadow-black/30"
             >
               <Users className="h-4 w-4" />
-              Referral Person
+              Referral Person (coming soon)
             </Button>
           </div>
         </CardHeader>
