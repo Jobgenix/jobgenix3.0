@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import logo from "../../../public/company-logos/logo.png"
 
 
 
@@ -42,16 +43,16 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="sticky h-[10vh] flex z-[9999] items-center justify-center top-0 w-full border-b bg-white shadow-md shadow-black/30">
+    <nav className="sticky max-h-[10vh] flex z-[9999] items-center justify-center top-0 w-full border-b bg-white shadow-md shadow-black/30">
       <div className="w-full mx-auto flex items-center gap-3 justify-between">
         {/* Left Section: Logo */}
         <div className="flex items-center gap-2">
           <Link href="/" className="text-xl ">
             <Image
-              height={100}
-              width={150}
-              className="h-[10vh]"
-              src="https://s3-alpha-sig.figma.com/img/ec08/93e5/253cb74fcc4215a86fb3f64054477aeb?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=evZfmBKIz~rd~nakZOf0JRY237J9x8-5z5pahi~ct5BIW4iksla1YvpBtbTqQTt780fd~-iP8fJLu0AyQRWrNSN-L6SoxSDUm~FZI4yL87D51kFEQjFp9V~xsPBR57zwEWezJffsNzsEKuemITj~3KX5hMWA~i1qo9Cly7RllmlVCGn9YTB4j~OFAAINUZUT3IhLbqthAU9b6JkZ-4gBWbMqpj0fNMY2yVWvWnMr2yGpbJZ1-jfaq6ESBZesPvOo~erBHp9t9ymCgMQD1fDPUGdNApYHMle6YtwcX3Bu8GIKfOgJ1tT-1P1UzObgqJs5UoLRTZtK2SuqsdtLU3InYQ__"
+              height={0}
+              width={120}
+              className=" w-full h-auto"
+              src={logo}
               alt="Logo"
             />
           </Link>

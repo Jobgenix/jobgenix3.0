@@ -15,7 +15,7 @@ import CareerButtons from "../components/LandingPageComponents/CareerButtons"
 
 export function Landing() {
     return (
-        <div className="min-h-screen bg-[#E8F5E9]">
+        <div className="min-h-screen bg-[#E8F5E9] overflow-hidden">
             <Navbar />
             <HeaderSection />
             <TrustedCompanies />

@@ -36,14 +36,14 @@ import Image from "next/image"
 
 export default function GuidanceBanner() {
   return (
-    <div className="block h-32 flex items-center justify-center  w-screen  mx-auto transition-transform ">
-      <div className="bg-gradient-to-r h-[80%] md:h-4/5 from-[#E8F5E9] to-[#F1F8E9] w-full  md:px-0 md:w-4/5 lg:w-3/5 md:rounded-3xl   flex items-center shadow-sm">
-        <div className="relative h-full w-full  md:rounded-3xl flex-shrink-0">
+    <div className="block md:h-32 h-24 flex items-center justify-center  w-screen  mx-auto transition-transform ">
+      <div className="bg-gradient-to-r h-20 md:h-4/5 from-[#E8F5E9] to-[#F1F8E9] w-[90%] md:px-0 md:w-4/5 lg:w-3/5 rounded-3xl   flex items-center shadow-sm">
+        <div className="relative h-full w-full  rounded-3xl flex-shrink-0">
           <Image
             src="/images/mentorBg.png"
             alt="Mentor profile"
            fill
-            className="md:rounded-3xl"
+            className="rounded-3xl"
           />
         </div>
       </div>

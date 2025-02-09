@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function HeaderSection() {
   return (
-    <div className="w-full h-[full] lg:h-[90vh] flex flex-col md:flex-row bg-[#F3F9F3]">
+    <div className="w-full h-full md:max-h-[90vh] lg:h-[90vh]  flex flex-col md:flex-row bg-[#F3F9F3]">
       {/* Left Side - Image */}
       <div className="flex-1 flex justify-center items-center p-4 lg:p-0">
         <Image
@@ -18,13 +18,13 @@ export function HeaderSection() {
 
       {/* Right Side - Text Content */}
       <div className="flex-1 flex flex-col justify-center items-center md:items-start px-6 text-center lg:text-left">
-        <h1 className="font-semibold text-3xl lg:text-5xl leading-[22px] lg:leading-[52px] mb-4">
+        <h1 className="font-semibold text-2xl md:text-4xl lg:text-5xl leading-[18px] md:leading-[24px] lg:leading-[52px] mb-4">
           <span className="text-[#2F8E5B]">Empowering</span> Growth
         </h1>
-        <h1 className="font-semibold text-3xl lg:text-5xl leading-[22px] lg:leading-[52px] mb-4">
+        <h1 className="font-semibold text-2xl md:text-4xl lg:text-5xl leading-[18px] md:leading-[24px] lg:leading-[52px] mb-4">
           Through Career
         </h1>
-        <h1 className="font-semibold text-3xl lg:text-5xl leading-[22px] lg:leading-[52px] mb-8">
+        <h1 className="font-semibold text-2xl md:text-4xl lg:text-5xl leading-[18px] md:leading-[24px] lg:leading-[52px] mb-8">
           Innovation
         </h1>
         <p className="text-[#5D5D5D] text-sm lg:text-base leading-6 max-w-xl">
