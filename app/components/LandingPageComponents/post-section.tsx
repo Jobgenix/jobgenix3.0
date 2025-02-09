@@ -1,6 +1,6 @@
 import { Button } from "@/app/components/ui/button"
 import Image from "next/image"
-import postImg from "../../../public/images/postImg.png"
+
 
 export function PostSection() {
   return (
@@ -25,7 +25,7 @@ export function PostSection() {
         </div>
         <div className="relative">
           <Image
-            src={postImg}
+            src="/images/postImg.png"
             alt="Host Platform"
             width={400}
             height={250}
