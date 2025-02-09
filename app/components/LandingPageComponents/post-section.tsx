@@ -1,5 +1,6 @@
 import { Button } from "@/app/components/ui/button"
 import Image from "next/image"
+import postImg from "../../../public/images/postImg.png"
 
 export function PostSection() {
   return (
@@ -24,7 +25,7 @@ export function PostSection() {
         </div>
         <div className="relative">
           <Image
-            src="https://s3-alpha-sig.figma.com/img/78b7/32f2/616184f84af2a61c950423a58e667f73?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DsXlcUadVLbueAddrUvrvC5Mhv-8RUcoUyXGDXpCNzjIqJtBpxpauFjet5Yp-EEqcvaYAWxQuLuPACZmW~sOIPhTqOTlcSRF1TyWP8vUldGoiMt8h8D1Xxc~F4kTrsKX0KqGDSc66iUVFSr8azTcGW701sealDTgXsFoIeME5c53DLeU-oaUNai8BJCfOdu0qjcSruPsyJGLJnHCJXA4VmAMJmIJEUFSC6VtVloEZoTGt5GXR~FgPNcOuLvNvtpVeME63oPbDStdHN5HPauD9befchtvYY8zddwoQVRPxCe71gB5WY0QFb5oshE4TwihjnNXO~2tMiiy2j39PtqXZw__"
+            src={postImg}
             alt="Host Platform"
             width={400}
             height={250}
