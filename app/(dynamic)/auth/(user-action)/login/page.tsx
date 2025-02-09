@@ -51,15 +51,15 @@ const Login = () => {
 
   return (
     <div className="flex min-h-screen w-screen justify-center bg-[#E5F7EB] items-center">
-      <div className="md:h-[90vh] h-[85vh] max-md:w-4/5 lg:w-[50vw] p-2 rounded-lg md:rounded-bl-[50px] bg-white flex flex-col-reverse md:flex-row items-center justify-between">
-        
+      <div className="md:h-auto lg:max-h-[90vh]  h-[85vh] max-md:w-4/5 lg:w-[50vw] p-2 rounded-lg md:rounded-bl-[50px] bg-white flex flex-col-reverse md:flex-row items-center justify-between">
+
         {/* Image Section (Hidden on small screens) */}
         <div className="hidden md:flex h-full w-2/5 justify-center">
           <Image
             src="/LandingPageImages/login page.png"
             alt="Login Illustration"
-            className="w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
-            width={400}
+            className="w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px] lg:max-h-[88vh]"
+            width={200}
             height={200 / (9 / 16)}
           />
         </div>

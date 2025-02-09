@@ -99,29 +99,29 @@ const Register: React.FC = () => {
         }
 
         setIsLoading(false);
-        if(callbackUrl?.length) setTimeout(() => router.push(callbackUrl), 0);
+        if (callbackUrl?.length) setTimeout(() => router.push(callbackUrl), 0);
         else router.push('/auth/first-login');
     };
 
     return (
         <div className="flex min-h-screen w-screen justify-center bg-[#E5F7EB] items-center">
-            <div className="md:h-[9/10 * 100] h-[90vh]   max-md:w-4/5 lg:w-1/2    p-2 rounded-lg md:rounded-bl-[50px] bg-white flex flex-col md:flex-row items-center justify-between ">
-                <div className="hidden h-full  md:flex md:w-2/5   justify-center">
-                
-                          <Image
-                            src="/LandingPageImages/login page.png"
-                            alt="Login Illustration"
-                            className="lg:w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px]"
-                            width={400}
-                            height={200 / (9 / 16)}
-                          />
-                        </div>
+            <div className="md:h-auto lg:max-h-[90vh]  h-[85vh] max-md:w-4/5 lg:w-[50vw] p-2 rounded-lg md:rounded-bl-[50px] bg-white flex flex-col-reverse md:flex-row items-center justify-between">
+                <div className="hidden md:flex h-full w-2/5 justify-center">
+                    <Image
+                        src="/LandingPageImages/login page.png"
+                        alt="Login Illustration"
+                        className="w-full rounded-2xl rounded-tr-[50px] rounded-bl-[50px] lg:max-h-[88vh]"
+                        width={200}
+                        height={200 / (9 / 16)}
+                    />
+                </div>
 
 
-                        <div className="h-full  w-full  flex justify-center px-4 flex-col    max-w-sm sm:max-w-md  md:w-3/5">
+
+                <div className="h-full  w-full  flex justify-center px-4 flex-col    max-w-sm sm:max-w-md  md:w-3/5">
                     <h1 className="text-xl text-center text-slate-700 mb-4">
-          Welcome Back to <span className="text-[#2F8E5B]">Jobgenix!</span>
-        </h1>
+                        Welcome Back to <span className="text-[#2F8E5B]">Jobgenix!</span>
+                    </h1>
 
                     <form onSubmit={handleSubmit}>
                         {/* First Name */}
@@ -266,7 +266,7 @@ const Register: React.FC = () => {
                         Already have an account?{" "}
                         <button
                             className="text-[#2F8E5B] hover:underline"
-                            onClick={() =>callbackUrl? router.push(`/auth/login?callback=${callbackUrl}`) : router.push("/auth/login")}
+                            onClick={() => callbackUrl ? router.push(`/auth/login?callback=${callbackUrl}`) : router.push("/auth/login")}
                         >
                             Login
                         </button>

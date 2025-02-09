@@ -147,7 +147,7 @@ export function Navbar() {
                 <span className="block w-6 h-0.5 bg-gray-800"></span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-60 bg-gray-300 mr-0 mt-4 md:mt-8  flex flex-col justify-center align-center">
+            <DropdownMenuContent className="w-60 bg-gray-300 mr-0 mt-4 md:mt-8  flex flex-col justify-center align-center xl:hidden">
               {opportunityOptions.map((option) => (
                 <DropdownMenuItem key={option.name}>
                   <Link
