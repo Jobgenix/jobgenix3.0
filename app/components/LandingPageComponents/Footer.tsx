@@ -10,7 +10,7 @@ export  function Footer() {
         {/* Left Section */}
         <div className="bg-slate-800 text-white p-8 lg:p-12">
           <div className="max-w-md">
-            <Image src="https://s3-alpha-sig.figma.com/img/8a96/4fd8/dc86de2637a0aa6cbc1ad213911dc022?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EomFmufgWmkZOAWQ3qy3bEcbZZofobfIH4ryq832jX7J9tpj8axjQ0hj8bkAokgezUPy2h32ooCUZVdCCKljRgELSjRRcb3iR34GgezaF~T-0hUecHM2Yc5qqyyF~zulwfN9cj4AIDC2O8iYpZlCxb5K1Zu5KipNtXtIBMpi7I9njFWOqwim7pTJFxuJTsBlnF7fXP5cD7YbCvlnEVFzC4EA2UvQumwT0ObjfCEK7fUCeOnr7npR1CrKoODZAW12FWBEU9O7mLLdmOU9ui5Qt1j~OmsG1LoHESXx83cBEKJ4AJB5V3CE9qBbT13XHCYEgs29KOg6ZwsBYUpAKnDYVQ__" alt="Jobgenix Logo" width={150} height={40} className="mb-4" />
+            <Image src="/images/Jobgenix.png" alt="Jobgenix Logo" width={150} height={40} className="mb-4" />
             <p className="text-gray-300 mb-8">Built with ❤️ in India for the world</p>
 
             <div className="space-y-8">

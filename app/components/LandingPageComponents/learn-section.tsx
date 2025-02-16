@@ -26,7 +26,6 @@ export function LearnSection() {
               <br />
               <span className="text-[#2E7D32]"> Level Up Your Skills</span>
             </h2>
-            <h2 className="text-2xl mb-2">Coming Soon</h2>
             <p className="mb-6 text-gray-600">
               Select from a wide range of courses to upskill and advance your
               career!

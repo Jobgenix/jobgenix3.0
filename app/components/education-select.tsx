@@ -9,8 +9,8 @@ interface EducationSelectProps {
 
 export function EducationSelect({ label, value, onValueChange, options }: EducationSelectProps) {
   return (
-    <div className="space-y-2">
-      <label className="text-emerald-600 text-lg font-medium">{label}</label>
+    <div className="space-y-2 ">
+      <label className="text-emerald-600 text-md font-medium">{label}</label>
       <Select value={value} onValueChange={onValueChange}>
         <SelectTrigger className="w-[140px] bg-white shadow-sm border-none">
           <SelectValue />
