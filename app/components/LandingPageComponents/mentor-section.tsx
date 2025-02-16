@@ -11,7 +11,6 @@ export function MentorSection() {
           <h2 className="text-4xl font-bold">
             <span className="text-[#2E7D32]">Personalised</span> Mentor Support
           </h2>
-          <h2 className="text-2xl mb-2">Coming Soon</h2>
           <p className="text-gray-600">
             Choose from top industry mentors and get exclusive 1-on-1 coaching!
           </p>
