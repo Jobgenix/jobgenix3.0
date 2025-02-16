@@ -14,7 +14,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../../../public/company-logos/logo.png"
+
 
 
 
@@ -52,7 +52,7 @@ export function Navbar() {
               height={0}
               width={120}
               className=" w-full h-auto"
-              src={logo}
+              src="/company-logos/logo.png"
               alt="Logo"
             />
           </Link>
@@ -150,7 +150,7 @@ export function Navbar() {
                 <span className="block w-6 h-0.5 bg-gray-800"></span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-60 bg-gray-300 mr-0 mt-4 md:mt-8  flex flex-col justify-center align-center">
+            <DropdownMenuContent className="w-60 bg-gray-300 mr-0 mt-4 md:mt-8  flex flex-col justify-center align-center xl:hidden">
               {opportunityOptions.map((option) => (
                 <DropdownMenuItem key={option.name}>
                   <Link

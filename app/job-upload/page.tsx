@@ -82,7 +82,7 @@ export default function Page() {
       router.push("/auth/login");
     }
     if (status === "authenticated" && session.user.role !== ROLE_IDS.EMPLOYER) {
-      router.push("/job-display");
+      router.push("/opportunities?type=jobs");
     }
   }, [status, session, router]);
 
