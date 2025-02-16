@@ -2,6 +2,7 @@ import { Button } from "@/app/components/ui/button"
 import { Card } from "@/app/components/ui/card"
 import { Search } from 'lucide-react'
 // import Image from "next/image"
+import Link from "next/link";
 
 export function JobSection() {
   const jobs = [
@@ -62,9 +63,12 @@ export function JobSection() {
                   <h5 className="font-semibold">{job.title}</h5>
                   <p className="text-sm text-gray-600">{job.category}</p>
                 </div>
+                <Link href="/comingSoon">
                 <Button className="bg-[#2E7D32] hover:bg-[#1B5E20] rounded-2xl text-white px-8">
                   Apply
                 </Button>
+                </Link>
+                
               </div>
             ))}
           </div>

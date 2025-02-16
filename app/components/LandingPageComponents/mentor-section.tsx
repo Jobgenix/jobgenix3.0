@@ -1,6 +1,7 @@
 import { Button } from "@/app/components/ui/button";
 import Image from "next/image";
 // import img3 from "../../Images/image3.jpeg"
+import Link from "next/link";
 
 export function MentorSection() {
   return (
@@ -15,15 +16,18 @@ export function MentorSection() {
             Choose from top industry mentors and get exclusive 1-on-1 coaching!
           </p>
           <div className="flex gap-4">
-            <Button className="bg-[#2E7D32] rounded-2xl text-white hover:bg-[#1B5E20]">
+            
+            <Link href="/comingSoon"><Button className="bg-[#2E7D32] rounded-2xl text-white hover:bg-[#1B5E20]">
               Find a Mentor
-            </Button>
+            </Button></Link>
+            <Link href="/comingSoon">
             <Button
               variant="outline"
               className="border-[#2E7D32] rounded-2xl bg-white"
             >
               Become a Mentor
-            </Button>
+            </Button></Link>
+            
           </div>
         </div>
         <div className="relative rounded-lg  flex justify-center items-center p-6">

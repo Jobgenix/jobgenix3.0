@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@/app/components/ui/button";
 // import img1 from "././../Images/image1.png";
 // import img2 from "../../Images/image2.png";
+import Link from "next/link";
 
 export function ForSection() {
   return (
@@ -13,13 +14,16 @@ export function ForSection() {
             <h2 className="mb-4 text-4xl font-semibold text-gray-800">
               For Employees
             </h2>
-            <h2 className="text-2xl mb-2">Coming Soon</h2>
+
             <p className="mb-8 text-xl text-gray-600">
               Find professionals from around the country and across all skills.
             </p>
-            <Button className="rounded-full bg-[#2E7D32] text-white px-8 py-6 text-lg font-medium hover:bg-[#1B5E20]">
-              Post jobs for Free
-            </Button>
+            <Link href="/comingSoon">
+              <Button className="rounded-full bg-[#2E7D32] text-white px-8 py-6 text-lg font-medium hover:bg-[#1B5E20]">
+                Post jobs for Free
+              </Button>
+            </Link>
+
           </div>
           <div className="mt-6 hidden xl:flex">
             <Image
@@ -38,13 +42,15 @@ export function ForSection() {
             <h2 className="mb-4 text-4xl font-semibold text-gray-800">
               For Candidates
             </h2>
-            <h2 className="text-2xl mb-2">Coming Soon</h2>
+
             <p className="mb-8 text-xl text-gray-600">
               Build your professional profile, find new opportunities.
             </p>
-            <Button className="rounded-full bg-[#2E7D32] text-white px-8 py-6 text-lg font-medium hover:bg-[#1B5E20]">
-              Upload Your CV
-            </Button>
+            <Link href="/comingSoon">
+              <Button className="rounded-full bg-[#2E7D32] text-white px-8 py-6 text-lg font-medium hover:bg-[#1B5E20]">
+                Upload Your CV
+              </Button></Link>
+
           </div>
           <div className="mt-6 hidden xl:flex">
             <Image

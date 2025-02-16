@@ -36,10 +36,10 @@ export function Navbar() {
   const opportunityOptions = [
     { name: "Internships", route: "/opportunities?type=internships" },
     { name: "Jobs", route: "/opportunities?type=jobs" },
-    { name: "Government Jobs", route: "/opportunities?type=government-jobs" },
-    { name: "Freshers", route: "/opportunities?type=Freshers" },
-    { name: "Remote Jobs", route: "/opportunities?type=Remote Jobs" },
-    { name: "Part-time Jobs", route: "/opportunities?type=Part-time Jobs" },
+    { name: "Government Jobs", route: "/comingSoon" },
+    { name: "Freshers", route: "/comingSoon" },
+    { name: "Remote Jobs", route: "/comingSoon" },
+    { name: "Part-time Jobs", route: "/comingSoon" },
   ];
 
   return (
@@ -69,16 +69,16 @@ export function Navbar() {
         {/* Middle and Right Sections: Hidden on small/medium screens */}
         <div className="flex gap-4">
           <div className="hidden xl:flex items-center gap-4">
-            <Link href="#" className="text-sm text-[#646A66] font-bold">
+            <Link href="/comingSoon" className="text-sm text-[#646A66] font-bold">
               Resources
             </Link>
-            <Link href="#" className="text-sm text-[#646A66] font-bold">
+            <Link href="/comingSoon" className="text-sm text-[#646A66] font-bold">
               Mentorship
             </Link>
-            <Link href="#" className="text-sm text-[#646A66] font-bold">
+            <Link href="/comingSoon" className="text-sm text-[#646A66] font-bold">
               Courses
             </Link>
-            <Link href="#" className="text-sm text-[#646A66] font-bold">
+            <Link href="/comingSoon" className="text-sm text-[#646A66] font-bold">
               Practice
             </Link>
 
@@ -129,12 +129,15 @@ export function Navbar() {
                 <Plus className="mr-1 h-4 w-4" /> Host
               </Button>
             </Link>
-            <Button
-              variant="ghost"
-              className="h-9 px-4 bg-[#DFE2FF] text-[#383838] font-extrabold hover:bg-gray-100 rounded-[18px]"
-            >
-              For Business
-            </Button>
+            <Link href="/comingSoon">
+              <Button
+                variant="ghost"
+                className="h-9 px-4 bg-[#DFE2FF] text-[#383838] font-extrabold hover:bg-gray-100 rounded-[18px]"
+              >
+                For Business
+              </Button>
+            </Link>
+
           </div>
         </div>
         {/* Hamburger Menu for Small/Medium Screens */}

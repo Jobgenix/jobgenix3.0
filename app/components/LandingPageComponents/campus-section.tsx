@@ -29,11 +29,11 @@ export function CampusSection() {
           <h1 className="mb-4 text-4xl  text-[#2E7D32] md:text-5xl lg:text-6xl">
             Jobgenix Campus
           </h1>
-          <h1 className="text-4xl mb-4">Coming Soon</h1>
+          
           <p className="mx-auto max-w-2xl text-lg text-gray-600">
             Level up your coding skills by practicing the hiring assessments of your dream companies & ace your placement game!
           </p>
-          <a href="#" className="text-blue-600 hover:underline">
+          <a href="/comingSoon" className="text-blue-600 hover:underline">
             View More →
           </a>
         </div>

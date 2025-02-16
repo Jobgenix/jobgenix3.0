@@ -1,7 +1,8 @@
 import Image from "next/image";
 // import img from "../../Images/Main.png";
+import Link from "next/link";
 
-export  function ReferAndWin() {
+export function ReferAndWin() {
   return (
     <div className="bg-[#E8F5E9] p-10 flex items-center justify-center">
       <div className="w-4/5 xl:w-2/5 border p-6 flex flex-col xl:flex-row items-center rounded-xl justify-between bg-[#9BE6C1]"> {/* Added flex-col and xl:flex-row */}
@@ -12,9 +13,11 @@ export  function ReferAndWin() {
             <br />
             AirPods, Cash Rewards and more!
           </p>
-          <button className="mt-4 bg-gray-900 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition-colors">
-            Get Started
-          </button>
+          <Link href="/comingSoon">
+            <button className="mt-4 bg-gray-900 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition-colors">
+              Get Started
+            </button></Link>
+
         </div>
         <div className="relative mt-6 xl:mt-0"> {/* Added margin-top for mobile */}
           <div className="rounded-2xl overflow-hidden border-[#B7E4C7]"> {/* Removed hidden and xl:flex */}

@@ -1,6 +1,7 @@
 import { Button } from "@/app/components/ui/button";
 import { Check } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 // import learnImage from "../../Images/1000+ students.png"
 
 export function LearnSection() {
@@ -40,9 +41,12 @@ export function LearnSection() {
                 </div>
               ))}
             </div>
-            <Button className="bg-[#2E7D32] rounded-3xl text-white hover:bg-[#1B5E20]">
-              Explore Courses →
-            </Button>
+            <Link href="/comingSoon">
+              <Button className="bg-[#2E7D32] rounded-3xl text-white hover:bg-[#1B5E20]">
+                Explore Courses →
+              </Button>
+            </Link>
+
           </div>
         </div>
       </div>
