@@ -26,7 +26,8 @@ export default function CareerButtons() {
         </button>
       </Link>
 
-      <button className="group shadow-lg shadow-gray-400 flex flex-col items-center p-4 bg-[#EBCABFF7] w-4/5 rounded-2xl hover:shadow-lg transition-all duration-300">
+      <Link href="/comingSoon" className="group shadow-lg shadow-gray-400 flex flex-col items-center p-4 bg-[#EBCABFF7] w-4/5 rounded-2xl hover:shadow-lg transition-all duration-300">
+      <button >
         <div className="flex items-center gap-2 mb-1">
           
           <span className="font-semibold text-lg">Power up your career</span>
@@ -34,6 +35,7 @@ export default function CareerButtons() {
         </div>
         <span className="text-sm text-gray-600">Upload Your CV</span>
       </button>
+      </Link>
     </div>
   )
 }
