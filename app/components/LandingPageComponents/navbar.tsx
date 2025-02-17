@@ -215,7 +215,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../../../public/company-logos/logo.png";
+
  
 export function Navbar() {
   const [loginStatus, setLoginStatus] = useState(false);
@@ -260,7 +260,7 @@ export function Navbar() {
               height={0}
               width={120}
               className=" w-full h-auto"
-              src={logo}
+              src="/company-logos/logo.png"
               alt="Logo"
             />
           </Link>
