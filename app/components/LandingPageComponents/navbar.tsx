@@ -233,21 +233,21 @@ export function Navbar() {
   }, [session]);
  
   const opportunityOptions = [
+    { name: "Courses", route: "/comingSoon" },
+    { name: "Practice", route: "/comingSoon" },
     { name: "Mentorship", route: "/comingSoon" },
-    {name: "Resources", route: "/comingSoon" },
     { name: "Government Jobs", route: "/comingSoon" },
-    { name: "Remote Jobs", route: "/comingSoon" },
-    { name: "Part-time Jobs", route: "/comingSoon" },
   ];
 
   const opportunityOptionsHamburger = [
     { name: "Internship", route: "/opportunities?type=internships" },
     { name: "Jobs", route: "/opportunities?type=jobs" },
-    { name: "Mentorship", route: "/comingSoon" },
-    {name: "Resources", route: "/comingSoon" },
     { name: "Government Jobs", route: "/comingSoon" },
-    { name: "Remote Jobs", route: "/comingSoon" },
-    { name: "Part-time Jobs", route: "/comingSoon" },
+    { name: "Mentorship", route: "/comingSoon" },
+    { name: "Roadmaps", route: "/comingSoon" },
+    {name: "Resources", route: "/comingSoon" },
+    { name: "Courses", route: "/comingSoon" },
+    { name: "Practice", route: "/comingSoon" },
   ];
  
   return (
@@ -290,10 +290,10 @@ export function Navbar() {
               Jobs
             </Link>
             <Link href="/comingSoon" className="text-sm text-[#646A66] font-bold">
-              Courses
+              Roadmaps
             </Link>
             <Link href="/comingSoon" className="text-sm text-[#646A66] font-bold">
-              Practice
+              Resources
             </Link>
  
             {/* Opportunities Dropdown (Desktop) */}
@@ -303,7 +303,7 @@ export function Navbar() {
                   href="#"
                   className="text-sm text-[#646A66] font-bold flex justify-center items-center"
                 >
-                  Get Started
+                  Get started
                   <ChevronDown className="h-4 w-4" />
                 </Link>
               </DropdownMenuTrigger>
@@ -326,7 +326,7 @@ export function Navbar() {
           <div className="hidden xl:flex items-center gap-3 px-3">
             <span className="text-gray-400">|</span>
             <Button
-              className="w-full bg-[#01A768] hover:bg-[#018e59] text-white rounded-[18px] font-medium"
+              className="w-full bg-[#2F8E5B]  hover:bg-[#1E7045] text-white rounded-[18px] font-medium"
               onClick={() =>
                 loginStatus ? router.push("/home") : router.push("/auth/login")
               }
@@ -376,7 +376,7 @@ export function Navbar() {
               ))}
               <DropdownMenuItem>
                 <Button
-                  className="w-full bg-[#01A768] hover:bg-[#018e59] text-white rounded-[18px] font-medium"
+                  className="w-full bg-[#2F8E5B] text-white hover:bg-[#1E7045] rounded-[18px] font-medium"
                   onClick={() =>
                     loginStatus
                       ? router.push("/home")

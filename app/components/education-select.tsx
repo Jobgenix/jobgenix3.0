@@ -9,10 +9,10 @@ interface EducationSelectProps {
 
 export function EducationSelect({ label, value, onValueChange, options }: EducationSelectProps) {
   return (
-    <div className="space-y-2 ">
-      <label className="text-emerald-600 text-md font-medium">{label}</label>
+    <div className="space-y-2">
+      <label className="text-emerald-600 text-sm ">{label}</label>
       <Select value={value} onValueChange={onValueChange}>
-        <SelectTrigger className="w-[140px] bg-white shadow-sm border-none">
+        <SelectTrigger className="w-[140px] h-[30px] bg-white text-sm shadow-sm border-none">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
