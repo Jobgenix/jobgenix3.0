@@ -1,10 +1,11 @@
 //import { Card } from "../LandingPageComponents/ui/card";
 import Image from "next/image";
+import { JoinCommunity } from "./JoinCommunity";
 // import heroImage from "../../Images/";
 
 export function HeaderSection() {
   return (
-    <div className="w-full h-full md:max-h-[90vh] lg:h-[90vh]  flex flex-col md:flex-row bg-[#F3F9F3]">
+    <div className="w-full h-full md:max-h-[90vh] lg:h-[90vh] p-2 flex flex-col md:flex-row bg-[#F3F9F3]">
       {/* Left Side - Image */}
       <div className="flex-1 flex justify-center items-center p-4 lg:p-0">
         <Image
@@ -31,6 +32,7 @@ export function HeaderSection() {
           Amplify your skills, enrich your CV, and make your dream job a reality
           with global connections.
         </p>
+        <JoinCommunity/>
       </div>
     </div>
   );

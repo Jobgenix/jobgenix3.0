@@ -5,13 +5,13 @@ import { ForSection } from "../components/LandingPageComponents/for-section"
 import { LearnSection } from "../components/LandingPageComponents/learn-section"
 import { CampusSection } from "../components/LandingPageComponents/campus-section"
 import { MentorSection } from "../components/LandingPageComponents/mentor-section"
-import { JobSection } from "../components/LandingPageComponents/job-section"
 import { OpportunitySection } from "../components/LandingPageComponents/opportunity-section"
 import { HostSection } from "../components/LandingPageComponents/host-section"
 import { Footer } from "../components/LandingPageComponents/Footer"
 import { ReferAndWin } from "../components/LandingPageComponents/ReferAndWin"
 import { StatsSection } from "../components/LandingPageComponents/statsSection"
 import CareerButtons from "../components/LandingPageComponents/CareerButtons"
+
 
 export function Landing() {
     return (
@@ -24,7 +24,6 @@ export function Landing() {
             <LearnSection />
             <CampusSection />
             <MentorSection />
-            <JobSection />
             <OpportunitySection />
             <HostSection />
             <ReferAndWin />
