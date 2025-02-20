@@ -8,6 +8,7 @@ interface EducationSelectProps {
 }
 
 export function EducationSelect({ label, value, onValueChange, options }: EducationSelectProps) {
+  if (label === "Type") return null;
   return (
     <div className="space-y-2">
       <label className="text-emerald-600 text-sm ">{label}</label>

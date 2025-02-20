@@ -271,7 +271,7 @@ export default function JobsPage() {
       <Navbar />
 
       <section className="md:px-16 mt-4  pb-6">
-        <section className="flex gap-2  justify-evenly items-center">
+        <section className="flex gap-4  justify-evenly items-center">
           <div className="flex flex-col gap-4 h-screen  bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[96%] md:w-4/5 lg:w-[30%] shadow-lg shadow-black/20 rounded-md">
             <section className="p-4 flex flex-col gap-4 ">
               <div className="relative">
@@ -284,7 +284,7 @@ export default function JobsPage() {
                 />
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
               </div>
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex gap-8 flex-wrap">
                 <EducationSelect
                   label="Passing Year"
                   value={passingYear}
@@ -297,12 +297,12 @@ export default function JobsPage() {
                   onValueChange={setStream}
                   options={streams}
                 />
-                {/* <EducationSelect
+                <EducationSelect
                   label="Type"
                   value={type}
                   onValueChange={setType}
                   options={types}
-                /> */}
+                />
               </div>
             </section>
             <div className="overflow-auto custom-scrollbar" id="scrollableDiv">
