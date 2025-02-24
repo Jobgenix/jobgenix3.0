@@ -16,7 +16,7 @@ const ComingSoon = () => {
                     {/* Heading */}
                     <p className="text-4xl md:text-5xl font-bold flex items-center gap-2 text-green-600">
                         <img
-                            src="https://s3-alpha-sig.figma.com/img/f042/61c4/79adca8b82bf6f2b20c47d251b8cbd4f?Expires=1740355200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=aBrsXiPdUIEd-PFanXD3Bg5GQR1OD2xtETEGZjBGivyQDzypSOTrfbtFyNXwLoMWZNHGvw5UcHTqrIxas5tgzxrLaS~bNTNEro600xr6vIGpxTkI5TBQ-WOlwXZ1IPzsBcHgjjGzncSYL-pwsi0PjTyFJJLOAlhGraTjTjQNuHq57SugbEmtwaa73nE6Z-n58jpkhMShPmfgAtXmBNhjZWOH4Ptw2OPnw3cq6T2y-IG8atIUrg~4wYts9YzpBTvSNlPBlaoN4LQxUk4tO5EKXO~ueNxDnchmGfKDG6Kt2~m7SvAdLytqvwRyuvEe2kWWcHIgi2kWzCcR0b~CLA4yLw__"
+                            src="/images/emoji.png"
                             alt="Icon"
                             width={35}
                             className="hidden  md:block"

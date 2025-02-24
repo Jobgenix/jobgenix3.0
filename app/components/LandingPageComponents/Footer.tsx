@@ -172,6 +172,14 @@ export  function Footer() {
                   <Link href="#">RRB ALP 2023 Papers</Link>
                 </li>
               </ul>
+              <h3 className="font-semibold text-lg mt-8 mb-4">Upload new roadmap</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link href="/roadmap-admin">click here</Link>
+                </li>
+                
+              </ul>
+
             </div>
           </div>
 
