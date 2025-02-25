@@ -1,9 +1,12 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Mail, Phone } from "lucide-react"
-import { Instagram, Linkedin, Facebook, Send, DiscIcon as Discord, Twitter, Youtube } from "lucide-react"
+// import { Instagram, Linkedin, Facebook, Send, DiscIcon as Discord, Twitter, Youtube } from "lucide-react"
+import { Instagram, Linkedin } from "lucide-react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 
-export  function Footer() {
+export function Footer() {
   return (
     <footer className="w-full">
       <div className="grid lg:grid-cols-2 gap-0">
@@ -38,34 +41,35 @@ export  function Footer() {
               </div>
 
               <div className="flex gap-4 mb-8">
-                <Link href="https://instagram.com" className="text-[#E1B067] hover:opacity-80">
-                  <Instagram size={24} />
-                  <span className="sr-only">Instagram</span>
-                </Link>
-                <Link href="https://linkedin.com" className="text-[#E1B067] hover:opacity-80">
+                <Link href=" https://www.linkedin.com/company/successwithjobgenix/" className="text-[#E1B067] hover:opacity-80">
                   <Linkedin size={24} />
                   <span className="sr-only">LinkedIn</span>
                 </Link>
-                <Link href="https://facebook.com" className="text-[#E1B067] hover:opacity-80">
+                <Link href=" https://www.instagram.com/jobgenix.unbeatable/" className="text-[#E1B067] hover:opacity-80">
+                  <Instagram size={24} />
+                  <span className="sr-only">Instagram</span>
+                </Link>
+                {/* <Link href="https://facebook.com" className="text-[#E1B067] hover:opacity-80">
                   <Facebook size={24} />
                   <span className="sr-only">Facebook</span>
-                </Link>
-                <Link href="https://telegram.org" className="text-[#E1B067] hover:opacity-80">
+                </Link> */}
+                {/* <Link href="https://telegram.org" className="text-[#E1B067] hover:opacity-80">
                   <Send size={24} />
                   <span className="sr-only">Telegram</span>
-                </Link>
-                <Link href="https://discord.com" className="text-[#E1B067] hover:opacity-80">
+                </Link> */}
+                {/* <Link href="https://discord.com" className="text-[#E1B067] hover:opacity-80">
                   <Discord size={24} />
                   <span className="sr-only">Discord</span>
-                </Link>
-                <Link href="https://twitter.com" className="text-[#E1B067] hover:opacity-80">
-                  <Twitter size={24} />
+                </Link> */}
+                <Link href="https://x.com/team_Jobgenix" className="text-[#E1B067] hover:opacity-80">
+                  {/* <Twitter size={24} /> */}
+                  <FontAwesomeIcon size="xl" icon={faXTwitter} />
                   <span className="sr-only">X (Twitter)</span>
                 </Link>
-                <Link href="https://youtube.com" className="text-[#E1B067] hover:opacity-80">
+                {/* <Link href="https://youtube.com" className="text-[#E1B067] hover:opacity-80">
                   <Youtube size={24} />
                   <span className="sr-only">YouTube</span>
-                </Link>
+                </Link> */}
               </div>
 
               <div>
@@ -177,7 +181,7 @@ export  function Footer() {
                 <li>
                   <Link href="/roadmap-admin">click here</Link>
                 </li>
-                
+
               </ul>
 
             </div>
@@ -191,7 +195,7 @@ export  function Footer() {
               <Link href="#" className="hover:underline">
                 Contact Us
               </Link>
-              <Link href="#" className="hover:underline">
+              <Link href="/careers" className="hover:underline">
                 Careers
               </Link>
               <Link
