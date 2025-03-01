@@ -176,7 +176,7 @@ export default function Home() {
             className="ml-10"
           />
           <div className="text block ">
-            <h1 className="text-2xl mt-2">Don't see any relevant openings?</h1>
+            <h1 className="text-2xl mt-2">Don&apos;t see any relevant openings?</h1>
             <p className="text-xs mt-3">
               Mail us at <Link href="careers@jobgenix.co.in">careers@jobgenix.co.in</Link>  with the profile name as the
               subject. (Example: Applying for SDE Intern role.)
