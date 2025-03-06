@@ -229,24 +229,34 @@ import { JobCardProps } from "@/types/job";
 import { CompanyType } from "@/types/companyType";
 import { Opportunity } from "@/types/opportunityType";
 import Link from "next/link";
+// import { jobStatusEnum } from "@/lib/schema";
+import { toast } from "sonner";
 
 
 
 interface JobDetailsMobileProps {
   job: JobCardProps;
-
+  jobDetails:
+    | {
+      companies: CompanyType;
+      opportunities: Opportunity;
+    }
+    | undefined;
   onClose: () => void;
 
 }
 
-export default function JobDetailsMobile({ job, onClose }: JobDetailsMobileProps) {
-  const copyToClipboard = () => {
-    const url = window.location.href;
-    navigator.clipboard
-      .writeText(url)
-      .then(() => alert("URL copied to clipboard!"))
-      .catch((err) => console.error("Failed to copy URL:", err));
-  };
+export default function JobDetailsMobile({ job,jobDetails, onClose }: JobDetailsMobileProps) {
+  // const copyToClipboard = () => {
+  //   const url = `${window.location.origin}/opportunities/?id=${job.jobId}`;
+  //   navigator.clipboard
+  //     .writeText(url)
+  //     .then(() => ("URL copied to clipboard!"))
+  //     .catch((err) => console.error("Failed to copy URL:", err));
+  // };
+  
+
+  console.log(jobDetails);
 
   return (
     <div className="xl:hidden block h-screen w-full fixed top-0 pt-[10vh] left-0 bg-white z-20 overflow-y-auto">
@@ -254,8 +264,17 @@ export default function JobDetailsMobile({ job, onClose }: JobDetailsMobileProps
       <div className="flex justify-between items-center px-6 py-4">
         <MdKeyboardArrowLeft size={32} className="cursor-pointer" onClick={onClose} />
         <h1 className="text-2xl font-semibold">Details</h1>
-        <button onClick={copyToClipboard}>
+        <button onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${typeof window !== "undefined"
+                      ? window.location.origin
+                      : ""
+                    }/opportunities/?id=${job.jobId}`
+                  );
+                  toast.success("Copied to clipboard");
+                }}>
           <IoShareSocialOutline size={28} />
+          
         </button>
       </div>
 
@@ -293,25 +312,29 @@ export default function JobDetailsMobile({ job, onClose }: JobDetailsMobileProps
             <MdOutlineHome size={24} />
           </div>
           <p className="text-gray-500 text-sm mt-2">Job Location</p>
-          <h1 className="text-lg font-semibold">{job.jobType}</h1>
+          <h1 className="text-lg font-semibold">{job.jobLocation}</h1>
         </div>
       </div>
 
       {/* About the Job */}
       <div className="px-6 mt-8">
         <h1 className="text-2xl font-semibold">About the job</h1>
-        <p className="text-md text-gray-700 mt-4">
+        {/* <p className="text-md text-gray-700 mt-4">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor sint impedit, quibusdam temporibus cupiditate nulla earum eaque excepturi, ut quisquam placeat quidem fugit ab magni est consequuntur natus. Quas, facilis.
-        </p>
+        </p> */}
+        <div
+              className="space-y-4"
+              dangerouslySetInnerHTML={{ __html: jobDetails?.opportunities.description || "" }}
+            />
       </div>
 
       {/* Key Responsibilities */}
-      <div className="px-6 mt-6 mb-24">
+      {/* <div className="px-6 mt-6 mb-24">
         <h1 className="text-2xl font-semibold">Key Responsibilities</h1>
         <p className="text-md text-gray-700 mt-4">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere culpa ullam aut sequi quasi.
         </p>
-      </div>
+      </div> */}
 
       {/* Bottom Buttons */}
       <div className="sticky  bottom-0 left-0 right-0 bg-gray-200 p-4 border-t flex justify-center gap-4">

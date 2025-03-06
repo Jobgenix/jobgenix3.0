@@ -258,6 +258,7 @@ export default function JobsPage() {
           <JobCard
             key={job.jobId}
             job={job}
+            
             onClick={() => handleJobCardClick(job.jobId)}
           />
         )),

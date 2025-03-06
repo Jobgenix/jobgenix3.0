@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaFilter, FaSort } from "react-icons/fa";
 
 export default function ApplicationTracker() {
-  const [applications, setApplications] = useState([
+  const applications = [
     {
       id: 1,
       company: "Google",
@@ -25,7 +25,7 @@ export default function ApplicationTracker() {
       status: "Rejected",
       dateApplied: "2025-02-18",
     },
-  ]);
+  ];
 
   const getStatusColor = (status: string): string => {
     switch (status) {

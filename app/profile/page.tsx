@@ -6,11 +6,11 @@ import React from 'react';
 import { Navbar } from '../components/LandingPageComponents/navbar';
 import UploadCv from '../components/profilePage/uploadcv';
 import {Footer} from "@/app/components/LandingPageComponents/Footer";
-import Courses from '../components/profilePage/courses';
-import ApplicationTracker from '../components/profilePage/Applicationtracker';
-import Mentorship from '../components/profilePage/mentorship';
+// import Courses from '../components/profilePage/courses';
+// import ApplicationTracker from '../components/profilePage/Applicationtracker';
+// import Mentorship from '../components/profilePage/mentorship';
 import Practice from '../components/profilePage/practiceAssesments';
-import Events from '../components/profilePage/events';
+// import Events from '../components/profilePage/events';
 import Name from '../components/profilePage/name';
 
 export default function ProfilePage() {

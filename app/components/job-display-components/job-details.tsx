@@ -61,6 +61,8 @@ export default function JobDetails({
       return "2 Hours ago";
     };
 
+    console.log("Jobs in laptop : " + jobDetails?.companies.name);
+
     return (
       <Card className="w-[70%] hidden lg:block mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar shadow-lg shadow-black/20 rounded-md">
         <CardHeader className="space-y-4">
