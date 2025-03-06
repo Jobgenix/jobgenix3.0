@@ -258,6 +258,7 @@ export default function JobsPage() {
           <JobCard
             key={job.jobId}
             job={job}
+            
             onClick={() => handleJobCardClick(job.jobId)}
           />
         )),
@@ -267,7 +268,7 @@ export default function JobsPage() {
   if (status === "loading") return null;
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden -z-10">
       <Navbar />
 
       <section className="md:px-16 mt-4  pb-6">

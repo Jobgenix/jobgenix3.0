@@ -22,11 +22,11 @@ import { Opportunity } from "@/types/opportunityType";
 
 type JobDetailsProps = {
   jobDetails:
-    | {
-        companies: CompanyType;
-        opportunities: Opportunity;
-      }
-    | undefined;
+  | {
+    companies: CompanyType;
+    opportunities: Opportunity;
+  }
+  | undefined;
   isLoadingDetails: boolean;
 };
 
@@ -61,6 +61,8 @@ export default function JobDetails({
       return "2 Hours ago";
     };
 
+    console.log("Jobs in laptop : " + jobDetails?.companies.name);
+
     return (
       <Card className="w-[70%] hidden lg:block mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar shadow-lg shadow-black/20 rounded-md">
         <CardHeader className="space-y-4">
@@ -78,10 +80,9 @@ export default function JobDetails({
                 variant="ghost"
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `${
-                      typeof window !== "undefined"
-                        ? window.location.origin
-                        : ""
+                    `${typeof window !== "undefined"
+                      ? window.location.origin
+                      : ""
                     }/opportunities/?id=${id}`
                   );
                   toast.success("Copied to clipboard");
@@ -139,10 +140,20 @@ export default function JobDetails({
               variant="outline"
               className="flex items-center gap-2 bg-white border border-[#01A768] text-[#01A768] hover:bg-emerald-700 rounded-full  text-lg font-medium px-6 shadow-md shadow-black/30"
             >
+
+              Referral Person (Coming Soon)
               <Users className="h-4 w-4" />
-              Referral Person (coming soon)
             </Button>
+
           </div>
+
+          {/* <div className="flex items-center justify-between bg-green-100 text-green-700 rounded-full p-2 w-full max-w-md shadow-md">
+            <span className="font-semibold text-sm ml-4">Your resume is matching the required qualifications</span>
+            <button className="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-full">
+              Get Started
+            </button>
+          </div> */}
+
         </CardHeader>
 
         <CardContent className="space-y-6">
