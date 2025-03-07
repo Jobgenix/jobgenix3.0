@@ -6,10 +6,7 @@ import { JobCardProps } from "@/types/job";
 import { capitalizeWords } from "@/utils/stringUtility";
 import { CheckCircle, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
-import { CompanyType } from "@/types/companyType";
-import { Opportunity } from "@/types/opportunityType";
-import { useSession } from "next-auth/react";
+
 import { useRouter } from "next/navigation"; // ✅ Correct usage inside the component
 
 interface JobCardElementProps {
@@ -18,14 +15,11 @@ interface JobCardElementProps {
 }
 
 export default function JobCard({ job, onClick }: JobCardElementProps) {
-  const { data: session } = useSession();
+
   const router = useRouter(); // ✅ Moved inside the component
-  const [selectedJob, setSelectedJob] = useState<JobCardProps | null>(null);
-  const [selectedJobDetails, setSelectedJobDetails] = useState<{
-    companies: CompanyType;
-    opportunities: Opportunity;
-  } | null>(null);
-  const [showMobileDetails, setShowMobileDetails] = useState(false);
+
+
+
 
   if (!job) {
     return null;
