@@ -77,7 +77,7 @@ export default function JobsPage() {
     const fetchDegrees = async () => {
       try {
         const response = await axios.get("/api/job/get-degree");
-        console.log(response.data);
+        
         setStreams([...response.data]);
       } catch (error) {
         console.log("Error While Fetching Degrees: ", error);
@@ -211,9 +211,11 @@ export default function JobsPage() {
   const handleJobCardClick = useCallback(
     async (jobId: string) => {
       const details = await fetchJobDetails(jobId);
+      
       if (details) {
         setJobDetails(details);
       }
+      
     },
     [fetchJobDetails]
   );
@@ -232,7 +234,7 @@ export default function JobsPage() {
           stream,
           type: type !== "all" ? type : undefined,
         });
-        // console.log(response.data.jobs);
+        
         setHasMore(response.data.hasMore);
         setJobListings((prevJobs) => [...prevJobs, ...response.data.jobs]);
         setIsLoading(false);
