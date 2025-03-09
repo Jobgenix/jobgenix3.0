@@ -1,7 +1,7 @@
 "use client"
 // import React from 'react';
 import { Navbar } from '../components/LandingPageComponents/navbar';
-import UploadCv from '../components/profilePage/uploadcv';
+// import UploadCv from '../components/profilePage/uploadcv';
 import { Footer } from "@/app/components/LandingPageComponents/Footer";
 // import Courses from '../components/profilePage/courses';
 // import ApplicationTracker from '../components/profilePage/Applicationtracker';

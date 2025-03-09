@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader } from "@/app/components/ui/card"
 
 export default function JobDetailsSkeleton() {
   return (
-    <Card className="w-[70%] mx-auto h-screen bg-[#E5F7EB] hidden lg:block overflow-auto custom-scrollbar">
+    <Card className="w-[67%] mx-auto h-screen bg-[#E5F7EB] hidden lg:block overflow-auto custom-scrollbar">
       <CardHeader className="space-y-4">
         <div className="flex justify-between items-start">
           <Skeleton circle width={52} height={52} />

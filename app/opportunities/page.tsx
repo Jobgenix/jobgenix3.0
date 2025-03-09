@@ -3,8 +3,9 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+// import { Search } from "lucide-react";
 import { toast } from "sonner";
+import Image from "next/image";
 
 import type { JobCardProps } from "@/types/job";
 import type { CompanyType } from "@/types/companyType";
@@ -24,6 +25,9 @@ import MentorBanner from "../components/mentors-banner";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
+// import { usePathname } from "next/navigation";
+
+
 
 const generatePassingYears = () => {
   const currentYear = 2019;
@@ -41,6 +45,8 @@ export default function JobsPage() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const jobId = searchParams.get("id");
+
+
 
   const filter_type = searchParams.get("type") || "all";
 
@@ -77,7 +83,7 @@ export default function JobsPage() {
     const fetchDegrees = async () => {
       try {
         const response = await axios.get("/api/job/get-degree");
-        
+
         setStreams([...response.data]);
       } catch (error) {
         console.log("Error While Fetching Degrees: ", error);
@@ -211,11 +217,11 @@ export default function JobsPage() {
   const handleJobCardClick = useCallback(
     async (jobId: string) => {
       const details = await fetchJobDetails(jobId);
-      
+
       if (details) {
         setJobDetails(details);
       }
-      
+
     },
     [fetchJobDetails]
   );
@@ -234,7 +240,7 @@ export default function JobsPage() {
           stream,
           type: type !== "all" ? type : undefined,
         });
-        
+
         setHasMore(response.data.hasMore);
         setJobListings((prevJobs) => [...prevJobs, ...response.data.jobs]);
         setIsLoading(false);
@@ -260,42 +266,52 @@ export default function JobsPage() {
           <JobCard
             key={job.jobId}
             job={job}
-            
+
             onClick={() => handleJobCardClick(job.jobId)}
           />
         )),
     [isLoading, jobListings, handleJobCardClick]
   );
 
+
+
   if (status === "loading") return null;
 
   return (
     <div className="overflow-hidden -z-10">
-      <Navbar />
+      <div className={`${jobId ? "hidden lg:block" : "block"}`}>
+        <Navbar />
+      </div>
+
+
 
       <section className="md:px-16 mt-4  pb-6">
         <section className="flex gap-4  justify-evenly items-center">
-          <div className="flex flex-col gap-4 h-screen  bg-gradient-to-b from-[#E5F7EB] via-[#E5F7EB] to-[#FFFCEF] w-[96%] md:w-4/5 lg:w-[30%] shadow-lg shadow-black/20 rounded-md">
-            <section className="p-4 flex flex-col gap-4 ">
-              <div className="relative">
+          <div className={`flex flex-col gap-4 h-screen bg-[#E5F7EB] w-[96%] md:w-4/5 lg:w-[33%] shadow-lg shadow-black/20 rounded-md 
+    ${jobId ? 'hidden lg:flex' : 'flex'}`}>
+            <section className="p-4 flex flex-col  gap-4 ">
+              <div className="relative  flex justify-center ">
                 <Input
                   type="search"
-                  placeholder="Search Opportunities"
-                  className="w-full lg:w-full pl-10 text-[#646A66] rounded-3xl border-gray-300"
+                  placeholder="Search from the listings"
+                  className="w-full  lg:w-full rounded-full  overflow-hidden  pl-10 text-[#646A66] shadow-lg  shadow-black/20 border-gray-300"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
+
+                <Image height={0} width={40} className="absolute cursor-pointer rounded-r-full right-0" src="/images/rightArrowImg.png" alt="arrow" />
+
+                {/* <Search className="  left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" /> */}
               </div>
-              <div className="flex gap-8 flex-wrap">
+              <div className="flex gap-8 flex-wrap justify-center">
                 <EducationSelect
-                  label="Passing Year"
+                  label=""
                   value={passingYear}
                   onValueChange={setPassingYear}
                   options={passingYears}
                 />
                 <EducationSelect
-                  label="Stream"
+                  label=""
                   value={stream}
                   onValueChange={setStream}
                   options={streams}
@@ -308,7 +324,7 @@ export default function JobsPage() {
                 />
               </div>
             </section>
-            <div className="overflow-auto custom-scrollbar" id="scrollableDiv">
+            <div className="overflow-auto p-2   flex justify-center align-center  custom-scrollbar" id="scrollableDiv">
               <InfiniteScroll
                 dataLength={jobListings.length}
                 hasMore={hasMore}
@@ -318,7 +334,7 @@ export default function JobsPage() {
                 }}
                 loader={<JobCardSkeleton />}
                 endMessage={
-                  <p style={{ textAlign: "center" }}>
+                  <p style={{ textAlign: "center" }} className="m-3">
                     <b>Yay! You have seen it all</b>
                   </p>
                 }
@@ -336,10 +352,16 @@ export default function JobsPage() {
           />
         </section>
       </section>
-      <CompanyPreparation />
-      <MentorBanner />
-      <PostSection />
-      <Footer />
+
+
+
+
+      <div className={`${jobId ? "hidden lg:block" : "block"}`}>
+        <CompanyPreparation />
+        <MentorBanner />
+        <PostSection />
+        <Footer />
+      </div>
     </div>
   );
 }
