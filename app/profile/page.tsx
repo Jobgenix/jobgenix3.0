@@ -6,7 +6,7 @@ import { Footer } from "@/app/components/LandingPageComponents/Footer";
 // import Courses from '../components/profilePage/courses';
 // import ApplicationTracker from '../components/profilePage/Applicationtracker';
 // import Mentorship from '../components/profilePage/mentorship';
-import Practice from '../components/profilePage/practiceAssesments';
+// import Practice from '../components/profilePage/practiceAssesments';
 // import Events from '../components/profilePage/events';
 import Name from '../components/profilePage/name';
 import { useSession } from "next-auth/react";
@@ -21,7 +21,8 @@ import { useEffect } from "react";
 
 
 export default function ProfilePage() {
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   useEffect(() => {
     if (status === "unauthenticated") {
