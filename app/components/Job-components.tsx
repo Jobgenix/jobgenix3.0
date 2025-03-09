@@ -100,7 +100,7 @@ export default function JobCard({ job, onClick }: JobCardElementProps) {
     //   </Card>
     // </>
     <>
-      <Card className="w-[96%] lg:w-full mt-4  bg-[#FEFFE1] 
+      <Card className="w-[94%] lg:w-full mt-4  bg-[#FEFFE1] 
   cursor-pointer hover:bg-[#C6F7D5] border-none 
   shadow-[4px_4px_4px_#c4c4c4] 
   hover:shadow-[6px_6px_10px_#b0b0b0] 

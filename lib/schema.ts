@@ -20,6 +20,10 @@ export const users = pgTable("user", {
     password: text("password"),
     salt: text("passwordSalt"),
     roleId: text("role_id").references(() => roles.id),
+    location: text("location"), // User's location
+    university: text("university"), // User's university
+    summary: text("summary"), // User's summary or bio
+    resumeUrl: text("resume_url"),
 });
 
 export const accounts = pgTable(
