@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import Image from "next/image";
-import profileLog from "@/public/images/user.png"
+// import profileLog from "@/public/images/user.png"
 import { toast } from "sonner";
 
 export default function Name() {
