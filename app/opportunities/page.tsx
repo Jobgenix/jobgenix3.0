@@ -3,8 +3,9 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+// import { Search } from "lucide-react";
 import { toast } from "sonner";
+import Image from "next/image";
 
 import type { JobCardProps } from "@/types/job";
 import type { CompanyType } from "@/types/companyType";
@@ -24,7 +25,7 @@ import MentorBanner from "../components/mentors-banner";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 
 
 
@@ -289,15 +290,18 @@ export default function JobsPage() {
           <div className={`flex flex-col gap-4 h-screen bg-[#E5F7EB] w-[96%] md:w-4/5 lg:w-[33%] shadow-lg shadow-black/20 rounded-md 
     ${jobId ? 'hidden lg:flex' : 'flex'}`}>
             <section className="p-4 flex flex-col  gap-4 ">
-              <div className="relative   flex justify-center align-center">
+              <div className="relative  flex justify-center ">
                 <Input
                   type="search"
                   placeholder="Search from the listings"
-                  className="w-full  sm:w-3/5 lg:w-full  pl-10 text-[#646A66] shadow-lg rounded-3xl shadow-black/20 border-gray-300"
+                  className="w-full  lg:w-full rounded-full  overflow-hidden  pl-10 text-[#646A66] shadow-lg  shadow-black/20 border-gray-300"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                {/* <Search className="absolute  left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" /> */}
+
+                <Image height={0} width={40} className="absolute cursor-pointer rounded-r-full right-0" src="/images/rightArrowImg.png" alt="arrow" />
+
+                {/* <Search className="  left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" /> */}
               </div>
               <div className="flex gap-8 flex-wrap justify-center">
                 <EducationSelect
@@ -320,7 +324,7 @@ export default function JobsPage() {
                 />
               </div>
             </section>
-            <div className="overflow-auto p-1  flex justify-center align-center  custom-scrollbar" id="scrollableDiv">
+            <div className="overflow-auto p-2   flex justify-center align-center  custom-scrollbar" id="scrollableDiv">
               <InfiniteScroll
                 dataLength={jobListings.length}
                 hasMore={hasMore}

@@ -13,7 +13,7 @@ export function EducationSelect({ label, value, onValueChange, options }: Educat
     <div className="space-y-2 ">
       <label className="text-emerald-600 text-sm ">{label}</label>
       <Select value={value} onValueChange={onValueChange}>
-        <SelectTrigger className="w-[140px] h-[30px] bg-[#2F8E5B]   hover:bg-[#1E7045] text-white text-sm shadow-sm border-none">
+        <SelectTrigger className="w-[140px] h-[30px] bg-[#2F8E5B] rounded-full  hover:bg-[#1E7045] text-white text-sm shadow-sm border-none">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

@@ -4,13 +4,13 @@ import { Button } from "@/app/components/ui/button";
 import { Card } from "@/app/components/ui/card";
 import { JobCardProps } from "@/types/job";
 import { capitalizeWords } from "@/utils/stringUtility";
-import { CheckCircle, ArrowUpRight } from "lucide-react";
+// import { CheckCircle, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import {
+// import {
 
-  Users,
+//   Users,
 
-} from "lucide-react";
+// } from "lucide-react";
 
 
 import { Badge } from "@/app/components/ui/badge";
@@ -39,7 +39,7 @@ export default function JobCard({ job, onClick }: JobCardElementProps) {
       router.push(`/opportunities?id=${job.jobId}`);
     }
   };
-  
+
 
   return (
     // <>
@@ -100,7 +100,13 @@ export default function JobCard({ job, onClick }: JobCardElementProps) {
     //   </Card>
     // </>
     <>
-      <Card className="w-[98%] lg:w-full mt-3   overflow-hidden bg-[#FEFFE1] cursor-pointer hover:bg-[#C6F7D5] border-none shadow-sm">
+      <Card className="w-[96%] lg:w-full mt-4  bg-[#FEFFE1] 
+  cursor-pointer hover:bg-[#C6F7D5] border-none 
+  shadow-[4px_4px_4px_#c4c4c4] 
+  hover:shadow-[6px_6px_10px_#b0b0b0] 
+  transition-all rounded-xl">
+
+
         <CardContent className="p-4">
           <div className="flex flex-col">
             <div className="flex items-start justify-between">
@@ -108,11 +114,12 @@ export default function JobCard({ job, onClick }: JobCardElementProps) {
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="font-medium text-lg">{job.jobTitle}</h3>
                   {/* {title === "Software Engineer" && <CheckCircle className="h-4 w-4 text-gray-500" />} */}
+                  <img src="/images/tick.png" className=" mr-1" alt="" />
                 </div>
                 <p className="text-sm text-gray-600">{capitalizeWords(job.jobLocation)}</p>
               </div>
 
-              <Badge variant="outline" className="bg-[#2F8E5B]  hover:bg-[#1E7045] text-white border-none px-2 py-1 text-xs">
+              <Badge variant="outline" className="bg-[#2F8E5B]   hover:bg-[#1E7045] text-white border-none px-2 py-1 text-xs">
                 {job.jobType}
               </Badge>
             </div>
