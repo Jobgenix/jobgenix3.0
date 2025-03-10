@@ -3,7 +3,6 @@ import { db } from "@/lib/db"; // Import database instance
 import { users } from "@/lib/schema"; // Import users schema
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
-import profileLog from "@/public/images/user.png"
 
 // Handle PUT request to update user profile
 export async function PUT(req: Request) {

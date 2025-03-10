@@ -15,6 +15,7 @@ import Link from "next/link";
 import { CompanyType } from "@/types/companyType";
 import { Opportunity } from "@/types/opportunityType";
 import { Navbar } from "@/app/components/LandingPageComponents/navbar";
+import Image from "next/image";
 
 export default function JobDetailsMobile() {
     const router = useRouter();
@@ -92,10 +93,12 @@ export default function JobDetailsMobile() {
                         <h1 className="text-white text-xl font-semibold">{job.companies.name}</h1>
                     </div>
                     <div className="absolute top-14 flex items-center justify-center bg-white w-16 h-16 rounded-full shadow-lg border-4 border-white">
-                        <img
+                        <Image
                             src={job.companies.logo || "/placeholder.svg"}
                             alt={`${job.companies.name} logo`}
-                            className="w-10 h-10 object-contain"
+                            width={40}  // Equivalent to w-10
+                            height={40} // Equivalent to h-10
+                            className="object-contain"
                         />
                     </div>
                 </div>
