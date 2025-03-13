@@ -27,7 +27,6 @@ export default function UploadCv({ userId }: { userId: string }) {
         const fileInput = document.createElement("input");
         fileInput.type = "file";
         fileInput.accept = ".pdf,.doc,.docx";
-
         fileInput.onchange = async (event) => {
             const target = event.target as HTMLInputElement | null;
             const file = target?.files?.[0];
