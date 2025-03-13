@@ -1,29 +1,17 @@
-"use client"
-// import React from 'react';
-import { Navbar } from '../components/LandingPageComponents/navbar';
-// import UploadCv from '../components/profilePage/uploadcv';
+"use client";
+import { Navbar } from "../components/LandingPageComponents/navbar";
 import { Footer } from "@/app/components/LandingPageComponents/Footer";
-// import Courses from '../components/profilePage/courses';
-// import ApplicationTracker from '../components/profilePage/Applicationtracker';
-// import Mentorship from '../components/profilePage/mentorship';
-// import Practice from '../components/profilePage/practiceAssesments';
-// import Events from '../components/profilePage/events';
-import Name from '../components/profilePage/name';
+import Name from "../components/profilePage/name";
+import UploadCv from "../components/profilePage/uploadcv";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
-
 import { useRouter } from "next/navigation";
-
 import { useEffect } from "react";
 
-
-
-
-
 export default function ProfilePage() {
-  // const { data: session, status } = useSession();
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+
   useEffect(() => {
     if (status === "unauthenticated") {
       toast.error("You need to login first");
@@ -31,13 +19,19 @@ export default function ProfilePage() {
     }
   }, [status, router]);
 
+  // if (status === "loading") {
+  //   return <p className="text-center mt-10 text-lg">Loading...</p>;
+  // }
+
+  if (!session?.user?.id) {
+    return null; // Prevents errors when session is null
+  }
+
   return (
-    <div className="h-auto w-full bg-[#c6f7d5] ">
+    <div className="h-auto w-full bg-[#c6f7d5]">
       <Navbar />
       <Name />
-      {/* <UploadCv /> */}
-      {/* <Practice /> */}
-      {/* <Events /> */}
+      <UploadCv />
       <Footer />
     </div>
   );

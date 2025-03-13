@@ -69,6 +69,7 @@ export default function Name() {
     }
   };
 
+  
   const handleCancel = () => {
     setIsEdited(false); // Hide buttons
     //window.location.reload(); // Refresh page to reset fields (or fetch initial data again)
