@@ -39,6 +39,7 @@ export function hashPassword(
  * @param digest The hash function used during hashing (default: 'sha512').
  * @returns True if the password matches the hash, false otherwise.
  */
+
 export function verifyPassword(
   password: string,
   hashedPassword: string,
