@@ -9,8 +9,9 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function ProfilePage() {
-  const { data: session, status } = useSession();
+  const { data: session , status } = useSession();
   const router = useRouter();
+
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -18,10 +19,6 @@ export default function ProfilePage() {
       router.push("/auth/login");
     }
   }, [status, router]);
-
-  // if (status === "loading") {
-  //   return <p className="text-center mt-10 text-lg">Loading...</p>;
-  // }
 
   if (!session?.user?.id) {
     return null; // Prevents errors when session is null

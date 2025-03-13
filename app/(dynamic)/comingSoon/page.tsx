@@ -2,8 +2,9 @@
 import { Navbar } from "@/app/components/LandingPageComponents/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faInstagram } from "@fortawesome/free-brands-svg-icons";
-import Link from "next/link"; // ✅ Import Link
-
+import Link from "next/link"; // 
+import Image
+ from "next/image";
 const ComingSoon = () => {
     return (
         <>
@@ -15,11 +16,12 @@ const ComingSoon = () => {
                 <div className="h-[90vh] w-3/5 md:w-4/5 flex flex-col gap-3 justify-end  py-10 md:py-0 md:justify-center py-4 md:py-0  md:- items-start md:pl-5 ">
                     {/* Heading */}
                     <p className="text-4xl md:text-5xl font-bold flex items-center gap-2 text-green-600">
-                        <img
+                        <Image
                             src="/images/emoji.png"
                             alt="Icon"
                             width={35}
-                            className="hidden  md:block"
+                            height={35} // Required in Next.js
+                            className="hidden md:block"
                         />
                         Hey!
                     </p>

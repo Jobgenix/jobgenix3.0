@@ -4,8 +4,6 @@ import { users } from "@/lib/schema"; // Import users schema
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-
-
 // Handle PUT request to update user profile
 export async function PUT(req: Request) {
     try {

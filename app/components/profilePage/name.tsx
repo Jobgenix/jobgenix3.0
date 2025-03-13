@@ -16,7 +16,6 @@ export default function Name() {
     location: "",
     summary: "",
   });
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isEdited, setIsEdited] = useState(false); // New state to track edits
