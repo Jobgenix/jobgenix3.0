@@ -144,7 +144,7 @@ export default function UploadCv() {
                 ref={fileInputRef}
                 onChange={handleFileChange}
             />
-
+            
             {/* Uploaded File Section */}
             <div className="cv h-auto sm:h-16 w-full sm:w-[95%] mx-auto sm:ml-5 mt-5 border border-black flex flex-col sm:flex-row items-center gap-3 p-2">
                 {fileUrl ? (
