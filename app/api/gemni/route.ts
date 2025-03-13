@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     try {
         const { prompt } = await req.json();
-
         const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
         if (!apiKey) {
             return NextResponse.json({ error: "Missing API Key" }, { status: 500 });
