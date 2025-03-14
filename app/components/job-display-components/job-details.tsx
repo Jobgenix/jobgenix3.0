@@ -32,11 +32,11 @@ import router from "next/router";
 
 type JobDetailsProps = {
   jobDetails:
-  | {
-    companies: CompanyType;
-    opportunities: Opportunity;
-  }
-  | undefined;
+    | {
+        companies: CompanyType;
+        opportunities: Opportunity;
+      }
+    | undefined;
   isLoadingDetails: boolean;
 };
 
@@ -56,8 +56,6 @@ export default function JobDetails({
   // console.log("Jobid : ", jobIdUrl);
 
   if (jobDetails && Object.keys(jobDetails!).length) {
-
-
     const { name, logo } = jobDetails.companies;
 
     const {
@@ -78,11 +76,13 @@ export default function JobDetails({
       return "2 Hours ago";
     };
 
-
-
     return (
       <>
-        <Card className={`w-[67%] hidden lg:block mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar shadow-lg shadow-black/20 rounded-md ${jobIdUrl ? 'hidden' : 'lg:block'}`}>
+        <Card
+          className={`w-[67%] hidden lg:block mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar shadow-lg shadow-black/20 rounded-md ${
+            jobIdUrl ? "hidden" : "lg:block"
+          }`}
+        >
           <CardHeader className="space-y-4">
             <div className="flex justify-between items-start">
               <Image
@@ -98,9 +98,10 @@ export default function JobDetails({
                   variant="ghost"
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `${typeof window !== "undefined"
-                        ? window.location.origin
-                        : ""
+                      `${
+                        typeof window !== "undefined"
+                          ? window.location.origin
+                          : ""
                       }/opportunities/?id=${id}`
                     );
                     toast.success("Copied to clipboard");
@@ -131,7 +132,9 @@ export default function JobDetails({
               </div>
 
               <div className="flex flex-wrap gap-2 font-bold text-black/60">
-                {workplaceType === "office" && <Briefcase className="h-6 w-6" />}
+                {workplaceType === "office" && (
+                  <Briefcase className="h-6 w-6" />
+                )}
                 {workplaceType === "remote" && <Home className="h-6 w-6" />}
                 {workplaceType === "hybrid" && (
                   <ArrowLeftRight className="h-6 w-6" />
@@ -143,6 +146,10 @@ export default function JobDetails({
                   {capitalizeWords(workplaceType)}
                 </Badge>
                 • {type}
+                <Button className="w-40 ml-5 mt-[-0.8%] text-green-500 bg-white hover:bg-white p-2  rounded-3xl shadow-2xl">
+  36% Resume match🎉
+</Button>
+
               </div>
             </div>
 
@@ -158,11 +165,9 @@ export default function JobDetails({
                 variant="outline"
                 className="flex items-center gap-2 bg-white border border-[#01A768] text-[#01A768] hover:bg-emerald-700 rounded-full  text-lg font-medium px-6 shadow-md shadow-black/30"
               >
-
                 Referral Person (Coming Soon)
                 <Users className="h-4 w-4" />
               </Button>
-
             </div>
 
             {/* <div className="flex items-center justify-between bg-green-100 text-green-700 rounded-full p-2 w-full max-w-md shadow-md">
@@ -171,7 +176,6 @@ export default function JobDetails({
               Get Started
             </button>
           </div> */}
-
           </CardHeader>
 
           <CardContent className="space-y-6">
@@ -186,8 +190,11 @@ export default function JobDetails({
           </CardContent>
         </Card>
 
-        <div className={`fixed inset-0 flex flex-col bg-white z-20  ${jobIdUrl ? 'lg:hidden' : 'hidden'}`}>
-
+        <div
+          className={`fixed inset-0 flex flex-col bg-white z-20  ${
+            jobIdUrl ? "lg:hidden" : "hidden"
+          }`}
+        >
           <Navbar />
           {/* Scrollable Content */}
           <div className="flex-1 overflow-y-auto px-6 pb-20">
@@ -196,7 +203,7 @@ export default function JobDetails({
               <MdKeyboardArrowLeft
                 size={32}
                 className="cursor-pointer"
-                onClick={() => router.push('/opportunities?type=internships')}
+                onClick={() => router.push("/opportunities?type=internships")}
               />
               <h1 className="text-2xl font-semibold">Details</h1>
               <button
@@ -213,7 +220,6 @@ export default function JobDetails({
               >
                 <IoShareSocialOutline size={28} />
               </button>
-
             </div>
 
             {/* Company Info */}
@@ -235,7 +241,9 @@ export default function JobDetails({
               <h1 className="text-2xl font-semibold">{title}</h1>
               <div className="flex items-center justify-center gap-2 mt-2">
                 <CiLocationOn size={24} />
-                <p className="text-lg font-medium text-gray-600">{capitalizeWords(location)}</p>
+                <p className="text-lg font-medium text-gray-600">
+                  {capitalizeWords(location)}
+                </p>
               </div>
             </div>
 
@@ -247,6 +255,7 @@ export default function JobDetails({
                 </div>
                 <p className="text-gray-500 text-sm mt-2">Job Type</p>
                 <h1 className="text-lg font-semibold">{type}</h1>
+               
               </div>
 
               <div className="border rounded-xl p-4 w-40 text-center">
@@ -254,7 +263,9 @@ export default function JobDetails({
                   <MdOutlineHome size={24} />
                 </div>
                 <p className="text-gray-500 text-sm mt-2">Job Location</p>
-                <h1 className="text-lg font-semibold">{capitalizeWords(location)}</h1>
+                <h1 className="text-lg font-semibold">
+                  {capitalizeWords(location)}
+                </h1>
               </div>
             </div>
 
@@ -282,10 +293,7 @@ export default function JobDetails({
             </Link>
           </div>
         </div>
-
       </>
-
-
     );
   }
 }
