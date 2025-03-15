@@ -126,7 +126,7 @@ export const authConfig = {
         },
         async jwt({ token, user, trigger, session }) {
             if (user) {
-                return { ...token, id: user.id, roleId: user.roleId };
+                return { ...token, id: user.id, roleId: user.roleId , image: user.image || null,};
             }
             if (trigger === 'update' && session?.role) {
                 return { ...token, roleId: session.role }
@@ -137,6 +137,7 @@ export const authConfig = {
             if (token) {
                 session.user.id = token.id as string;
                 session.user.role = token.roleId as string;
+                session.user.image = token.image as string || null;
             }
             return session;
         },

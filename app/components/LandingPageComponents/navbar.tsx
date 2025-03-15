@@ -26,7 +26,7 @@ export function Navbar() {
 
     if (session?.user) {
       setLoginStatus(true);
-      setUserImage(session.user.image as string);
+      setUserImage(session?.user?.image ?? null);
     } else {
       setLoginStatus(false);
       setUserImage(null);
@@ -116,7 +116,7 @@ export function Navbar() {
 
             <Button
               className="bg-white h-12 w-24 text-black hover:bg-white rounded-[18px] font-medium flex items-center gap-2 px-4 py-2"
-              onClick={() => (loginStatus ? router.push("/home") : router.push("/auth/login"))}
+              onClick={() => (loginStatus ? router.push("/profile") : router.push("/auth/login"))}
             >
               {loginStatus ? (
                 userImage ? (
