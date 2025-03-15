@@ -24,6 +24,7 @@ export const users = pgTable("user", {
     university: text("university"), // User's university
     summary: text("summary"), // User's summary or bio
     resumeUrl: text("resume_url"),
+    skills: text("skills"),
 });
 
 export const accounts = pgTable(
