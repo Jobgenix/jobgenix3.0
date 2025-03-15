@@ -51,6 +51,7 @@ export function Navbar() {
     { name: "Practice", route: "/comingSoon" },
   ];
 
+  
   return (
     <nav className="sticky top-0 z-[9999] w-full bg-white border-b shadow-md shadow-black/30 max-h-[10vh] flex items-center justify-center">
       <div className="w-full mx-auto flex items-center justify-between gap-3">
