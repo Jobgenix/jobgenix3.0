@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+// import UploadCV from "../components/test/cv";
 
 export default function ProfilePage() {
   const { data: session , status } = useSession();
@@ -29,7 +30,8 @@ export default function ProfilePage() {
       <Navbar />
       <Name />
       <UploadCv />
-      <Footer />
+      {/* <UploadCV userId={session?.user?.id}/> */}
+      <Footer/>
     </div>
   );
 }
