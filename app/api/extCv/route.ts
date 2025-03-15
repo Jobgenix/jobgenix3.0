@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateSignedUrl } from "@/utils/CloudinaryCvUploads";
+//import { generateSignedUrl } from "@/utils/CloudinaryCvUploads";
 import { db } from "@/lib/db";
 import { users } from "@/lib/schema";
 import { eq } from "drizzle-orm";
