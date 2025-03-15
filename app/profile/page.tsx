@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { signOut } from "next-auth/react";
+import { Button } from "@/app/components/ui/button";
 
 export default function ProfilePage() {
   const { data: session , status } = useSession();
@@ -23,13 +25,18 @@ export default function ProfilePage() {
   if (!session?.user?.id) {
     return null; // Prevents errors when session is null
   }
+ 
 
   return (
     <div className="h-auto w-full bg-[#c6f7d5]">
       <Navbar />
       <Name />
       <UploadCv />
+      <Button onClick={() => signOut()} className="bg-red-500 hover:bg-red-600 mb-6 ml-[44%] lg:ml-[48%] sm:ml-[46%]">
+      Logout
+    </Button>
       <Footer />
+      
     </div>
   );
 }
