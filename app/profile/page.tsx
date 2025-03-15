@@ -14,7 +14,6 @@ export default function ProfilePage() {
   const { data: session , status } = useSession();
   const router = useRouter();
 
-
   useEffect(() => {
     if (status === "unauthenticated") {
       toast.error("You need to login first");
