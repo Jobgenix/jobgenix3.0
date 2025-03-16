@@ -25,7 +25,6 @@ export default function ProfilePage() {
     return null; // Prevents errors when session is null
   }
 
-
   return (
     <div className="h-auto w-full bg-[#c6f7d5]">
       <Navbar />
