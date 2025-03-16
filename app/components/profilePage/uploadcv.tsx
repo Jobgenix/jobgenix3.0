@@ -4,8 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
-
-// API Endpoints
 const API_UPLOAD_CV = "/api/uploadcv";
 const API_PROFILE_INFO = "/api/profileInfo/";
 
@@ -16,15 +14,16 @@ export default function UploadCv() {
     const [fileName, setFileName] = useState("");
     const [fileUrl, setFileUrl] = useState("");
     const [loading, setLoading] = useState(false);
-
+    
     const userId = session?.user?.id;
-
     // Fetch User CV on Component Mount
     useEffect(() => {
         if (status === "authenticated" && userId) {
             fetchUserCV();
         }
     }, [status, userId]);
+
+    
 
     // Fetch Resume from Profile API
     const fetchUserCV = async () => {
@@ -55,8 +54,51 @@ export default function UploadCv() {
         if (file) {
             setFileName(file.name);
             await uploadFileToBackend(file);
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                const response = await fetch("/api/extractskils/", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || "Failed to extract skills");
+                }
+                // console.log(data.text);
+                await updateSkills(userId || "", data.text || "");
+            } catch (error) {
+                console.error("Error extracting skills:", error);
+            } finally {
+                setLoading(false);
+            }
+
         }
     };
+
+    // Update Skills to Database
+    const updateSkills = async (userId: string, skills: string) => {
+        try {
+            const response = await fetch("/api/extractskils/", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({userId , skills }),
+            });
+
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.message || "Failed to update skills.");
+            console.log(result);
+            toast.success(result.message);
+        } catch (error) {
+            console.error("Error updating skills:", error);
+        }
+    };
+    
+    
+
 
     // Save Resume URL to Database
     const handleSave = async (resumeUrl: string) => {
@@ -75,6 +117,7 @@ export default function UploadCv() {
             console.error("Error saving profile:", error);
         }
     };
+
 
     // Upload File to Cloudinary & Save URL
     const uploadFileToBackend = async (file: File) => {
