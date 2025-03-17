@@ -237,7 +237,6 @@ import { useState } from "react";
 
 interface JobDetailsMobileProps {
   job: JobCardProps;
-  userId: string | undefined;
   jobDetails:
     | {
       companies: CompanyType;
@@ -248,70 +247,70 @@ interface JobDetailsMobileProps {
 
 }
 
-export default function JobDetailsMobile({ job, jobDetails, onClose, userId }: JobDetailsMobileProps) {
+export default function JobDetailsMobile({ job, jobDetails, onClose }: JobDetailsMobileProps) {
 
-  if (jobDetails && Object.keys(jobDetails!).length) {
-  const { requireSkils} = jobDetails.opportunities;
+  // if (jobDetails && Object.keys(jobDetails!).length) {
+  // const { requireSkils} = jobDetails.opportunities;
 
-  const [matchPercentage, setMatchPercentage] = useState<string>("0");
+  // const [matchPercentage, setMatchPercentage] = useState<string>("0");
 
-  console.log(`Required skills: ${requireSkils} ID: ${userId || null}`);
+  // console.log(`Required skills: ${requireSkils} ID: ${userId || null}`);
 
-    const checkMatch = async (): Promise<void> => {
-      const data = await checkSkillMatch(requireSkils, userId || "");
-      if (data?.status) {
-        console.log("Matched Skills:", data.matchedSkills);
-        setMatchPercentage(data.matchPercentage)// Correct update inside async function
-        console.log("Match Percentage:", matchPercentage); // Use it here
-      } else {
-        console.log("No skills matched or error occurred.");
-      }
-    };
+  //   const checkMatch = async (): Promise<void> => {
+  //     const data = await checkSkillMatch(requireSkils, userId || "");
+  //     if (data?.status) {
+  //       console.log("Matched Skills:", data.matchedSkills);
+  //       setMatchPercentage(data.matchPercentage)// Correct update inside async function
+  //       console.log("Match Percentage:", matchPercentage); // Use it here
+  //     } else {
+  //       console.log("No skills matched or error occurred.");
+  //     }
+  //   };
 
-    // Define the expected response type
-    interface SkillMatchResponse {
-      status: boolean;
-      matchedSkills: string[];
-      matchPercentage: string;
-    }
+  //   // Define the expected response type
+  //   interface SkillMatchResponse {
+  //     status: boolean;
+  //     matchedSkills: string[];
+  //     matchPercentage: string;
+  //   }
 
-    // Fetch skills matching data from API
-    const checkSkillMatch = async (requiredSkills: string = "", userId: string = ""): Promise<SkillMatchResponse | null> => {
-      if (!userId.trim() || !requiredSkills.trim()) {
-        console.error("User ID and Required Skills are required");
-        return null;
-      }
+  //   // Fetch skills matching data from API
+  //   const checkSkillMatch = async (requiredSkills: string = "", userId: string = ""): Promise<SkillMatchResponse | null> => {
+  //     if (!userId.trim() || !requiredSkills.trim()) {
+  //       console.error("User ID and Required Skills are required");
+  //       return null;
+  //     }
 
-      try {
-        const response = await fetch("/api/cvmatcher", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, requiredSkills }),
-        });
+  //     try {
+  //       const response = await fetch("/api/cvmatcher", {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ userId, requiredSkills }),
+  //       });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
 
-        const data: SkillMatchResponse = await response.json();
-        console.log("API Response:", data);
-        return data;
-      } catch (error) {
-        console.error("Error fetching skill match:", error);
-        return null;
-      }
-    };
+  //       const data: SkillMatchResponse = await response.json();
+  //       console.log("API Response:", data);
+  //       return data;
+  //     } catch (error) {
+  //       console.error("Error fetching skill match:", error);
+  //       return null;
+  //     }
+  //   };
 
-    // Ensure requireSkils is defined before calling checkMatch
-    if (typeof requireSkils !== "undefined" && typeof userId !== "undefined") {
-      checkMatch();
-    } else {
-      console.log("Error: requiredSkills or userId is not defined");
-    }
+  //   // Ensure requireSkils is defined before calling checkMatch
+  //   if (typeof requireSkils !== "undefined" && typeof userId !== "undefined") {
+  //     checkMatch();
+  //   } else {
+  //     console.log("Error: requiredSkills or userId is not defined");
+  //   }
 
 
 
-  }
+  // }
   
 
   console.log(jobDetails);
