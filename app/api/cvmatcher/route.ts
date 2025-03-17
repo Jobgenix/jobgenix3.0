@@ -52,7 +52,9 @@ export async function POST(req: NextRequest) {
             matchPercentage
         });
 
-    } catch (error) {
+    }catch (error) {
+        console.error("Database error:", error);
         return NextResponse.json({ status: false, message: "Database error" }, { status: 500 });
     }
+    
 }
