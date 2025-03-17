@@ -26,7 +26,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 
 // import { usePathname } from "next/navigation";
-
 const generatePassingYears = () => {
   const currentYear = 2019;
   return [
