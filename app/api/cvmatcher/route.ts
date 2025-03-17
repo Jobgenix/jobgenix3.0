@@ -53,6 +53,6 @@ export async function POST(req: NextRequest) {
         });
 
     } catch (error) {
-        return NextResponse.json({ status: false, message: "Database error", error }, { status: 500 });
+        return NextResponse.json({ status: false, message: "Database error" }, { status: 500 });
     }
 }
