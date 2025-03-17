@@ -74,6 +74,7 @@ export default function InternshipDescription({
         }
       });
     },
+    
     onUpdate: ({ editor }) => {
       const text = editor.state.doc.textContent;
       setFormData("description", editor.getHTML());

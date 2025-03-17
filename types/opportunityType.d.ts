@@ -56,6 +56,7 @@ export type Opportunity = {
   category?: string[]; // Array of categories (optional)
   deadline: string; // Date as a string (or use `Date` type)
   postedAt: string; // Date as a string (or use `Date` type)
+  requireSkils?: string; // Array of skills required (optional)
 };
 
 export type Degree = {

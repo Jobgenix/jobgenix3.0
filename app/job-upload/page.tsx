@@ -47,6 +47,7 @@ export default function Page() {
       const validatedFormData = opportunitySchema.parse(formData);
 
       console.dir(validatedFormData);
+
       const response = await axios.post("/api/job/create-job", {
         ...validatedFormData,
         userId: session.user.id,
@@ -102,6 +103,8 @@ export default function Page() {
     ],
     [updateField]
   );
+
+  // alert(formData.description)
 
   return (
     <section className="flex flex-col gap-4 px-8">

@@ -348,6 +348,7 @@ export default function JobsPage() {
           </div>
           <JobDetails
             jobDetails={jobDetails!}
+            userId={session?.user?.id || null}
             isLoadingDetails={isDetailsLoading}
           />
         </section>

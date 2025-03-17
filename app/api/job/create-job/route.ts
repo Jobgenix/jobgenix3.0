@@ -16,7 +16,12 @@ async function createJob(req: NextRequest) {
         if(userRole[0].roleId !== ROLE_IDS.EMPLOYER)
             return new NextResponse(JSON.stringify({ err: "Unauthorised request" }), { status: 401 });
         const opportunity = opportunitySchema.parse(requestBody);
-        await db.insert(opportunities).values({ id: uuidv4(), ...opportunity, postedAt: new Date(opportunity.postedAt), deadline: new Date(opportunity.deadline)});
+        // get jobdescription from opportunitySchema
+        const jd = opportunity.description
+        const resulySkils = await getActSkils(jd)
+
+
+        await db.insert(opportunities).values({ id: uuidv4(), ...opportunity, postedAt: new Date(opportunity.postedAt), deadline: new Date(opportunity.deadline), requireSkils:resulySkils});
 
         return new NextResponse(JSON.stringify({ success: "Job created successfully" }), { status: 201 });
     } catch (error) {
@@ -29,5 +34,36 @@ async function createJob(req: NextRequest) {
         } 
     }
 }
+
+// function for get the extracted skils 
+async function getActSkils(extractedText: string): Promise<string | null> {
+    const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
+    const prompt = `Extract technical skills from the following job description and return a comma-separated list of normalized industry terms:\n\n${extractedText}`
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+        }),
+      }
+    );
+  
+    if (!response.ok) {
+      console.error("Error calling Gemini API:", response.statusText);
+      return null;
+    }
+  
+    const data = await response.json();
+    if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
+      return null;
+    }
+  
+    return data.candidates[0].content.parts[0].text.trim();
+  }
+  
 
 export { createJob as POST }

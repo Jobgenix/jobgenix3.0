@@ -104,3 +104,4 @@ function WorkplaceTypeFunc({ value, onChange }: WorkplaceTypeProps) {
     </div>
   );
 }
+

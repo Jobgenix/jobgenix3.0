@@ -5,6 +5,7 @@ export type JobDetailsProps = {
   companies: CompanyType;
   opportunities: Opportunity;
   children?: React.ReactNode;
+  userId : string;
 };
 
 export type JobCardProps = {
@@ -15,5 +16,6 @@ export type JobCardProps = {
   jobLocation: string;
   jobType: WorkplaceType; // Adjust based on actual enum values
   jobLink: string;
+  requireskils : string | null;
 };
 

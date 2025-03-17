@@ -9,7 +9,7 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { PiBagBold } from "react-icons/pi";
 import { useRouter } from "next/navigation";
-
+import { useState } from "react";
 import { MdOutlineHome } from "react-icons/md";
 import {
   MoreHorizontal,
@@ -29,20 +29,25 @@ import { CompanyType } from "@/types/companyType";
 import { Opportunity } from "@/types/opportunityType";
 import { Navbar } from "../LandingPageComponents/navbar";
 import router from "next/router";
+import { useSession } from "next-auth/react";
+import { Axios } from "axios";
+
 
 type JobDetailsProps = {
   jobDetails:
-    | {
-        companies: CompanyType;
-        opportunities: Opportunity;
-      }
-    | undefined;
+  | {
+    companies: CompanyType;
+    opportunities: Opportunity;
+  }
+  | undefined;
   isLoadingDetails: boolean;
+  userId: string | null; // Added userId prop for sharing job link
 };
 
 export default function JobDetails({
   jobDetails,
   isLoadingDetails,
+  userId,
 }: JobDetailsProps) {
   if (isLoadingDetails || !jobDetails) {
     return <JobDetailsSkeleton />;
@@ -68,8 +73,70 @@ export default function JobDetails({
       jobLink,
       description,
       id,
+      requireSkils,
     } = jobDetails.opportunities;
     const isVerified = status === "active";
+    const [matchPercentage, setMatchPercentage] = useState<string>("0");
+
+    // let matchPercentage: string = "0";
+
+    console.log(`Required skills: ${requireSkils} ID: ${userId || null}`);
+
+    const checkMatch = async (): Promise<void> => {
+      const data = await checkSkillMatch(requireSkils, userId || "");
+      if (data?.status) {
+        //console.log("Matched Skills:", data.matchedSkills);
+        setMatchPercentage(data.matchPercentage)// Correct update inside async function
+        //console.log("Match Percentage:", matchPercentage); // Use it here
+      } else {
+        console.log("No skills matched or error occurred.");
+      }
+    };
+
+    // Define the expected response type
+    interface SkillMatchResponse {
+      status: boolean;
+      matchedSkills: string[];
+      matchPercentage: string;
+    }
+
+    // Fetch skills matching data from API
+    const checkSkillMatch = async (requiredSkills: string = "", userId: string = ""): Promise<SkillMatchResponse | null> => {
+      if (!userId.trim() || !requiredSkills.trim()) {
+        console.error("User ID and Required Skills are required");
+        return null;
+      }
+
+      try {
+        const response = await fetch("/api/cvmatcher", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, requiredSkills }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data: SkillMatchResponse = await response.json();
+        console.log("API Response:", data);
+        return data;
+      } catch (error) {
+        console.error("Error fetching skill match:", error);
+        return null;
+      }
+    };
+
+    // Ensure requireSkils is defined before calling checkMatch
+    if (typeof requireSkils !== "undefined" && typeof userId !== "undefined") {
+      checkMatch();
+    } else {
+      console.log("Error: requiredSkills or userId is not defined");
+    }
+
+
+
+    // alert(requireskils)
 
     const formatTimeAgo = (datestring: string) => {
       // In a real app, implement proper time ago formatting
@@ -79,9 +146,8 @@ export default function JobDetails({
     return (
       <>
         <Card
-          className={`w-[67%] hidden lg:block mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar shadow-lg shadow-black/20 rounded-md ${
-            jobIdUrl ? "hidden" : "lg:block"
-          }`}
+          className={`w-[67%] hidden lg:block mx-auto h-screen bg-[#E5F7EB] overflow-auto custom-scrollbar shadow-lg shadow-black/20 rounded-md ${jobIdUrl ? "hidden" : "lg:block"
+            }`}
         >
           <CardHeader className="space-y-4">
             <div className="flex justify-between items-start">
@@ -98,10 +164,9 @@ export default function JobDetails({
                   variant="ghost"
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `${
-                        typeof window !== "undefined"
-                          ? window.location.origin
-                          : ""
+                      `${typeof window !== "undefined"
+                        ? window.location.origin
+                        : ""
                       }/opportunities/?id=${id}`
                     );
                     toast.success("Copied to clipboard");
@@ -146,9 +211,9 @@ export default function JobDetails({
                   {capitalizeWords(workplaceType)}
                 </Badge>
                 • {type}
-                <Button className="w-40 ml-5 mt-[-0.8%] text-green-500 bg-white hover:bg-white p-2  rounded-3xl shadow-2xl">
-  36% Resume match🎉
-</Button>
+                <Button className="w-auto ml-5 mt-[-0.8%] text-green-500 bg-white hover:bg-white p-2  rounded-3xl shadow-2xl">
+                <a href="/profile">{matchPercentage}% Resume match 🎉</a>
+                </Button>
 
               </div>
             </div>
@@ -191,9 +256,8 @@ export default function JobDetails({
         </Card>
 
         <div
-          className={`fixed inset-0 flex flex-col bg-white z-20  ${
-            jobIdUrl ? "lg:hidden" : "hidden"
-          }`}
+          className={`fixed inset-0 flex flex-col bg-white z-20  ${jobIdUrl ? "lg:hidden" : "hidden"
+            }`}
         >
           <Navbar />
           {/* Scrollable Content */}
@@ -255,7 +319,7 @@ export default function JobDetails({
                 </div>
                 <p className="text-gray-500 text-sm mt-2">Job Type</p>
                 <h1 className="text-lg font-semibold">{type}</h1>
-               
+
               </div>
 
               <div className="border rounded-xl p-4 w-40 text-center">

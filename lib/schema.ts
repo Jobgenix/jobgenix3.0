@@ -119,6 +119,7 @@ export const opportunities = pgTable("opportunities", {
     category: text("category").array(), // Add a category table and reference it here
     deadline: timestamp("deadline", { mode: "date" }).notNull(),
     postedAt: timestamp("postedAt", { mode: "date" }).notNull(),
+    requireSkils: text("requiredSkils"),
 });
 
 export const degrees = pgTable("degrees", {

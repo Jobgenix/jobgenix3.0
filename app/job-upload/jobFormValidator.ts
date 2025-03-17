@@ -22,5 +22,6 @@ export const opportunitySchema = z.object({
     category: z.string().array().optional(),
     deadline: z.string().date(),
     postedAt: z.string().date(),
+    // skilsrequired: z.string(),
 });
 
