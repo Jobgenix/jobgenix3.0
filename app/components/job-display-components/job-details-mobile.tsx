@@ -231,9 +231,6 @@ import { Opportunity } from "@/types/opportunityType";
 import Link from "next/link";
 // import { jobStatusEnum } from "@/lib/schema";
 import { toast } from "sonner";
-import { useState } from "react";
-
-
 
 interface JobDetailsMobileProps {
   job: JobCardProps;
