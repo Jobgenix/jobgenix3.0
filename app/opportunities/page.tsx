@@ -24,7 +24,6 @@ import { Footer } from "../components/LandingPageComponents/Footer";
 import MentorBanner from "../components/mentors-banner";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-
 // import { usePathname } from "next/navigation";
 const generatePassingYears = () => {
   const currentYear = 2019;
