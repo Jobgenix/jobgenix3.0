@@ -346,7 +346,7 @@ export default function JobDetails({
           {/* Bottom Buttons - Fixed at Bottom */}
           <div className="fixed bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-center gap-4 shadow-md">
             <button className="h-12 w-36 sm:w-40 rounded-lg bg-gray-200 text-black font-medium">
-              1157+ Applicants
+            {matchPercentage}% Resume match 🎉
             </button>
             <Link href={jobLink || "#"} passHref legacyBehavior>
               <a target="_blank">
