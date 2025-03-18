@@ -30,7 +30,7 @@ export default function ProfilePage() {
       <Navbar />
       <Name />
       <UploadCv />
-      <Button onClick={() => signOut()} className="bg-red-500 hover:bg-red-600 mb-6 ml-[44%] lg:ml-[48%] sm:ml-[46%]">
+      <Button onClick={() => signOut()} className="bg-red-500 hover:bg-red-600 mb-6 ml-[42%] lg:ml-[48%] sm:ml-[46%]">
         Logout
       </Button>
       <Footer />
