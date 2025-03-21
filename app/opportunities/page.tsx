@@ -41,7 +41,6 @@ export default function JobsPage() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const jobId = searchParams.get("id");
-
   const filter_type = searchParams.get("type") || "all";
 
   const [searchQuery, setSearchQuery] = useState("");

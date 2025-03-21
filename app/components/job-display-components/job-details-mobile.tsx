@@ -232,8 +232,6 @@ import Link from "next/link";
 // import { jobStatusEnum } from "@/lib/schema";
 import { toast } from "sonner";
 
-
-
 interface JobDetailsMobileProps {
   job: JobCardProps;
   jobDetails:

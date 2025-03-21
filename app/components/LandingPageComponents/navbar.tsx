@@ -51,21 +51,23 @@ export function Navbar() {
     { name: "Practice", route: "/comingSoon" },
   ];
 
-  
   return (
-    <nav className="sticky top-0 z-[9999] w-full bg-white border-b shadow-md shadow-black/30 max-h-[10vh] flex items-center justify-center">
-      <div className="w-full mx-auto flex items-center justify-between gap-3">
+    <nav className="sticky top-0 z-[9999] w-full bg-white border-b shadow-md shadow-black/30 max-h-[10vh] flex items-center justify-center px-4">
+      <div className="w-full flex items-center justify-between">
         {/* Left Section: Logo */}
         <div className="flex items-center gap-2">
-          <Link href="/" className="text-xl">
+          <Link href="/" className="block">
             <Image
               width={120}
               height={50}
-              className="w-full h-auto"
+              className="w-[120px] h-auto sm:w-[100px] md:w-[120px] object-contain"
               src="/company-logos/logo.png"
               alt="Logo"
+              priority
             />
           </Link>
+
+          {/* Search bar - Hidden on small screens */}
           <div className="relative hidden md:block">
             <Input
               type="search"
@@ -77,8 +79,9 @@ export function Navbar() {
         </div>
 
         {/* Middle and Right Sections */}
-        <div className="flex gap-4">
-          <div className="hidden xl:flex items-center gap-4">
+        <div className="flex gap-4 items-cente ">
+          {/* Large Screen Navigation */}
+          <div className="hidden xl:flex items-center gap-4 ml-12">
             <Link href="/opportunities?type=internships" className="text-md text-[#646A66] font-bold">
               Internships
             </Link>
@@ -112,16 +115,23 @@ export function Navbar() {
             </DropdownMenu>
           </div>
 
-          <div className="hidden xl:flex items-center gap-3 px-3">
-            <span className="text-gray-400">|</span>
-
+          {/* Login Button */}
+          <div className="flex items-center ">
             <Button
-              className="bg-white h-12 w-24 text-black hover:bg-white rounded-[18px] font-medium flex items-center gap-2 px-4 py-2"
-              onClick={() => (loginStatus ? router.push("/profile") : router.push("/auth/login"))}
+              className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium flex items-center gap-2 px-4 py-2 "
+              onClick={() =>
+                loginStatus ? router.push("/profile") : router.push("/auth/login")
+              }
             >
               {loginStatus ? (
                 userImage ? (
-                  <Image src={userImage} alt="Profile" width={40} height={40} className="rounded-full" />
+                  <Image
+                    src={userImage}
+                    alt="Profile"
+                    width={40}
+                    height={40}
+                    className="rounded-full h-10 w-10 ml-20"
+                  />
                 ) : (
                   "Logout"
                 )
@@ -129,43 +139,51 @@ export function Navbar() {
                 "Login"
               )}
             </Button>
+          </div>
 
+          {/* Business & Hosting Buttons */}
+          <div className="hidden xl:flex items-center gap-3 px-3">
             <span className="text-gray-400">|</span>
-
             <Link href="/job-upload">
-              <Button variant="outline" className="h-9 px-4 font-bold text-[#646A66] border-gray-200 rounded-[18px]">
+              <Button
+                variant="outline"
+                className="h-9 px-4 font-bold text-[#646A66] border-gray-200 rounded-[18px]"
+              >
                 <Plus className="mr-1 h-4 w-4" /> Host
               </Button>
             </Link>
             <Link href="/comingSoon">
-              <Button variant="ghost" className="h-9 px-4 bg-[#DFE2FF] text-[#383838] font-extrabold hover:bg-gray-100 rounded-[18px]">
+              <Button
+                variant="ghost"
+                className="h-9 px-4 bg-[#DFE2FF] text-[#383838] font-extrabold hover:bg-gray-100 rounded-[18px]"
+              >
                 For Business
               </Button>
             </Link>
           </div>
-        </div>
 
-        {/* Hamburger Menu */}
-        <div className="xl:hidden">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex flex-col gap-1">
-                <span className="block w-6 h-0.5 bg-gray-800"></span>
-                <span className="block w-6 h-0.5 bg-gray-800"></span>
-                <span className="block w-6 h-0.5 bg-gray-800"></span>
-              </Button>
-            </DropdownMenuTrigger>
+          {/* Hamburger Menu - Only on small screens */}
+          <div className="xl:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex flex-col gap-1">
+                  <span className="block w-6 h-0.5 bg-gray-800"></span>
+                  <span className="block w-6 h-0.5 bg-gray-800"></span>
+                  <span className="block w-6 h-0.5 bg-gray-800"></span>
+                </Button>
+              </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-60 bg-gray-300 mt-4 flex flex-col">
-              {opportunityOptionsHamburger.map((option) => (
-                <DropdownMenuItem key={option.name}>
-                  <Link href={option.route    } className="text-sm text-[#646A66] font-bold">
-                    {option.name}
-                  </Link>             
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <DropdownMenuContent className="w-60 bg-gray-300 mt-4 flex flex-col">
+                {opportunityOptionsHamburger.map((option) => (
+                  <DropdownMenuItem key={option.name}>
+                    <Link href={option.route} className="text-sm text-[#646A66] font-bold">
+                      {option.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </nav>
