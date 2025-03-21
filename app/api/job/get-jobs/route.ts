@@ -3,7 +3,7 @@ import { companies, opportunities } from "@/lib/schema";
 import { db } from "@/lib/db";
 import { string, z } from "zod";
 import { ZodError } from "zod";
-import { and, eq, gt, ilike, sql } from "drizzle-orm";
+import { and, eq, gt, ilike, sql ,desc } from "drizzle-orm";
 import {
   jobTypeSchema,
   passoutYearSchema,
@@ -86,7 +86,7 @@ async function getJobs(req: NextRequest) {
     if (type) filters.push(eq(opportunities.type, type));
 
     const result = await query
-      .orderBy(opportunities.id)
+      .orderBy(desc(opportunities.postedAt))
       .where(filters.length ? and(...filters) : undefined)
       .limit(limit);
 
