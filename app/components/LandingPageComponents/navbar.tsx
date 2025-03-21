@@ -45,7 +45,7 @@ export function Navbar() {
     { name: "Jobs", route: "/opportunities?type=jobs" },
     { name: "Government Jobs", route: "/comingSoon" },
     { name: "Mentorship", route: "/comingSoon" },
-    { name: "Roadmaps", route: "/comingSoon" },
+    { name: "Roadmaps", route: "/roadmaps" },
     { name: "Resources", route: "/comingSoon" },
     { name: "Courses", route: "/comingSoon" },
     { name: "Practice", route: "/comingSoon" },
@@ -88,7 +88,7 @@ export function Navbar() {
             <Link href="/opportunities?type=jobs" className="text-md text-[#646A66] font-bold">
               Jobs
             </Link>
-            <Link href="/comingSoon" className="text-md text-[#646A66] font-bold">
+            <Link href="/roadmaps" className="text-md text-[#646A66] font-bold">
               Roadmaps
             </Link>
             <Link href="/comingSoon" className="text-md text-[#646A66] font-bold">
