@@ -46,7 +46,7 @@ export function ForSection() {
             <p className="mb-8 text-xl text-gray-600">
               Build your professional profile, find new opportunities.
             </p>
-            <Link href="/comingSoon">
+            <Link href="/profile">
               <Button className="rounded-full bg-[#2E7D32] text-white px-8 py-6 text-lg font-medium hover:bg-[#1B5E20]">
                 Upload Your CV
               </Button></Link>
