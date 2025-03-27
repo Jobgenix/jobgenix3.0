@@ -24,34 +24,34 @@ const brands = [
 ];
 
 export default function Companies({ className }: { className?: string }) {
-    return (
-    
-      <div className="w-3/5 mx-auto mt-12 rounded-lg ">
-        <div className="lines flex text-[10px] text-gray-400 ml-16">
-        <div className="l1 h-0.5 w-64 border border-gray-200 "></div>
-        <p className="ml-2 mt-[-1%]">Featured Jobs From Top Companies Hiring Now</p>
-        <div className="l2 h-0.5 w-64 border ml-4 border-gray-200"></div>
-        </div>
-        
-        <Marquee
-          className={twMerge(`bg-white px-4 py-8 md:px-6 lg:px-8`, className)}
-        >
-          <div className="flex items-center justify-around gap-8 min-w-max">
-            {brands.map((brand, index) => ( 
-              <div key={index} className="flex-shrink-0">
-                <Image
-                  src={brand}
-                  alt={`Brand ${index + 1}`}
-                  width={55}
-                  height={30}
-                  draggable={false}
-                  className="object-contain animate-fadeInOut"
-                />
-              </div>
-            ))}
-          </div>
-        </Marquee>
+  return (
+    <div className="w-full sm:w-3/5 xl:mx-auto ml-4 sm:ml-12 mt-12 rounded-lg">
+      <div className="lines flex items-center justify-center gap-2 sm:gap-4 text-[9px] sm:text-xs text-gray-400 mx-auto">
+        <div className="l1 h-0.5 w-16 sm:w-64 border border-gray-200"></div>
+        <p>Featured Jobs From Top Companies Hiring Now</p>
+        <div className="l2 h-0.5 w-16 sm:w-64 border border-gray-200"></div>
       </div>
-    );
-  }
+
+      <Marquee className={twMerge(`bg-white px-2 sm:px-4 py-4 sm:py-8`, className)}>
+        <div className="flex items-center justify-around gap-4 sm:gap-8 min-w-max">
+          {brands.map((brand, index) => (
+            <div key={index} className="flex-shrink-0">
+              <Image
+                src={brand}
+                alt={`Brand ${index + 1}`}
+                width={45}
+                height={25}
+                draggable={false}
+                className="object-contain sm:w-14 md:w-16"
+              />
+            </div>
+          ))}
+        </div>
+      </Marquee>
+    </div>
+  );
+}
+
+
+
   
