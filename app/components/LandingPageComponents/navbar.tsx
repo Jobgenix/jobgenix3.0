@@ -79,7 +79,7 @@ export function Navbar() {
         </div>
 
         {/* Middle and Right Sections */}
-        <div className="flex gap-4 items-cente ">
+        <div className="flex gap-4 items-center">
           {/* Large Screen Navigation */}
           <div className="hidden xl:flex items-center gap-4 ml-12">
             <Link href="/opportunities?type=internships" className="text-md text-[#646A66] font-bold">
