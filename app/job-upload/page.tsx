@@ -105,7 +105,6 @@ export default function Page() {
   );
 
   // alert(formData.description)
-
   return (
     <section className="flex flex-col gap-4 px-8">
       <h2 className="w-full h-16 text-3xl font-bold flex justify-between bg-[#E2E2E2] text-[#27724A] items-center px-8 tracking-wide rounded-md shadow-md shadow-black/20 mt-4">
