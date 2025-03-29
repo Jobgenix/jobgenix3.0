@@ -15,11 +15,14 @@ export const signUpSchema = object({
   lastName: string({ required_error: "Last name is required" })
     .min(1, "Last name is required"),
 
-  gender: string({ required_error: "Gender is required" })
-    .min(1, "Gender is required"),
+  // gender: string({ required_error: "Gender is required" })
+  //   .min(1, "Gender is required"),
+
+  gender: string().optional(),
 
   phoneNumber: string({ required_error: "Phone number is required" })
-    .regex(/^\+91 \d{10}$/, "Phone number must follow the format +91 XXXXXXXXXX"),
+    .regex(/^\+91 \d{10}$/, "Phone number must follow the format +91 XXXXXXXXXX")
+    .optional(),
 });
 
 

@@ -23,12 +23,13 @@ export const authConfig = {
         Google({
             authorization: {
                 params: {
-                    scope: "openid email profile https://www.googleapis.com/auth/user.phonenumbers.read https://www.googleapis.com/auth/user.gender.read",
+                    scope: "openid email profile",
                 },
             },
             async profile(profile, tokens) {
                 profile.access_token = tokens.access_token;
 
+                console.log(`Access token: ${profile.access_token}`)
                 return profile
             },
             allowDangerousEmailAccountLinking: true,
@@ -63,8 +64,8 @@ export const authConfig = {
                             email: email,
                             password: pwHash,
                             name: `${firstName} ${lastName}`,
-                            gender: gender,
-                            phoneNumber: phoneNumber,
+                            gender: gender ?? "not_specified",
+                            phoneNumber: phoneNumber ?? "not_specified",
                             salt,
                             id: userId,
                             roleId: ROLE_IDS.NEW_USER,

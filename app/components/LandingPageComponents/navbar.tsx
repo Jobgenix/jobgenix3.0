@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BsPersonFill } from "react-icons/bs";
 
 export function Navbar() {
   const [loginStatus, setLoginStatus] = useState(false);
@@ -133,7 +134,8 @@ export function Navbar() {
                     className="rounded-full h-10 w-10 ml-20"
                   />
                 ) : (
-                  "Logout"
+                  <BsPersonFill className="text-gray-600 w-40 h-40" />
+
                 )
               ) : (
                 "Login"
