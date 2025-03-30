@@ -71,6 +71,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-loading-skeleton": "^3.5.0",
     "sonner": "^1.7.2",
+    "swiper": "^11.2.6",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "textract": "^2.5.0",

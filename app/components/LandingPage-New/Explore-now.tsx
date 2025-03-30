@@ -4,7 +4,7 @@ import { BsGlobe2 } from "react-icons/bs"
 
 export default function Section() {
   return (
-    <div className="relative w-full py-8 px-4 overflow-hidden overflow-x-hidden">
+    <div className="relative w-full py-8 px-4 overflow-hidden overflow-x-hidden font-[sora]">
       <div className="max-w-[1200px] mx-4 sm:mx-8 md:mx-16 lg:mx-36">
         <div className="w-full md:w-[80%] lg:w-[60%]">
           <h1 className="text-2xl sm:text-3xl md:text-4xl p-3 md:p-7 font-semibold text-center md:text-left">
@@ -13,11 +13,11 @@ export default function Section() {
           </h1>
           <p className="text-gray-400 text-center md:text-left md:ml-8">Wanna know how ?</p>
           <div className="btn flex flex-col sm:flex-row items-center justify-center md:justify-start gap-2 sm:gap-0">
-            <button className="btn1 text-white bg-[#0073E6] p-2 rounded-lg flex items-center gap-2 mt-5 w-full sm:w-auto sm:ml-8">
+            <button className="btn1 text-white bg-[#0073E6] p-2 rounded-lg flex items-center justify-center gap-2 mt-5 xl:w-full w-64 sm:w-auto sm:ml-8">
               Talk to one of our cool mentors! <IoCallOutline />
             </button>
-            <p className="p-1 mt-2 sm:mt-6 sm:ml-3 font-semibold">Or</p>
-            <button className="btn2 text-white bg-[#0073E6] p-2 rounded-lg flex items-center gap-2 mt-2 sm:mt-5 sm:ml-8 w-full sm:w-auto">
+            <p className="p-1 mt-2 sm:mt-6 sm:ml-3 font-semibold hidden xl:block">Or</p>
+            <button className="btn2 text-white bg-[#0073E6] xl:p-2 p-3 rounded-lg xl:flex justify-center  xl:items-center text-center gap-2 mt-2 sm:mt-5 sm:ml-8 w-36 xl:w-full hidden  sm:w-auto  xl:block">
               Explore Now <BsGlobe2 />
             </button>
           </div>

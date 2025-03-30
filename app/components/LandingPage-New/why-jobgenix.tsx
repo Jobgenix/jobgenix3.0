@@ -1,19 +1,24 @@
-"use client"
-import Head from 'next/head';
+"use client";
+
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { FreeMode } from "swiper/modules";
+
 
 export default function Whyjobgenix() {
-    return (
-        <div>
-            <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-            <div className="con1">
-                <h1 className="text-4xl font-[700] font-[sora] text-center">Why Jobgenix ?</h1>
-                <p className='text-gray-400 text-center xl:ml-64 ml-32 mt-2'>Here's What's Holding You Back (and How We Fix It)</p>
-            </div>
-        </div>
-    );
+  return (
+    <div className="con1">
+      <p className="text-sm font-bold font-sora text-center text-[#2563eb]">
+        3940+ Happy Landingfolio Users
+      </p>
+      <h1 className="text-6xl text-center font-sora">Don't Believe Us?</h1>
+      <p className="text-sm font-bold font-sora text-center text-[#2563eb] xl:mt-3">
+        Hear from them
+      </p>
+   
+    </div>
+  );
 }

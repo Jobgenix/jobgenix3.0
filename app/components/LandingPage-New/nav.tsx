@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu"
-import { ChevronDown, Menu } from "lucide-react"
-import { Button } from "@/app/components/ui/button"
+} from "@/app/components/ui/dropdown-menu";
+import { ChevronDown, Menu } from "lucide-react";
+import { Button } from "@/app/components/ui/button";
 
-import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Nav() {
   const opportunityOptionsHamburger = [
@@ -25,32 +25,32 @@ export default function Nav() {
     { name: "Opportunities", route: "/comingSoon" },
     { name: "Courses", route: "/comingSoon" },
     { name: "Practice", route: "/comingSoon" },
-  ]
+  ];
 
   const opportunityOptions = [
     { name: "Courses", route: "/comingSoon" },
     { name: "Practice", route: "/comingSoon" },
     { name: "Mentorship", route: "/comingSoon" },
     { name: "Government Jobs", route: "/comingSoon" },
-  ]
+  ];
 
-  const [loginStatus, setLoginStatus] = useState(false)
-  const [userImage, setUserImage] = useState<string | null>(null)
-  const { data: session, status } = useSession()
-  const router = useRouter()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [userImage, setUserImage] = useState<string | null>(null);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (status === "loading") return
+    if (status === "loading") return;
 
     if (session?.user) {
-      setLoginStatus(true)
-      setUserImage(session?.user?.image ?? null)
+      setLoginStatus(true);
+      setUserImage(session?.user?.image ?? null);
     } else {
-      setLoginStatus(false)
-      setUserImage(null)
+      setLoginStatus(false);
+      setUserImage(null);
     }
-  }, [session, status])
+  }, [session, status]);
 
   return (
     <div className="relative">
@@ -65,7 +65,7 @@ export default function Nav() {
         <div className="Logo flex justify-start">
           <Image
             src="/images2/logo.png"
-            className="ml-0 sm:ml-4 xl:ml-24 mt-5 pt-3"
+            className="ml-0 sm:ml-4 xl:ml-24 mt-5 pt-3  "
             alt="logo"
             width={150}
             height={150}
@@ -73,11 +73,17 @@ export default function Nav() {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden xl:flex items-center gap-8 xl:ml-[150px] xl:justify-start w-full mt-8">
-          <Link href="/opportunities?type=internships" className="text-md text-[#646A66] font-semibold">
+        <div className="hidden xl:flex items-center gap-8 xl:ml-[50px] font-[sora] xl:justify-start w-full mt-8">
+          <Link
+            href="/opportunities?type=internships"
+            className="text-md text-[#646A66] font-semibold"
+          >
             Home
           </Link>
-          <Link href="/opportunities?type=jobs" className="text-md text-[#646A66] font-semibold">
+          <Link
+            href="/opportunities?type=jobs"
+            className="text-md text-[#646A66] font-semibold"
+          >
             About us
           </Link>
           <DropdownMenu>
@@ -91,7 +97,10 @@ export default function Nav() {
             <DropdownMenuContent className="w-48 mt-4 py-2 bg-gray-300 hidden xl:block">
               {opportunityOptions.map((option) => (
                 <DropdownMenuItem key={option.name}>
-                  <Link href={option.route} className="text-sm text-[#646A66] font-semibold">
+                  <Link
+                    href={option.route}
+                    className="text-sm text-[#646A66] font-semibold"
+                  >
                     {option.name}
                   </Link>
                 </DropdownMenuItem>
@@ -108,23 +117,36 @@ export default function Nav() {
             <DropdownMenuContent className="w-48 mt-4 py-2 z-50 bg-gray-300 hidden xl:block">
               {opportunityOptions.map((option) => (
                 <DropdownMenuItem key={option.name}>
-                  <Link href={option.route} className="text-sm text-[#646A66] font-semibold">
+                  <Link
+                    href={option.route}
+                    className="text-sm text-[#646A66] font-semibold"
+                  >
                     {option.name}
                   </Link>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Link href="/comingSoon" className="text-md text-[#646A66] font-semibold">
+          <Link
+            href="/comingSoon"
+            className="text-md text-[#646A66] font-semibold"
+          >
             Roadmaps
           </Link>
-          <Link href="/comingSoon" className="text-md text-[#646A66] font-semibold">
+          <Link
+            href="/comingSoon"
+            className="text-md text-[#646A66] font-semibold"
+          >
             Opportunities
           </Link>
-          <button className="h-10 w-28 bg-[#31363d] text-white rounded-lg">For Business</button>
-          <button className="h-10 w-16 border-black border rounded-lg">Host</button>
-
-          <div className="flex">
+          <button className="h-10 w-28 bg-[#31363d] text-white rounded-lg">
+            For Business
+          </button>
+          <button className="h-10 w-16 border-black border rounded-lg">
+            Host
+          </button>
+{/* Profile Button - Visible on Both Mobile & Desktop */}
+<div className="flex">
             <Button
               className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium"
               onClick={() => (loginStatus ? router.push("/profile") : router.push("/auth/login"))}
@@ -146,35 +168,27 @@ export default function Nav() {
               )}
             </Button>
           </div>
+
         </div>
 
         {/* Mobile Menu Button */}
         <div className="xl:hidden flex items-center mt-5">
-          <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="mr-2">
-            <Menu className="h-6 w-6" />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="mr-2"
+          >
+            <Image
+              src="/images2/menu-5-line.png"
+              alt="logo"
+              width={30}
+              height={30}
+              className="rounded-full mt-2"
+            />
           </Button>
 
-          {/* Mobile Login Button */}
-          <Button
-            className="bg-white h-10 w-16 text-black hover:bg-white rounded-[18px] font-medium"
-            onClick={() => (loginStatus ? router.push("/profile") : router.push("/auth/login"))}
-          >
-            {loginStatus ? (
-              userImage ? (
-                <Image
-                  src={userImage || "/placeholder.svg"}
-                  alt="Profile"
-                  width={32}
-                  height={32}
-                  className="rounded-full h-8 w-8"
-                />
-              ) : (
-                "Logout"
-              )
-            ) : (
-              "Login"
-            )}
-          </Button>
+          
         </div>
 
         {/* Mobile Menu Dropdown */}
@@ -192,14 +206,17 @@ export default function Nav() {
                 </Link>
               ))}
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                <button className="h-10 w-full sm:w-28 bg-[#31363d] text-white rounded-lg">For Business</button>
-                <button className="h-10 w-full sm:w-16 border-black border rounded-lg">Host</button>
+                <button className="h-10 w-full sm:w-28 bg-[#31363d] text-white rounded-lg">
+                  For Business
+                </button>
+                <button className="h-10 w-full sm:w-16 border-black border rounded-lg">
+                  Host
+                </button>
               </div>
             </div>
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }
-
