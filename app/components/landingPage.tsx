@@ -1,34 +1,30 @@
-import { Navbar } from "../components/LandingPageComponents/navbar"
-import { HeaderSection } from "../components/LandingPageComponents/header-section"
-import { TrustedCompanies } from "../components/LandingPageComponents/trusted-companies"
-import { ForSection } from "../components/LandingPageComponents/for-section"
-import { LearnSection } from "../components/LandingPageComponents/learn-section"
-import { CampusSection } from "../components/LandingPageComponents/campus-section"
-import { MentorSection } from "../components/LandingPageComponents/mentor-section"
-import { OpportunitySection } from "../components/LandingPageComponents/opportunity-section"
-import { HostSection } from "../components/LandingPageComponents/host-section"
-import { Footer } from "../components/LandingPageComponents/Footer"
-import { ReferAndWin } from "../components/LandingPageComponents/ReferAndWin"
-import { StatsSection } from "../components/LandingPageComponents/statsSection"
-import CareerButtons from "../components/LandingPageComponents/CareerButtons"
+import React from 'react'
+import Hero from './LandingPage-New/hero'
+import Companies from './LandingPage-New/companies'
+import ExploreNow from './LandingPage-New/Explore-now'
+import Whyjobgenix from './LandingPage-New/why-jobgenix'
+import Slider from './LandingPage-New/slider'
+import { Container } from './LandingPage-New/Container'
+import JobSearchHero from './LandingPage-New/job-search-hero'
+import StatsSection from './LandingPage-New/statsSections'
+import Footer from './LandingPage-New/footerNew'
+import Nav from './LandingPage-New/nav'
+
 
 
 export function Landing() {
     return (
-        <div className="min-h-screen bg-[#E8F5E9] overflow-hidden">
-            <Navbar />
-            <HeaderSection />
-            <TrustedCompanies />
-            <CareerButtons />
-            <ForSection />
-            <LearnSection />
-            <CampusSection />
-            <MentorSection />
-            <OpportunitySection />
-            <HostSection />
-            <ReferAndWin />
-            <StatsSection />
-            <Footer />
+        <div className="min-h-screen">
+                        <Nav/>
+                        <Hero/>
+                        <Companies/>
+                        <ExploreNow/>
+                        <Whyjobgenix/>
+                        <Slider/>
+                        <Container/>
+                        <JobSearchHero/>
+                        <StatsSection/>
+                        <Footer/>
 
         </div>
     )

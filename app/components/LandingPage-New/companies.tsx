@@ -27,9 +27,9 @@ export default function Companies({ className }: { className?: string }) {
   return (
     <div className="w-full sm:w-3/5 xl:mx-auto ml-4 sm:ml-12 mt-12 rounded-lg font-[sora]">
       <div className="lines flex items-center justify-center gap-2 sm:gap-4 text-[9px] sm:text-xs text-gray-400 mx-auto">
-        <div className="l1 h-0.5 w-16 sm:w-64 border border-gray-200"></div>
+        <div className="l1 h-0.2 w-16 sm:w-64 border border-gray-200"></div>
         <p>Featured Jobs From Top Companies Hiring Now</p>
-        <div className="l2 h-0.5 w-16 sm:w-64 border border-gray-200"></div>
+        <div className="l2 h-0.2 w-16 sm:w-64 border border-gray-200"></div>
       </div>
 
       <Marquee className={twMerge(`bg-white px-2 sm:px-4 py-4 sm:py-8`, className)}>

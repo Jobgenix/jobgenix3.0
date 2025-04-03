@@ -5,7 +5,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 export default function Footer() {
     return (
         <footer
-            className="  bg-[url('/images2/footerimg.png')] bg-cover bg-no-repeat bg-left  md:bg-top  text-white mt-24"
+            className="  bg-[url('/LandingPageImages/footerImg.png')] bg-cover bg-no-repeat bg-left  md:bg-top  text-white "
         >
 
             <div className="max-w-6xl mx-auto px-4 text-center ">
@@ -23,7 +23,7 @@ export default function Footer() {
                             placeholder="Enter your email"
                             className="px-4 py-2 w-64 text-black rounded-xl focus:outline-none"
                         />
-                        <button className="bg-blue-500 px-4 py-2 rounded-xl">Subscribe</button>
+                        <button className="bg-[#0073e6]     px-4 py-2 rounded-xl">Subscribe</button>
                     </div>
                     <p className="text-gray-500 text-xs mt-2">By subscribing you agree to our Privacy Policy</p>
                 </div>
@@ -83,6 +83,7 @@ export default function Footer() {
                     <img src="/LandingPageImages/logoDark.svg" alt="Logo" />
                     {/* Social Icons */}
                     <div className="flex justify-center space-x-4 ">
+                    <a target='_blank' href="https://www.instagram.com/jobgenix.unbeatable/"><FaFacebookF className="text-gray-400 cursor-pointer hover:text-white" /></a>
                         <a target='_blank' href="https://www.instagram.com/jobgenix.unbeatable/"><FaInstagram className="text-gray-400 cursor-pointer hover:text-white" /></a>
                         <a target='_blank' href="https://www.linkedin.com/company/successwithjobgenix/"><FaLinkedinIn className="text-gray-400 cursor-pointer hover:text-white" />   </a>
 
@@ -95,7 +96,7 @@ export default function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="border-t flex justify-between border-gray-700 mt-6 py-4 text-xs text-gray-500">
-                    <p>Made with ❤️ for dreamers</p>
+                    <p>Made with 🩷 for dreamers</p>
                     <p>© 2025 JobGenix. All rights reserved.</p>
                 </div>
             </div>

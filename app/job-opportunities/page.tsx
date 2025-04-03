@@ -1,6 +1,9 @@
-import JobCard from "../components/job-display-new/test";
-import JobSearchPage from "../components/job-display-new/job-dis";
+"use client";
 
+
+
+import JobSearchPage from "../components/job-display-new/job-dis";
+import Footer from "../components/LandingPage-New/footerNew";
 import Nav from "../components/LandingPage-New/nav";
 
 export default function JobOpportunitiesPage() {
@@ -8,7 +11,7 @@ export default function JobOpportunitiesPage() {
                   <div>
                     <Nav />
                     <JobSearchPage />
-                    <JobCard />
+                    <Footer />
                     
                   </div>
            );
