@@ -50,8 +50,8 @@ export default function Nav() {
 
 
   const opportunityOptions = [
-    { name: "Internships", route: "/comingSoon" },
-    {name: "Jobs", route: "/comingSoon" },
+    { name: "Internships", route: "/opportunities?type=internships" },
+    {name: "Jobs", route: "/opportunities?type=jobs" },
     { name: "Courses", route: "/comingSoon" },
     { name: "Practice", route: "/comingSoon" },
     { name: "Mentorship", route: "/comingSoon" },
@@ -109,7 +109,7 @@ export default function Nav() {
   {/* Desktop Menu */}
   <div className="hidden xl:flex items-center gap-8 xl:absolute left-[24%] mt-8 font-[sora]">
     {["Home", "About us", "Roadmaps", "Opportunities", "Internships", "Jobs"].map((name, index) => (
-      <Link key={index} href="/comingSoon" className={`text-md ${name === "Home" ? "text-blue-500" : "text-[#646A66]"}`} >
+      <Link key={index} href="/" className={`text-md ${name === "Home" ? "text-blue-500" : "text-[#646A66]"}`} >
         {name}
       </Link>
     ))}
