@@ -34,9 +34,13 @@ export default function UploadCv() {
             if (!response.ok) throw new Error("Failed to fetch user CV");
 
             const data = await response.json();
+
+            console.log(data)
             if (data.resume_url) {
                 setFileUrl(data.resume_url);
-                setFileName(data.resume_url.split("/").pop() || "Uploaded CV");
+                // setFileName(data.resume_url.split("/").pop() || "Uploaded CV");
+                setFileName(data.resume_url != null ? "YourResume.pdf" : "Upload Resume");
+
             }
         } catch (error) {
             console.error("Error fetching CV:", error);
@@ -194,9 +198,9 @@ export default function UploadCv() {
                     <>
                         <Image src="/images2/pdf.png" height={30} width={30} alt="file icon" />
                         <span className="text-lg text-center sm:text-left">{fileName}</span>
-                        <a href={fileUrl} target="_blank" rel="noreferrer">
+                        {/* <a href={fileUrl} target="_blank" rel="noreferrer">
                             <Image src="/images2/view.png" height={25} width={25} alt="view icon" />
-                        </a>
+                        </a> */}
                     </>
                 ) : (
                     <span className="text-gray-500 text-center">No file selected</span>
