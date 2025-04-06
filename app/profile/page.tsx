@@ -19,7 +19,6 @@ export default function ProfilePage() {
       router.push("/auth/login");
     }
   }, [status, router]);
-
   if (!session?.user?.id) {
     return null; // Prevents errors when session is null
   }
