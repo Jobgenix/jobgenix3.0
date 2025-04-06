@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Search, ChevronRight, ChevronLeft } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
@@ -79,12 +78,13 @@ export default function JobSearchHero() {
   };
 
   useEffect(() => {
-    if (jobListRef.current) {
-      jobListRef.current.addEventListener("scroll", handleScroll);
+    const currentRef = jobListRef.current;
+    if (currentRef) {
+      currentRef.addEventListener("scroll", handleScroll);
     }
     return () => {
-      if (jobListRef.current) {
-        jobListRef.current.removeEventListener("scroll", handleScroll);
+      if (currentRef) {
+        currentRef.removeEventListener("scroll", handleScroll);
       }
     };
   }, []);

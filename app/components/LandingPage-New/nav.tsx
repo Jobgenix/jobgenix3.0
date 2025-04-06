@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -16,8 +15,8 @@ import gsap from "gsap";
 
 export default function Nav() {
 
-  const boxRef = useRef(null);
-  const lines = useRef([]);
+  const boxRef = useRef<HTMLDivElement | null>(null);
+  const lines = useRef<HTMLDivElement[]>([]);
   const messages = [
     "📢 Empowering future leader across 20+ cities and counting !",
     "🚀 Need help ? our mentors are online Now- Book free sessions !",
@@ -28,7 +27,7 @@ export default function Nav() {
   useEffect(() => {
     if (!boxRef.current || lines.current.length === 0) return;
   
-    let tl = gsap.timeline({ repeat: -1 });
+    const tl = gsap.timeline({ repeat: -1 });
   
     messages.forEach((_, index) => {
       tl.to(lines.current[index], {
@@ -40,13 +39,12 @@ export default function Nav() {
       })
         .to(lines.current[index], {
           x: "100%", // Move out of view to the right
-          duration: 1,
           opacity: 0,
           duration: 1,
           ease: "power2.inOut",
         }, "+=1"); // Delay before the next one appears
     });
-  }, []);
+  }, [messages]);
 
 
   const opportunityOptions = [
@@ -59,10 +57,10 @@ export default function Nav() {
   ];
 
   const [loginStatus, setLoginStatus] = useState(false);
-  const [userImage, setUserImage] = useState(null);
+  const [userImage, setUserImage] = useState<string | null>(null);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Mobile menu state handled by DropdownMenu component
 
   useEffect(() => {
     if (status === "loading") return;
