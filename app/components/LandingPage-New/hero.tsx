@@ -14,7 +14,7 @@ const soraFont = Sora({
 
 export default function Hero() {
   
-  const [showJobs, setShowJobs] = useState(true);
+  // const [showJobs, setShowJobs] = useState(true);
   const jobsRef = useRef(null);
   const internshipRef = useRef(null);
 
