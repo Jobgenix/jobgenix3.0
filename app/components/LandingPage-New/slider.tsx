@@ -67,7 +67,7 @@ export default function TestimonialSlider() {
   useEffect(() => {
     const interval = setInterval(goToNext, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [goToNext]);
 
   const visibleTestimonials = () => {
     const startIndex = currentIndex * 2;
@@ -96,7 +96,7 @@ export default function TestimonialSlider() {
                     <Star key={i} className="w-5 h-5 fill-blue-500 text-blue-500" />
                   ))}
                 </div>
-                <p className="text-lg font-medium mb-4">"{testimonial.quote}"</p>
+                <p className="text-lg font-medium mb-4">&ldquo;{testimonial.quote}&rdquo;</p>
                 <p className="font-semibold">{testimonial.name} <span className="text-blue-400"> {testimonial.company}</span></p>
               </div>
             </div>

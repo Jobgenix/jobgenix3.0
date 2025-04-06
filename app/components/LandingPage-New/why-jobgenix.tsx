@@ -12,7 +12,7 @@ export default function Whyjobgenix() {
       <p className="text-sm font-bold font-sora text-center text-[#2563eb]">
         3940+ Happy Landingfolio Users
       </p>
-      <h1 className="text-6xl text-center font-sora">Don't Believe Us?</h1>
+      <h1 className="text-6xl text-center font-sora">Don&apos;t Believe Us?</h1>
       <p className="text-sm font-bold font-sora text-center text-[#2563eb] xl:mt-3">
         Hear from them
       </p>
