@@ -17,18 +17,18 @@ export default function Section() {
               Talk to one of our cool mentors! <IoCallOutline />
             </button>
             <p className="p-1 mt-2 sm:mt-6 sm:ml-3 font-semibold hidden xl:block">Or</p>
-            <button className="btn2 text-white bg-[#0073E6] xl:p-2 p-3 rounded-lg xl:flex justify-center  xl:items-center text-center gap-2 mt-2 sm:mt-5 sm:ml-8 w-36 xl:w-full hidden  sm:w-auto  xl:block">
+            <button className="btn2 text-white bg-[#0073E6]   xl:p-2 p-3 rounded-lg  justify-center  xl:items-center text-center gap-2 mt-2 sm:mt-5 sm:ml-8 w-36 xl:w-full hidden  sm:w-auto  xl:block">
               Explore Now <BsGlobe2 />
             </button>
           </div>
           <div className="flex justify-center md:justify-start">
-            <Image src="/images2/boy-illustration.svg" className="mt-8 md:ml-12" alt="hero" width={400} height={400} />
+            <Image src="/images2/boy-illustration.svg" className="mt-8 md:ml-12 w-[200px] xl:w-[400px] ml-[-25%] xl:ml-[25%]" alt="hero" width={400} height={400} />
           </div>
         </div>
       </div>
 
       {/* Image fixed to viewport right corner */}
-      <div className="absolute right-0 top-[500px] sm:top-96 transform -translate-y-1/2 max-w-[200px] sm:max-w-[300px] md:max-w-[400px]">
+      <div className="absolute right-0 top-[500px] sm:top-96 transform -translate-y-1/2 max-w-[200px] mt-[-25%] xl:mt-[10%] sm:max-w-[300px] md:max-w-[400px]">
         <Image src="/images2/orbit-illustration.svg" alt="hero" width={400} height={400} className="w-full h-auto" />
       </div>
     </div>

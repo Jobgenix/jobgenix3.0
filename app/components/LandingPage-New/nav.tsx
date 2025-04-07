@@ -12,39 +12,52 @@ import { Button } from "@/app/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
+import { useMemo } from "react";
 
 export default function Nav() {
 
   const boxRef = useRef<HTMLDivElement | null>(null);
   const lines = useRef<HTMLDivElement[]>([]);
-  const messages = [
+  const messages = useMemo(() => [
     "📢 Empowering future leader across 20+ cities and counting !",
     "🚀 Need help ? our mentors are online Now- Book free sessions !",
     "💼 New Internship! openings just dropped - Apply before they are gone !",
     "🎉Join 8000+ students and job seekers growing their careers with Jobgenix"
     
-  ];
+  ], []);
   useEffect(() => {
     if (!boxRef.current || lines.current.length === 0) return;
   
     const tl = gsap.timeline({ repeat: -1 });
   
     messages.forEach((_, index) => {
+      // Reset the element before animation
+      tl.set(lines.current[index], { opacity: 0, x: "-100%" });
+  
       tl.to(lines.current[index], {
         opacity: 1,
-        x: "0%", // Move to center
-        
+        x: "0%",
         duration: 1,
         ease: "power2.inOut",
       })
-        .to(lines.current[index], {
-          x: "100%", // Move out of view to the right
-          opacity: 0,
-          duration: 1,
-          ease: "power2.inOut",
-        }, "+=1"); // Delay before the next one appears
+        .to(
+          lines.current[index],
+          {
+            x: "100%",
+            opacity: 0,
+            duration: 1,
+            ease: "power2.inOut",
+          },
+          "+=1"
+        );
     });
+  
+    return () => {
+      tl.kill(); // Clean up GSAP timeline on component unmount
+    };
   }, [messages]);
+  
+  
 
 
   const opportunityOptions = [
@@ -54,6 +67,14 @@ export default function Nav() {
     { name: "Practice", route: "/comingSoon" },
     { name: "Mentorship", route: "/comingSoon" },
     { name: "Government Jobs", route: "/comingSoon" },
+  ];
+  const navItems = [
+    { name: "Home", route: "/" },
+    { name: "About us", route: "/comingsoon" },
+    { name: "Roadmaps", route: "/roadmaps" },
+    { name: "Opportunities", route: "/opportunities" },
+    { name: "Internships", route: "/internships" },
+    { name: "Jobs", route: "/jobs" },
   ];
 
   const [loginStatus, setLoginStatus] = useState(false);
@@ -106,15 +127,20 @@ export default function Nav() {
 
   {/* Desktop Menu */}
   <div className="hidden xl:flex items-center gap-8 xl:absolute left-[24%] mt-8 font-[sora]">
-    {["Home", "About us", "Roadmaps", "Opportunities", "Internships", "Jobs"].map((name, index) => (
-      <Link key={index} href="/" className={`text-md ${name === "Home" ? "text-blue-500" : "text-[#646A66]"}`} >
-        {name}
-      </Link>
+  {navItems.map((item, index) => (
+        <Link
+          key={index}
+          href={item.route}
+          className={`text-md ${item.name === "Home" ? "text-blue-500" : "text-[#646A66]"}`}
+        >
+          {item.name}
+        </Link>
+      
     ))}
 
     {/* Buttons */}
     <button className="h-10 w-32 bg-[#30373d] text-white rounded-lg">For Business</button>
-    <button className="h-10 w-16 border-black border rounded-lg">Host</button>
+    <button className="h-10 w-32 border-black border rounded-lg">Hire the best</button>
 
     {/* Profile Button */}
     <Button
@@ -132,29 +158,49 @@ export default function Nav() {
       )}
     </Button>
   </div>
+  {/* Profile Button for mobile */}
+  <div className="xl:hidden block mr-8 mt-4">                  
+  <Button
+      className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium"
+      onClick={() => (loginStatus ? router.push("/profile") : router.push("/auth/login"))}
+    >
+      {loginStatus ? (
+        userImage ? (
+          <Image src={userImage} alt="Profile" width={40} height={40} className="rounded-full h-10 w-10" />
+        ) : (
+          "Logout"
+        )
+      ) : (
+        "Login"
+      )}
+    </Button>
+  </div>
 
   {/* // ✅ Mobile Menu Button  */}
   <div className="xl:hidden absolute top-5 right-5 z-50">
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="flex flex-col gap-1">
-          <span className="block w-6 h-0.5 bg-gray-800"></span>
-          <span className="block w-6 h-0.5 bg-gray-800"></span>
-          <span className="block w-6 h-0.5 bg-gray-800"></span>
-        </Button>
-      </DropdownMenuTrigger>
+  <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <Button variant="ghost" className="flex flex-col gap-1">
+        <span className="block w-6 h-0.5 bg-gray-800"></span>
+        <span className="block w-6 h-0.5 bg-gray-800"></span>
+        <span className="block w-6 h-0.5 bg-gray-800"></span>
+      </Button>
+    </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-60 bg-gray-300 mt-4 flex flex-col">
-        {opportunityOptions.map((option) => (
-          <DropdownMenuItem key={option.name}>
-            <Link href={option.route} className="text-sm text-[#646A66] font-bold">
-              {option.name}
-            </Link>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  </div>
+    <DropdownMenuContent className="w-60 bg-gray-300 mt-4 flex flex-col p-0">
+      {opportunityOptions.map((option) => (
+        <DropdownMenuItem key={option.name} className="p-0 hover:bg-gray-400">
+          <Link 
+            href={option.route} 
+            className="w-full px-2 py-1.5 text-sm text-[#646A66] font-bold"
+          >
+            {option.name}
+          </Link>
+        </DropdownMenuItem>
+      ))}
+    </DropdownMenuContent>
+  </DropdownMenu>
+</div>
 </div>
       </div>
     

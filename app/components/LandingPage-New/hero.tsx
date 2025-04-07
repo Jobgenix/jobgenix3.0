@@ -36,10 +36,17 @@ export default function Hero() {
         {/* Left side content */}
         <div className="w-full lg:w-1/2">
           {/* Mentored badge */}
+          <div >
           <div className="relative bg-[#F6F6F7] rounded-lg shadow-2xl p-2 w-52 mx-auto lg:ml-44 ml-3 lg:mx-0 mb-6 lg:mt-32">
             <div className="absolute top-1/2 -translate-y-1/2 left-2 w-3 h-3 bg-[#FFA500]  rounded-full"></div>
             <p className="ml-6">Mentored 200+ students</p>
           </div>
+          <div className="relative bg-[#F6F6F7] rounded-lg shadow-2xl p-2 w-24  mx-auto lg:ml-[60%]  ml-3 lg:mx-0 mb-6 lg:mt-[-10%]">
+            <div className="absolute top-1/2 -translate-y-1/2 left-2 w-3 h-3 bg-[#0073e6] rounded-full"></div>
+            <p className="ml-6">Beta</p>
+          </div>
+          </div>
+         
 
           {/* Main heading */}
           <div className="ml-5 lg:text-left lg:ml-44 mt-6 lg:mt-4">
