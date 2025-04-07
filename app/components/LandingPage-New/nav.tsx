@@ -106,11 +106,17 @@ export default function Nav() {
 
   {/* Desktop Menu */}
   <div className="hidden xl:flex items-center gap-8 xl:absolute left-[24%] mt-8 font-[sora]">
-    {["Home", "About us", "Roadmaps", "Opportunities", "Internships", "Jobs"].map((name, index) => (
+    {["Home", "About us", "Roadmaps", "Opportunities"].map((name, index) => (
       <Link key={index} href="/" className={`text-md ${name === "Home" ? "text-blue-500" : "text-[#646A66]"}`} >
         {name}
       </Link>
     ))}
+    <Link href="/opportunities?type=internships" className="text-md text-[#646A66]">
+      Internships
+    </Link>
+    <Link href="/opportunities?type=jobs" className="text-md text-[#646A66]">
+      Jobs
+    </Link>
 
     {/* Buttons */}
     <button className="h-10 w-32 bg-[#30373d] text-white rounded-lg">For Business</button>
