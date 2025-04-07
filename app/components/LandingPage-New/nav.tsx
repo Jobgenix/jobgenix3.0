@@ -49,7 +49,7 @@ export default function Nav() {
 
   const opportunityOptions = [
     { name: "Internships", route: "/opportunities?type=internships" },
-    {name: "Jobs", route: "/opportunities?type=jobs" },
+    { name: "Jobs", route: "/opportunities?type=jobs" },
     { name: "Courses", route: "/comingSoon" },
     { name: "Practice", route: "/comingSoon" },
     { name: "Mentorship", route: "/comingSoon" },

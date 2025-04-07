@@ -1,5 +1,4 @@
 "use client"
-
 import { ArrowRight } from "lucide-react"
 import Image from 'next/image'
 
@@ -10,8 +9,6 @@ export default function StatsSection() {
       <div className="relative md:w-full w-[90vw] max-w-6xl flex flex-col md:flex-row bg-[#C9E3FF] gap-4 md:gap-6 rounded-2xl px-5  py-8 border border-blue-400 
   transition-all duration-300 hover:shadow-lg 
   before:absolute before:bottom-[-25px] before:left-1/2 before:w-[90%] before:h-6 before:bg-[#0073E6] before:opacity-30 before:blur-lg before:-translate-x-1/2">
-
-
 
         {/* Left Section - Title & Description */}
         <div className="flex flex-col justify-center w-full xl:ml-5 md:w-1/3 text-center md:text-left mb-4 md:mb-0">
@@ -49,10 +46,6 @@ export default function StatsSection() {
         </div>
       </div>
 
-
-
-
-
       {/* CTA Section */}
       <div className="text-center py-16  w-full max-w-2xl px-4 flex flex-col items-center">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -70,7 +63,7 @@ export default function StatsSection() {
           <Image
             src="/LandingPageImages/left.png"
             alt="Left Icon"
-            width={56} // Approx for md:w-14 (14 * 4 = 56px)
+            width={56}
             height={56}
             className="w-10 md:w-14"
           />
@@ -92,4 +85,3 @@ export default function StatsSection() {
     </div>
   )
 }
-
