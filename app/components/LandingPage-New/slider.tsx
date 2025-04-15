@@ -81,7 +81,7 @@ export default function TestimonialSlider() {
   };
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-4 py-12 text-center">
+    <div className="relative w-full max-w-6xl mx-auto px-4 py-12 text-center ">
       
       <div
         className="overflow-hidden"
@@ -89,7 +89,7 @@ export default function TestimonialSlider() {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="flex transition-transform duration-500 ease-in-out"
+        <div className="flex transition-transform duration-500 ease-in-out "
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {visibleTestimonials().map((testimonial) => (
             <div key={testimonial.id} className="w-1/2 flex flex-col md:flex-row items-center justify-center gap-6 px-6">
