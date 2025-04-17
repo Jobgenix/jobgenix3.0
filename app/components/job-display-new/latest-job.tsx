@@ -69,11 +69,11 @@ export default function JobSearchInterface() {
       </div>
 
       {/* Main Content */}
-      <Home/>
+      <Home />
      
-        <h1 className="text-2xl ml-[25%] bg-[#f9fafb] font-semibold">All Jobs</h1>
+        <h1 className="xl:text-2xl xl:ml-[25%] ml-[8%] text-xl bg-[#f9fafb] font-semibold">All Jobs</h1>
       <Home2/>
-      <button className="flex items-center justify-center bg-[#0073e6] text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors w-[150px] ml-[45%]   mb-10">
+      <button className="flex  items-center justify-center  bg-[#0073e6] text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors w-[150px] xl:ml-[45%] ml-[30%] mb-10">
         <span className="flex items-center">
           Load More
           <ArrowRight size={16} className="ml-2" />

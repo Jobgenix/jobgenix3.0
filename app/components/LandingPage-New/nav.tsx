@@ -103,7 +103,7 @@ export default function Nav() {
       <div className="w-[80%] ml-44  overflow-hidden bg-[#0073e6] text-white py-2 px-4 text-center rounded-bl-full rounded-br-full hidden xl:block">
         <div
           ref={boxRef}
-          className="h-6 relative flex items-center justify-center"
+          className="h-[27px] relative flex items-center justify-center"
         >
           {messages.map((text, index) => (
             <div
@@ -119,12 +119,12 @@ export default function Nav() {
         </div>
       </div>
 
-      <div className="flex justify-between items-center px-4 sm:px-6 xl:px-0 xl:ml-12">
+      <div className="flex justify-between items-center px-4 sm:px-6 xl:px-0 xl:ml-12 bg-white ">
         {/* Logo */}
         <div className="Logo">
           <Image
             src="/images2/logo.png"
-            className="ml-4 xl:ml-72 mt-5 pt-3"
+            className="ml-4 xl:ml-32 mt-5 pt-3"
             alt="logo"
             width={150}
             height={150}
@@ -132,7 +132,7 @@ export default function Nav() {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden xl:flex items-center gap-8 xl:absolute left-[30%] mt-8 font-[sora]">
+        <div className="hidden xl:flex items-center gap-8 xl:absolute left-[25%] mt-8 font-[sora]">
           {navItems.map((item, index) => (
             <Link
               key={index}
@@ -155,7 +155,7 @@ export default function Nav() {
 
           {/* Profile Button */}
           <Button
-            className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium"
+            className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium ml-[-3%]"
             onClick={() =>
               loginStatus ? router.push("/profile") : router.push("/auth/login")
             }

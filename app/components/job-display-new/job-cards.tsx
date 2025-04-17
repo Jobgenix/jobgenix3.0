@@ -58,7 +58,7 @@ function JobCard({
 
     return (
         
-        <div className="relative w-full bg-white rounded-md shadow-sm border border-gray-100 p-4">
+        <div className="relative w-full bg-white rounded-md shadow-sm border border-gray-100 p-4 hover:shadow-md transition duration-200 ease-in-out mb-4">
          
             {aiRecommendedJob && (
                 <div

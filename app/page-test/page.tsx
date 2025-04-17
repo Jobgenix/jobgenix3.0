@@ -15,7 +15,7 @@ export default function JobDisplayNew() {
       <div className="mt-3">
         <JoBDet />
       </div>
-
+      
       <div className="mt-1">
         <Footer />
       </div>

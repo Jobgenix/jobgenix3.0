@@ -12,16 +12,16 @@ const sora = Sora({ weight: "400", subsets: ["latin"] });
 
 export default function JobDisplayNew() {
   return (
-    <div className="" >
+    <div className={sora.className} >
       <div className={sora.className}>
         <Nav />
       </div>
 
       <JobDisplay />
-      <div className="absolute top-[50%] left-[4%]">
+      <div className="absolute   xl:top-[50%] xl:left-[4%]">
         <JobGenixPromo />
       </div>
-      <h1 className="absolute top-[40%] left-[25%] text-2xl font-semibold">
+      <h1 className="absolute top-[53%] left-[4%] xl:top-[40%] text-xl xl:left-[25%] xl:text-2xl font-semibold">
         Featured Jobs
       </h1>
 

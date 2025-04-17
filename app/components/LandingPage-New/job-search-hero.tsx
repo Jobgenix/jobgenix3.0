@@ -17,10 +17,10 @@ interface CompanyCardProps {
 
 const CompanyCard = ({ logo, name, rating, totalRatings, description }: CompanyCardProps) => {
   return (
-    <Card className="w-full mt-4 rounded-3xl  h-[250px] max-w-[200px] ml-20 bg-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105 sm:max-w-[250px]">
+    <Card className="w-52 mt-4 rounded-3xl  h-[250px] max-w-[200px] ml-8 bg-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105 sm:max-w-[250px]">
       <CardContent className="p-0 h-full w-full ">
         <div
-          className={`p-6 h-full flex flex-col items-center justify-center rounded-xl relative 
+          className={`p-6 h-full flex flex-col items-center justify-center rounded-xl relative text-xl 
             ${name === "SDE Intern"
               ? "bg-[#1DB954]"
               : name === "Social Media Manager"

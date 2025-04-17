@@ -29,7 +29,7 @@ export default function Section() {
           <div className="flex justify-center md:justify-start">
             <Image
               src="/images2/boy-illustration.svg"
-              className="mt-8 md:ml-12 w-[200px] xl:w-[400px] ml-[-25%] xl:ml-[25%]"
+              className="mt-8 md:ml-12 w-[200px] xl:w-[500px] ml-[-25%] xl:ml-[5%]"
               alt="hero"
               width={400}
               height={400}
@@ -39,11 +39,11 @@ export default function Section() {
       </div>
 
       {/* Image fixed to viewport right corner */}
-      <div className="absolute right-0 top-[500px] sm:top-96 transform -translate-y-1/2 max-w-[200px] mt-[-25%] xl:mt-[10%] sm:max-w-[300px] md:max-w-[400px]">
+      <div className="absolute right-0 top-[600px] sm:top-96 transform -translate-y-1/2 max-w-[200px] mt-[-25%] xl:mt-[10%] sm:max-w-[300px] md:max-w-[400px]">
         <Image
           src="/images2/orbit-illustration.svg"
           alt="hero"
-          width={400}
+          width={500}
           height={400}
           className="w-full h-auto"
         />
