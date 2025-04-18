@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { useCallback } from "react";
+
 
 interface Testimonial {
   id: number;
@@ -48,7 +50,11 @@ export default function TestimonialSlider() {
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
-  const goToNext = () => setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  // ✅ useCallback to prevent redefinition
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  }, [maxIndex]);
+
   const goToPrev = () => setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -66,16 +72,16 @@ export default function TestimonialSlider() {
 
   useEffect(() => {
     const interval = setInterval(goToNext, 5000);
+    goToNext(); // Start immediately
     return () => clearInterval(interval);
   }, [goToNext]);
 
   const visibleTestimonials = () => {
-    const startIndex = currentIndex * 2;
-    return testimonials.slice(startIndex, startIndex + 2);
+    return testimonials.slice(currentIndex * 2, currentIndex * 2 + 2);
   };
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-4 py-12 text-center">
+    <div className="relative w-full max-w-6xl mx-auto px-4 py-12 text-center ">
       
       <div
         className="overflow-hidden"
@@ -83,7 +89,7 @@ export default function TestimonialSlider() {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="flex transition-transform duration-500 ease-in-out"
+        <div className="flex transition-transform duration-500 ease-in-out "
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {visibleTestimonials().map((testimonial) => (
             <div key={testimonial.id} className="w-1/2 flex flex-col md:flex-row items-center justify-center gap-6 px-6">
@@ -96,7 +102,7 @@ export default function TestimonialSlider() {
                     <Star key={i} className="w-5 h-5 fill-blue-500 text-blue-500" />
                   ))}
                 </div>
-                <p className="text-lg font-medium mb-4">&ldquo;{testimonial.quote}&rdquo;</p>
+                <p className="text-lg font-medium mb-4">{testimonial.quote}</p>
                 <p className="font-semibold">{testimonial.name} <span className="text-blue-400"> {testimonial.company}</span></p>
               </div>
             </div>

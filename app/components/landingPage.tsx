@@ -10,11 +10,9 @@ import StatsSection from './LandingPage-New/statsSections'
 import Footer from './LandingPage-New/footerNew'
 import Nav from './LandingPage-New/nav'
 
-
-
 export function Landing() {
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen overflow-x-hidden">
                         <Nav/>
                         <Hero/>
                         <Companies/>

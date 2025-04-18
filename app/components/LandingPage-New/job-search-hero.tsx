@@ -17,10 +17,10 @@ interface CompanyCardProps {
 
 const CompanyCard = ({ logo, name, rating, totalRatings, description }: CompanyCardProps) => {
   return (
-    <Card className="w-full mt-4 rounded-3xl h-[250px] max-w-[200px] bg-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105 sm:max-w-[250px]">
-      <CardContent className="p-0 h-full w-full">
+    <Card className="w-52 mt-4 rounded-3xl  h-[250px] max-w-[200px] ml-8 bg-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105 sm:max-w-[250px]">
+      <CardContent className="p-0 h-full w-full ">
         <div
-          className={`p-6 h-full flex flex-col items-center justify-center rounded-xl relative
+          className={`p-6 h-full flex flex-col items-center justify-center rounded-xl relative text-xl 
             ${name === "SDE Intern"
               ? "bg-[#1DB954]"
               : name === "Social Media Manager"
@@ -43,7 +43,7 @@ const CompanyCard = ({ logo, name, rating, totalRatings, description }: CompanyC
             </span>
           </div>
           <p className="text-white italic text-center text-xs sm:text-sm leading-tight min-h-[40px]">{description}</p>
-          <Button variant="secondary" size="sm" className="mt-2 w-24 rounded-full text-xs font-medium sm:w-28 sm:text-sm">
+          <Button variant="secondary" size="sm" className="mt-3 w-24 rounded-full text-xs font-medium sm:w-28 sm:text-sm ">
             Apply Now
           </Button>
         </div>
@@ -121,7 +121,7 @@ export default function JobSearchHero() {
   ];
 
   return (
-    <div className="max-w-screen mx-auto px-4 mt-10 py-20 bg-white font-montserrat">
+    <div className="max-w-screen mx-auto px-4 mt-10 py-20 bg-white font-montserrat ">
       <div className="text-center mb-8">
         <h1 className="text-xl sm:text-3xl font-bold mb-6">
           Type It. <span className="text-blue-500">Upload It.</span> Get Hired.
@@ -131,7 +131,7 @@ export default function JobSearchHero() {
           <Input
             type="text"
             placeholder="Dream job? Type it in ✨"
-            className="pl-4 pr-10 py-4 sm:py-6 rounded-full bg-[#EAEAEA] border-[#9DCEFF] focus:outline-none "
+            className="pl-4 pr-10 py-4 sm:py-6 rounded-full bg-[#EAEAEA] border-[#9DCEFF] focus:outline-none"
           />
           <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
         </div>
@@ -144,7 +144,7 @@ export default function JobSearchHero() {
         <div className="relative flex items-center">
           {/* Left Arrow */}
           {canScrollLeft && (
-            <button 
+            <button
               onClick={handleScrollLeft}
               className="absolute left-0 z-10 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition"
             >
@@ -152,10 +152,10 @@ export default function JobSearchHero() {
             </button>
           )}
 
-          {/* Scrollable Job List */}
-          <div 
-            ref={jobListRef} 
-            className="flex flex-row gap-4 overflow-hidden scroll-smooth scrollbar-hide mx-8 ml-52"
+          {/* Scrollable Job List - Fixed margin on mobile */}
+          <div
+            ref={jobListRef}
+            className="flex flex-row gap-4 overflow-x-hidden scroll-y-hidden scroll-smooth scrollbar-hide mx-4 sm:mx-8 sm:ml-20 md:ml-40 lg:ml-52 "
           >
             {companies.map((company, index) => (
               <CompanyCard key={index} {...company} />
@@ -164,7 +164,7 @@ export default function JobSearchHero() {
 
           {/* Right Arrow */}
           {canScrollRight && (
-            <button 
+            <button
               onClick={handleScrollRight}
               className="absolute right-0 z-10 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition"
             >

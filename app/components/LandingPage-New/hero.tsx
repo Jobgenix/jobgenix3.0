@@ -36,17 +36,24 @@ export default function Hero() {
         {/* Left side content */}
         <div className="w-full lg:w-1/2">
           {/* Mentored badge */}
-          <div className="relative bg-[#F6F6F7] rounded-lg shadow-2xl p-2 w-52 mx-auto lg:ml-44 ml-3 lg:mx-0 mb-6 lg:mt-32">
+          <div >
+          <div className="relative bg-[#F6F6F7] rounded-lg shadow-2xl p-2 w-64   mx-auto lg:ml-[90px] ml-3 lg:mx-0 mb-6 lg:mt-32">
             <div className="absolute top-1/2 -translate-y-1/2 left-2 w-3 h-3 bg-[#FFA500]  rounded-full"></div>
             <p className="ml-6">Mentored 200+ students</p>
           </div>
+          <div className="relative bg-[#F6F6F7] rounded-lg shadow-2xl p-2 w-24  mx-auto lg:ml-[52%]  ml-3 lg:mx-0 mb-6 lg:mt-[-9.5%]">
+            <div className="absolute top-1/2 -translate-y-1/2 left-2 w-3 h-3 bg-[#0073e6] rounded-full"></div>
+            <p className="ml-6">Beta</p>
+          </div>
+          </div>
+         
 
           {/* Main heading */}
-          <div className="ml-5 lg:text-left lg:ml-44 mt-6 lg:mt-4">
+          <div className="ml-5 lg:text-left lg:ml-20 mt-6 lg:mt-4">
             <h1 className="text-2xl lg:text-5xl xl:text-6xl font-bold">Your Career,</h1>
             <h1 className="text-2xl lg:text-5xl xl:text-6xl font-extrabold text-[#0073e6] mt-2 lg:mt-4">Supercharged</h1>
 
-            <button className="h-10 w-36 mt-6 text-xl font-semibold border-[#FFD17F] border-4 rounded-3xl overflow-hidden relative flex items-center justify-center">
+            <button className="h-12 w-36 mt-6 text-xl font-light border-[#FFD17F] border-4 rounded-3xl overflow-hidden relative flex items-center justify-center">
       <span ref={jobsRef} className="absolute">Jobs</span>
       <span ref={internshipRef} className="opacity-0">Internship</span>
     </button>
@@ -60,13 +67,13 @@ export default function Hero() {
                 <Image
                   src="/images2/rocket.svg"
                   alt="mobile-png"
-                  className="relative mt-[-70%] xl:absolute xl:top-48 xl:left-0"
+                  className="relative mt-[-70%] xl:absolute xl:top-48 xl:left-40"
                   height={500}
                   width={500}
                 />
               </div>
             </div>
-            <button className="h-8 w-28 lg:mt-3 lg:ml-3 ml-3 hidden xl:block bg-[#0073E6] rounded-lg text-white text-xs">Get started</button>
+          <button className="h-8 w-28 lg:mt-3 absolute left-[160px] hidden xl:block bg-[#0073E6] rounded-lg text-white text-xs">Get started</button>
             <button className="h-8 w-28 lg:mt-3 lg:ml-3 ml-3 xl:hidden sm:block mt-4 bg-[#0073E6] rounded-lg text-white">Book a call</button>
           </div>
         </div>

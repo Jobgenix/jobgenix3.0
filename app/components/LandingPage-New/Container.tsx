@@ -86,7 +86,7 @@ export function Container() {
           <div className="flex gap-4 justify-center">
             <a
               href="#"
-              className="flex block rounded-xl overflow-hidden h-16 sm:h-20 md:h-24 relative transition-all duration-300 hover:h-32 sm:hover:h-40 md:hover:h-48"
+              className="flex  rounded-xl overflow-hidden h-16 sm:h-20 md:h-24 relative transition-all duration-300 hover:h-32 sm:hover:h-40 md:hover:h-48"
             >
               <img
                 src="/LandingPageImages/winning.png"
@@ -96,7 +96,7 @@ export function Container() {
             </a>
             <a
               href="#"
-              className="flex block rounded-xl overflow-hidden h-16 sm:h-20 md:h-24 relative transition-all duration-300 hover:h-32 sm:hover:h-40 md:hover:h-48"
+              className="flex  rounded-xl overflow-hidden h-16 sm:h-20 md:h-24 relative transition-all duration-300 hover:h-32 sm:hover:h-40 md:hover:h-48"
             >
               <img
                 src="/LandingPageImages/expert.png"
@@ -193,7 +193,7 @@ export function Container() {
           <div className="flex gap-4 justify-center">
             <a
               href="#"
-              className="flex block rounded-xl overflow-hidden h-16 sm:h-20 md:h-24 relative group transition-all duration-300 hover:h-32 sm:hover:h-40 md:hover:h-48"
+              className="flex  rounded-xl overflow-hidden h-16 sm:h-20 md:h-24 relative group transition-all duration-300 hover:h-32 sm:hover:h-40 md:hover:h-48"
             >
               {/* Default Image */}
               <img
@@ -210,7 +210,7 @@ export function Container() {
             </a>
             <a
               href="#"
-              className="flex block rounded-xl overflow-hidden h-16 sm:h-20 md:h-24 relative group transition-all duration-300 hover:h-32 sm:hover:h-40 md:hover:h-48"
+              className="flex  rounded-xl overflow-hidden h-16 sm:h-20 md:h-24 relative group transition-all duration-300 hover:h-32 sm:hover:h-40 md:hover:h-48"
             >
               {/* Default Image */}
               <img
@@ -233,4 +233,3 @@ export function Container() {
     </div>
   )
 }
-

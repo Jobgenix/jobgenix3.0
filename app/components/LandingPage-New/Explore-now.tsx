@@ -1,6 +1,6 @@
-import Image from "next/image"
-import { IoCallOutline } from "react-icons/io5"
-import { BsGlobe2 } from "react-icons/bs"
+import Image from "next/image";
+import { IoCallOutline } from "react-icons/io5";
+import { BsGlobe2 } from "react-icons/bs";
 
 export default function Section() {
   return (
@@ -11,27 +11,43 @@ export default function Section() {
             We bridge the gap between <br className="hidden md:block" />
             ambition and <span className="text-[#0073E6]">opportunity</span>
           </h1>
-          <p className="text-gray-400 text-center md:text-left md:ml-8">Wanna know how ?</p>
+          <p className="text-gray-400 text-center md:text-left md:ml-8">
+            Wanna know how ?
+          </p>
           <div className="btn flex flex-col sm:flex-row items-center justify-center md:justify-start gap-2 sm:gap-0">
-            <button className="btn1 text-white bg-[#0073E6] p-2 rounded-lg flex items-center justify-center gap-2 mt-5 xl:w-full w-64 sm:w-auto sm:ml-8">
+            <button className="btn1 flex items-center justify-center gap-2 rounded-lg bg-[#0073E6] p-2 text-white mt-5 w-64 sm:w-auto sm:ml-8 xl:w-full">
               Talk to one of our cool mentors! <IoCallOutline />
             </button>
-            <p className="p-1 mt-2 sm:mt-6 sm:ml-3 font-semibold hidden xl:block">Or</p>
-            <button className="btn2 text-white bg-[#0073E6] xl:p-2 p-3 rounded-lg xl:flex justify-center  xl:items-center text-center gap-2 mt-2 sm:mt-5 sm:ml-8 w-36 xl:w-full hidden  sm:w-auto  xl:block">
+
+            <p className="p-1 mt-2 sm:mt-6 sm:ml-3 font-semibold hidden xl:block">
+              Or
+            </p>
+            <button className="btn2 text-white bg-[#0073E6]  items-center justify-center gap-2 rounded-lg p-3 xl:p-2 mt-2 sm:mt-5 sm:ml-8 w-36 xl:w-56 hidden sm:w-auto xl:flex">
               Explore Now <BsGlobe2 />
             </button>
           </div>
           <div className="flex justify-center md:justify-start">
-            <Image src="/images2/boy-illustration.svg" className="mt-8 md:ml-12" alt="hero" width={400} height={400} />
+            <Image
+              src="/images2/boy-illustration.svg"
+              className="mt-8 md:ml-12 w-[200px] xl:w-[500px] ml-[-25%] xl:ml-[5%]"
+              alt="hero"
+              width={400}
+              height={400}
+            />
           </div>
         </div>
       </div>
 
       {/* Image fixed to viewport right corner */}
-      <div className="absolute right-0 top-[500px] sm:top-96 transform -translate-y-1/2 max-w-[200px] sm:max-w-[300px] md:max-w-[400px]">
-        <Image src="/images2/orbit-illustration.svg" alt="hero" width={400} height={400} className="w-full h-auto" />
+      <div className="absolute right-0 top-[600px] sm:top-96 transform -translate-y-1/2 max-w-[200px] mt-[-25%] xl:mt-[10%] sm:max-w-[300px] md:max-w-[400px]">
+        <Image
+          src="/images2/orbit-illustration.svg"
+          alt="hero"
+          width={500}
+          height={400}
+          className="w-full h-auto"
+        />
       </div>
     </div>
-  )
+  );
 }
-
