@@ -20,7 +20,7 @@ export default function StatsSection() {
             Your Success, By <br className="hidden md:block" /> The Numbers 🚀
           </h2>
           <p className="text-gray-600 text-sm mt-1 font-normal">
-            We're helping dreamers become <br className="hidden md:block" /> doers—every single day.
+            We are helping dreamers become <br className="hidden md:block" /> doers—every single day.
           </p>
         </div>
 
@@ -53,7 +53,7 @@ export default function StatsSection() {
       {/* CTA Section */}
       <div className="text-center py-16  w-full max-w-2xl px-4 flex flex-col items-center">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-          Your Future's Calling <br />
+          Your Future&apos;s Calling <br />
           <span className="text-gray-800">Are You Ready to Answer?</span>
         </h2>
 

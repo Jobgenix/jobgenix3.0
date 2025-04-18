@@ -1,8 +1,5 @@
 import { CheckCircle } from "lucide-react"
 import Image from "next/image"
-
-import { Sora } from "next/font/google"
-
 export default function JoBDet() {
   return (
     <div className="bg-white min-h-screen p-4">
@@ -144,7 +141,7 @@ export default function JoBDet() {
 
   {/* Text content */}
   <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-    <h1 className="text-xl">Your Journey's Just Getting Started</h1>
+    <h1 className="text-xl">Your Journey&apos;s Just Getting Started</h1>
     <button className="border border-white w-44 mt-10 rounded-full h-8">Explore more jobs</button>
   </div>
 </div>
