@@ -96,7 +96,7 @@ export default function Nav() {
   {/* Logo */}
   <div className="Logo">
     <Image
-      src="/images2/logo.png"
+      src="/images2.0/logo.png"
       className="ml-4 xl:ml-40 mt-5 pt-3"
       alt="logo"
       width={150}
