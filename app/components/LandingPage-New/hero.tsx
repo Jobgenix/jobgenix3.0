@@ -73,7 +73,7 @@ export default function Hero() {
                 />
               </div>
             </div>
-          <button className="h-8 w-28 lg:mt-3 absolute left-[160px] hidden xl:block bg-[#0073E6] rounded-lg text-white text-xs">Get started</button>
+          <button className="h-8 w-28 lg:mt-3 absolute xl:left-[160px] hidden xl:block bg-[#0073E6] rounded-lg text-white text-xs">Get started</button>
             <button className="h-8 w-28 lg:mt-3 lg:ml-3 ml-3 xl:hidden sm:block mt-4 bg-[#0073E6] rounded-lg text-white">Book a call</button>
           </div>
         </div>

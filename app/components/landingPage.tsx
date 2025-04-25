@@ -19,6 +19,7 @@ const soraFont = Sora({
 
 export function Landing() {
     return (
+      <div className={` ${soraFont.className}`}>
         <div className="min-h-screen overflow-x-hidden">
                         <Nav/>
                         <Hero/>
@@ -32,5 +33,7 @@ export function Landing() {
                         <Footer/>
 
         </div>
+      </div>
+        
     )
 }

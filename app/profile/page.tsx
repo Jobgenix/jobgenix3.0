@@ -1,37 +1,29 @@
-"use client";
-import { Navbar } from "../components/LandingPageComponents/navbar";
-import { Footer } from "@/app/components/LandingPageComponents/Footer";
-import Name from "../components/profilePage/name";
-import UploadCv from "../components/profilePage/uploadcv";
-import { useSession } from "next-auth/react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { signOut } from "next-auth/react";
-import { Button } from "@/app/components/ui/button";
+import React from "react";
+import { Sora } from "next/font/google";
 
-export default function ProfilePage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      toast.error("You need to login first");
-      router.push("/auth/login");
-    }
-  }, [status, router]);
-  if (!session?.user?.id) {
-    return null; // Prevents errors when session is null
-  }
-  
+import ProfileCard from "../components/cards/profileCard";
+import Activity from "../components/cards/activity";
+import Image from "next/image";
+import Link from "next/link";
+import Nav from "../components/LandingPage-New/nav";
+
+const sorafont = Sora({
+  subsets: ["latin"],
+  weight: "400",
+});
+
+export default function Page() {
   return (
-    <div className="h-auto w-full bg-[#c6f7d5]">
-      <Navbar />
-      <Name />
-      <UploadCv />
-      <Button onClick={() => signOut()} className="bg-red-500 hover:bg-red-600 mb-6 ml-[42%] lg:ml-[48%] sm:ml-[46%]">
-        Logout
-      </Button>
-      <Footer />
+    <>
+   <Nav/>
+    <div className="max-w-7xl mt-44 md:mt-30 mx-auto h-full md:flex justify-between" >
+       
+      <ProfileCard />
+      <Activity />
     </div>
+    <Link href={"/"} className="w-full flex justify-center mt-16">
+      <Image src={"/images/refer.png"} height={1080} width={1080} alt='logo' className='object-cover w-full md:w-7xl' ></Image>
+    </Link>
+    </>
   );
 }

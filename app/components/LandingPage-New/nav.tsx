@@ -119,12 +119,12 @@ export default function Nav() {
         </div>
       </div>
 
-      <div className="flex justify-between items-center px-4 sm:px-6 xl:px-0 xl:ml-12 bg-white ">
+      <div className="flex justify-between items-center px-4 sm:px-6 xl:px-0 xl:ml-24  bg-white ">
         {/* Logo */}
         <div className="Logo">
           <Image
             src="/images2/logo.png"
-            className="ml-4 xl:ml-32 mt-5 pt-3"
+            className="ml-4 xl:ml-20 mt-5 pt-3"
             alt="logo"
             width={150}
             height={150}
