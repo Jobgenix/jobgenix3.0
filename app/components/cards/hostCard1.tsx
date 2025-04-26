@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { CategoryDropdown } from "@/components/dropdown/category-dropdown";
+import { CategoryDropdown } from "../dropdown/category-dropdown";
 import { useState } from "react";
 
 export default function HostCard1() {

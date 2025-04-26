@@ -36,7 +36,10 @@ export default function hostCard3({heading}: {heading: string}) {
       <div className="relative w-[700px] border border-blue-400 rounded-2xl">
         <h2 className="absolute -top-7 left-2">{heading}<span className="text-red-500">*</span> </h2>
         <MenuBar editor={editor} />
-        <EditorContent editor={editor} />
+        
+        <EditorContent  editor={editor} />
+        
+        
       </div>
     </>
   );

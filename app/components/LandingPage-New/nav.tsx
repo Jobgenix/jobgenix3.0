@@ -100,7 +100,7 @@ export default function Nav() {
   return (
     <div className="relative">
       {/* GSAP Animated Text */}
-      <div className="w-[80%] ml-44  overflow-hidden bg-[#0073e6] text-white py-2 px-4 text-center rounded-bl-full rounded-br-full hidden xl:block">
+      <div className="w-[80%] ml-44  overflow-hidden bg-[#004080] text-white py-2 px-4 text-center rounded-bl-full rounded-br-full hidden xl:block">
         <div
           ref={boxRef}
           className="h-[27px] relative flex items-center justify-center"

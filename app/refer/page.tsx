@@ -33,18 +33,15 @@ const accordionData = [
 
 export default function Page() {
   return (
-    <div>
+    <div >
       <Nav />
-      <div className="max-w-7xl mt-44 md:mt-30 mx-auto h-full md:flex justify-between">
-        <ReferCard data={accordionData} />
-        <ReferCard data={accordionData} />
-      </div>
+     
  <div
       className={`${sorafont.className} w-full flex flex-col items-center justify-center py-6 bg-gradient-to-r from-white via-[#f8fafd] to-white mt-30 px-5 md:px-0`}
     >
       
       {/* Header Section */}
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="flex flex-col items-center justify-center gap-4 mt-20">
         <div className="flex items-center justify-center space-x-4">
           {/* Left speed lines */}
           <Image
@@ -55,7 +52,7 @@ export default function Page() {
           />
 
           {/* Center text */}
-          <h2 className="text-lg md:text-3xl font-semibold text-gray-800 text-center">
+          <h2 className="text-lg md:text-3xl font-semibold text-gray-800 text-center " >
             Tap In, Get Referred, Glow Up.
           </h2>
 
