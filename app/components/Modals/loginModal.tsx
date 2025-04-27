@@ -1,13 +1,13 @@
 "use client";
 import { useForm } from "react-hook-form";
-
 import React from "react";
 import { Eye } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import { Sora } from "next/font/google";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+  
 
 const sora = Sora({
   subsets: ["latin"],
@@ -15,6 +15,10 @@ const sora = Sora({
 });
 
 export default function LoginModal() {
+  
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callback");
+
   const {
     register,
     handleSubmit,
@@ -134,7 +138,7 @@ export default function LoginModal() {
           <div className="flex-grow h-px bg-gray-600" />
         </div>
 
-        <button className="w-full py-2 border border-white rounded-md flex items-center justify-center gap-2 bg-white text-black transition">
+        <button onClick={() => callbackUrl?.length ? signIn('google', { redirectTo: callbackUrl }) : signIn('google')} className="w-full py-2 border border-white rounded-md flex items-center justify-center gap-2 bg-white text-black transition">
           <FcGoogle size={20} />
           Log in with Google
         </button>
