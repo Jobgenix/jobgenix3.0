@@ -123,7 +123,7 @@ const Login = () => {
             <span className="px-4 text-gray-500 text-sm">Or sign in with</span>
           </div>
 
-          <button
+          <button 
             onClick={() => callbackUrl?.length ? signIn('google', { redirectTo: callbackUrl }) : signIn('google')}
             className="w-full text-center justify-center px-1 py-2 mb-3 bg-white text-gray-600 rounded-md border-2 border-slate-200 flex items-center hover:bg-gray-100 transition"
           >
