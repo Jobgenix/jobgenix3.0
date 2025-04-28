@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Sora } from "next/font/google";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { X } from "lucide-react";
   
 
 const sora = Sora({
@@ -14,7 +15,13 @@ const sora = Sora({
   weight: ["400", "500", "600", "700"],
 });
 
-export default function LoginModal() {
+type LoginModalProps = {
+  onClose: () => void; // Function to close the modal
+};
+
+export default function LoginModal({ onClose }: LoginModalProps) {
+
+  const router = useRouter();
   
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callback");
@@ -41,14 +48,13 @@ export default function LoginModal() {
       console.log(result.error);
     } else {
       console.log("Login successful");
+      router.push('/profile');
     }
   };
 
-  const router = useRouter();
+  
 
-  const handleClick = () => {
-    router.push("/");
-  };
+  
 
   const logo =
     "https://s3-alpha-sig.figma.com/img/66fe/f6d5/97d560eac2dfb51eedeb938fb228a29c?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=dFBkqNY4hAeHADjrhieJRfojj0IZFRSIW1Pbsc~eDTTzhox17DJ8aFvEiVGExsSprXkiiv9IHwrOeVKmizKt~ITETAbrQMdpWmXT0O6Pe1RMfBfRccMxSbtr4MuAmnfqxaAu0YljKn16bm8GIUz5gI-UgYLYOHhOpTCkoJdHk9DoRTDYmwo0khQ2hAk5X9nuqpXD9s8zA-MfHr4F5bNfCMN~iU~Aw~8Md6pIzyaZY51qAsgMEqIbHhymg0GEVHEVLxul5AVrS37tBMs0ObjEsPGP7FfD8mYnq8t64WewxLcFRF~FpdQksvMEnN3leVsaKObb068JJATrqk7mZNeIkQ__";
@@ -60,9 +66,9 @@ export default function LoginModal() {
       <div className="border items-center border-[#333] rounded-[30px] text-white w-[400px] p-8 shadow-lg backdrop-blur-sm">
         <button
           className="absolute top-4 right-4 text-white text-xl"
-          onClick={handleClick}
+          onClick={onClose}
         >
-          ×
+          <X />
         </button>
         <div className="w-full flex justify-center pb-2">
           <div className="relative h-5 w-32 overflow-hidden">
