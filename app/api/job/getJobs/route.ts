@@ -236,7 +236,7 @@ async function getJobs(req: NextRequest) {
     const filters = [];
     if (name) filters.push(ilike(opportunities.title, `%${name}%`));
     if (lastJobId) filters.push(gt(opportunities.id, lastJobId));
-    if (stream) filters.push(sql`${stream} = ANY(${opportunities.degree})`);
+    if (stream) {filters.push(sql`${stream} = ANY(${opportunities.degree})`);}
     if (passingYear)
       filters.push(sql`${passingYear} = ANY(${opportunities.passoutYear})`);
     if (type) filters.push(eq(opportunities.type, type));
