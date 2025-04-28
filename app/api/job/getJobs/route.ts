@@ -114,7 +114,7 @@ function getMatchedSkills(userSkills: string[] | undefined, requireSkills: strin
   
   return {
     matchingSkills: uniqueMatched,
-    jobgenixSuggestion: matchPercentage > 30,
+    jobgenixSuggestion: matchPercentage > 20,
   };
 }
 
