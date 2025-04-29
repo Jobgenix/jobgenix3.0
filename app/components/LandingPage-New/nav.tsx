@@ -15,6 +15,9 @@ import gsap from "gsap";
 import { useMemo } from "react";
 
 export default function Nav() {
+
+
+
   const boxRef = useRef<HTMLDivElement | null>(null);
   const lines = useRef<HTMLDivElement[]>([]);
   const messages = useMemo(
@@ -85,12 +88,15 @@ export default function Nav() {
   const { data: session, status } = useSession();
   const router = useRouter();
   // Mobile menu state handled by DropdownMenu component
+  
+  console.log("Session data:", session?.user.id);
 
   useEffect(() => {
     if (status === "loading") return;
     if (session?.user) {
       setLoginStatus(true);
       setUserImage(session.user.image ?? null);
+      
     } else {
       setLoginStatus(false);
       setUserImage(null);
@@ -123,8 +129,8 @@ export default function Nav() {
         {/* Logo */}
         <div className="Logo">
           <Image
-            src="/images2/logo.png"
-            className="ml-4 xl:ml-20 mt-5 pt-3"
+            src="/images2/Logo.png"
+            className="ml-4 xl:ml-32 mt-5 pt-3"
             alt="logo"
             width={150}
             height={150}

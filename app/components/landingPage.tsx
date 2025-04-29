@@ -9,13 +9,6 @@ import JobSearchHero from './LandingPage-New/job-search-hero'
 import StatsSection from './LandingPage-New/statsSections'
 import Footer from './LandingPage-New/footerNew'
 import Nav from './LandingPage-New/nav'
-import { Sora } from 'next/font/google'
-const soraFont = Sora({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-}); 
-
-
 
 export function Landing() {
     return (

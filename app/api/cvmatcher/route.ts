@@ -25,6 +25,8 @@ export async function POST(req: NextRequest) {
     try {
         const userData = await db.select({ skills: users.skills }).from(users).where(eq(users.id, userId));
 
+    
+
         if (!userData.length || !userData[0].skills) {
             return NextResponse.json({ status: false, message: "User skills not found" });
         }

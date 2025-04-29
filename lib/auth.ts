@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import { signInSchema, signUpSchema } from "./zod";
 import { ZodError } from "zod";
 import { CustomError } from "./authError";
-import { CustomDrizzleAdapter } from "./adapter";
+import { CustomDrizzleAdapter } from "@/lib/adapter";
 import { ROLE_IDS } from "@/constants/roles";
 import { getUserFromCache, setUserInCache } from "@/utils/userByEmailOrId";
 

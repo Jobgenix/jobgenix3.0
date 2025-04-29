@@ -34,5 +34,4 @@ export default function JobDisplayNew() {
      
     </div>
   );
-}
-4;
+};

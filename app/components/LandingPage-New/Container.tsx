@@ -1,8 +1,7 @@
 "use client"
-
 export function Container() {
   return (
-    <div className="relative w-full bg-[#021C2D] text-white py-8 md:py-16 px-4 md:px-8 lg:px-16 ml-2.5">
+    <div className="relative w-full bg-[#021C2D] text-white py-8 md:py-16 px-4 md:px-8 lg:px-16 ">
       <div className="max-w-6xl mx-auto">
         {/* Heading Section */}
         <div className="text-center md:mb-12">

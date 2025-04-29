@@ -14,15 +14,13 @@ export default function StatsSection() {
   transition-all duration-300 hover:shadow-lg 
   before:absolute before:bottom-[-25px] before:left-1/2 before:w-[90%] before:h-6 before:bg-[#0073E6] before:opacity-30 before:blur-lg before:-translate-x-1/2">
 
-
-
         {/* Left Section - Title & Description */}
         <div className="flex flex-col justify-center w-full xl:ml-5 md:w-1/3 text-center md:text-left mb-4 md:mb-0">
           <h2 className="text-xl md:text-2xl text-[#333333] font-semibold">
             Your Success, By <br className="hidden md:block" /> The Numbers 🚀
           </h2>
           <p className="text-gray-600 text-sm mt-1 font-normal">
-            We're helping dreamers become <br className="hidden md:block" /> doers—every single day.
+            We are helping dreamers become <br className="hidden md:block" /> doers—every single day.
           </p>
         </div>
 
@@ -52,14 +50,10 @@ export default function StatsSection() {
         </div>
       </div>
 
-
-
-
-
       {/* CTA Section */}
       <div className="text-center py-16  w-full max-w-2xl px-4 flex flex-col items-center">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-          Your Future's Calling <br />
+          Your Future&apos;s Calling <br />
           <span className="text-gray-800">Are You Ready to Answer?</span>
         </h2>
 
@@ -87,4 +81,3 @@ export default function StatsSection() {
     </div>
   )
 }
-
