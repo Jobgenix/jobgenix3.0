@@ -19,6 +19,7 @@ interface JobType {
   jobLocation: string[];
   jobType: "office" | "remote" | "hybrid"; // Adjust if needed
   jobLink: string;
+  jobgenixSuggestion: boolean;
   requireskils: string;
 }
 
@@ -35,14 +36,12 @@ function JobCard({
   jobLocation,
   jobType, // Adjust if needed
   jobLink,
-  requireskils,
+  jobgenixSuggestion
 }: JobType) {
-
-  const aiRecommendedJob = false;
 
   return (
     <div className="relative w-full bg-white rounded-md shadow-sm border border-gray-100 p-4 hover:shadow-md transition duration-200 ease-in-out mb-4">
-      {aiRecommendedJob && (
+      {jobgenixSuggestion && (
         <div
           className="absolute top-0 right-0 w-auto -translate-y-1/2 bg-transparent pl-8 pr-4 py-1 mt-3 shadow-sm flex justify-end items-center gap-1 text-xs font-medium"
           style={{
@@ -120,7 +119,7 @@ function JobCard({
           <div className="flex flex-wrap gap-2 mt-3">
             
               <span
-                className={`px-3 py-1 rounded-full text-xs `}
+                className={`px-3 py-1 rounded-full text-xs bg-[#eff6ff]`}
               >
                 {jobType}
               </span>
@@ -258,7 +257,7 @@ export default async function Home() {
 
   let jobs=[]
   try {
-    const response = await fetch("http://localhost:3000/api/job/get-jobs", {
+    const response = await fetch("http://localhost:3000/api/job/getJobs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -290,8 +289,8 @@ export default async function Home() {
     >
       <div className="w-full max-w-3xl space-y-8">
         {jobs &&
-          jobs.map((job: JobType, index: number) => (
-            <JobCard key={index} {...job} />
+          jobs.map((job: JobType) => (
+            <JobCard key={job.jobId} {...job} />
           ))}
       </div>
     </main>
