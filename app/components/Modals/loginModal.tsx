@@ -56,8 +56,6 @@ export default function LoginModal({ onClose }: LoginModalProps) {
 
   
 
-  const logo =
-    "https://s3-alpha-sig.figma.com/img/66fe/f6d5/97d560eac2dfb51eedeb938fb228a29c?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=dFBkqNY4hAeHADjrhieJRfojj0IZFRSIW1Pbsc~eDTTzhox17DJ8aFvEiVGExsSprXkiiv9IHwrOeVKmizKt~ITETAbrQMdpWmXT0O6Pe1RMfBfRccMxSbtr4MuAmnfqxaAu0YljKn16bm8GIUz5gI-UgYLYOHhOpTCkoJdHk9DoRTDYmwo0khQ2hAk5X9nuqpXD9s8zA-MfHr4F5bNfCMN~iU~Aw~8Md6pIzyaZY51qAsgMEqIbHhymg0GEVHEVLxul5AVrS37tBMs0ObjEsPGP7FfD8mYnq8t64WewxLcFRF~FpdQksvMEnN3leVsaKObb068JJATrqk7mZNeIkQ__";
 
   return (
     <div
@@ -72,7 +70,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
         </button>
         <div className="w-full flex justify-center pb-2">
           <div className="relative h-5 w-32 overflow-hidden">
-            <Image src={logo} fill alt="logo"></Image>
+            <Image src={"/brand/JobGenix-dark.png"} fill alt="logo"></Image>
           </div>
         </div>
 
