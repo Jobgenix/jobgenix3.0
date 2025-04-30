@@ -8,7 +8,8 @@ import {
   jobTypeSchema,
   passoutYearSchema,
 } from "@/constants/jobOpportunities";
-import { getJobsById, setJobsById } from "@/utils/jobCache";
+// Removed Redis cache imports since we're not using them anymore
+// import { getJobsById, setJobsById } from "@/utils/jobCache";
 
 // Define the job result type from DB queries
 interface JobQueryResult {
@@ -20,26 +21,7 @@ interface JobQueryResult {
   jobType: "remote" | "office" | "hybrid";
   jobLink: string;
   requireSkils: string | null;
-}
-
-// Define a type for cached job data that might have a nested structure
-interface CachedJobData {
-  companyName?: string;
-  companyLogo?: string | null;
-  jobTitle?: string;
-  jobId?: string;
-  jobLocation?: string[];
-  jobType?: "remote" | "office" | "hybrid";
-  jobLink?: string;
-  requireSkils?: string | null;
-  opportunities?: {
-    requireSkils?: string | null;
-    [key: string]: unknown;
-  };
-  companies?: {
-    [key: string]: unknown;
-  };
-  [key: string]: unknown;
+  description: string | null; // Added description field
 }
 
 const getJobsSchema = z
@@ -49,8 +31,7 @@ const getJobsSchema = z
     limit: z
       .string()
       .regex(/^[0-9]+$/)
-      .optional()
-      .default("10"),
+      .optional(),
     userId: z.string().uuid(),
     lastJobId: z.string().uuid().optional(),
     passingYear: passoutYearSchema.optional(),
@@ -67,16 +48,17 @@ const getJobsSchema = z
  * Matches user skills with required job skills with partial matching
  * @param userSkills Array of user skills
  * @param requireSkills String of comma-separated required skills
- * @returns Object with matching skills and suggestion flag
+ * @returns Object with matching skills, suggestion flag, and match percentage
  */
 function getMatchedSkills(userSkills: string[] | undefined, requireSkills: string | null): { 
   matchingSkills: string[], 
-  jobgenixSuggestion: boolean 
+  jobgenixSuggestion: boolean,
+  matchPercentage: number
 } {
   // Handle empty cases
   if (!userSkills || userSkills.length === 0 || !requireSkills) {
     console.log("No skills to match: empty user skills or required skills");
-    return { matchingSkills: [], jobgenixSuggestion: false };
+    return { matchingSkills: [], jobgenixSuggestion: false, matchPercentage: 0 };
   }
   
   // Normalize user skills to lowercase
@@ -115,28 +97,8 @@ function getMatchedSkills(userSkills: string[] | undefined, requireSkills: strin
   return {
     matchingSkills: uniqueMatched,
     jobgenixSuggestion: matchPercentage > 20,
+    matchPercentage: Number(matchPercentage.toFixed(1)) // Round to 1 decimal place and convert to number
   };
-}
-
-/**
- * Extracts requireSkils field from job data regardless of structure
- * @param jobData Job data from cache or DB
- * @returns The requireSkils value or null if not found
- */
-function extractRequiredSkills(jobData: CachedJobData | null): string | null {
-  if (!jobData) return null;
-  
-  // Check direct property
-  if (jobData.requireSkils) {
-    return jobData.requireSkils;
-  }
-  
-  // Check nested in opportunities
-  if (jobData.opportunities && jobData.opportunities.requireSkils) {
-    return jobData.opportunities.requireSkils;
-  }
-  
-  return null;
 }
 
 async function getJobs(req: NextRequest) {
@@ -159,79 +121,45 @@ async function getJobs(req: NextRequest) {
 
     console.log("User skills received:", JSON.stringify(userSkills));
     
-    const parsedLimit = parseInt(limit) || 10;
+    // If limit is undefined or empty, we won't apply a limit (return all results)
+    const parsedLimit = limit ? parseInt(limit) : undefined;
 
-    // If jobId is provided, fetch single job
+    // If jobId is provided, fetch single job directly from database
     if (jobId) {
-      console.log("Fetching job by ID:", jobId);
-      // Get cached job with proper typing
-      const cachedJob = await getJobsById(jobId) as CachedJobData | null;
+      console.log("Fetching job by ID directly from database:", jobId);
       
-      let jobdata: JobQueryResult | null = null;
-      let requireSkils: string | null = null;
-      
-      if (cachedJob) {
-        // Extract required skills from cached job
-        requireSkils = extractRequiredSkills(cachedJob);
-        
-        if (requireSkils) {
-          // If job is cached and has required skills
-          jobdata = {
-            companyName: cachedJob.companyName || '',
-            companyLogo: cachedJob.companyLogo || null,
-            jobTitle: cachedJob.jobTitle || '',
-            jobId: cachedJob.jobId || '',
-            jobLocation: cachedJob.jobLocation || [],
-            jobType: cachedJob.jobType || 'office',
-            jobLink: cachedJob.jobLink || '',
-            requireSkils: requireSkils
-          };
-          console.log("Job found in cache with skills data:", requireSkils);
-        } else {
-          console.log("Job found in cache but missing skills data");
-        }
-      }
-      
-      // If not cached or missing skills data, fetch from database
-      if (!jobdata || requireSkils === null) {
-        console.log("Fetching complete job data from database");
-        const dbResult = await db
-          .select({
-            companyName: companies.name,
-            companyLogo: companies.logo,
-            jobTitle: opportunities.title,
-            jobId: opportunities.id,
-            jobLocation: opportunities.location,
-            jobType: opportunities.workplaceType,
-            jobLink: opportunities.jobLink,
-            requireSkils: opportunities.requireSkils,
-          })
-          .from(opportunities)
-          .innerJoin(companies, eq(opportunities.companyId, companies.id))
-          .where(eq(opportunities.id, jobId));
-
-        if (dbResult && dbResult.length > 0) {
-          jobdata = dbResult[0] as JobQueryResult;
-          requireSkils = jobdata.requireSkils;
-          console.log("Job found in database with skills:", requireSkils);
-
-          // Cache the job data for future use
-          await setJobsById(jobdata as unknown as Parameters<typeof setJobsById>[0]);
-        } else {
-          console.log("No job found in DB for ID:", jobId);
-        }
-      }
+      const dbResult = await db
+        .select({
+          companyName: companies.name,
+          companyLogo: companies.logo,
+          jobTitle: opportunities.title,
+          jobId: opportunities.id,
+          jobLocation: opportunities.location,
+          jobType: opportunities.workplaceType,
+          jobLink: opportunities.jobLink,
+          requireSkils: opportunities.requireSkils,
+          description: opportunities.description, // Added description field to query
+        })
+        .from(opportunities)
+        .innerJoin(companies, eq(opportunities.companyId, companies.id))
+        .where(eq(opportunities.id, jobId));
 
       // Handle case where job is not found
-      if (!jobdata) {
+      if (!dbResult || dbResult.length === 0) {
+        console.log("Job not found in database:", jobId);
         return new NextResponse(
           JSON.stringify({ error: "job_not_found", message: "Job not found" }),
           { status: 404 }
         );
       }
 
+      const jobdata = dbResult[0] as JobQueryResult;
+      const requireSkils = jobdata.requireSkils;
+      console.log("Job found in database with skills:", requireSkils);
+
       let matchingSkills: string[] = [];
       let jobgenixSuggestion = false;
+      let matchPercentage = 0;
 
       console.log("User skills:", userSkills);
       console.log("Required Skills:", requireSkils);
@@ -241,18 +169,21 @@ async function getJobs(req: NextRequest) {
         const matchResult = getMatchedSkills(userSkills, requireSkils);
         matchingSkills = matchResult.matchingSkills;
         jobgenixSuggestion = matchResult.jobgenixSuggestion;
+        matchPercentage = matchResult.matchPercentage;
       } else {
         console.log("Skipping skill matching - missing user skills or job skills");
       }
 
-      // Ensure requireSkils is included in the response
+      // Create the complete response job object
       const responseJob = {
         ...jobdata,
         requireSkils,
         matchingSkills,
         jobgenixSuggestion,
+        match: `${matchPercentage}%` // Add match percentage to response
       };
 
+      // Return the complete job data
       return new NextResponse(
         JSON.stringify({
           job: responseJob,
@@ -280,14 +211,17 @@ async function getJobs(req: NextRequest) {
         jobType: opportunities.workplaceType,
         jobLink: opportunities.jobLink,
         requireSkils: opportunities.requireSkils,
+        description: opportunities.description, // Added description field to list query too
       })
       .from(opportunities)
       .innerJoin(companies, eq(opportunities.companyId, companies.id))
       .where(filters.length ? and(...filters) : undefined)
-      .orderBy(desc(opportunities.postedAt))
-      .limit(parsedLimit);
+      .orderBy(desc(opportunities.postedAt));
+      
+    // Only apply limit if it's defined
+    const finalQuery = parsedLimit ? query.limit(parsedLimit) : query;
 
-    const result = await query as JobQueryResult[];
+    const result = await finalQuery as JobQueryResult[];
     console.log(`Found ${result.length} jobs matching criteria`);
 
     const jobsWithMatchingSkills = result.map((job) => {
@@ -301,19 +235,21 @@ async function getJobs(req: NextRequest) {
           ...job,
           matchingSkills: matchResult.matchingSkills,
           jobgenixSuggestion: matchResult.jobgenixSuggestion,
+          match: `${matchResult.matchPercentage}%` // Add match percentage to response
         };
       }
       return {
         ...job,
         matchingSkills: [],
         jobgenixSuggestion: false,
+        match: "0%" // Default match percentage
       };
     });
 
     return new NextResponse(
       JSON.stringify({
         jobs: jobsWithMatchingSkills,
-        hasMore: result.length === parsedLimit,
+        hasMore: parsedLimit ? result.length === parsedLimit : false, // If no limit, there's no "more" to fetch
       }),
       { status: 200 }
     );
