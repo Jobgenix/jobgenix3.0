@@ -36,9 +36,8 @@ function JobCard({
   jobLocation,
   jobType, // Adjust if needed
   jobLink,
-  jobgenixSuggestion
+  jobgenixSuggestion,
 }: JobType) {
-
   return (
     <div className="relative w-full bg-white rounded-md shadow-sm border border-gray-100 p-4 hover:shadow-md transition duration-200 ease-in-out mb-4">
       {jobgenixSuggestion && (
@@ -117,13 +116,9 @@ function JobCard({
           </div>
 
           <div className="flex flex-wrap gap-2 mt-3">
-            
-              <span
-                className={`px-3 py-1 rounded-full text-xs bg-[#eff6ff]`}
-              >
-                {jobType}
-              </span>
-            
+            <span className={`px-3 py-1 rounded-full text-xs bg-[#eff6ff]`}>
+              {jobType}
+            </span>
           </div>
 
           <div className="border-t border-gray-200 my-3"></div>
@@ -255,7 +250,7 @@ export default async function Home() {
   //   },
   // ];
 
-  let jobs=[]
+  let jobs = [];
   try {
     const response = await fetch("http://localhost:3000/api/job/getJobs", {
       method: "POST",
@@ -289,9 +284,12 @@ export default async function Home() {
     >
       <div className="w-full max-w-3xl space-y-8">
         {jobs &&
-          jobs.map((job: JobType) => (
-            <JobCard key={job.jobId} {...job} />
-          ))}
+          jobs
+            .filter(
+              (job: JobType,index:number) =>
+                index < 5  
+            )
+            .map((job: JobType) => <JobCard key={job.jobId} {...job} />)}
       </div>
     </main>
   );
