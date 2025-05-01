@@ -2,6 +2,8 @@
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Search, ArrowRight } from "lucide-react";
+import {useJobStore} from '@/app/_store/oppJobStore';
+
 import Home from "./job-cards";
 import Home2 from "./job-cards2";
 
@@ -56,7 +58,9 @@ export default function JobSearchInterface() {
       }),
     });
 
+    const addJobs = useJobStore((state) => state.addJobs); // Globas state
     const {jobs} = await response.json();
+    addJobs(jobs);  //Added in globas state
     console.log(jobs); 
 
   
