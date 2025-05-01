@@ -1,6 +1,10 @@
+'use client';
 import { ArrowRight, MapPin, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
+import { useSession } from "next-auth/react";
+import {useJobStore} from '@/app/_store/oppJobStore';
+import { useEffect } from "react";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -234,6 +238,10 @@ export default async function Home2() {
   //         onViewDetails: () => console.log("View details for Microsoft job"),
   //     },
   // ]
+  const { data: session } = useSession(); // Get user session data
+  const userId = session?.user?.id;
+  const addJobs = useJobStore((state) => state.addJobs);
+
   interface JobType {
     companyName: string;
     companyLogo: string;
@@ -246,33 +254,40 @@ export default async function Home2() {
     requireskils: string;
   }
 
-  let jobs = [];
-  try {
-    const response = await fetch("http://localhost:3000/api/job/getJobs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: "bd6b443f-222d-403d-8c3c-c55b4520d76a",
-        userSkills: ["JavaScript", "React", "Node.js"],
-        lastJobId: "38463de2-cf42-4063-9a8d-143e6232471e",
-        passingYear: "2024",
-        stream: "1",
-        type: "jobs",
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+   useEffect(() => {
+      const fetchJobs = async () => {
+        try {
+          const response = await fetch("http://localhost:3000/api/job/getJobs", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: userId,
+              userSkills: ["JavaScript", "React", "Node.js"],
+              passingYear: "2026",
+              stream: "1",
+              type: "jobs",
+            }),
+          });
+  
+          if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+          }
+  
+          const data = await response.json();
+          addJobs(data.jobs); // Add jobs to global state
+        } catch (error) {
+          console.error("Failed to fetch jobs:", error);
+        }
+      };
+  
+      fetchJobs();
     }
-
-    const data = await response.json();
-    jobs = data.jobs; // Assuming the API returns an array of jobs
-  } catch (error) {
-    console.error("Failed to fetch jobs:", error);
-  }
-
+    , [userId]); // Fetch jobs when userId changes
+  
+    const jobs = useJobStore((state) => state.jobs);
+  
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-4 md:p-24 bg-gray-50 ${montserrat.className}`}
