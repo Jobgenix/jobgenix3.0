@@ -1,6 +1,23 @@
 import { CheckCircle } from "lucide-react"
 import Image from "next/image"
-export default function JoBDet() {
+import Link from "next/link"
+
+interface Job {
+  companyName: string;
+  companyLogo: string;
+  jobTitle: string;
+  jobId: string;
+  jobLocation: string[];
+  jobType: "office" | "remote" | "hybrid"; // extend as needed
+  jobLink: string;
+  requireSkils: string;
+  description: string;
+  matchingSkills: string[];
+  jobgenixSuggestion: boolean;
+  match: string; // keep as string like "28.6%" or change to number if needed
+}
+
+export default function JoBDet({job}: { job: Job }) {
   return (
     <div className="bg-white min-h-screen p-4">
       <div className="max-w-6xl mx-auto grid md:grid-cols-[300px_1fr] gap-4" >
@@ -30,12 +47,12 @@ export default function JoBDet() {
 
           <div className="flex justify-center mb-4">
             <div className="w-10 h-10 relative">
-              <Image src="/images2/Google.png" fill alt="logo-google" className="object-cover" />
+              <Image src={job.companyLogo} fill alt="logo-google" className="object-cover" />
             </div>
           </div>
 
-          <h1 className="text-center font-semibold text-lg mb-1">Senior UX Designer</h1>
-          <p className="text-center text-sm text-gray-500 mb-4">Google • San Francisco, CA</p>
+          <h1 className="text-center font-semibold text-lg mb-1">{job.jobTitle}</h1>
+          <p className="text-center text-sm text-gray-500 mb-4">{job.companyName}</p>
 
           <div className="flex justify-between mb-4">
             <div className="flex items-center gap-1  bg-[#F4F4F5] text-black px-2 py-1 rounded-full text-[9px] " style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>
@@ -45,27 +62,22 @@ export default function JoBDet() {
             </div>
             <div className="flex items-center gap-1 bg-[#F4F4F5] text-green-600 px-2 py-1 rounded-full text-[9px] "  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>
             <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-              <span className="font-bold">91% Match Score</span>
+              <span className="font-bold">{job.match}</span>
             </div>
           </div>
 
           <div className="border-t border-b py-3 mb-4">
             <p className="text-sm text-gray-500 mb-2">Matched Skill(s)</p>
             <div className="flex flex-wrap gap-2">
-              <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs flex items-center gap-1"  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>
+              {job.matchingSkills.map((skill,index)=>(
+                <span key={index} className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs flex items-center gap-1"  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>
                 <CheckCircle className="w-3 h-3" />
-                User-Centered Design
+                {skill}
               </span>
-              <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs flex items-center gap-1"  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>
-                <CheckCircle className="w-3 h-3" />
-                Wireframing
-              </span>
-              <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs flex items-center gap-1"  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>
-                <CheckCircle className="w-3 h-3" />
-                User Research
-              </span>
-              <span className="bg-linear-to-r from-[#] to-blue-500 text-gray-600 px-3 py-1 rounded-full text-xs"  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>Interaction Design</span>
-              <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs"  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>Prototyping</span>
+              ))}
+              
+              {/* <span className="bg-linear-to-r from-[#] to-blue-500 text-gray-600 px-3 py-1 rounded-full text-xs"  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>Interaction Design</span>
+              <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs"  style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}>Prototyping</span> */}
             </div>
           </div>
 
@@ -83,50 +95,32 @@ export default function JoBDet() {
 
         {/* Job Details */}
         <div className="bg-white rounded-xl p-6 shadow-sm" style={{ boxShadow: "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)" }}  >
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h2 className="font-bold text-lg mb-3">About the Company</h2>
             <p className="text-sm text-gray-600">
               Lorem ipsum dolor sit amet consectetur. Scelerisque mus nunc ultricies viverra tincidunt eu cum. Auctor
               elementum nunc in amet. Amet nunc amet aliquot neque neque egestas cursus. Fames cursus.
             </p>
-          </div>
+          </div> */}
 
           <div className="mb-6">
             <h2 className="font-bold text-lg mb-3">Job Description</h2>
-            <p className="text-sm text-gray-600">
-              Lorem ipsum dolor sit amet consectetur. Scelerisque mus nunc ultricies viverra tincidunt eu cum. Auctor
-              elementum nunc in amet. Amet nunc amet aliquot neque neque egestas cursus. Fames cursus pulvinar nisi
-              nulla adipiscing interdum cursus. Amet amet purus id gravida sed eget cursus mi nisi a. Amet nunc amet
-              aliquot neque neque egestas cursus. Fames cursus pulvinar adipiscing mattis nisi. Mattris sed adipiscing
-              nulla. Orci pulvinar adipiscing mattis nisi. Mattris sed adipiscing nulla. Orci pulvinar adipiscing mattis
-              nisi. Mattris sed adipiscing nulla. Orci pulvinar adipiscing mattis nisi. Mattris sed adipiscing nulla.
-              Orci pulvinar adipiscing mattis nisi. Mattris sed adipiscing nulla. Orci.
+            <p className="text-sm text-gray-600" dangerouslySetInnerHTML={{ __html: job.description }}>
+              {/* {job.description} */}
             </p>
           </div>
 
           <div className="mb-6">
             <h2 className="font-bold text-lg mb-3">Requirements</h2>
             <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-600">
-              <li>Lorem ipsum dolor sit amet consectetur. Scelerisque mus nunc ultricies viverra tincidunt eu cum.</li>
-              <li>Auctor elementum nunc in amet.</li>
-              <li>
-                Amet nunc amet aliquot neque neque egestas cursus. Fames cursus pulvinar nisi nulla adipiscing interdum
-                cursus.
-              </li>
-              <li>Fames cursus pulvinar nisi nulla adipiscing.</li>
-              <li>
-                Amet purus id gravida sed eget cursus mi nisi a. Nisi amet nunc amet aliquot neque neque egestas cursus.
-                Fames cursus pulvinar adipiscing mattis nisi. Mattris sed adipiscing nulla. Orci pulvinar adipiscing
-                mattis nisi. Mattris sed adipiscing nulla. Orci pulvinar adipiscing mattis nisi. Mattris sed adipiscing
-                nulla. Orci.
-              </li>
+              <li>{job.requireSkils}</li>
             </ol>
           </div>
 
           <div className="mb-6">
             <h2 className="font-bold text-lg mb-3">Contact Details</h2>
             <p className="text-sm text-gray-600">
-              Lorem ipsum dolor sit amet consectetur. Scelerisque mus nunc ultricies viverra tincidunt eu cum.
+              <Link href={job.jobLink}>{job.jobLink}</Link>
             </p>
           </div>
         </div>

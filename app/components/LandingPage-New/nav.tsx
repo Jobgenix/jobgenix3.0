@@ -89,13 +89,14 @@ export default function Nav() {
   const router = useRouter();
   // Mobile menu state handled by DropdownMenu component
   
-  console.log("Session data:", session?.user.id);
+  
 
   useEffect(() => {
     if (status === "loading") return;
     if (session?.user) {
       setLoginStatus(true);
-      setUserImage(session.user.image ?? null);
+      setUserImage(session.user.image || null);
+      
       
     } else {
       setLoginStatus(false);

@@ -255,11 +255,10 @@ export default async function Home2() {
       },
       body: JSON.stringify({
         userId: "bd6b443f-222d-403d-8c3c-c55b4520d76a",
-        limit: "10",
         userSkills: ["JavaScript", "React", "Node.js"],
         lastJobId: "38463de2-cf42-4063-9a8d-143e6232471e",
         passingYear: "2024",
-        stream: "7",
+        stream: "1",
         type: "jobs",
       }),
     });
