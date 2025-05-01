@@ -257,7 +257,7 @@ export default function Home() {
   const { data: session } = useSession(); // Get user session data
   const userId = session?.user?.id; // Get user ID from session
   const addJobs = useJobStore((state) => state.addJobs);
-  
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -303,7 +303,7 @@ export default function Home() {
               (job: JobType,index:number) =>
                 index < 5  
             )
-            .map((job: JobType) => <JobCard key={job.jobId} {...job} />)}
+            .map((job: JobType,index:number) => <JobCard key={index} {...job} />)}
       </div>
     </main>
   );
