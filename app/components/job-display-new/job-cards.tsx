@@ -97,7 +97,7 @@ function JobCard({
                 <span className="text-gray-400">•</span>
                 <div className="flex items-center gap-1">
                   <MapPin size={14} className="text-gray-500" />
-                  <span className="text-gray-600">{jobLocation[0]}</span>
+                  <span className="text-gray-600">{jobLocation && jobLocation[0]}</span>
                 </div>
               </div>
             </div>
@@ -261,26 +261,23 @@ export default function Home() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/job/getJobs", {
+        const response = await fetch("/api/job/getJobs", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId: userId,
+            userId: userId?.toString(),
             userSkills: ["JavaScript", "React", "Node.js"],
-            passingYear: "2026",
             stream: "1",
             type: "jobs",
           }),
         });
 
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
-        }
 
         const data = await response.json();
         addJobs(data.jobs); // Add jobs to global state
+        // console.log(data.jobs)
       } catch (error) {
         console.error("Failed to fetch jobs:", error);
       }
@@ -291,6 +288,7 @@ export default function Home() {
   , [userId]); // Fetch jobs when userId changes
 
   const jobs = useJobStore((state) => state.jobs); // Global state
+  // console.log(jobs); // Log the jobs data
 
   return (
     <main

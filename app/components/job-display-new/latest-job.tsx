@@ -38,33 +38,32 @@ export default function JobSearchInterface() {
 
   const { register, handleSubmit } = useForm<JobSearchFormData>();
 
+  const addJobs = useJobStore((state) => state.addJobs); // This is invalid inside an async function
+
   const onSubmit = async (data:JobSearchFormData) => {
     const selectedCourse = courseOptions.find((c) => c.name === data.course);
     const courseId = selectedCourse?.id || null;
     console.log(courseId)
 
-    const response = await fetch("http://localhost:3000/api/job/getJobs", {
+    const response = await fetch("/api/job/getJobs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: session?.user?.id,
+        userId: session?.user?.id.toString(),
         limit: "10",
         userSkills: ["JavaScript", "React", "Node.js"],
         passingYear: data.passingYear,
         stream: courseId,
         type: "jobs",
+        name: data.search,
       }),
     });
 
-    const addJobs = useJobStore((state) => state.addJobs); // Globas state
     const {jobs} = await response.json();
     addJobs(jobs);  //Added in globas state
     console.log(jobs); 
-
-  
-
   };
 
   return (
@@ -120,7 +119,7 @@ export default function JobSearchInterface() {
       <Home />
 
       <h1 className="xl:text-2xl xl:ml-[25%] ml-[8%] text-xl bg-[#f9fafb] font-semibold">All Jobs</h1>
-      {/* <Home2 /> */}
+      <Home2 />
 
       <button className="flex items-center justify-center bg-[#0073e6] text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors w-[150px] xl:ml-[45%] ml-[30%] mb-10">
         <span className="flex items-center">

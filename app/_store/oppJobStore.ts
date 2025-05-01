@@ -15,14 +15,14 @@ interface JobType {
 
 interface JobStoreState {
   jobs: JobType[];
-  addJobs: (jobs: JobType) => void;
+  addJobs: (jobs: JobType[]) => void; // Update to accept an array of JobType
 }
 
 const JobStore: StateCreator<JobStoreState> = (set) => ({
   jobs: [],
-  addJobs: (jobs: JobType) => {
+  addJobs: (newJobs: JobType[]) => {
     set(() => ({
-      jobs: [jobs], 
+      jobs: newJobs, // Replace the jobs array with the new array
     }));
   },
 });

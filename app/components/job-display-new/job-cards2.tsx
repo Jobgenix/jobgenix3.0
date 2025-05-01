@@ -142,7 +142,7 @@ function JobCard({
   );
 }
 
-export default async function Home2() {
+export default function Home2() {
   // const jobs: JobCardProps[] = [
   //     {
   //         companyLogo: "/images/Adobe.png?height=40&width=40",
@@ -257,26 +257,22 @@ export default async function Home2() {
    useEffect(() => {
       const fetchJobs = async () => {
         try {
-          const response = await fetch("http://localhost:3000/api/job/getJobs", {
+          const response = await fetch("/api/job/getJobs", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              userId: userId,
+              userId: userId?.toString(),
               userSkills: ["JavaScript", "React", "Node.js"],
-              passingYear: "2026",
               stream: "1",
               type: "jobs",
             }),
           });
   
-          if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
-          }
-  
           const data = await response.json();
           addJobs(data.jobs); // Add jobs to global state
+          // console.log(data.jobs); // Log the jobs to the console
         } catch (error) {
           console.error("Failed to fetch jobs:", error);
         }
@@ -293,7 +289,7 @@ export default async function Home2() {
       className={`flex min-h-screen flex-col items-center justify-between p-4 md:p-24 bg-gray-50 ${montserrat.className}`}
     >
       <div className="w-full max-w-3xl space-y-8">
-        {jobs.filter((_:JobType,index:number)=>index>=5).map((job: JobType, index: number) => (
+        {jobs && jobs.filter((_:JobType,index:number)=>index>=5).map((job: JobType, index: number) => (
           <JobCard key={index} {...job} />
         ))}
       </div>
