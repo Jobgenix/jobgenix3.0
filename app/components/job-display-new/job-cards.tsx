@@ -140,7 +140,7 @@ function JobCard({
             </div>
 
             <Link
-              href={jobLink}
+              href={`/jobdescription/${jobId}`}
               className="flex items-center gap-1 text-[#0073E6] mt-2 md:mt-0 text-sm"
             >
               <span>View Details</span>

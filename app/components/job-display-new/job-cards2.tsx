@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 import { useSession } from "next-auth/react";
 import {useJobStore} from '@/app/_store/oppJobStore';
 import { useEffect } from "react";
+import Link from "next/link";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -129,12 +130,12 @@ function JobCard({
               </div>
             </div>
 
-            <button
+            <Link href={`/jobdescription/${jobId}`}
               className="flex items-center gap-1 text-[#0073E6] mt-2 md:mt-0 text-sm"
             >
               <span>View Details</span>
               <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
