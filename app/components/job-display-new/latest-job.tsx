@@ -117,7 +117,7 @@ export default function JobSearchInterface() {
       </form>
 
       {/* Main Content */}
-      {/* <Home /> */}
+      <Home />
 
       <h1 className="xl:text-2xl xl:ml-[25%] ml-[8%] text-xl bg-[#f9fafb] font-semibold">All Jobs</h1>
       {/* <Home2 /> */}
