@@ -24,7 +24,6 @@ export default function Page() {
     async function fetchProfile(){
       const response = await fetch("api/profileInfo");
       const data = await response.json();
-      console.log(data);
       setUserDetails(data);
     }
     fetchProfile();
