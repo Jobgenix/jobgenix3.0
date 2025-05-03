@@ -1,4 +1,5 @@
-import React from "react";
+'use client';
+import React, { useEffect ,useState} from "react";
 import { Sora } from "next/font/google";
 
 import ProfileCard from "../components/cards/profileCard";
@@ -14,14 +15,28 @@ const sorafont = Sora({
   weight: "400",
 });
 
+
 export default function Page() {
+
+  const [userDetails, setUserDetails] = useState()
+
+  useEffect(() => {
+    async function fetchProfile(){
+      const response = await fetch("api/profileInfo");
+      const data = await response.json();
+      console.log(data);
+      setUserDetails(data);
+    }
+    fetchProfile();
+  },[])
+
   return (
     <>
    <Nav/>
-    <div className="max-w-7xl mt-44 md:mt-5 mx-auto h-full md:flex justify-between" >
+    <div className="max-w-7xl mt-10 md:mt-5 mx-auto h-full md:flex justify-between" >
        
-      <ProfileCard />
-      <Activity />
+      {userDetails && <ProfileCard data={userDetails} />}
+      {userDetails && <Activity data={userDetails} />}
       
     </div>
     <Link href={"/"} className="w-full flex justify-center mt-16">

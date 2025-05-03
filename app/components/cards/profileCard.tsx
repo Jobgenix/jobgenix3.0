@@ -2,6 +2,7 @@ import React from "react";
 import { PencilLine, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import UserDetails from '@/types/userDetails';
 
 import { Sora } from "next/font/google";
 const sorafont = Sora({
@@ -9,24 +10,27 @@ const sorafont = Sora({
   weight: "400",
 });
 
-export default function ProfileCard() {
+
+
+
+export default function ProfileCard({data}: {data: UserDetails}) {
   return (
     <div className=" md:w-[442px]">
       <div
         className={`${sorafont.className} h-fit bg-white rounded-2xl p-6 text-center space-y-4 mt-25 shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)]`}
       >
         <Image
-          src="/images3/profile.png"
+          src={data.profileImage}
           height={50}
           width={50}
           alt="Surajit Saha"
           className="w-24 h-24 rounded-full mx-auto"
         />
         <div className="flex flex-col items-center justify-center">
-          <h2 className="text-lg font-bold">Surajit Saha</h2>
+          <h2 className="text-lg font-bold">{data.name}</h2>
           <p className="text-sm font-semibold text-gray-500">UI/UX Designer</p>
           <p className="text-sm text-gray-500 flex items-center gap-2">
-            <MapPin size={14} /> San Francisco, CA
+            <MapPin size={14} /> {data.location}
           </p>
         </div>
 

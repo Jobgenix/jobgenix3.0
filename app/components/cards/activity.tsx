@@ -3,13 +3,14 @@ import React from "react";
 import { PencilLine, Trash2, Eye, FileDown } from "lucide-react";
 import { Sora } from "next/font/google";
 import { useState } from "react";
+import UserDetails from "@/types/userDetails";
 
 const sorafont = Sora({
   subsets: ["latin"],
   weight: "400",
 });
 
-export default function Activity() {
+export default function Activity({data}: {data: UserDetails}) {
   
   const [isEditable, setIsEditable] = useState(false);
 
@@ -121,16 +122,16 @@ export default function Activity() {
       </div>
 
       {/* Learning Activity */}
-      <div className="relative bg-white rounded-2xl p-6 space-y-4 shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)]">
-        <h2 className="text-lg mx-auto w-fit font-semibold">
-          Learning Activity
-        </h2>
+      {/* <div className="relative bg-white rounded-2xl p-6 space-y-4 shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)]"> */}
+        {/* <h2 className="text-lg mx-auto w-fit font-semibold"> */}
+          {/* Learning Activity */}
+        {/* </h2> */}
 
         {/* Horizontal Scroll Container */}
         {/* <div className="overflow-x-auto md:overflow-x-hidden"> */}
           {/* Month Labels */}
-          <div className="flex gap-6 min-w-[800px] md:min-w-full pl-8 mb-1">
-            {[
+          {/* <div className="flex gap-6 min-w-[800px] md:min-w-full pl-8 mb-1"> */}
+            {/* {[
               "Apr",
               "May",
               "Jun",
@@ -149,7 +150,7 @@ export default function Activity() {
                 {month}
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* Selected Month */}
           {/* <div className="absolute md:top-[40px] md:right-[30px] right-[10px] top-[50px] text-sm text-gray-600">
@@ -182,7 +183,7 @@ export default function Activity() {
             {/* })} */}
           {/* </div> */}
         {/* </div> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 }
