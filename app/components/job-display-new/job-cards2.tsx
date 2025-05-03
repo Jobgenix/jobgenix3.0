@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import {useJobStore} from '@/app/_store/oppJobStore';
 import { useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -239,6 +240,10 @@ export default function Home2() {
   //         onViewDetails: () => console.log("View details for Microsoft job"),
   //     },
   // ]
+
+    const pathname = usePathname(); 
+    const slug = pathname.split("opportunities2/").pop(); 
+
   const { data: session } = useSession(); // Get user session data
   const userId = session?.user?.id;
   const addJobs = useJobStore((state) => state.addJobs);
@@ -267,7 +272,7 @@ export default function Home2() {
               userId: userId?.toString(),
               userSkills: ["JavaScript", "React", "Node.js"],
               stream: "1",
-              type: "jobs",
+              type: slug?.toString(),
             }),
           });
   

@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import Footer from "../components/LandingPage-New/footerNew";
-import Nav from "../components/LandingPage-New/nav";
-import JobDisplay from "../components/job-display-new/job-dis";
-import JobSearchInterface from "../components/job-display-new/latest-job";
-import JobGenixPromo from "../components/job-display-new/side-card";
+import Footer from "../../components/LandingPage-New/footerNew";
+import Nav from "../../components/LandingPage-New/nav";
+import JobDisplay from "../../components/job-display-new/job-dis";
+import JobSearchInterface from "../../components/job-display-new/latest-job";
+import JobGenixPromo from "../../components/job-display-new/side-card";
 
 import { Sora } from "next/font/google";
 

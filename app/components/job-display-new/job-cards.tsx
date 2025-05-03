@@ -6,6 +6,7 @@ import Link from "next/link";
 import {useJobStore} from '@/app/_store/oppJobStore';
 import { use, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { usePathname } from 'next/navigation';
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -254,6 +255,10 @@ export default function Home() {
   //   },
   // ];
   
+  const pathname = usePathname(); 
+  const slug = pathname.split("opportunities2/").pop(); 
+  
+  console.log(slug)
   const { data: session } = useSession(); // Get user session data
   const userId = session?.user?.id; // Get user ID from session
   const addJobs = useJobStore((state) => state.addJobs);
@@ -270,7 +275,7 @@ export default function Home() {
             userId: userId?.toString(),
             userSkills: ["JavaScript", "React", "Node.js"],
             stream: "1",
-            type: "jobs",
+            type: slug?.toString(),
           }),
         });
 

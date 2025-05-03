@@ -78,8 +78,8 @@ export default function Nav() {
     { name: "Home", route: "/" },
     { name: "About us", route: "/comingsoon" },
     { name: "Roadmaps", route: "/roadmaps" },
-    { name: "Internships", route: "/opportunities?type=internships" },
-    { name: "Jobs", route: "/opportunities?type=jobs" },
+    { name: "Internships", route: "/opportunities2/internships" },
+    { name: "Jobs", route: "/opportunities2/jobs" },
     { name: "Ge-job-ready", route: "/comingsoon" },
   ];
 
@@ -146,7 +146,7 @@ export default function Nav() {
               href={item.route}
               className={`text-md ${
                 item.name === "Home" ? "text-blue-500" : "text-[#646A66]"
-              }`}
+              } focus:text-blue-500`}
             >
               {item.name}
             </Link>
