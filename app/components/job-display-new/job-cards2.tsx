@@ -24,6 +24,7 @@ interface JobType {
   jobLink: string;
   jobgenixSuggestion: boolean;
   requireskils: string;
+  match: string;
 }
 
 function JobCard({
@@ -34,6 +35,7 @@ function JobCard({
   jobLocation,
   jobType, // Adjust if needed
   jobLink,
+  match,
   jobgenixSuggestion,
 }: JobType) {
   return (
@@ -107,7 +109,7 @@ function JobCard({
               }}
             >
               <span className="text-blue-500 text-sm font-light ">
-                {82}% Match
+                {match} Match
               </span>
               <span className="text-yellow-300">⚡</span>
             </div>
@@ -258,6 +260,7 @@ export default function Home2() {
     jobLink: string;
     jobgenixSuggestion: boolean;
     requireskils: string;
+    match: string;
   }
 
    useEffect(() => {

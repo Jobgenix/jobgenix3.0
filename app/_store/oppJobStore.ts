@@ -11,6 +11,7 @@ interface JobType {
   jobLink: string;
   jobgenixSuggestion: boolean;
   requireskils: string;
+  match:string
 }
 
 interface JobStoreState {
