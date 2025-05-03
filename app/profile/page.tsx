@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Nav from "../components/LandingPage-New/nav";
 import Footer from "../components/LandingPage-New/footerNew";
+import Activity from "../components/cards/activity";
 
 const sorafont = Sora({
   subsets: ["latin"],
@@ -17,9 +18,10 @@ export default function Page() {
   return (
     <>
    <Nav/>
-    <div className="max-w-7xl mt-44 md:mt-30 mx-auto h-full md:flex justify-between" >
+    <div className="max-w-7xl mt-44 md:mt-5 mx-auto h-full md:flex justify-between" >
        
       <ProfileCard />
+      <Activity />
       
     </div>
     <Link href={"/"} className="w-full flex justify-center mt-16">

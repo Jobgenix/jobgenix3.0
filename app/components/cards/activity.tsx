@@ -127,9 +127,9 @@ export default function Activity() {
         </h2>
 
         {/* Horizontal Scroll Container */}
-        <div className="overflow-x-auto md:overflow-x-hidden">
+        {/* <div className="overflow-x-auto md:overflow-x-hidden"> */}
           {/* Month Labels */}
-          <div className="grid grid-cols-52 min-w-[800px] md:min-w-full pl-8 mb-1">
+          <div className="flex gap-6 min-w-[800px] md:min-w-full pl-8 mb-1">
             {[
               "Apr",
               "May",
@@ -145,43 +145,43 @@ export default function Activity() {
               "Mar",
               "Apr",
             ].map((month, i) => (
-              <div key={i} className="col-span-4 text-xs text-gray-500">
+              <div key={i} className="text-xs text-gray-500">
                 {month}
               </div>
             ))}
           </div>
 
           {/* Selected Month */}
-          <div className="absolute md:top-[40px] md:right-[30px] right-[10px] top-[50px] text-sm text-gray-600">
+          {/* <div className="absolute md:top-[40px] md:right-[30px] right-[10px] top-[50px] text-sm text-gray-600">
               2025 ▾ January
-            </div>
+            </div> */}
 
 
           {/* Activity Grid */}
-          <div className="relative grid grid-cols-52 gap-[2px] text-[0px] min-w-[800px] md:min-w-full pl-10">
+          {/* <div className="relative flex flex-wrap max gap-[2px] text-[0px] max-w-[800px] md:min-w-full pl-10"> */}
             {/* Days of the Week */}
-            <div className="absolute left-1 flex flex-col gap-3 items-center justify-center h-[60px]">
-              {["Mon", "Wed", "Fri"].map((day, i) => (
-                <div key={i} className="text-xs text-gray-500 h-[8px]">
-                  {day}
-                </div>
-              ))}
-            </div>
+            {/* <div className="absolute left-1 flex flex-col gap-3 items-center justify-center h-[60px]"> */}
+              {/* {["Mon", "Wed", "Fri"].map((day, i) => ( */}
+                {/* <div key={i} className="text-xs text-gray-500 h-[8px]"> */}
+                  {/* {day} */}
+                {/* </div> */}
+              {/* ))} */}
+            {/* </div> */}
 
             {/* Activity Cells */}
-            {Array.from({ length: 52 * 7 }).map((_, i) => {
-              const isFilled = [34, 67, 110, 222, 300].includes(i); // example filled cells
-              return (
-                <div
-                  key={i}
-                  className={`w-2 h-2 rounded-[2px] border-[0.5px] ${
-                    isFilled ? "bg-blue-600" : "bg-white"
-                  }`}
-                />
-              );
-            })}
-          </div>
-        </div>
+            {/* {Array.from({ length: 52 * 7 }).map((_, i) => { */}
+              {/* const isFilled = [34, 67, 110, 222, 300].includes(i); // example filled cells */}
+              {/* return ( */}
+                {/* <div */}
+                  {/* key={i} */}
+                  {/* className={`w-2 h-2 rounded-[2px] border-[0.5px] ${ */}
+                    {/* isFilled ? "bg-blue-600" : "bg-white" */}
+                  {/* }`} */}
+                {/* /> */}
+              {/* ); */}
+            {/* })} */}
+          {/* </div> */}
+        {/* </div> */}
       </div>
     </div>
   );
