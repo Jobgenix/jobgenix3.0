@@ -107,9 +107,14 @@ export default function Activity({ data }: { data: UserDetails }) {
       setUserData((prev) => ({ ...prev, ...formData }));
       toast.success("Profile updated successfully");
       setIsEditable(false);
-    } catch (error: any) {
-      console.error("Error saving profile:", error);
-      toast.error(error.message || "Failed to update profile");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error saving profile:", error);
+        toast.error(error.message || "Failed to update profile");
+      } else {
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setLoading(false);
     }
@@ -195,30 +200,18 @@ export default function Activity({ data }: { data: UserDetails }) {
       });
 
       toast.success("Resume uploaded successfully!");
-    } catch (error: any) {
-      console.error("Upload Error:", error);
-      toast.error(error.message || "Failed to upload resume");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Upload Error:", error);
+        toast.error(error.message || "Failed to upload resume");
+      } else {
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setLoading(false);
     }
   };
-
-  // const updateSkills = async (userId: string, skills: string) => {
-  //   try {
-  //     const response = await fetch("/api/extractskils", {
-  //       method: "PUT",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ userId, skills }),
-  //     });
-
-  //     const result = await response.json();
-  //     if (!response.ok) throw new Error(result.message || "Failed to update skills.");
-  //     toast.success("Skills extracted and updated successfully");
-  //   } catch (error: any) {
-  //     console.error("Error updating skills:", error);
-  //     toast.error(error.message || "Failed to update skills");
-  //   }
-  // };
 
   const handleDeleteResume = async () => {
     if (!resumeFile) return;
@@ -251,9 +244,14 @@ export default function Activity({ data }: { data: UserDetails }) {
       }));
 
       toast.success("Resume deleted successfully");
-    } catch (error: any) {
-      console.error("Error deleting resume:", error);
-      toast.error(error.message || "Failed to delete resume");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error deleting resume:", error);
+        toast.error(error.message || "Failed to delete resume");
+      } else {
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setLoading(false);
     }
