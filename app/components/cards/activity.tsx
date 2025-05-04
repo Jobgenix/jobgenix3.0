@@ -1,34 +1,65 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { PencilLine, Trash2, Eye, FileDown, UploadCloud } from "lucide-react";
 import { Sora } from "next/font/google";
-import { useState, useEffect, useRef } from "react";
-import UserDetails from "@/types/userDetails";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import UserDetails from "@/types/userDetails";
 
 const sorafont = Sora({
   subsets: ["latin"],
   weight: "400",
 });
 
+interface FormData {
+  email: string;
+  phone: string;
+  university: string;
+  location: string;
+  id: string;
+  userId: string;
+  name: string;
+  profileImage: string;
+  summary: string;
+}
+
+interface ResumeFile {
+  name: string;
+  updatedDate: string;
+  url: string;
+}
+
+interface SignedResponse {
+  success: boolean;
+  api_key: string;
+  timestamp: string;
+  signature: string;
+  folder: string;
+  cloud_name: string;
+  message?: string;
+}
+
+interface UploadResponse {
+  secure_url: string;
+  error?: { message: string };
+}
+
+// interface ExtractResult {
+//   text: string;
+//   error?: string;
+// }
+
 export default function Activity({ data }: { data: UserDetails }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm();
+  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<FormData>();
   const [isEditable, setIsEditable] = useState(false);
-  const [resumeFile, setResumeFile] = useState<{
-    name: string;
-    updatedDate: string;
-    url: string;
-  } | null>(null);
+  const [resumeFile, setResumeFile] = useState<ResumeFile | null>(null);
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<UserDetails>(data);
 
-  // Initialize form and resume data when component mounts or userData changes
   useEffect(() => {
     console.log("Data received in Activity component:", userData);
-    
-    // Set form data
+
     reset({
       email: userData.email,
       phone: userData.phone,
@@ -41,31 +72,27 @@ export default function Activity({ data }: { data: UserDetails }) {
       summary: userData.summary,
     });
 
-    // Initialize resume file if exists in data
-    if (userData.resumeUrl) {
+    if (userData.resume_url) {
       const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString('en-US', {
-        month: 'short',
-        day: '2-digit',
-        year: 'numeric'
+      const formattedDate = currentDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
       });
 
-      // Extract filename from URL - get the part after the last slash
-      const fileName = userData.resumeUrl.split("/").pop() || "Resume.pdf";
-      
+      const fileName = userData.resume_url.split("/").pop() || "Resume.pdf";
+
       setResumeFile({
         name: fileName,
         updatedDate: formattedDate,
-        url: userData.resumeUrl
+        url: userData.resume_url,
       });
     } else {
-      // Ensure resumeFile is null if no resumeUrl in data
       setResumeFile(null);
     }
   }, [userData, reset]);
 
-  // Handle profile form submission
-  const onSubmit = async (formData: any) => {
+  const onSubmit = async (formData: FormData) => {
     try {
       setLoading(true);
       const response = await fetch("/api/profileInfo", {
@@ -77,55 +104,44 @@ export default function Activity({ data }: { data: UserDetails }) {
       const result = await response.json();
       if (!response.ok) throw new Error(result.message || "Failed to update profile");
 
-      // Update local userData with the new information
-      setUserData(prev => ({...prev, ...formData}));
-      
+      setUserData((prev) => ({ ...prev, ...formData }));
       toast.success("Profile updated successfully");
       setIsEditable(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error saving profile:", error);
-      toast.error("Failed to update profile");
+      toast.error(error.message || "Failed to update profile");
     } finally {
       setLoading(false);
     }
   };
 
-  // Trigger file input click
   const triggerFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
-  // Handle file upload process
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0] as File;
     if (!file) return;
 
     setLoading(true);
 
     try {
-      // 1. Get signed URL from our API
       const signedResponse = await fetch("/api/uploadcv", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fileType: file.type,
-          userId: userData.userId
+          userId: userData.userId,
         }),
       });
 
-      if (!signedResponse.ok) {
-        throw new Error(await signedResponse.text() || "Failed to get signed URL");
-      }
-
-      const signedData = await signedResponse.json();
-      if (!signedData.success) {
+      const signedData: SignedResponse = await signedResponse.json();
+      if (!signedResponse.ok || !signedData.success) {
         throw new Error(signedData.message || "Failed to get upload credentials");
       }
-      
 
-      // 2. Upload to Cloudinary
       const uploadFormData = new FormData();
       uploadFormData.append("file", file);
       uploadFormData.append("api_key", signedData.api_key);
@@ -141,18 +157,17 @@ export default function Activity({ data }: { data: UserDetails }) {
         }
       );
 
-      const uploadData = await uploadResponse.json();
+      const uploadData: UploadResponse = await uploadResponse.json();
       if (!uploadResponse.ok) {
         throw new Error(uploadData.error?.message || "Upload failed");
       }
 
-      // 3. Save the resume URL to our database
       const saveResponse = await fetch("/api/uploadcv", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id: userData.userId,
-          resumeUrl: uploadData.secure_url
+          resumeUrl: uploadData.secure_url,
         }),
       });
 
@@ -160,52 +175,23 @@ export default function Activity({ data }: { data: UserDetails }) {
       if (!saveResponse.ok) {
         throw new Error(saveResult.message || "Failed to save resume URL");
       }
-      
-      // Update our local userData object with new resumeUrl
-      setUserData(prevData => ({
+
+      setUserData((prevData) => ({
         ...prevData,
-        resumeUrl: uploadData.secure_url
+        resumeUrl: uploadData.secure_url,
       }));
 
-      // 4. Now extract skills from the uploaded CV
-      try {
-        // Create a new FormData to send the file for skills extraction
-        const extractFormData = new FormData();
-        extractFormData.append("file", file);
-        extractFormData.append("userId", userData.userId);
-        
-        const extractResponse = await fetch("/api/extractskils", {
-          method: "POST",
-          body: extractFormData,
-        });
-
-        const extractResult = await extractResponse.json();
-        if (!extractResponse.ok) {
-          throw new Error(extractResult.error || "Failed to extract skills");
-        }
-
-        // If skills were successfully extracted, update them in database
-        if (extractResult.text) {
-          await updateSkills(userData.userId, extractResult.text);
-        }
-      } catch (error: any) {
-        console.error("Error extracting skills:", error);
-        toast.error("Resume uploaded but skills extraction failed");
-      }
-
-      // Update local state with the ORIGINAL file name (not stored in DB)
       const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString('en-US', {
-        month: 'short',
-        day: '2-digit',
-        year: 'numeric'
+      const formattedDate = currentDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
       });
 
-      // Set the resumeFile state to ensure the UI is updated correctly
       setResumeFile({
-        name: file.name, // Keep the original filename
+        name: file.name,
         updatedDate: formattedDate,
-        url: uploadData.secure_url
+        url: uploadData.secure_url,
       });
 
       toast.success("Resume uploaded successfully!");
@@ -217,24 +203,23 @@ export default function Activity({ data }: { data: UserDetails }) {
     }
   };
 
-  const updateSkills = async (userId: string, skills: string) => {
-    try {
-      const response = await fetch("/api/extractskils", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, skills }),
-      });
+  // const updateSkills = async (userId: string, skills: string) => {
+  //   try {
+  //     const response = await fetch("/api/extractskils", {
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ userId, skills }),
+  //     });
 
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.message || "Failed to update skills.");
-      toast.success("Skills extracted and updated successfully");
-    } catch (error: any) {
-      console.error("Error updating skills:", error);
-      toast.error(error.message || "Failed to update skills");
-    }
-  };
+  //     const result = await response.json();
+  //     if (!response.ok) throw new Error(result.message || "Failed to update skills.");
+  //     toast.success("Skills extracted and updated successfully");
+  //   } catch (error: any) {
+  //     console.error("Error updating skills:", error);
+  //     toast.error(error.message || "Failed to update skills");
+  //   }
+  // };
 
-  // Handle resume deletion
   const handleDeleteResume = async () => {
     if (!resumeFile) return;
 
@@ -245,7 +230,7 @@ export default function Activity({ data }: { data: UserDetails }) {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id: userData.userId
+          id: userData.userId,
         }),
       });
 
@@ -259,13 +244,12 @@ export default function Activity({ data }: { data: UserDetails }) {
         throw new Error(result.message || "Failed to delete resume");
       }
 
-      // Update both state and userData object
       setResumeFile(null);
-      setUserData(prevData => ({
+      setUserData((prevData) => ({
         ...prevData,
-        resumeUrl: null
+        resumeUrl: null,
       }));
-      
+
       toast.success("Resume deleted successfully");
     } catch (error: any) {
       console.error("Error deleting resume:", error);
@@ -277,15 +261,18 @@ export default function Activity({ data }: { data: UserDetails }) {
 
   return (
     <div className={`${sorafont.className} md:w-[735px] mx-auto p-4 space-y-8 mt-25`}>
-      {/* User Profile Section */}
-      <form onSubmit={handleSubmit(onSubmit)}
-        className="bg-white flex flex-col items-center gap-10 [background:var(--Neutrals-White,#FFF)] shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)] pt-6 pb-[50px] px-11 rounded-[15px]">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white flex flex-col items-center gap-10 [background:var(--Neutrals-White,#FFF)] shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)] pt-6 pb-[50px] px-11 rounded-[15px]"
+      >
         <div className="flex items-center md:gap-6 justify-center">
           <h2 className="text-lg">User Profile</h2>
           <button
             type="button"
             onClick={() => setIsEditable(!isEditable)}
-            className={`${isEditable && "bg-slate-200"} px-3 rounded-md py-2 cursor-pointer text-blue-600 flex items-center gap-2 text-sm font-medium`}
+            className={`${
+              isEditable && "bg-slate-200"
+            } px-3 rounded-md py-2 cursor-pointer text-blue-600 flex items-center gap-2 text-sm font-medium`}
           >
             Edit <PencilLine size={14} />
           </button>
@@ -370,7 +357,6 @@ export default function Activity({ data }: { data: UserDetails }) {
         </div>
       </form>
 
-      {/* Resume Section */}
       <div className="bg-white rounded-2xl p-6 space-y-4 shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)]">
         <h2 className="text-center text-[color:var(--Neutrals-Dark-Grey,#333)] [font-family:Sora] text-2xl font-normal leading-[var(--Display-Small-Line-Height,44px)] tracking-[var(--Display-Medium-Tracking,0px)]">
           CV/Resume Management
@@ -382,7 +368,6 @@ export default function Activity({ data }: { data: UserDetails }) {
               <FileDown className="text-red-600" />
               <div className="flex flex-col gap-0 justify-center pl-2">
                 <span className="text-xs">{resumeFile.name}</span>
-                {/* Date is shown only if we have a valid date */}
                 {resumeFile.updatedDate && (
                   <span className="text-gray-500 text-[10px] font-semibold">
                     {resumeFile.updatedDate}
