@@ -34,7 +34,6 @@ function JobCard({
   jobId,
   jobLocation,
   jobType, // Adjust if needed
-  jobLink,
   match,
   jobgenixSuggestion,
 }: JobType) {
