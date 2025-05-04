@@ -28,7 +28,7 @@ export default function Page() {
       const response = await fetch("api/profileInfo");
       const data = await response.json();
       setUserDetails(data);
-      console.log("Skills:", data.skills || "No skills available");
+      // console.log("Skills:", data.skills || "No skills available");
     }
     fetchProfile();
   },[])

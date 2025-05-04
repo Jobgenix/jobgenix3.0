@@ -41,7 +41,7 @@ export default async function JobDisplayNew({
   };
 
   try {
-    const response = await fetch(`http://localhost:3000/api/job/getJobs`, {
+    const response = await fetch(`/api/job/getJobs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
