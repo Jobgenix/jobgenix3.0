@@ -2,7 +2,7 @@
 import React from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import TextAlign from "@tiptap/extension-text-align";
-import Underline from '@tiptap/extension-underline'
+import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import Superscript from "@tiptap/extension-superscript";
 import Subscript from "@tiptap/extension-subscript";
@@ -10,7 +10,7 @@ import BulletList from "@tiptap/extension-bullet-list";
 
 import MenuBar from "./menuBar";
 
-export default function hostCard3({heading}: {heading: string}) {
+export default function HostCard3({ heading }: { heading: string }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -31,15 +31,16 @@ export default function hostCard3({heading}: {heading: string}) {
     },
     immediatelyRender: false,
   });
+
   return (
     <>
       <div className="relative w-[700px] border border-blue-400 rounded-2xl">
-        <h2 className="absolute -top-7 left-2">{heading}<span className="text-red-500">*</span> </h2>
+        <h2 className="absolute -top-7 left-2">
+          {heading}
+          <span className="text-red-500">*</span>
+        </h2>
         <MenuBar editor={editor} />
-        
-        <EditorContent  editor={editor} />
-        
-        
+        <EditorContent editor={editor} />
       </div>
     </>
   );
