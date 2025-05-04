@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
   try {
-    const { fileType } = await req.json();
+    const { fileType, userId } = await req.json();
 
     if (!fileType) {
       return NextResponse.json({ success: false, error: "File type is required" }, { status: 400 });
@@ -26,7 +26,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-
 //update resume link
 export async function PUT(req: Request) {
   try {
@@ -42,10 +41,32 @@ export async function PUT(req: Request) {
       .set({ resumeUrl: resumeUrl })
       .where(eq(users.id, id));
 
-    return NextResponse.json({ success: true, message: "Resume Update Succesfully" });
-  }catch (error) {
+    return NextResponse.json({ success: true, message: "Resume Updated Successfully" });
+  } catch (error) {
     console.error("Error updating profile:", error);
     return NextResponse.json({ success: false, message: "Failed to update profile." }, { status: 500 });
   }
+}
 
+// Delete resume
+export async function DELETE(req: Request) {
+  try {
+    const { id } = await req.json();
+
+    // Ensure user ID is provided
+    if (!id) {
+      return NextResponse.json({ success: false, message: "User ID is required." }, { status: 400 });
+    }
+
+    // Set the resumeUrl field to null in the database
+    await db
+      .update(users)
+      .set({ resumeUrl: null })
+      .where(eq(users.id, id));
+
+    return NextResponse.json({ success: true, message: "Resume deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting resume:", error);
+    return NextResponse.json({ success: false, message: "Failed to delete resume." }, { status: 500 });
+  }
 }
