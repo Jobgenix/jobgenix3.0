@@ -2,7 +2,6 @@ import React from "react";
 import { Sora } from "next/font/google";
 
 import ProfileCard from "../components/cards/profileCard";
-
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "../components/LandingPage-New/nav";
@@ -12,6 +11,10 @@ const sorafont = Sora({
   subsets: ["latin"],
   weight: "400",
 });
+
+<div className={`${sorafont.className} max-w-7xl mt-44 md:mt-30 mx-auto h-full md:flex justify-between`}>
+  <ProfileCard />
+</div>
 
 export default function Page() {
   return (
