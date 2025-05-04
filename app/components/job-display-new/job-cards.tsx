@@ -8,6 +8,7 @@ import { use, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname } from 'next/navigation';
 
+
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
