@@ -29,7 +29,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    // formState: { errors, isSubmitting },
   } = useForm<LoginFormData>(); // Explicitly type the form data
 
   type LoginFormData = {

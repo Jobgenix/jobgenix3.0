@@ -1,4 +1,4 @@
-;"use client";
+"use client";
 import React, { useState } from "react";
 import LoginModal from "../components/Modals/loginModal";
 import Hero from "../components/LandingPage-New/hero";

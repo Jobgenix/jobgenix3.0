@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import Link from "next/link";
 import {useJobStore} from '@/app/_store/oppJobStore';
-import { use, useEffect } from "react";
+import {  useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname } from 'next/navigation';
 
@@ -30,10 +30,10 @@ interface JobType {
   match:string
 }
 
-interface JobData {
-  jobs: JobType[];
-  hasMore: boolean;
-}
+// interface JobData {
+//   jobs: JobType[];
+//   hasMore: boolean;
+// }
 
 function JobCard({
   companyName,
@@ -42,7 +42,7 @@ function JobCard({
   jobId,
   jobLocation,
   jobType, // Adjust if needed
-  jobLink,
+  // jobLink,
   match,
   jobgenixSuggestion,
 }: JobType) {

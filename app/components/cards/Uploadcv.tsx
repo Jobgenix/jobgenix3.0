@@ -6,7 +6,7 @@ import { useState } from "react";
 import UserDetails from "@/types/userDetails";
 import {useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 const sorafont = Sora({
   subsets: ["latin"],
@@ -40,7 +40,7 @@ export default function Activity({data}: {data: UserDetails}) {
   }, [data, reset]);
 
 
-  const  onSubmit = async(data: any) => {
+  const  onSubmit = async(data: { email: string; phone: string; university: string; location: string; id: string; userId: string; name: string; profileImage: string; summary: string; }) => {
     try {
       console.log("Form data:", data); // Log the form data
       const response = await fetch("/api/profileInfo", {

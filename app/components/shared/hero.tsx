@@ -86,7 +86,7 @@ export default function Hero() {
                     </span>
                   </div>
                   <p className="text-[10px] max-w-40 font-light mt-2">
-                    "Landed my dream job in weeks! Jobgenix is live saver"
+                    &quot;Landed my dream job in weeks! Jobgenix is live saver&quot;
                   </p>
                 </div>
                 {/* card 2 */}
@@ -107,7 +107,7 @@ export default function Hero() {
                     </span>
                   </div>
                   <p className="text-[10px] max-w-40 font-light mt-2">
-                    "Landed my dream job in weeks! Jobgenix is live saver"
+                    &quot;Landed my dream job in weeks! Jobgenix is live saver&quot;
                   </p>
                 </div>
                 {/* card 3 */}
@@ -128,7 +128,7 @@ export default function Hero() {
                     </span>
                   </div>
                   <p className="text-[10px] max-w-40 font-light mt-2">
-                    "Landed my dream job in weeks! Jobgenix is live saver"
+                    &quot;Landed my dream job in weeks! Jobgenix is live saver&quot;
                   </p>
                 </div> 
               </div>

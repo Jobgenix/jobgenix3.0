@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
   try {
-    const { fileType, userId } = await req.json();
+    const { fileType } = await req.json();
 
     if (!fileType) {
       return NextResponse.json({ success: false, error: "File type is required" }, { status: 400 });
