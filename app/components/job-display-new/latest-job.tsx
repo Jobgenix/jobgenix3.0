@@ -39,6 +39,8 @@ export default function JobSearchInterface() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const addJobs = useJobStore((state) => state.addJobs); // This is invalid inside an async function
+
   const onSubmit = async (data:JobSearchFormData) => {
     try {
       setLoading(true);
@@ -47,6 +49,7 @@ export default function JobSearchInterface() {
       const selectedCourse = courseOptions.find((c) => c.name === data.course);
       const courseId = selectedCourse?.id || null;
 
+<<<<<<< HEAD
       const response = await fetch("/api/job/getJobs", {
         method: "POST",
         headers: {
@@ -91,6 +94,27 @@ export default function JobSearchInterface() {
     } finally {
       setLoading(false);
     }
+=======
+    const response = await fetch("/api/job/getJobs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: session?.user?.id.toString(),
+        limit: "10",
+        userSkills: ["JavaScript", "React", "Node.js"],
+        passingYear: data.passingYear,
+        stream: courseId,
+        type: "jobs",
+        name: data.search,
+      }),
+    });
+
+    const {jobs} = await response.json();
+    addJobs(jobs);  //Added in globas state
+    console.log(jobs); 
+>>>>>>> 65b786af432730df54eff5773d9c283e573e7ec9
   };
 
   return (
@@ -164,6 +188,10 @@ export default function JobSearchInterface() {
       <Home filteredJobs={filteredJobs} />
 
       <h1 className="xl:text-2xl xl:ml-[25%] ml-[8%] text-xl bg-[#f9fafb] font-semibold">All Jobs</h1>
+<<<<<<< HEAD
+=======
+      <Home2 />
+>>>>>>> 65b786af432730df54eff5773d9c283e573e7ec9
 
       <button className="flex items-center justify-center bg-[#0073e6] text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors w-[150px] xl:ml-[45%] ml-[30%] mb-10">
         <span className="flex items-center">

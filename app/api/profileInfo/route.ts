@@ -58,6 +58,7 @@ export async function GET() {
             location: user.location || "Not specified",
             summary: user.summary || "No summary available",
             resume_url: user.resumeUrl || "No resume url available",
+            skills: user.skills || "No skills available"
         };
 
         return NextResponse.json(userData);

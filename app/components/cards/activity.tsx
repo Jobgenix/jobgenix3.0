@@ -3,26 +3,67 @@ import React from "react";
 import { PencilLine, Trash2, Eye, FileDown } from "lucide-react";
 import { Sora } from "next/font/google";
 import { useState } from "react";
+import UserDetails from "@/types/userDetails";
+import {useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 const sorafont = Sora({
   subsets: ["latin"],
   weight: "400",
 });
 
-export default function Activity() {
+export default function Activity({data}: {data: UserDetails}) {
+
+  const { register, handleSubmit,reset ,formState:{isSubmitting} } = useForm();
   
   const [isEditable, setIsEditable] = useState(false);
+
+  useEffect(() => {
+    reset({
+      email: data.email,
+      phone: data.phone,
+      university: data.university,
+      location: data.location,
+      id: data.userId,
+      userId: data.userId,
+      name: data.name,
+      profileImage: data.profileImage,
+      summary: data.summary,
+    });
+  }, [data, reset]);
+
+
+  const  onSubmit = async(data: any) => {
+    try {
+      console.log("Form data:", data); // Log the form data
+      const response = await fetch("/api/profileInfo", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      console.log("Profile updated successfully:", result);
+      setIsEditable(false); // Disable editing after submission
+    } catch (error) {
+      console.error("Error saving profile:", error);
+    }
+  };
 
   return (
     <div
       className={`${sorafont.className} md:w-[735px] mx-auto p-4 space-y-8 mt-25`}
     >
       {/* User Profile Section */}
-      <div className="bg-white flex flex-col items-center gap-10  [background:var(--Neutrals-White,#FFF)] shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)] pt-6 pb-[50px] px-11 rounded-[15px]">
-        <div className="flex items-center gap-6 justify-center">
+      <form onSubmit={handleSubmit(onSubmit)} 
+       className="bg-white flex flex-col items-center gap-10  [background:var(--Neutrals-White,#FFF)] shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)] pt-6 pb-[50px] px-11 rounded-[15px]">
+        <div className="flex items-center md:gap-6 justify-center">
           <h2 className="text-lg">User Profile</h2>
-          <button onClick={()=>setIsEditable(!isEditable)} className={`${isEditable && "bg-slate-200"} px-3 rounded-md py-2 cursor-pointer text-blue-600 flex items-center gap-2 text-sm font-medium`}>
+          <button type="button" onClick={()=>setIsEditable(!isEditable)} className={`${isEditable && "bg-slate-200"} px-3 rounded-md py-2 cursor-pointer text-blue-600 flex items-center gap-2 text-sm font-medium`}>
             Edit <PencilLine size={14} />
+          </button>
+          <button type="submit" disabled={isSubmitting} className={`px-3 rounded-md py-2 cursor-pointer text-blue-600 flex items-center gap-2 text-sm font-medium`}>
+            Submit
           </button>
         </div>
 
@@ -33,6 +74,7 @@ export default function Activity() {
                 Email Address
               </label>
               <input
+                {...register("email", { required: true })}
                 type="email"
                 placeholder="surajit.saha@example.com"
                 readOnly={!isEditable}
@@ -49,6 +91,7 @@ export default function Activity() {
                 Phone Number
               </label>
               <input
+                {...register("phone", { required: true })}
                 type="text"
                 placeholder="(+91) 9456XXXXXX"
                 readOnly={!isEditable}
@@ -65,6 +108,7 @@ export default function Activity() {
                 College/University
               </label>
               <input
+                {...register("university", { required: true })}
                 type="text"
                 placeholder="Example Institute of Technology"
                 readOnly={!isEditable}
@@ -81,6 +125,7 @@ export default function Activity() {
                 Location
               </label>
               <input
+              {...register("location",{required:true})}
                 type="text"
                 placeholder="City, State"
                 readOnly={!isEditable}
@@ -92,7 +137,7 @@ export default function Activity() {
             </div>
           </div>
         </div>
-      </div>
+      </form>
 
       {/* Resume Section */}
       <div className="bg-white rounded-2xl  p-6 space-y-4 shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)]">
@@ -120,17 +165,20 @@ export default function Activity() {
         </div>
       </div>
 
+
+      
+
       {/* Learning Activity */}
-      <div className="relative bg-white rounded-2xl p-6 space-y-4 shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)]">
-        <h2 className="text-lg mx-auto w-fit font-semibold">
-          Learning Activity
-        </h2>
+      {/* <div className="relative bg-white rounded-2xl p-6 space-y-4 shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)]"> */}
+        {/* <h2 className="text-lg mx-auto w-fit font-semibold"> */}
+          {/* Learning Activity */}
+        {/* </h2> */}
 
         {/* Horizontal Scroll Container */}
-        <div className="overflow-x-auto md:overflow-x-hidden">
+        {/* <div className="overflow-x-auto md:overflow-x-hidden"> */}
           {/* Month Labels */}
-          <div className="grid grid-cols-52 min-w-[800px] md:min-w-full pl-8 mb-1">
-            {[
+          {/* <div className="flex gap-6 min-w-[800px] md:min-w-full pl-8 mb-1"> */}
+            {/* {[
               "Apr",
               "May",
               "Jun",
@@ -145,44 +193,44 @@ export default function Activity() {
               "Mar",
               "Apr",
             ].map((month, i) => (
-              <div key={i} className="col-span-4 text-xs text-gray-500">
+              <div key={i} className="text-xs text-gray-500">
                 {month}
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* Selected Month */}
-          <div className="absolute md:top-[40px] md:right-[30px] right-[10px] top-[50px] text-sm text-gray-600">
+          {/* <div className="absolute md:top-[40px] md:right-[30px] right-[10px] top-[50px] text-sm text-gray-600">
               2025 ▾ January
-            </div>
+            </div> */}
 
 
           {/* Activity Grid */}
-          <div className="relative grid grid-cols-52 gap-[2px] text-[0px] min-w-[800px] md:min-w-full pl-10">
+          {/* <div className="relative flex flex-wrap max gap-[2px] text-[0px] max-w-[800px] md:min-w-full pl-10"> */}
             {/* Days of the Week */}
-            <div className="absolute left-1 flex flex-col gap-3 items-center justify-center h-[60px]">
-              {["Mon", "Wed", "Fri"].map((day, i) => (
-                <div key={i} className="text-xs text-gray-500 h-[8px]">
-                  {day}
-                </div>
-              ))}
-            </div>
+            {/* <div className="absolute left-1 flex flex-col gap-3 items-center justify-center h-[60px]"> */}
+              {/* {["Mon", "Wed", "Fri"].map((day, i) => ( */}
+                {/* <div key={i} className="text-xs text-gray-500 h-[8px]"> */}
+                  {/* {day} */}
+                {/* </div> */}
+              {/* ))} */}
+            {/* </div> */}
 
             {/* Activity Cells */}
-            {Array.from({ length: 52 * 7 }).map((_, i) => {
-              const isFilled = [34, 67, 110, 222, 300].includes(i); // example filled cells
-              return (
-                <div
-                  key={i}
-                  className={`w-2 h-2 rounded-[2px] border-[0.5px] ${
-                    isFilled ? "bg-blue-600" : "bg-white"
-                  }`}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </div>
+            {/* {Array.from({ length: 52 * 7 }).map((_, i) => { */}
+              {/* const isFilled = [34, 67, 110, 222, 300].includes(i); // example filled cells */}
+              {/* return ( */}
+                {/* <div */}
+                  {/* key={i} */}
+                  {/* className={`w-2 h-2 rounded-[2px] border-[0.5px] ${ */}
+                    {/* isFilled ? "bg-blue-600" : "bg-white" */}
+                  {/* }`} */}
+                {/* /> */}
+              {/* ); */}
+            {/* })} */}
+          {/* </div> */}
+        {/* </div> */}
+      {/* </div> */}
     </div>
   );
 }
