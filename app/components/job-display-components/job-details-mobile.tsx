@@ -111,7 +111,6 @@
 //   );
 // }
 
-
 // "use client";
 
 // import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -160,7 +159,6 @@
 //             className="object-contain"
 //           />
 //         </div>
-
 
 //       </div>
 
@@ -219,6 +217,7 @@
 // }
 
 "use client";
+import Image from "next/image";
 
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { IoShareSocialOutline } from "react-icons/io5";
@@ -236,16 +235,18 @@ interface JobDetailsMobileProps {
   job: JobCardProps;
   jobDetails:
     | {
-      companies: CompanyType;
-      opportunities: Opportunity;
-    }
+        companies: CompanyType;
+        opportunities: Opportunity;
+      }
     | undefined;
   onClose: () => void;
-
 }
 
-export default function JobDetailsMobile({ job, jobDetails, onClose }: JobDetailsMobileProps) {
-
+export default function JobDetailsMobile({
+  job,
+  jobDetails,
+  onClose,
+}: JobDetailsMobileProps) {
   // if (jobDetails && Object.keys(jobDetails!).length) {
   // const { requireSkils} = jobDetails.opportunities;
 
@@ -305,41 +306,49 @@ export default function JobDetailsMobile({ job, jobDetails, onClose }: JobDetail
   //     console.log("Error: requiredSkills or userId is not defined");
   //   }
 
-
-
   // }
-  
 
   console.log(jobDetails);
-
 
   return (
     <div className="xl:hidden block h-screen w-full fixed top-0 pt-[10vh] left-0 bg-white z-20 overflow-y-auto">
       {/* Header */}
       <div className="flex justify-between items-center px-6 py-4">
-        <MdKeyboardArrowLeft size={32} className="cursor-pointer" onClick={onClose} />
+        <MdKeyboardArrowLeft
+          size={32}
+          className="cursor-pointer"
+          onClick={onClose}
+        />
         <h1 className="text-2xl font-semibold">Details</h1>
-        <button onClick={() => {
-                  navigator.clipboard.writeText(
-                    `${typeof window !== "undefined"
-                      ? window.location.origin
-                      : ""
-                    }/opportunities/?id=${job.jobId}`
-                  );
-                  toast.success("Copied to clipboard");
-                }}>
+        <button
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${
+                typeof window !== "undefined" ? window.location.origin : ""
+              }/opportunities/?id=${job.jobId}`
+            );
+            toast.success("Copied to clipboard");
+          }}
+        >
           <IoShareSocialOutline size={28} />
-          
         </button>
       </div>
 
       {/* Company Info */}
       <div className="relative flex flex-col items-center mt-6">
         <div className="bg-[#01a768] w-64 h-20 rounded-full flex items-center justify-center">
-          <h1 className="text-white text-xl font-semibold">{job.companyName}</h1>
+          <h1 className="text-white text-xl font-semibold">
+            {job.companyName}
+          </h1>
         </div>
         <div className="absolute top-14 flex items-center justify-center bg-white w-16 h-16 rounded-full shadow-lg border-4 border-white">
-          <img src={job.companyLogo || "/placeholder.svg"} alt={`${job.companyName} logo`} className="w-10 h-10 object-contain" />
+          <Image
+            width={500}
+            height={500}
+            src={job.companyLogo || "/placeholder.svg"}
+            alt={`${job.companyName} logo`}
+            className="w-10 h-10 object-contain"
+          />
         </div>
       </div>
 
@@ -378,9 +387,11 @@ export default function JobDetailsMobile({ job, jobDetails, onClose }: JobDetail
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor sint impedit, quibusdam temporibus cupiditate nulla earum eaque excepturi, ut quisquam placeat quidem fugit ab magni est consequuntur natus. Quas, facilis.
         </p> */}
         <div
-              className="space-y-4"
-              dangerouslySetInnerHTML={{ __html: jobDetails?.opportunities.description || "" }}
-            />
+          className="space-y-4"
+          dangerouslySetInnerHTML={{
+            __html: jobDetails?.opportunities.description || "",
+          }}
+        />
       </div>
 
       {/* Key Responsibilities */}

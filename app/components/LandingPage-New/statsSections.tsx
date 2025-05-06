@@ -1,8 +1,5 @@
-
-
 "use client"
-
-
+import Image from "next/image"
 
 import { ArrowRight } from "lucide-react"
 
@@ -66,8 +63,8 @@ export default function StatsSection() {
         <div className="flex flex-col items-center justify-center w-full mt-4 space-y-4 xl:space-y-0">
   {/* Icons Row */}
   <div className="flex justify-between items-center w-4/5 md:w-2/3 max-w-sm xl:max-w-full">
-    <img src="/LandingPageImages/left.png" alt="" className="w-10 md:w-14" />
-    <img src="/LandingPageImages/right.png" alt="" className="w-10 md:w-14" />
+    <Image width={200} height={200} src="/LandingPageImages/left.png" alt="" className="w-10 md:w-14" />
+    <Image width={200} height={200} src="/LandingPageImages/right.png" alt="" className="w-10 md:w-14" />
   </div>
 
   {/* Call to Action Button */}

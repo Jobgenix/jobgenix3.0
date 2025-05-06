@@ -288,6 +288,7 @@ export default function Home2() {
   
       fetchJobs();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     , [userId]); // Fetch jobs when userId changes
   
     const jobs = useJobStore((state) => state.jobs);

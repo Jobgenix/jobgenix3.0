@@ -13,6 +13,7 @@ export default function ExperienceSettings({ setFormData }: formSectionProps) {
 
   useEffect(()=>{
     setFormData('experience',experienceType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[experienceType])
 
   return (

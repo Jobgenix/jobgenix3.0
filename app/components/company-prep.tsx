@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react"
+import Image from "next/image"
 
 const companies = [
   {
@@ -54,7 +55,9 @@ export default function CompanyPreparation() {
                 }}
               >
                 <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow-lg">
-                  <img
+                  <Image
+                width={500}
+                height={500}
                     src={company.logo || "/placeholder.svg"}
                     alt={`${company.name} logo`}
                     className="w-12 h-12 object-contain"
