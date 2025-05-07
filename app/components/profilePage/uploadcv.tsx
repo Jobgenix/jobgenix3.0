@@ -21,6 +21,7 @@ export default function UploadCv() {
         if (status === "authenticated" && userId) {
             fetchUserCV();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, userId]);
 
     

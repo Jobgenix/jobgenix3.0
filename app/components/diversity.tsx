@@ -22,6 +22,7 @@ export default function DiversityBenefits({ setFormData }: formSectionProps) {
 
   useEffect(()=>{
     setFormData("diversityType", selectedOption!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[selectedOption])
 
   return (

@@ -9,6 +9,7 @@ interface UserDetails {
   summary: string;
   university: string;
   userId: string;
+  skills: string;
 };
 
 export default UserDetails;
