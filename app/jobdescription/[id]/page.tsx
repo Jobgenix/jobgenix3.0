@@ -33,6 +33,7 @@ export default function JobDisplayNew() {
   const params = useParams(); // ✅ Gets the dynamic route params
   const id = params?.id as string;
 
+<<<<<<< HEAD
   useEffect(() => {
     const fetchJobData = async () => {
       try {
@@ -77,6 +78,41 @@ export default function JobDisplayNew() {
 
     fetchJobData();
   }, [id]);
+=======
+  try {
+    const response = await fetch(`api/job/getJobs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: "bd6b443f-222d-403d-8c3c-c55b4520d76a",
+        userSkills: [
+          "JavaScript",
+          "React",
+          "Node.js",
+          "Java",
+          "C",
+          "c++",
+          "Python",
+          "c#",
+          "Git",
+          "SQL",
+          "NoSQL",
+          "Microservices",
+        ],
+        stream: "1",
+        type: "jobs",
+        jobId: `${id}`,
+      }),
+    });
+    const data = await response.json();
+    job = data.job; // Assign the fetched job data
+    console.log("Job data:", job);
+  } catch (error) {
+    console.error("Error fetching job data:", error);
+  }
+>>>>>>> 83f2fef (bug fix)
 
   return (
     <div className="font-sora">
