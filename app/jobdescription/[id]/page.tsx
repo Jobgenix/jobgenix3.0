@@ -33,6 +33,7 @@ export default function JobDisplayNew() {
   const params = useParams(); // ✅ Gets the dynamic route params
   const id = params?.id as string;
 
+
   useEffect(() => {
     const fetchJobData = async () => {
       try {
@@ -77,6 +78,7 @@ export default function JobDisplayNew() {
 
     fetchJobData();
   }, [id]);
+
 
   return (
     <div className="font-sora">
