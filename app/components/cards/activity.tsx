@@ -5,6 +5,7 @@ import { Sora } from "next/font/google";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import UserDetails from "@/types/userDetails";
+import { signOut } from "next-auth/react";
 
 const sorafont = Sora({
   subsets: ["latin"],
@@ -268,9 +269,8 @@ export default function Activity({ data }: { data: UserDetails }) {
           <button
             type="button"
             onClick={() => setIsEditable(!isEditable)}
-            className={`${
-              isEditable && "bg-slate-200"
-            } px-3 rounded-md py-2 cursor-pointer text-blue-600 flex items-center gap-2 text-sm font-medium`}
+            className={`${isEditable && "bg-slate-200"
+              } px-3 rounded-md py-2 cursor-pointer text-blue-600 flex items-center gap-2 text-sm font-medium`}
           >
             Edit <PencilLine size={14} />
           </button>
@@ -414,6 +414,15 @@ export default function Activity({ data }: { data: UserDetails }) {
           </div>
         )}
       </div>
+
+
+
+      <button
+        onClick={() => signOut({ callbackUrl: "/", redirect: true })}
+        className="bg-red-500 hover:bg-red-600 mb-6 ml-[42%] lg:ml-[48%] sm:ml-[46%] text-white px-4 py-2 rounded"
+      >
+        Logout
+      </button>
     </div>
   );
 }
