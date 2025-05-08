@@ -1,14 +1,13 @@
 "use client";
 import { useForm } from "react-hook-form";
 import React from "react";
-import { Eye } from "lucide-react";
+import { Eye , EyeOff} from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import { Sora } from "next/font/google";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { X } from "lucide-react";
-  
 
 const sora = Sora({
   subsets: ["latin"],
@@ -20,12 +19,13 @@ type LoginModalProps = {
 };
 
 export default function LoginModal({ onClose }: LoginModalProps) {
-
   const router = useRouter();
-  
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callback");
-  
+  const [showPassword, setShowPassword] = React.useState(false); // For show/hide
+  const [error, setError] = React.useState<string | null>(null); // For error message
+
+  const [loading, setLoading] = React.useState(false); // Add loading state
 
   const handleClose = () => {
     router.push("/"); // Navigate to home page
@@ -43,27 +43,22 @@ export default function LoginModal({ onClose }: LoginModalProps) {
     password: string;
   };
 
-  async function  onSubmit (data: LoginFormData) {
-    console.log(data);
+  async function onSubmit(data: LoginFormData) {
+    setLoading(true); // Set loading to true when login starts
     const result = await signIn("credentials", {
       redirect: false,
       email: data.email,
       password: data.password,
     });
+    setLoading(false); // Set loading to false when login finishes
     if (result?.error) {
-      console.log(result.error);
+      // console.log(result.error);
+      setError("Invalid email or password."); 
     } else {
       console.log("Login successful");
       router.push('/profile');
     }
-  };
-
-  
-
-  
-
-  
-
+  }
 
   return (
     <div
@@ -103,15 +98,17 @@ export default function LoginModal({ onClose }: LoginModalProps) {
             <div className="relative">
               <input
                 {...register("password", { required: "Password is required" })}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="********"
                 className="w-full px-4 py-1 rounded-md border border-[#0073E6] bg-transparent text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#0073E6]"
               />
               <button
                 type="button"
                 className="absolute right-3 top-[5px] text-gray-400"
+                onClick={() => setShowPassword((prev) => !prev)}
+                tabIndex={-1}
               >
-                <Eye />
+                {showPassword ? <EyeOff /> : <Eye />}
               </button>
             </div>
           </div>
@@ -126,10 +123,16 @@ export default function LoginModal({ onClose }: LoginModalProps) {
           <button
             type="submit"
             className="w-full py-3 text-xs rounded-md bg-[#0073E6] hover:bg-blue-700 transition font-light"
+            disabled={loading} // Disable button when loading
           >
-            Sign Up
+            {loading ? "Loading..." : "Sign Up"}
           </button>
         </form>
+
+        {/* Error message */}
+        {error && (
+          <div className="text-red-400 text-xs text-center mt-2">{error}</div>
+        )}
         <a
           href="#"
           className="hover:underline w-full flex justify-end text-xs text-gray-300 mt-2"
