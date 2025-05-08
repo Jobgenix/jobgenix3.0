@@ -25,6 +25,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
   
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callback");
+  
 
   const handleClose = () => {
     router.push("/"); // Navigate to home page
