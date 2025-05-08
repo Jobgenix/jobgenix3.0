@@ -45,6 +45,7 @@ export default function JobSearchInterface() {
     const courseId = selectedCourse?.id || null;
     console.log(courseId)
 
+
     const response = await fetch("/api/job/getJobs", {
       method: "POST",
       headers: {
@@ -53,7 +54,7 @@ export default function JobSearchInterface() {
       body: JSON.stringify({
         userId: session?.user?.id.toString(),
         limit: "10",
-        userSkills: ["JavaScript", "React", "Node.js"],
+        userSkills: session?.user.email,
         passingYear: data.passingYear,
         stream: courseId,
         type: "jobs",

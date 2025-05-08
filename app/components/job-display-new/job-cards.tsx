@@ -3,7 +3,7 @@ import { ArrowRight, MapPin, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import Link from "next/link";
-import {useJobStore} from '@/app/_store/oppJobStore';
+import { useJobStore } from '@/app/_store/oppJobStore';
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname } from 'next/navigation';
@@ -27,7 +27,7 @@ interface JobType {
   jobLink: string;
   jobgenixSuggestion: boolean;
   requireskils: string;
-  match:string
+  match: string
 }
 
 
@@ -130,11 +130,11 @@ function JobCard({
             <div className="flex flex-col md:flex-row gap-3 md:items-center">
               <div className="flex items-center gap-1 text-gray-500 text-sm font-medium">
                 <Clock size={16} />
-                <span>Posted {1} day ago</span>
+                <span>Posted {Math.floor(Math.random() * 5) + 1} day ago</span>
               </div>
               <div className="flex items-center gap-1 text-gray-500 text-sm">
                 <Users size={16} />
-                <span>{5} Applicants</span>
+                <span>{Math.floor(Math.random() * 100) + 32} Applicants</span>
               </div>
             </div>
 
@@ -252,10 +252,10 @@ export default function Home() {
   //     onViewDetails: () => console.log("View details for Microsoft job"),
   //   },
   // ];
-  
-  const pathname = usePathname(); 
-  const slug = pathname.split("opportunities2/").pop(); 
-  
+
+  const pathname = usePathname();
+  const slug = pathname.split("opportunities2/").pop();
+
   console.log(slug)
   const { data: session } = useSession(); // Get user session data
   const userId = session?.user?.id; // Get user ID from session
@@ -288,8 +288,8 @@ export default function Home() {
 
     fetchJobs();
   }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  , [userId]); // Fetch jobs when userId changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    , [userId]); // Fetch jobs when userId changes
 
   const jobs = useJobStore((state) => state.jobs); // Global state
   // console.log(jobs); // Log the jobs data
@@ -302,10 +302,10 @@ export default function Home() {
         {jobs &&
           jobs
             .filter(
-              (job: JobType,index:number) =>
-                index < 5  
+              (job: JobType, index: number) =>
+                index < 5
             )
-            .map((job: JobType,index:number) => <JobCard key={index} {...job} />)}
+            .map((job: JobType, index: number) => <JobCard key={index} {...job} />)}
       </div>
     </main>
   );

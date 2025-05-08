@@ -124,11 +124,11 @@ function JobCard({
             <div className="flex flex-col md:flex-row gap-3 md:items-center">
               <div className="flex items-center gap-1 text-gray-500 text-sm font-medium">
                 <Clock size={16} />
-                <span>Posted {2} days ago</span>
+                <span>Posted {Math.floor(Math.random() * 5) + 1} days ago</span>
               </div>
               <div className="flex items-center gap-1 text-gray-500 text-sm">
                 <Users size={16} />
-                <span>{7} Applicants</span>
+                <span>{Math.floor(Math.random() * 10) + 1} Applicants</span>
               </div>
             </div>
 
