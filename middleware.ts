@@ -25,5 +25,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
- // matcher: ['/login', '/register', '/opportunities2/:path*'], // Add your protected routes here
+  matcher: ['/login', '/register'], // Add your protected routes here
+  // '/opportunities2/:path*'
 };
