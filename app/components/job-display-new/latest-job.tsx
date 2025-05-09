@@ -54,7 +54,7 @@ export default function JobSearchInterface() {
       body: JSON.stringify({
         userId: session?.user?.id.toString(),
         limit: "10",
-        userSkills: session?.user.email,
+        userSkills: ["JavaScript", "React", "Node.js"],
         passingYear: data.passingYear,
         stream: courseId,
         type: "jobs",
