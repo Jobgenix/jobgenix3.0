@@ -107,7 +107,7 @@ export default function Nav() {
   return (
     <div className="relative">
       {/* GSAP Animated Text */}
-      <div className="w-[80%] ml-44  overflow-hidden bg-[#004080] text-white py-2 px-4 text-center rounded-bl-full rounded-br-full hidden xl:block">
+      <div className="w-[90%] 2xl:w-[80%] mx-auto  overflow-hidden bg-[#004080] text-white py-2 px-4 text-center rounded-bl-full rounded-br-full hidden xl:block">
         <div
           ref={boxRef}
           className="h-[27px] relative flex items-center justify-center"
@@ -126,12 +126,12 @@ export default function Nav() {
         </div>
       </div>
 
-      <div className="flex justify-between items-center px-4 sm:px-6 xl:px-0 xl:ml-24  bg-white ">
+      <div className="flex justify-between items-center px-4 sm:px-6 xl:px-0 w-[85%] 2xl:w-[75%] mx-auto mt-2 bg-white">
         {/* Logo */}
         <div className="Logo">
           <Image
             src="/images2/Logo.png"
-            className="ml-4 xl:ml-32 mt-5 pt-3"
+            className=""
             alt="logo"
             width={150}
             height={150}
@@ -139,7 +139,7 @@ export default function Nav() {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden xl:flex items-center gap-8 xl:absolute left-[25%] mt-8 font-[sora]">
+        <div className="hidden xl:flex items-center gap-4 mt-1 font-[sora] ">
           {navItems.map((item, index) => (
             <Link
               key={index}
@@ -162,7 +162,7 @@ export default function Nav() {
 
           {/* Profile Button */}
           <Button
-            className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium ml-[-3%]"
+            className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium ml-2"
             onClick={() =>
               loginStatus ? router.push("/profile") : router.push("/login")
             }
@@ -185,7 +185,7 @@ export default function Nav() {
           </Button>
         </div>
         {/* Profile Button for mobile */}
-        <div className="xl:hidden block mr-8 mt-4">
+        <div className="xl:hidden block  mr-2">
           <Button
             className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium"
             onClick={() =>
@@ -211,7 +211,7 @@ export default function Nav() {
         </div>
 
         {/* // ✅ Mobile Menu Button  */}
-        <div className="xl:hidden absolute top-5 right-5 z-50">
+        <div className="xl:hidden absolute top-1 right-5 z-50">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex flex-col gap-1">
