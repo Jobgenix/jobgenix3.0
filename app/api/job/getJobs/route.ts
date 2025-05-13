@@ -3,14 +3,13 @@ import { companies, opportunities } from "@/lib/schema";
 import { db } from "@/lib/db";
 import { string, z } from "zod";
 import { ZodError } from "zod";
-import { and, eq, gt, ilike, sql, desc } from "drizzle-orm";
+import { and, eq, gt, ilike, sql, desc, or } from "drizzle-orm";
 import {
   jobTypeSchema,
   passoutYearSchema,
 } from "@/constants/jobOpportunities";
 // Removed Redis cache imports since we're not using them anymore
 // import { getJobsById, setJobsById } from "@/utils/jobCache";
-
 // Define the job result type from DB queries
 interface JobQueryResult {
   companyName: string;
@@ -194,7 +193,14 @@ async function getJobs(req: NextRequest) {
 
     // Build query for multiple jobs
     const filters = [];
-    if (name) filters.push(ilike(opportunities.title, `%${name}%`));
+    if (name) {
+      filters.push(
+        or(
+          ilike(opportunities.title, `%${name}%`),
+          ilike(companies.name, `%${name}%`)
+        )
+      );
+    }
     if (lastJobId) filters.push(gt(opportunities.id, lastJobId));
     if (stream) filters.push(sql`${stream} = ANY(${opportunities.degree})`);
     if (passingYear)

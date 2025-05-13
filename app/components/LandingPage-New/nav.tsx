@@ -190,7 +190,7 @@ export default function Nav() {
           <Button
             className="bg-white h-12 w-24 sm:w-20 text-black hover:bg-white rounded-[18px] font-medium"
             onClick={() =>
-              loginStatus ? router.push("/profile") : router.push("/auth/login")
+              loginStatus ? router.push("/profile") : router.push("/login")
             }
           >
             {loginStatus ? (
