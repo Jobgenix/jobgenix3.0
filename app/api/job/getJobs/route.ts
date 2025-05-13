@@ -31,7 +31,7 @@ const getJobsSchema = z
       .string()
       .regex(/^[0-9]+$/)
       .optional(),
-    userId: z.string().uuid(),
+    userId: z.string().uuid().optional(), // Make userId optional
     lastJobId: z.string().uuid().optional(),
     passingYear: passoutYearSchema.optional(),
     stream: string().optional(),
@@ -104,7 +104,7 @@ async function getJobs(req: NextRequest) {
   try {
     const requestBody = await req.json();
     console.log("Request body:", JSON.stringify(requestBody));
-    
+
     const validatedQuery = getJobsSchema.parse(requestBody);
 
     const {
@@ -116,17 +116,19 @@ async function getJobs(req: NextRequest) {
       passingYear,
       type,
       userSkills,
+      userId, // userId is now optional
     } = validatedQuery;
 
     console.log("User skills received:", JSON.stringify(userSkills));
-    
+    console.log("User ID received:", userId);
+
     // If limit is undefined or empty, we won't apply a limit (return all results)
     const parsedLimit = limit ? parseInt(limit) : undefined;
 
     // If jobId is provided, fetch single job directly from database
     if (jobId) {
       console.log("Fetching job by ID directly from database:", jobId);
-      
+
       const dbResult = await db
         .select({
           companyName: companies.name,
@@ -179,7 +181,7 @@ async function getJobs(req: NextRequest) {
         requireSkils,
         matchingSkills,
         jobgenixSuggestion,
-        match: `${matchPercentage}%` // Add match percentage to response
+        match: `${matchPercentage}%`, // Add match percentage to response
       };
 
       // Return the complete job data
@@ -207,6 +209,9 @@ async function getJobs(req: NextRequest) {
       filters.push(sql`${passingYear} = ANY(${opportunities.passoutYear})`);
     if (type) filters.push(eq(opportunities.type, type));
 
+    // Determine if skill matching should be applied
+    const shouldMatchSkills = userId && userId !== "notlogin";
+
     const query = db
       .select({
         companyName: companies.name,
@@ -223,32 +228,32 @@ async function getJobs(req: NextRequest) {
       .innerJoin(companies, eq(opportunities.companyId, companies.id))
       .where(filters.length ? and(...filters) : undefined)
       .orderBy(desc(opportunities.postedAt));
-      
+
     // Only apply limit if it's defined
     const finalQuery = parsedLimit ? query.limit(parsedLimit) : query;
 
-    const result = await finalQuery as JobQueryResult[];
+    const result = await finalQuery;
     console.log(`Found ${result.length} jobs matching criteria`);
 
     const jobsWithMatchingSkills = result.map((job) => {
       const requireSkils = job.requireSkils;
       console.log(`Job ${job.jobId} required skills:`, requireSkils);
-      
-      if (userSkills && userSkills.length > 0 && requireSkils) {
+
+      if (shouldMatchSkills && userSkills && userSkills.length > 0 && requireSkils) {
         console.log(`Processing skills match for job: ${job.jobId} - ${job.jobTitle}`);
         const matchResult = getMatchedSkills(userSkills, requireSkils);
         return {
           ...job,
           matchingSkills: matchResult.matchingSkills,
           jobgenixSuggestion: matchResult.jobgenixSuggestion,
-          match: `${matchResult.matchPercentage}%` // Add match percentage to response
+          match: `${matchResult.matchPercentage}%`, // Add match percentage to response
         };
       }
       return {
         ...job,
         matchingSkills: [],
         jobgenixSuggestion: false,
-        match: "0%" // Default match percentage
+        match: "0%", // Default match percentage
       };
     });
 
@@ -261,7 +266,7 @@ async function getJobs(req: NextRequest) {
     );
   } catch (error) {
     console.error("Error processing request:", error);
-    
+
     if (error instanceof ZodError) {
       return new NextResponse(
         JSON.stringify({ error: "validation_error", message: error.message }),
