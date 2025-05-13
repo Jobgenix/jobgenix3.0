@@ -2,6 +2,8 @@ import { CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import ClientOnly from "../../components/client-only/clientOnly";
+import { useSession } from "next-auth/react";
+
 
 interface Job {
   companyName: string;
@@ -19,6 +21,7 @@ interface Job {
 }
 
 export default function JoBDet({ job }: { job: Job }) {
+  const { status } = useSession();
   return (
     <div className="bg-white min-h-screen p-4">
       <div className="max-w-6xl mx-auto grid md:grid-cols-[300px_1fr] gap-4">
@@ -86,22 +89,28 @@ export default function JoBDet({ job }: { job: Job }) {
           </p>
 
           <div className="flex justify-between mb-4">
-            <div
-              className="flex items-center gap-1  bg-[#F4F4F5] text-black px-2 py-1 rounded-full text-[9px] "
-              style={{
-                boxShadow:
-                  "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)",
-              }}
-            >
-              <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-              <Image
-                src="/images2/Jobgenix Logo.png"
-                height={40}
-                width={40}
-                alt="logo-jobgenix"
-              />
-              <span className="font-bold"> Ai Recommended</span>
-            </div>
+
+            {job.match >= "20%" ? ("Your match is ") : (
+              <div
+                className="flex items-center gap-1  bg-[#F4F4F5] text-black px-2 py-1 rounded-full text-[9px] "
+                style={{
+                  boxShadow:
+                    "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)",
+                }}
+              >
+                <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                <Image
+                  src="/images2/Jobgenix Logo.png"
+                  height={40}
+                  width={40}
+                  alt="logo-jobgenix"
+                />
+                <span className="font-bold"> Ai Recommended</span>
+              </div>
+            )}
+
+
+
             <div
               className="flex items-center gap-1 bg-[#F4F4F5] text-green-600 px-2 py-1 rounded-full text-[9px] "
               style={{
@@ -139,8 +148,16 @@ export default function JoBDet({ job }: { job: Job }) {
           <div className="text-center text-xs text-gray-500 mb-4">+ More</div>
 
           <div className="flex gap-2">
-            <button className="bg-blue-600 text-white  h-8 rounded-full py-2 px-2 text-xs font-medium flex-1">
-              Register to Apply
+            <button className="bg-blue-600 text-white h-8 rounded-full py-2 px-2 text-xs font-medium flex-1">
+              {status === "authenticated" ? (
+                <Link href={job.jobLink} className="text-white">
+                  Apply Now
+                </Link>
+              ) : (
+                <Link href="/login" className="text-white">
+                  Register to Apply
+                </Link>
+              )}
             </button>
             <button className="bg-blue-600 text-white border h-8 border-blue-600  rounded-full py-1 px-4  text-xs font-medium flex-1">
               Get Referral
