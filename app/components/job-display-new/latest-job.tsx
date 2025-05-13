@@ -70,8 +70,8 @@ export default function JobSearchInterface() {
     <div className="min-h-screen bg-sky-50 md:mt-14 xl:mt-[-2%]">
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Search Bar */}
-        <div className="p-4  md:mt-[-2%] relative bg-green-500">
-          <div className="  lg:ml-[12%] flex md:flex-row flex-col gap-y-2 items-left gap-4 bg-red-500">
+        <div className="p-4  md:mt-[-2%] relative ">
+          <div className="lg:px-[4%] xl:ml-[12%] xl:px-0 flex md:flex-row flex-col gap-y-2 items-left gap-4 ">
             {/* Search Input */}
             <div className="relative flex md:w-[700px] ">
               <Search
