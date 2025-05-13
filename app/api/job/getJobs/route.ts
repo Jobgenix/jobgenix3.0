@@ -10,7 +10,6 @@ import {
 } from "@/constants/jobOpportunities";
 // Removed Redis cache imports since we're not using them anymore
 // import { getJobsById, setJobsById } from "@/utils/jobCache";
-
 // Define the job result type from DB queries
 interface JobQueryResult {
   companyName: string;
