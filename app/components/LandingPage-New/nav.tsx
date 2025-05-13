@@ -67,12 +67,13 @@ export default function Nav() {
   }, [messages]);
 
   const opportunityOptions = [
-    { name: "Internships", route: "/opportunities?type=internships" },
-    { name: "Jobs", route: "/opportunities?type=jobs" },
+    { name: "Internships", route: "/opportunities2/internships" },
+    { name: "Jobs", route: "/opportunities2/jobs" },
     { name: "Courses", route: "/comingSoon" },
     { name: "Practice", route: "/comingSoon" },
     { name: "Mentorship", route: "/comingSoon" },
     { name: "Government Jobs", route: "/comingSoon" },
+    { name: "Profile", route: "/profile" },
   ];
   const navItems = [
     { name: "Home", route: "/" },
