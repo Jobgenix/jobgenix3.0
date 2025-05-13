@@ -45,7 +45,7 @@ function JobCard({
     <div className="relative w-full bg-white rounded-md shadow-sm border border-gray-100 p-4 hover:shadow-md transition duration-200 ease-in-out mb-4">
       {jobgenixSuggestion && (
         <div
-          className="absolute top-0 right-0 w-auto -translate-y-1/2 bg-transparent pl-8 pr-4 py-1 mt-3 shadow-sm flex justify-end items-center gap-1 text-xs font-medium"
+          className="absolute top-0 right-0 w-auto -translate-y-1/2 bg-transparent pl-8 pr-4 py-1 shadow-sm flex justify-end items-center gap-1 text-xs font-medium"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='26' viewBox='0 0 256 26' fill='none'%3E%3Cpath d='M46.7862 0C69.7379 0 256 0 256 0V26H0C0 26 23.8345 0 46.7862 0Z' fill='%23C0E0FF'/%3E%3C/svg%3E")`,
             backgroundRepeat: "no-repeat",
@@ -153,105 +153,6 @@ function JobCard({
 }
 
 export default function Home() {
-  // const jobs: JobCardProps[] = [
-  //   {
-  //     companyLogo: "/images/Adobe.png?height=40&width=40",
-  //     jobTitle: "Software Engineer (Backend)",
-  //     companyName: "Adobe",
-  //     location: "Los Gatos, CA",
-  //     jobTypes: [
-  //       { label: "Full Time", type: "fullTime" },
-  //       { label: "Remote", type: "remote" },
-  //       {
-  //         label: "Software Development",
-  //         type: "other",
-  //         category: "development",
-  //       },
-  //     ],
-  //     matchPercentage: 95,
-  //     postedDaysAgo: 2,
-  //     applicantsCount: 42,
-  //     aiRecommendedJob: true,
-  //     onViewDetails: () => console.log("View details for Adobe job"),
-  //   },
-  //   {
-  //     companyLogo: "/images/Amazon.png?height=40&width=40",
-  //     jobTitle: "Creative Director",
-  //     companyName: "RazorPay",
-  //     location: "San Francisco, CA",
-  //     jobTypes: [
-  //       { label: "Full Time", type: "fullTime" },
-  //       { label: "Hybrid", type: "hybrid" },
-  //       { label: "Design & Creatives", type: "other", category: "design" },
-  //     ],
-  //     matchPercentage: 92,
-  //     postedDaysAgo: 3,
-  //     applicantsCount: 37,
-  //     aiRecommendedJob: false,
-  //     onViewDetails: () => console.log("View details for RazorPay job"),
-  //   },
-  //   {
-  //     companyLogo: "/images/Google.png?height=40&width=40",
-  //     jobTitle: "Product Manager",
-  //     companyName: "Google",
-  //     location: "Mountain View, CA",
-  //     jobTypes: [
-  //       { label: "Onsite", type: "onsite" },
-  //       { label: "Full Time", type: "fullTime" },
-  //     ],
-  //     matchPercentage: 90,
-  //     postedDaysAgo: 1,
-  //     applicantsCount: 58,
-  //     aiRecommendedJob: false,
-  //     onViewDetails: () => console.log("View details for Google job"),
-  //   },
-  //   {
-  //     companyLogo: "/images/Facebook.png?height=40&width=40",
-  //     jobTitle: "UI/UX Designer",
-  //     companyName: "Facebook",
-  //     location: "Menlo Park, CA",
-  //     jobTypes: [
-  //       { label: "Hybrid", type: "hybrid" },
-  //       { label: "Part Time", type: "other", category: "design" },
-  //     ],
-  //     matchPercentage: 88,
-  //     postedDaysAgo: 4,
-  //     applicantsCount: 21,
-  //     aiRecommendedJob: false,
-  //     onViewDetails: () => console.log("View details for Facebook job"),
-  //   },
-  //   {
-  //     companyLogo: "/images/Apple.png?height=40&width=40",
-  //     jobTitle: "iOS Developer",
-  //     companyName: "Apple",
-  //     location: "Cupertino, CA",
-  //     jobTypes: [
-  //       { label: "Onsite", type: "onsite" },
-  //       { label: "Contract", type: "other", category: "development" },
-  //     ],
-  //     matchPercentage: 91,
-  //     postedDaysAgo: 5,
-  //     applicantsCount: 34,
-  //     aiRecommendedJob: false,
-  //     onViewDetails: () => console.log("View details for Apple job"),
-  //   },
-  //   {
-  //     companyLogo: "/images/Microsoft.png?height=40&width=40",
-  //     jobTitle: "Cloud Solutions Architect",
-  //     companyName: "Microsoft",
-  //     location: "Redmond, WA",
-  //     jobTypes: [
-  //       { label: "Remote", type: "remote" },
-  //       { label: "Full Time", type: "fullTime" },
-  //       { label: "Cloud & DevOps", type: "other", category: "infrastructure" },
-  //     ],
-  //     matchPercentage: 93,
-  //     postedDaysAgo: 1,
-  //     applicantsCount: 47,
-  //     aiRecommendedJob: true,
-  //     onViewDetails: () => console.log("View details for Microsoft job"),
-  //   },
-  // ];
 
   const pathname = usePathname();
   const slug = pathname.split("opportunities2/").pop();
@@ -296,9 +197,11 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-4 md:p-24 bg-gray-50 ${montserrat.className}`}
+      className={`flex min-h-screen flex-col items-center p-4 md:p-24 bg-gray-50 ${montserrat.className}`}
     >
-      <div className="w-full max-w-3xl space-y-8">
+      
+      <h2 className="font-semibold text-2xl mt-10 md:-mt-10 lg:mt-0 translate md:-translate-x-[290px] -translate-x-[100px] text-left">Featured Jobs</h2>
+      <div className="w-full max-w-3xl  space-y-8">
         {jobs &&
           jobs
             .filter(
