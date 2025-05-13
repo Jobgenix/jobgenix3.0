@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function JobDisplay() {
   return (
-    <div>
+    <div className="hidden xl:block">
       <div className="rectangle h-40 w-full bg-[#021C2D] mt-12 flex items-center justify-center relative">
         <Image
           src="/images2/Group 28.svg"
@@ -31,8 +31,6 @@ export default function JobDisplay() {
           className="object-contain "
         />
       </div>
-      
-      
     </div>
   );
 }
