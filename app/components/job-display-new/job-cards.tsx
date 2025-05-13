@@ -4,9 +4,10 @@ import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import Link from "next/link";
 import { useJobStore } from '@/app/_store/oppJobStore';
-import { useEffect } from "react";
+import { useEffect ,useState} from "react";
 import { useSession } from "next-auth/react";
 import { usePathname } from 'next/navigation';
+import UserDetails from '@/types/userDetails';
 
 
 const montserrat = Montserrat({
@@ -154,6 +155,7 @@ function JobCard({
 
 export default function Home() {
 
+  const [userDetails, setUserDetails] = useState<UserDetails>();
   const pathname = usePathname();
   const slug = pathname.split("opportunities2/").pop();
 
@@ -161,10 +163,20 @@ export default function Home() {
   const { data: session } = useSession(); // Get user session data
   const userId = session?.user?.id; // Get user ID from session
   const addJobs = useJobStore((state) => state.addJobs);
+  const { status } = useSession();
+  
 
   useEffect(() => {
     const fetchJobs = async () => {
+      
       try {
+
+        if (status === "authenticated") {
+          const response = await fetch("/api/profileInfo");
+          const data = await response.json();
+          setUserDetails(data);
+        }
+
         const response = await fetch("/api/job/getJobs", {
           method: "POST",
           headers: {
@@ -172,7 +184,7 @@ export default function Home() {
           },
           body: JSON.stringify({
             userId: userId?.toString(),
-            userSkills: ["JavaScript", "React", "Node.js"],
+            userSkills: userDetails ? userDetails?.skills.split(","):[],
             stream: "1",
             type: slug?.toString(),
           }),
@@ -205,7 +217,7 @@ export default function Home() {
         {jobs &&
           jobs
             .filter(
-              (job: JobType, index: number) =>
+              (job: JobType, index: number) => 
                 index < 5
             )
             .map((job: JobType, index: number) => <JobCard key={index} {...job} />)}

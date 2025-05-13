@@ -3,6 +3,8 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Search, ArrowRight } from "lucide-react";
 import { useJobStore } from "@/app/_store/oppJobStore";
+import { useState } from "react";
+import  UserDetails  from "@/types/userDetails";
 
 import Home from "./job-cards";
 import Home2 from "./job-cards2";
@@ -37,13 +39,22 @@ export default function JobSearchInterface() {
   const { data: session } = useSession();
 
   const { register, handleSubmit } = useForm<JobSearchFormData>();
+  const [userDetails, setUserDetails] = useState<UserDetails>();
 
   const addJobs = useJobStore((state) => state.addJobs); // This is invalid inside an async function
+  const { status } = useSession();
 
   const onSubmit = async (data: JobSearchFormData) => {
     const selectedCourse = courseOptions.find((c) => c.name === data.course);
     const courseId = selectedCourse?.id || null;
     console.log(courseId);
+    
+
+    if (status === "authenticated") {
+          const response = await fetch("/api/profileInfo");
+          const data = await response.json();
+          setUserDetails(data);
+        }
 
     const response = await fetch("/api/job/getJobs", {
       method: "POST",
@@ -53,7 +64,7 @@ export default function JobSearchInterface() {
       body: JSON.stringify({
         userId: session?.user?.id.toString(),
         limit: "10",
-        userSkills: ["JavaScript", "React", "Node.js"],
+        userSkills: userDetails ? userDetails?.skills.split(","):[],
         passingYear: data.passingYear,
         stream: courseId,
         type: "jobs",
