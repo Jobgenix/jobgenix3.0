@@ -8,6 +8,8 @@ import { useEffect ,useState} from "react";
 import { useSession } from "next-auth/react";
 import { usePathname } from 'next/navigation';
 import UserDetails from '@/types/userDetails';
+import { useSearchParams } from 'next/navigation';
+
 
 
 const montserrat = Montserrat({
@@ -158,6 +160,8 @@ export default function Home() {
   const [userDetails, setUserDetails] = useState<UserDetails>();
   const pathname = usePathname();
   const slug = pathname.split("opportunities2/").pop();
+  const searchParams = useSearchParams();
+  const name = searchParams.get('name');
 
   console.log(slug)
   const { data: session } = useSession(); // Get user session data
@@ -187,6 +191,7 @@ export default function Home() {
             userSkills: userDetails ? userDetails?.skills.split(","):[],
             stream: "1",
             type: slug?.toString(),
+            name:name?.toString()
           }),
         });
 

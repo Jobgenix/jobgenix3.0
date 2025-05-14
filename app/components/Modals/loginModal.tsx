@@ -125,7 +125,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
             className="w-full py-3 text-xs rounded-md bg-[#0073E6] hover:bg-blue-700 transition font-light"
             disabled={loading} // Disable button when loading
           >
-            {loading ? "Loading..." : "Sign Up"}
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
 
@@ -133,19 +133,19 @@ export default function LoginModal({ onClose }: LoginModalProps) {
         {error && (
           <div className="text-red-400 text-xs text-center mt-2">{error}</div>
         )}
-        <a
+        {/* <a
           href="#"
           className="hover:underline w-full flex justify-end text-xs text-gray-300 mt-2"
         >
           Forgot Password ?
-        </a>
+        </a> */}
 
-        <div className="text-center mt-4 text-xs font-light text-gray-300">
+        {/* <div className="text-center mt-4 text-xs font-light text-gray-300">
           Already have an account ?{" "}
           <a href="#" className="text-white hover:underline">
             Log in
           </a>
-        </div>
+        </div> */}
 
         <div className="flex items-center my-4">
           <div className="flex-grow h-px bg-gray-600" />
