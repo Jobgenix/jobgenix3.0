@@ -31,7 +31,7 @@ export default function Footer() {
             <h4 className="font-semibold mb-2">Quick Links</h4>
             <ul className="text-gray-400 space-y-1">
               <li><Link href="/">Home</Link></li>
-              <li><Link href="/opportunities?type=jobs">Explore Jobs</Link></li>
+              <li><Link href="/opportunities2/jobs">Explore Jobs</Link></li>
               <li><Link href="/comingSoon">Top Courses</Link></li>
               <li><Link href="/comingSoon">For Employers</Link></li>
               <li><Link href="/comingSoon">Mentorship</Link></li>
@@ -48,7 +48,7 @@ export default function Footer() {
               <li><Link href="/comingSoon">Design & Creatives</Link></li>
               <li><Link href="/comingSoon">Business & Management</Link></li>
               <li><Link href="/comingSoon">Data Science & AI</Link></li>
-              <li><Link href="/opportunities?type=internships">Internships</Link></li>
+              <li><Link href="/opportunities2/internships">Internships</Link></li>
             </ul>
           </div>
           <div>
