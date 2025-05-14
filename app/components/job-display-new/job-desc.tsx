@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ClientOnly from "../../components/client-only/clientOnly";
 import { useSession } from "next-auth/react";
+import { GoShareAndroid } from "react-icons/go";
 
 
 interface Job {
@@ -46,26 +47,9 @@ export default function JoBDet({ job }: { job: Job }) {
               </svg>
               Just Now
             </span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               <button className="text-gray-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path d="M15 4.5l-6 6 6 6-1.5 1.5L6 10.5 13.5 3z" />
-                </svg>
-              </button>
-              <button className="text-gray-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path d="M9 19.5l6-6-6-6 1.5-1.5L18 13.5 10.5 21z" />
-                </svg>
+                <GoShareAndroid />
               </button>
             </div>
           </div>
@@ -167,7 +151,7 @@ export default function JoBDet({ job }: { job: Job }) {
 
         {/* Job Details */}
         <div
-          className="bg-white rounded-xl p-6 shadow-sm"
+          className="bg-white rounded-xl p-6 shadow-sm max-w-3xl"
           style={{
             boxShadow:
               "1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset, -1px -1px 2px 0px rgba(200, 200, 200, 0.50) inset, -6px 6px 12px 0px rgba(200, 200, 200, 0.20), 6px -6px 12px 0px rgba(200, 200, 200, 0.20), -6px -6px 12px 0px rgba(255, 255, 255, 0.90), 6px 6px 15px 0px rgba(200, 200, 200, 0.90)",
@@ -200,8 +184,8 @@ export default function JoBDet({ job }: { job: Job }) {
 
           <div className="mb-6">
             <h2 className="font-bold text-lg mb-3">Contact Details</h2>
-            <p className="text-sm text-gray-600">
-              <Link href={job.jobLink}>{job.jobLink}</Link>
+            <p className="text-sm text-gray-600 max-w-2xl">
+              <Link className="break-words overflow-hidden inline-block max-w-full underline" href={job.jobLink}>{job.jobLink}</Link>
             </p>
           </div>
         </div>
