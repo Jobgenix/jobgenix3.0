@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import {Sora} from 'next/font/google';
+import Link from 'next/link';
 
 const soraFont = Sora({
   subsets: ['latin'],
@@ -73,7 +74,7 @@ export default function Hero() {
                 />
               </div>
             </div>
-          <button className="h-8 w-28 lg:mt-3 absolute xl:left-[160px] hidden xl:block bg-[#004080] rounded-lg text-white text-xs">Get started</button>
+          <Link href={"/opportunities2/jobs"} className="h-8 w-28 py-2 px-4 lg:mt-3 absolute xl:left-[160px] hidden xl:block bg-[#004080] rounded-lg text-white text-xs">Get started</Link>
             <button className="h-8 w-28 lg:mt-3 lg:ml-3 ml-3 xl:hidden sm:block mt-4 bg-[#0073E6] rounded-lg text-white">Book a call</button>
           </div>
         </div>
