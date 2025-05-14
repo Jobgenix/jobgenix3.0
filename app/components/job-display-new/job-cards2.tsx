@@ -2,11 +2,9 @@
 import { ArrowRight, MapPin, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
-import { useSession } from "next-auth/react";
 import {useJobStore} from '@/app/_store/oppJobStore';
-import { useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -242,12 +240,9 @@ export default function Home2() {
   //     },
   // ]
 
-    const pathname = usePathname(); 
-    const slug = pathname.split("opportunities2/").pop(); 
+    // const pathname = usePathname(); 
+    // const slug = pathname.split("opportunities2/").pop(); 
 
-  const { data: session } = useSession(); // Get user session data
-  const userId = session?.user?.id;
-  const addJobs = useJobStore((state) => state.addJobs);
 
   interface JobType {
     companyName: string;
@@ -262,35 +257,6 @@ export default function Home2() {
     match: string;
   }
 
-   useEffect(() => {
-      const fetchJobs = async () => {
-        try {
-          const response = await fetch("/api/job/getJobs", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userId: userId?.toString(),
-              userSkills: ["JavaScript", "React", "Node.js"],
-              stream: "1",
-              type: slug?.toString(),
-            }),
-          });
-  
-          const data = await response.json();
-          addJobs(data.jobs); // Add jobs to global state
-          // console.log(data.jobs); // Log the jobs to the console
-        } catch (error) {
-          console.error("Failed to fetch jobs:", error);
-        }
-      };
-  
-      fetchJobs();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    , [userId]); // Fetch jobs when userId changes
-  
     const jobs = useJobStore((state) => state.jobs);
   
   return (
