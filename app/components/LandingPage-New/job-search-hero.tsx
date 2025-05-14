@@ -3,49 +3,62 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Search, ChevronRight, ChevronLeft } from "lucide-react";
-import { Button } from "@/app/components/ui/button";
+import Link from "next/link";
 import { Input } from "@/app/components/ui/input";
 import { Card, CardContent } from "@/app/components/ui/card";
 
-interface CompanyCardProps {
-  logo: string;
-  name: string;
-  rating: number;
-  totalRatings: number;
+
+interface JobType {
+  companyName: string;
+  companyLogo: string;
+  jobTitle: string;
+  jobId: string;
+  jobLocation: string[];
+  jobType: "office" | "remote" | "hybrid"; // Adjust if needed
+  jobLink: string;
+  jobgenixSuggestion: boolean;
+  requireskils: string;
+  match: string,
   description: string;
 }
 
-const CompanyCard = ({ logo, name, rating, totalRatings, description }: CompanyCardProps) => {
+interface CompanyCardProps extends JobType {
+  no: number;
+}
+
+const CompanyCard = ({ companyLogo, companyName, description,jobId ,no }: CompanyCardProps) => {
   return (
     <Card className="w-52 mt-4 rounded-3xl  h-[250px] max-w-[200px] ml-8 bg-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105 sm:max-w-[250px]">
       <CardContent className="p-0 h-full w-full ">
         <div
           className={`p-6 h-full flex flex-col items-center justify-center rounded-xl relative text-xl 
-            ${name === "SDE Intern"
+            ${no === 0
               ? "bg-[#1DB954]"
-              : name === "Social Media Manager"
+              : no === 1
               ? "bg-[#e23744]"
-              : name === "UI/UX Designer"
+              : no === 3
               ? "bg-[#ff5a5f]"
-              : "bg-[#0B72E7]"
+              : no === 4
+              ? "bg-[#1DB954]"
+              :"bg-[#1DB954]"
             }`}
         >
-          <Image src={logo || "/placeholder.svg"} alt={`${name} logo`} width={80} height={80} className="m-auto" />
-          <h6 className="text-white text-center text-sm sm:text-base">{name}</h6>
+          <Image src={companyLogo || "/placeholder.svg"} alt={`${name} logo`} width={50} height={50} className="m-auto rounded-full" />
+          <h6 className="text-white text-center text-sm sm:text-base">{companyName}</h6>
           <div className="flex items-center mt-1 mb-2">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
                 <span key={i} className="text-yellow-300 text-xs sm:text-sm">★</span>
               ))}
             </div>
-            <span className="text-white text-xs ml-1 sm:text-sm">
+            {/* <span className="text-white text-xs ml-1 sm:text-sm">
               ({rating}) {totalRatings} + Jobs
-            </span>
+            </span> */}
           </div>
-          <p className="text-white italic text-center text-xs sm:text-sm leading-tight min-h-[40px]">{description}</p>
-          <Button variant="secondary" size="sm" className="mt-3 w-24 rounded-full text-xs font-medium sm:w-28 sm:text-sm ">
+          <p className="text-white italic text-center text-xs sm:text-sm leading-tight min-h-[40px]">{description.replace(/<[^>]*>/g, '').split(' ').slice(0, 5).join(' ')}</p>
+          <Link href={`/jobdescription/${jobId}`}  className="mt-3 w-24 rounded-full text-xs font-medium sm:w-28 sm:text-sm bg-white text-black py-2 px-3">
             Apply Now
-          </Button>
+          </Link>
         </div>
       </CardContent>
     </Card>
@@ -56,6 +69,7 @@ export default function JobSearchHero() {
   const jobListRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [jobs, setJobs] = useState<JobType[]>()
 
   const handleScroll = () => {
     if (jobListRef.current) {
@@ -89,36 +103,29 @@ export default function JobSearchHero() {
     };
   }, []);
 
-  const companies = [
-    {
-      logo: "/LandingPageImages/spotify.png?height=40&width=40",
-      name: "SDE Intern",
-      rating: 4.5,
-      totalRatings: 28,
-      description: "Your career playlist starts here.",
-    },
-    {
-      logo: "/LandingPageImages/airbnb.png?height=40&width=40",
-      name: "Social Media Manager",
-      rating: 4.6,
-      totalRatings: 26,
-      description: "Design tomorrow's experiences for millions.",
-    },
-    {
-      logo: "/LandingPageImages/zomato.png?height=40&width=40",
-      name: "UI/UX Designer",
-      rating: 4.7,
-      totalRatings: 25,
-      description: "Feed your career with endless opportunities.",
-    },
-    {
-      logo: "/LandingPageImages/razorpay.png?height=40&width=40",
-      name: "Full Stack Developer",
-      rating: 4.8,
-      totalRatings: 24,
-      description: "Empowering businesses, one payment at a time.",
-    },
-  ];
+useEffect(()=>{
+  try {
+    async function fetchJobs() {
+    const response = await fetch("/api/job/getJobs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            limit:"4",
+            stream: "1",
+            type: "jobs",
+          }),
+        });
+    const data = await response.json();
+    setJobs(data.jobs); // Set the jobs in state
+    }
+    fetchJobs();
+  } catch (error) {
+    console.error("Error fetching jobs:", error); 
+    
+  }
+},[])
 
   return (
     <div className="max-w-screen mx-auto px-4 mt-10 py-20 bg-white font-montserrat ">
@@ -157,8 +164,8 @@ export default function JobSearchHero() {
             ref={jobListRef}
             className="flex flex-row gap-4 overflow-x-hidden scroll-y-hidden scroll-smooth scrollbar-hide mx-4 sm:mx-8 sm:ml-20 md:ml-40 lg:ml-52 "
           >
-            {companies.map((company, index) => (
-              <CompanyCard key={index} {...company} />
+            {jobs && jobs.map((company, index) => (
+              <CompanyCard key={index} no={index} {...company} />
             ))}
           </div>
 
