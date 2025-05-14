@@ -67,6 +67,7 @@ const CompanyCard = ({ companyLogo, companyName, description,jobId ,no }: Compan
 
 export default function JobSearchHero() {
   const jobListRef = useRef<HTMLDivElement>(null);
+  const [name, setName] = useState("");
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [jobs, setJobs] = useState<JobType[]>()
@@ -136,11 +137,15 @@ useEffect(()=>{
 
         <div className="relative max-w-xl mx-auto mb-4">
           <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="Dream job? Type it in ✨"
             className="pl-4 pr-10 py-4 sm:py-6 rounded-full bg-[#EAEAEA] border-[#9DCEFF] focus:outline-none"
           />
-          <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <Link href={`/opportunities2/jobs?name=${name}`}>
+            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          </Link>
         </div>
       </div>
 
