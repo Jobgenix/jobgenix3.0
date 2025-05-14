@@ -3,9 +3,11 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Search, ArrowRight } from "lucide-react";
 import { useJobStore } from "@/app/_store/oppJobStore";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import  UserDetails  from "@/types/userDetails";
 import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import Home from "./job-cards";
 import Home2 from "./job-cards2";
@@ -38,18 +40,31 @@ interface JobSearchFormData {
 
 export default function JobSearchInterface() {
 
+  const router = useRouter();
   const pathname = usePathname();
   const slug = pathname.split("opportunities2/").pop();
+  const searchParams = useSearchParams();
+  const name = searchParams.get('name');
 
   const { data: session } = useSession();
 
-  const { register, handleSubmit } = useForm<JobSearchFormData>();
+  const { register, handleSubmit,reset } = useForm<JobSearchFormData>();
   const [userDetails, setUserDetails] = useState<UserDetails>();
 
   const addJobs = useJobStore((state) => state.addJobs); // This is invalid inside an async function
   const { status } = useSession();
 
+  useEffect(()=>{
+    name && reset({
+      search: name || "",
+      passingYear: "2026",
+      course: "B.Tech",
+    })
+  },[])
+
   const onSubmit = async (data: JobSearchFormData) => {
+
+    router.replace('/opportunities2/jobs');
     const selectedCourse = courseOptions.find((c) => c.name === data.course);
     const courseId = selectedCourse?.id || null;
     console.log(courseId);
