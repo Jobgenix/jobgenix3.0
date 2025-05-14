@@ -5,6 +5,7 @@ import { Search, ArrowRight } from "lucide-react";
 import { useJobStore } from "@/app/_store/oppJobStore";
 import { useState } from "react";
 import  UserDetails  from "@/types/userDetails";
+import { usePathname } from 'next/navigation';
 
 import Home from "./job-cards";
 import Home2 from "./job-cards2";
@@ -36,6 +37,10 @@ interface JobSearchFormData {
 }
 
 export default function JobSearchInterface() {
+
+  const pathname = usePathname();
+  const slug = pathname.split("opportunities2/").pop();
+
   const { data: session } = useSession();
 
   const { register, handleSubmit } = useForm<JobSearchFormData>();
@@ -67,7 +72,7 @@ export default function JobSearchInterface() {
         userSkills: userDetails ? userDetails?.skills.split(","):[],
         passingYear: data.passingYear,
         stream: courseId,
-        type: "jobs",
+        type: slug?.toString(),
         name: data.search,
       }),
     });

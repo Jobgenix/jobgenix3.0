@@ -41,9 +41,6 @@ export default function JobDisplayNew() {
       <div className="absolute   xl:top-[50%] xl:left-[4%]">
         <JobGenixPromo />
       </div>
-      <h1 className="absolute top-[53%] left-[4%] xl:top-[40%] text-xl xl:left-[25%] xl:text-2xl font-semibold">
-        Featured Jobs
-      </h1>
 
       <JobSearchInterface />
 
