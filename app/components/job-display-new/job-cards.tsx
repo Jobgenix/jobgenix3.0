@@ -11,6 +11,7 @@ import UserDetails from '@/types/userDetails';
 import { useSearchParams } from 'next/navigation';
 
 
+
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "700"],

@@ -5,6 +5,7 @@ import Nav from "../../components/LandingPage-New/nav";
 import JobDisplay from "../../components/job-display-new/job-dis";
 import JobSearchInterface from "../../components/job-display-new/latest-job";
 import JobGenixPromo from "../../components/job-display-new/side-card";
+import { Suspense } from 'react';
 
 import { Sora } from "next/font/google";
 
@@ -32,6 +33,7 @@ export default function JobDisplayNew() {
     </div>;
   }
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className={sora.className} >
       <div className={sora.className}>
         <Nav />
@@ -50,5 +52,6 @@ export default function JobDisplayNew() {
       </div>
 
     </div>
+    </Suspense>
   );
 };

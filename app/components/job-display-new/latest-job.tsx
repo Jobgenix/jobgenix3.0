@@ -55,11 +55,14 @@ export default function JobSearchInterface() {
   const { status } = useSession();
 
   useEffect(()=>{
-    name && reset({
-      search: name || "",
+    function setDefaultValues() {
+      reset({
+      search: name || undefined,
       passingYear: "2026",
       course: "B.Tech",
     })
+    }
+    setDefaultValues();
   },[])
 
   const onSubmit = async (data: JobSearchFormData) => {
