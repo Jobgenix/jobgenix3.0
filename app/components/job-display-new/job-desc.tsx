@@ -4,7 +4,7 @@ import Link from "next/link";
 import ClientOnly from "../../components/client-only/clientOnly";
 import { useSession } from "next-auth/react";
 import { GoShareAndroid } from "react-icons/go";
-
+import { toast } from "sonner";
 
 interface Job {
   companyName: string;
@@ -23,6 +23,16 @@ interface Job {
 
 export default function JoBDet({ job }: { job: Job }) {
   const { status } = useSession();
+
+    const handleShare = async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    toast.success("Link copied to clipboard!");
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+};
+
   return (
     <div className="bg-white min-h-screen p-4">
       <div className="max-w-6xl mx-auto grid md:grid-cols-[300px_1fr] gap-4">
@@ -48,7 +58,7 @@ export default function JoBDet({ job }: { job: Job }) {
               Just Now
             </span>
             <div className="flex gap-2 items-center">
-              <button className="text-gray-500">
+              <button onClick={handleShare} className="text-gray-500">
                 <GoShareAndroid />
               </button>
             </div>
