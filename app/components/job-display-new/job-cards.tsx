@@ -213,7 +213,6 @@ export default function Home() {
     , [userId, 
     status, 
     addJobs, 
-    userDetails, 
     slug,
     // Add search params to dependencies to trigger reload when they change
     name,
