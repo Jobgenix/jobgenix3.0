@@ -67,6 +67,7 @@ export default function Nav() {
   }, [messages]);
 
   const opportunityOptions = [
+    { name: "Home", route: "/" },
     { name: "Internships", route: "/opportunities2/internships" },
     { name: "Jobs", route: "/opportunities2/jobs" },
     { name: "Courses", route: "/comingSoon" },

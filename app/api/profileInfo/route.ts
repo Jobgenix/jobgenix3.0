@@ -57,7 +57,7 @@ export async function GET() {
             university: user.university || "Unknown",
             location: user.location || "Not specified",
             summary: user.summary || "No summary available",
-            resume_url: user.resumeUrl || "No resume url available",
+            resume_url: user.resumeUrl || null,
             skills: user.skills || "No skills available"
         };
 

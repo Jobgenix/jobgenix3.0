@@ -37,8 +37,10 @@ export default function Page() {
     async function fetchProfile() {
       if (status === "authenticated") {
         const response = await fetch("api/profileInfo");
+
         const data = await response.json();
         setUserDetails(data);
+        console.log("USer Data"+data);
       }
     }
     fetchProfile();

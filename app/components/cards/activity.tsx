@@ -358,9 +358,13 @@ export default function Activity({ data }: { data: UserDetails }) {
       <div className="bg-white rounded-2xl p-6 space-y-4 shadow-[1px_1px_2px_0px_rgba(255,255,255,0.30)_inset,-1px_-1px_2px_0px_rgba(198,198,198,0.50)_inset,-4px_4px_8px_0px_rgba(198,198,198,0.20),4px_-4px_8px_0px_rgba(198,198,198,0.20),-4px_-4px_8px_0px_rgba(255,255,255,0.90),4px_4px_10px_0px_rgba(198,198,198,0.90)]">
         <h2 className="text-center text-[color:var(--Neutrals-Dark-Grey,#333)] [font-family:Sora] text-2xl font-normal leading-[var(--Display-Small-Line-Height,44px)] tracking-[var(--Display-Medium-Tracking,0px)]">
           CV/Resume Management
+        
         </h2>
 
-        {resumeFile ? (
+
+
+
+        { resumeFile ? (
           <div className="md:flex items-center justify-between bg-gray-100 rounded-xl p-3 text-sm">
             <div className="flex items-center gap-2">
               <FileDown className="text-red-600" />
