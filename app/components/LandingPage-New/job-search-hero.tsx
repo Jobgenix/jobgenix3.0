@@ -6,6 +6,7 @@ import { Search, ChevronRight, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { Input } from "@/app/components/ui/input";
 import { Card, CardContent } from "@/app/components/ui/card";
+import { useRouter } from "next/navigation";
 
 
 interface JobType {
@@ -71,6 +72,7 @@ export default function JobSearchHero() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [jobs, setJobs] = useState<JobType[]>()
+  const router = useRouter();
 
   const handleScroll = () => {
     if (jobListRef.current) {
@@ -128,6 +130,11 @@ useEffect(()=>{
   }
 },[])
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push(`/opportunities2/jobs?name=${name}`);
+  };
+
   return (
     <div className="max-w-screen mx-auto px-4 mt-10 py-20 bg-white font-montserrat ">
       <div className="text-center mb-8">
@@ -135,7 +142,7 @@ useEffect(()=>{
           Type It. <span className="text-blue-500">Upload It.</span> Get Hired.
         </h1>
 
-        <div className="relative max-w-xl mx-auto mb-4">
+        <form onSubmit={handleSubmit} className="relative max-w-xl mx-auto mb-4">
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -143,10 +150,10 @@ useEffect(()=>{
             placeholder="Dream job? Type it in ✨"
             className="pl-4 pr-10 py-4 sm:py-6 rounded-full bg-[#EAEAEA] border-[#9DCEFF] focus:outline-none"
           />
-          <Link href={`/opportunities2/jobs?name=${name}`}>
-            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-          </Link>
-        </div>
+          <button type="submit">
+            <Search className="absolute right-4 top-3 md:top-4  text-gray-400" size={20} />
+          </button>
+        </form>
       </div>
 
       <div className="mt-12 relative">
