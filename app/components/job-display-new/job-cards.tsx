@@ -162,6 +162,8 @@ export default function Home() {
   const slug = pathname.split("opportunities2/").pop();
   const searchParams = useSearchParams();
   const name = searchParams.get('name');
+  const stream = searchParams.get('stream');
+  const passingYear = searchParams.get('passingYear');
 
   console.log(slug)
   const { data: session } = useSession(); // Get user session data
@@ -189,9 +191,10 @@ export default function Home() {
           body: JSON.stringify({
             userId: userId?.toString(),
             userSkills: userDetails ? userDetails?.skills.split(","):[],
-            stream: "1",
+            stream: stream || "1",
             type: slug?.toString(),
-            name:name?.toString()
+            name:name?.toString(),
+            passingYear: passingYear?.toString() || "2025",
           }),
         });
 
@@ -207,7 +210,15 @@ export default function Home() {
     fetchJobs();
   }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    , [userId]); // Fetch jobs when userId changes
+    , [userId, 
+    status, 
+    addJobs, 
+    userDetails, 
+    slug,
+    // Add search params to dependencies to trigger reload when they change
+    name,
+    stream, 
+    passingYear]); // Fetch jobs when userId changes
 
   const jobs = useJobStore((state) => state.jobs); // Global state
   // console.log(jobs); // Log the jobs data

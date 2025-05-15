@@ -1,11 +1,7 @@
 "use client";
-import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Search, ArrowRight } from "lucide-react";
-import { useJobStore } from "@/app/_store/oppJobStore";
-import { useState,useEffect } from "react";
-import  UserDetails  from "@/types/userDetails";
-import { usePathname } from 'next/navigation';
+import { useEffect } from "react";
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
@@ -40,26 +36,34 @@ interface JobSearchFormData {
 
 export default function JobSearchInterface() {
 
+  function getStreamNameById(streamId: string | null): string {
+  if (!streamId) return "B.Tech";
+  
+  const course = courseOptions.find(option => option.id === streamId);
+  return course ? course.name : "Unknown Course";
+}
+
   const router = useRouter();
-  const pathname = usePathname();
-  const slug = pathname.split("opportunities2/").pop();
+  // const slug = pathname.split("opportunities2/").pop();
   const searchParams = useSearchParams();
   const name = searchParams.get('name');
+  const stream = searchParams.get('stream');
+  const passingYear = searchParams.get('passingYear');
 
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   const { register, handleSubmit,reset } = useForm<JobSearchFormData>();
-  const [userDetails, setUserDetails] = useState<UserDetails>();
+  // const [userDetails, setUserDetails] = useState<UserDetails>();
 
-  const addJobs = useJobStore((state) => state.addJobs); // This is invalid inside an async function
-  const { status } = useSession();
+  // const addJobs = useJobStore((state) => state.addJobs); // This is invalid inside an async function
+  // const { status } = useSession();
 
   useEffect(()=>{
     function setDefaultValues() {
       reset({
       search: name || undefined,
-      passingYear: "2026",
-      course: "B.Tech",
+      passingYear: passingYear || "2025",
+      course: getStreamNameById(stream) || "B.Tech",
     })
     }
     setDefaultValues();
@@ -67,37 +71,24 @@ export default function JobSearchInterface() {
 
   const onSubmit = async (data: JobSearchFormData) => {
 
-    router.replace('/opportunities2/jobs');
+    // router.replace('/opportunities2/jobs');
     const selectedCourse = courseOptions.find((c) => c.name === data.course);
-    const courseId = selectedCourse?.id || null;
+    const courseId = selectedCourse?.id || "";
     console.log(courseId);
+   
     
+    const name = data.search || "";
+    const passingYear = data.passingYear;
+    const stream = courseId;
 
-    if (status === "authenticated") {
-          const response = await fetch("/api/profileInfo");
-          const data = await response.json();
-          setUserDetails(data);
-        }
+    const query = new URLSearchParams({
+      name,
+      passingYear,
+      stream,
+    }).toString();
 
-    const response = await fetch("/api/job/getJobs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: session?.user?.id.toString(),
-        limit: "10",
-        userSkills: userDetails ? userDetails?.skills.split(","):[],
-        passingYear: data.passingYear,
-        stream: courseId,
-        type: slug?.toString(),
-        name: data.search,
-      }),
-    });
+     router.push(`/opportunities2/jobs?${query}`);
 
-    const { jobs } = await response.json();
-    addJobs(jobs); //Added in globas state
-    console.log(jobs);
   };
 
   return (

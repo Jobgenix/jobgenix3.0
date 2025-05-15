@@ -182,12 +182,12 @@ export default function JoBDet({ job }: { job: Job }) {
             </ol>
           </div>
 
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h2 className="font-bold text-lg mb-3">Contact Details</h2>
             <p className="text-sm text-gray-600 max-w-2xl">
               <Link className="break-words overflow-hidden inline-block max-w-full underline" href={job.jobLink}>{job.jobLink}</Link>
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 
