@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-export default function Nav({ onLoginClick }: { onLoginClick: () => void }) {
+export default function Nav({ onLoginClick }: { onLoginClick?: () => void }) {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const lines = useRef<HTMLDivElement[]>([]);
   const messages = useMemo(
@@ -152,8 +152,9 @@ export default function Nav({ onLoginClick }: { onLoginClick: () => void }) {
             <Link
               key={index}
               href={item.route}
-              className={`text-md ${item.name === "Home" ? "text-blue-500" : "text-[#646A66]"
-                } focus:text-blue-500`}
+              className={`text-md ${
+                item.name === "Home" ? "text-blue-500" : "text-[#646A66]"
+              } focus:text-blue-500`}
             >
               {item.name}
             </Link>
@@ -177,7 +178,7 @@ export default function Nav({ onLoginClick }: { onLoginClick: () => void }) {
           <span
             className="flex items-center justify-center h-12 w-12 text-black rounded-full font-medium ml-2 bg-transparent cursor-pointer"
             onClick={() =>
-              loginStatus ? router.push("/profile") : onLoginClick()
+              loginStatus ? router.push("/profile") : onLoginClick?.()
             }
           >
             {loginStatus ? (
