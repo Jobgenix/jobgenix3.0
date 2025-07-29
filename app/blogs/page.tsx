@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 interface Blog {
   id: string;
   title: string;
-  content: any;
+  content: unknown;
   tags?: string[];
   authorId: string;
   createdAt?: string;

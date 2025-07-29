@@ -7,7 +7,7 @@ import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 
 interface EditorClientProps {
-  onChange: (data: any) => void;
+  onChange: (data: unknown) => void;
 }
 
 export default function EditorClient({ onChange }: EditorClientProps) {

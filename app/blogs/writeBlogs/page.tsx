@@ -17,7 +17,7 @@ export default function NewBlogPost() {
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-  const [editorData, setEditorData] = useState<any>(null);
+  const [editorData, setEditorData] = useState<unknown>(null);
   const [featuredImageUrl, setFeaturedImageUrl] = useState<string>("");
   const [imageUploading, setImageUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>("");
@@ -121,10 +121,15 @@ export default function NewBlogPost() {
         setImageUploading(false);
         // Now call handleSubmit
         await handleSubmit(publish, uploadData.secure_url);
-      } catch (error: any) {
+      } catch (error: unknown) {
         setImageUploading(false);
-        console.log(error);
-        toast.error(error.message || "Failed to upload image");
+        if (error instanceof Error) {
+          console.log(error);
+          toast.error(error.message || "Failed to upload image");
+        } else {
+          console.log("Unexpected error:", error);
+          toast.error("Failed to upload image");
+        }
       } finally {
         setLoading(false);
       }
