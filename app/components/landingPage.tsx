@@ -1,40 +1,35 @@
-import React from 'react'
-import Hero from './LandingPage-New/hero'
-import Companies from './LandingPage-New/companies'
-import ExploreNow from './LandingPage-New/Explore-now'
-import Whyjobgenix from './LandingPage-New/why-jobgenix'
-import Slider from './LandingPage-New/slider'
-import { Container } from './LandingPage-New/Container'
-import JobSearchHero from './LandingPage-New/job-search-hero'
-import StatsSection from './LandingPage-New/statsSections'
-import Footer from './LandingPage-New/footerNew'
-import Nav from './LandingPage-New/nav'
+import React from "react";
+import Footer from "../components/Footer/Footer";
+import Companies from "./LandingPage-New/companies";
+import { Container } from "./LandingPage-New/Container";
+import ExploreNow from "./LandingPage-New/Explore-now";
+import Hero from "./LandingPage-New/hero";
+import JobSearchHero from "./LandingPage-New/job-search-hero";
+import Nav from "./LandingPage-New/nav";
+import Slider from "./LandingPage-New/slider";
+import StatsSection from "./LandingPage-New/statsSections";
+import UsersWorkingAt from "./LandingPage-New/UsersWorkingAt";
+// import Whyjobgenix from "./LandingPage-New/WhyJobgenix";
 
-import { Sora } from 'next/font/google'
+export function Landing({ onLoginClick }: { onLoginClick: () => void }) {
+  return (
+    <div className={`font-sora`}>
+      <div className="min-h-screen overflow-x-hidden bg-[#F5F5F5]">
+        <Nav onLoginClick={onLoginClick} />
+        <Hero />
+        <Companies />
+        <ExploreNow />
+        <UsersWorkingAt />
+        {/* <div className="hidden sm:block">
+          <Whyjobgenix />
+          <Slider />
+        </div> */}
 
-const soraFont = Sora({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-}); 
-
-
-export function Landing() {
-    return (
-      <div className={` ${soraFont.className}`}>
-        <div className="min-h-screen overflow-x-hidden">
-                        <Nav/>
-                        <Hero/>
-                        <Companies/>
-                        <ExploreNow/>
-                        <Whyjobgenix/>
-                        <Slider/>
-                        <Container/>
-                        <JobSearchHero/>
-                        <StatsSection/>
-                        <Footer/>
-
-        </div>
+        <Container />
+        <JobSearchHero />
+        <StatsSection />
+        <Footer />
       </div>
-        
-    )
+    </div>
+  );
 }

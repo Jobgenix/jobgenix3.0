@@ -1,17 +1,12 @@
 "use client";
-import React from "react";
-import ReferCard from "../components/cards/referCard";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
+import ReferCard from "../components/cards/referCard";
+import YourJourneyBanner from "../components/YourJourneyBanner";
 
-import { Sora } from "next/font/google";
+import Footer from "../components/Footer/Footer";
 import Nav from "../components/LandingPage-New/nav";
-import Footer from "../components/LandingPage-New/footerNew";
-
-const sorafont = Sora({
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const accordionData = [
   {
@@ -33,55 +28,60 @@ const accordionData = [
 
 export default function Page() {
   return (
-    <div >
-      <Nav />
-     
- <div
-      className={`${sorafont.className} w-full flex flex-col items-center justify-center py-6 bg-gradient-to-r from-white via-[#f8fafd] to-white mt-30 px-5 md:px-0`}
-    >
-      
-      {/* Header Section */}
-      <div className="flex flex-col items-center justify-center gap-4 mt-20">
-        <div className="flex items-center justify-center space-x-4">
-          {/* Left speed lines */}
-          <Image
-            src={"/graphic/referLeft.png"}
-            height={100}
-            width={100}
-            alt="graphic"
-          />
+    <div className="bg-[#F5F5F5] w-full">
+      <Nav onLoginClick={() => (window.location.href = "/login")} />
 
-          {/* Center text */}
-          <h2 className="text-lg md:text-3xl font-semibold text-gray-800 text-center " >
-            Tap In, Get Referred, Glow Up.
-          </h2>
+      <div
+        className={`font-sora w-full flex flex-col items-center justify-center py-6 px-5 md:px-0 mx-auto`}
+      >
+        {/* Header Section */}
+        <div className="flex flex-col items-center justify-center sm:gap-4 mt-11 mb-8  sm:my-12 md:my-20 w-full">
+          <div className="flex items-center justify-center space-x-1 sm:space-x-4">
+            {/* Left speed lines */}
+            <Image
+              src={"/graphic/referLeft.png"}
+              height={100}
+              width={100}
+              alt="graphic"
+              className="h-auto lg:h-11 w-12 sm:w-24 md:w-32 lg:w-auto"
+            />
 
-          {/* Right speed lines */}
-          <Image
-            src={"/graphic/referRight.png"}
-            height={100}
-            width={100}
-            alt="graphic"
-          />
+            {/* Center text */}
+            <h2 className="text-[0.91rem] sm:text-lg md:text-2xl lg:text-[2.5rem] font-semibold text-gray-800 text-center ">
+              Tap In, Get Referred, Glow Up.
+            </h2>
+
+            {/* Right speed lines */}
+            <Image
+              src={"/graphic/referRight.png"}
+              height={100}
+              width={100}
+              alt="graphic"
+              className="h-auto lg:h-11 w-12 sm:w-24 md:w-32 lg:w-auto"
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Content Section */}
-      <Link href={"/"} className="w-full flex flex-col items-center justify-center gap-8 mt-10">
-        <ReferCard data={accordionData} />
-        <ReferCard data={accordionData} />
-        <Image
-          src={"/images3/refer.png"}
-          height={500}
-          width={500}
-          alt="logo"
-          className="object-cover md:w-[80%]"
-        />
-      </Link>
+        {/* Content Section */}
+        <div className="w-full max-w-[610px] h-[55.1rem] overflow-y-auto mb-12 scrollbar-track-none scrollbar-thumb-black scrollbar-w-5">
+          <Link
+            href={"/"}
+            className="w-full flex flex-col items-center justify-center gap-16 mx-auto"
+          >
+            <ReferCard data={accordionData} />
+            <ReferCard data={accordionData} />
+            <ReferCard data={accordionData} />
+            <ReferCard data={accordionData} />
+            <ReferCard data={accordionData} />
+            <ReferCard data={accordionData} />
+          </Link>
+        </div>
+        <YourJourneyBanner />
+      </div>
+      <div className="mt-14">
+        {" "}
+        <Footer />
+      </div>
     </div>
-    <Footer/>
-    </div>
-    
-   
   );
 }

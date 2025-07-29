@@ -1,13 +1,6 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-import { Sora } from "next/font/google";
-
-const sorafont = Sora({
-  subsets: ["latin"],
-  weight: "400",
-});
+import React from "react";
 
 const logo =
   "https://s3-alpha-sig.figma.com/img/b813/8220/21780452c44a98ce6c5430123d0fe7aa?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=ixyNHs9q4rN-9WEecUmo8YRhKXKtsWZhFP6MhW7JTfxeHPdnLpQxRZ3WkG3dCUJh9B4kE-fU0UKb1woUPeejYowAbPzHp1pZeIjydYidpoK3ENYR4l9zvkDRoTAczb28rW66PBaajPlCZHZxf0W83tVqmR7r0aAC-QJ~3-aibEKedD1zvgUjOdnUj0dTLAO5MYnQIpzm-EOxG9tIdT8Lz0fFHuoXig7c0sJWcpBc5qqmM4LlZKF4ODwZ62fWpPgLY8cR1zkE6TWiq-zRsyhP1KRWv6GOPY7JSIWo6xMhBLbyuCfHC5EUnC4o9POVEJW4Zy7Ynb0nNslsyD9PCpw9bQ__";
@@ -19,16 +12,16 @@ export default function Navbar() {
   return (
     <div className="w-full fixed  font-light top-0 z-10 bg-white">
       <div
-        className={`${sorafont.className} bg-[#0073E6] text-[#FFFFFF] max-w-7xl text-center mx-auto rounded-bl-[90px] py-[1px] rounded-br-[90px] `}
+        className={`font-sora bg-[#0073E6] text-[#FFFFFF] max-w-7xl text-center mx-auto rounded-bl-[90px] py-[1px] rounded-br-[90px] `}
       >
         🎉 Join 8000+ students & job seekers growing their careers with
         Jobgenix!
       </div>
       <nav
-        className={`${sorafont.className} flex max-w-7xl justify-between items-center mx-auto pt-6`}
+        className={`font-sora flex max-w-7xl justify-between items-center mx-auto pt-6`}
       >
         <div className="relative h-5 w-32 overflow-hidden">
-        <Image src={logo} fill alt="logo"></Image>
+          <Image src={logo} fill alt="logo"></Image>
         </div>
         <ul className="flex items-center gap-4">
           <li>Home</li>

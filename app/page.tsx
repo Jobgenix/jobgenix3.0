@@ -1,24 +1,19 @@
 "use client";
 import { Landing } from "@/app/components/landingPage";
-
+import LoginModal from "@/app/components/Modals/loginModal";
+import { Suspense, useState } from "react";
 
 export default function Page() {
-  // const session = useSession();
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   if (session.status === "unauthenticated") {
-  //     router.push("/auth/login");
-  //   }
-
-  //   if (session.status === 'authenticated' && session.data?.user.role === ROLE_IDS.NEW_USER) {
-  //     router.push("/auth/first-login");
-  //   }
-  // }, [session, router]);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
-    < >
-      <Landing />
+    <>
+      <Landing onLoginClick={() => setIsLoginOpen(true)} />
+      {isLoginOpen && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <LoginModal onClose={() => setIsLoginOpen(false)} />
+        </Suspense>
+      )}
     </>
   );
 }

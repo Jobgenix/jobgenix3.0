@@ -8,6 +8,55 @@
       "when": 1741287800368,
       "tag": "0000_complete_albert_cleary",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752646689323,
+      "tag": "0001_mighty_crystal",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752647102249,
+      "tag": "0002_create_blog",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1752648109883,
+      "tag": "0003_create_blog_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752658889236,
+      "tag": "0004_create_blog_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1752658907983,
+      "tag": "0005_create_blog_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1752659291657,
+      "tag": "0006_create_blog_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1752902782028,
+      "tag": "0007_left_molly_hayes",
+      "breakpoints": true
     }
   ]
 }

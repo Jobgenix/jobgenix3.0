@@ -1,16 +1,12 @@
 /* eslint-disable*/
 //@ts-nocheck
 "use client";
-import * as React from "react";
+import { ImageUpload } from "@/app/components/image-preview";
 import { Check, ChevronsUpDown } from "lucide-react";
 import Image from "next/image";
-import { ImageUpload } from "@/app/components/image-preview";
+import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/app/components/ui/button";
-import { Input } from "@/app/components/ui/input";
-import { Label } from "@/app/components/ui/label";
-import axios from "axios";
 import {
   Command,
   CommandEmpty,
@@ -19,15 +15,19 @@ import {
   CommandItem,
   CommandList,
 } from "@/app/components/ui/command";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/app/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { CloudinaryUploadReturnObject } from "@/types/cloudinaryUpload";
-import { useSession } from "next-auth/react";
 import { CompanyType } from "@/types/companyType";
 import { formSectionProps } from "@/types/formSectionProps";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
 export function Combobox({ setFormData }: formSectionProps) {
@@ -189,17 +189,10 @@ export function Combobox({ setFormData }: formSectionProps) {
 
     // console.log(companyName);
     // console.log(userId);
-
-    toast.promise(() => fetchCompanies(userId), {
-      loading: "Please wait while we fetch companies",
-      success: (data) => {
-        return `${data}`;
-      },
-      error: "Failed to fetch companies",
-    });
+    fetchCompanies(userId);
   }, [companyName, session, render]);
 
-  
+
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -208,7 +201,7 @@ export function Combobox({ setFormData }: formSectionProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full bg-[#FFFCEF] justify-between h-16 text-xl"
+          className="w-full justify-between border-none h-16 text-xl"
         >
           <div className="flex items-center gap-2 w-full">
             {selectedCompany ? (

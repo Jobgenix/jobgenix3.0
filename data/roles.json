@@ -1,0 +1,17 @@
+[
+    {
+        "id": "1",
+        "role": "Candidate",
+        "permissions": "CAN_APPLY_JOBS,CAN_UPDATE_PROFILE"
+    },
+    {
+        "id": "2",
+        "role": "Employer",
+        "permissions": "CAN_POST_JOBS,CAN_VIEW_CANDIDATES"
+    },
+    {
+        "id": "3",
+        "role": "NewUser",
+        "permissions": ""
+    }
+]

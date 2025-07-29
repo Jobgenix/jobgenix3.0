@@ -1,14 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
-import { Sora } from "next/font/google";
-
-const soraFont = Sora({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
+import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 export default function Hero() {
   // const [showJobs, setShowJobs] = useState(true);
@@ -24,9 +18,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div
-      className={`container mx-auto px-4 py-8 md:py-12 ${soraFont.className}`}
-    >
+    <div className={`container mx-auto px-4 py-8 md:py-12 font-sora`}>
       {/* Main content wrapper */}
       <div className="flex flex-col lg:flex-row">
         {/* Left side content */}
@@ -86,7 +78,8 @@ export default function Hero() {
                     </span>
                   </div>
                   <p className="text-[10px] max-w-40 font-light mt-2">
-                    &quot;Landed my dream job in weeks! Jobgenix is live saver&quot;
+                    &quot;Landed my dream job in weeks! Jobgenix is live
+                    saver&quot;
                   </p>
                 </div>
                 {/* card 2 */}
@@ -107,7 +100,8 @@ export default function Hero() {
                     </span>
                   </div>
                   <p className="text-[10px] max-w-40 font-light mt-2">
-                    &quot;Landed my dream job in weeks! Jobgenix is live saver&quot;
+                    &quot;Landed my dream job in weeks! Jobgenix is live
+                    saver&quot;
                   </p>
                 </div>
                 {/* card 3 */}
@@ -128,9 +122,10 @@ export default function Hero() {
                     </span>
                   </div>
                   <p className="text-[10px] max-w-40 font-light mt-2">
-                    &quot;Landed my dream job in weeks! Jobgenix is live saver&quot;
+                    &quot;Landed my dream job in weeks! Jobgenix is live
+                    saver&quot;
                   </p>
-                </div> 
+                </div>
               </div>
             </div>
             <button className="h-8 w-28 lg:mt-3 absolute left-[95px] hidden xl:block bg-[#0073E6] rounded-lg text-white text-xs">

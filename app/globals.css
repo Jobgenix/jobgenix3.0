@@ -142,12 +142,103 @@ code {
   /* Smooth transition for visibility */
 }
 
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-.greenish{
+.greenish {
   color: #2F8E5B;
+}
+
+.card-shadow {
+  box-shadow:
+    1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset,
+    -1px -1px 2px 0px rgba(198, 198, 198, 0.50) inset,
+    -4px 4px 8px 0px rgba(198, 198, 198, 0.20),
+    4px -4px 8px 0px rgba(198, 198, 198, 0.20),
+    -4px -4px 8px 0px rgba(255, 255, 255, 0.90),
+    4px 4px 10px 0px rgba(198, 198, 198, 0.90);
+}
+
+@media (max-width: 635px) {
+
+  /* Tailwind's lg breakpoint is 1024px */
+  .no-shadow-mobile {
+    box-shadow: none !important;
+  }
+}
+
+/* Hide scrollbar when not scrolling */
+.activity-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #c0c0c0 transparent;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE & Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
+
+.scrollbar-track-none::-webkit-scrollbar-track {
+  background: transparent;
+  /* Very light background for the track */
+}
+
+.scrollbar-thumb-black::-webkit-scrollbar-thumb {
+  background: #333333;
+  /* Slightly darker, very subtle thumb */
+  border-radius: 9999px;
+  /* Rounded thumb */
+  opacity: 0;
+  /* Invisible by default */
+  transition: opacity 0.2s ease;
+  /* Smooth transition for visibility */
+}
+
+.scrollbar-w-5::-webkit-scrollbar {
+  width: 5px;
+
+  /* Chrome, Safari, Opera */
+}
+
+.tiptap ul {
+  list-style-type: disc !important;
+  margin-left: 1.5em;
+  padding-left: 1em;
+}
+
+.tiptap ol {
+  list-style-type: decimal !important;
+  margin-left: 1.5em;
+  padding-left: 1em;
+}
+
+.tiptap li {
+  margin: 0.25em 0;
+}
+
+/* Ensure bullets/numbers show for lists in job descriptions */
+.prose ul {
+  list-style-type: disc !important;
+  margin-left: 1.5em;
+  padding-left: 1em;
+}
+
+.prose ol {
+  list-style-type: decimal !important;
+  margin-left: 1.5em;
+  padding-left: 1em;
+}
+
+.prose li {
+  margin: 0.25em 0;
 }

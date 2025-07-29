@@ -1,7 +1,16 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Mail, Phone } from "lucide-react"
-import { Instagram, Linkedin, Facebook, Send, DiscIcon as Discord, Twitter, Youtube } from "lucide-react"
+import {
+  DiscIcon as Discord,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  Phone,
+  Send,
+  Twitter,
+  Youtube,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -10,19 +19,33 @@ export default function Footer() {
         {/* Left Section */}
         <div className="bg-slate-800 text-white p-8 lg:p-12">
           <div className="max-w-md">
-            <Image src="/placeholder.svg" alt="Jobgenix Logo" width={150} height={40} className="mb-4" />
-            <p className="text-gray-300 mb-8">Built with ❤️ in India for the world</p>
+            <Image
+              src="/placeholder.svg"
+              alt="Jobgenix Logo"
+              width={150}
+              height={40}
+              className="mb-4"
+            />
+            <p className="text-gray-300 mb-8">
+              Built with ❤️ in India for the world
+            </p>
 
             <div className="space-y-8">
               <div>
                 <h3 className="font-semibold mb-4">Stay Connected</h3>
                 <div className="space-y-2">
                   <p className="font-medium">Sales Inquiries</p>
-                  <Link href="mailto:careers@jobgenix.co.in" className="text-gray-300 flex items-center gap-2">
+                  <Link
+                    href="mailto:careers@jobgenix.co.in"
+                    className="text-gray-300 flex items-center gap-2"
+                  >
                     <Mail size={16} />
                     careers@jobgenix.co.in
                   </Link>
-                  <Link href="tel:+918420641071" className="text-gray-300 flex items-center gap-2">
+                  <Link
+                    href="tel:+918420641071"
+                    className="text-gray-300 flex items-center gap-2"
+                  >
                     <Phone size={16} />
                     +91-8420641071
                   </Link>
@@ -30,7 +53,10 @@ export default function Footer() {
 
                 <div className="mt-4">
                   <p className="font-medium">Support Inquiries</p>
-                  <Link href="mailto:support@jobgenix.co.in" className="text-gray-300 flex items-center gap-2">
+                  <Link
+                    href="mailto:support@jobgenix.co.in"
+                    className="text-gray-300 flex items-center gap-2"
+                  >
                     <Mail size={16} />
                     support@jobgenix.co.in
                   </Link>
@@ -38,31 +64,52 @@ export default function Footer() {
               </div>
 
               <div className="flex gap-4 mb-8">
-                <Link href="https://instagram.com" className="text-[#E1B067] hover:opacity-80">
+                <Link
+                  href="https://instagram.com"
+                  className="text-[#E1B067] hover:opacity-80"
+                >
                   <Instagram size={24} />
                   <span className="sr-only">Instagram</span>
                 </Link>
-                <Link href="https://linkedin.com" className="text-[#E1B067] hover:opacity-80">
+                <Link
+                  href="https://linkedin.com"
+                  className="text-[#E1B067] hover:opacity-80"
+                >
                   <Linkedin size={24} />
                   <span className="sr-only">LinkedIn</span>
                 </Link>
-                <Link href="https://facebook.com" className="text-[#E1B067] hover:opacity-80">
+                <Link
+                  href="https://facebook.com"
+                  className="text-[#E1B067] hover:opacity-80"
+                >
                   <Facebook size={24} />
                   <span className="sr-only">Facebook</span>
                 </Link>
-                <Link href="https://telegram.org" className="text-[#E1B067] hover:opacity-80">
+                <Link
+                  href="https://telegram.org"
+                  className="text-[#E1B067] hover:opacity-80"
+                >
                   <Send size={24} />
                   <span className="sr-only">Telegram</span>
                 </Link>
-                <Link href="https://discord.com" className="text-[#E1B067] hover:opacity-80">
+                <Link
+                  href="https://discord.com"
+                  className="text-[#E1B067] hover:opacity-80"
+                >
                   <Discord size={24} />
                   <span className="sr-only">Discord</span>
                 </Link>
-                <Link href="https://twitter.com" className="text-[#E1B067] hover:opacity-80">
+                <Link
+                  href="https://twitter.com"
+                  className="text-[#E1B067] hover:opacity-80"
+                >
                   <Twitter size={24} />
                   <span className="sr-only">X (Twitter)</span>
                 </Link>
-                <Link href="https://youtube.com" className="text-[#E1B067] hover:opacity-80">
+                <Link
+                  href="https://youtube.com"
+                  className="text-[#E1B067] hover:opacity-80"
+                >
                   <Youtube size={24} />
                   <span className="sr-only">YouTube</span>
                 </Link>
@@ -71,8 +118,8 @@ export default function Footer() {
               <div>
                 <h3 className="font-semibold mb-4">Stay Updated</h3>
                 <p className="text-sm text-gray-300 mb-4">
-                  We will send you updates on the latest opportunities to showcase your talent and get hired and rewarded
-                  regularly.
+                  We will send you updates on the latest opportunities to
+                  showcase your talent and get hired and rewarded regularly.
                 </p>
                 <div className="flex gap-2">
                   <input
@@ -80,13 +127,19 @@ export default function Footer() {
                     placeholder="Sign up for our newsletter"
                     className="flex-1 px-4 py-2 rounded bg-slate-700 text-white"
                   />
-                  <button className="bg-amber-500 text-white px-4 py-2 rounded">→</button>
+                  <button className="bg-amber-500 text-white px-4 py-2 rounded">
+                    →
+                  </button>
                 </div>
               </div>
 
               <div className="space-x-4">
-                <button className="bg-emerald-600 text-white px-4 py-2 rounded text-sm">Share Your Story Now</button>
-                <button className="bg-emerald-600 text-white px-4 py-2 rounded text-sm">Publish Opportunity</button>
+                <button className="bg-emerald-600 text-white px-4 py-2 rounded text-sm">
+                  Share Your Story Now
+                </button>
+                <button className="bg-emerald-600 text-white px-4 py-2 rounded text-sm">
+                  Publish Opportunity
+                </button>
               </div>
 
               <div>
@@ -163,7 +216,9 @@ export default function Footer() {
                 </li>
               </ul>
 
-              <h3 className="font-semibold text-lg mt-8 mb-4">Past Year Papers</h3>
+              <h3 className="font-semibold text-lg mt-8 mb-4">
+                Past Year Papers
+              </h3>
               <ul className="space-y-2">
                 <li>
                   <Link href="#">Capgemini 2024 Papers</Link>
@@ -231,9 +286,9 @@ export default function Footer() {
       </div>
 
       <div className="bg-slate-800 text-gray-400 text-sm p-4 text-center">
-        Best Viewed in Latest Versions of Edge, Mozilla, Chrome, Opera & Safari. V: 12.5.2024.0.38
+        Best Viewed in Latest Versions of Edge, Mozilla, Chrome, Opera & Safari.
+        V: 12.5.2024.0.38
       </div>
     </footer>
-  )
+  );
 }
-

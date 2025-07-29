@@ -1,0 +1,97 @@
+[
+    {
+        "id": "1",
+        "name": "B.Tech",
+        "field": "engineering"
+    },
+    {
+        "id": "10",
+        "name": "EMBA",
+        "field": "business"
+    },
+    {
+        "id": "11",
+        "name": "B.A",
+        "field": "arts"
+    },
+    {
+        "id": "12",
+        "name": "PGDM",
+        "field": "business"
+    },
+    {
+        "id": "13",
+        "name": "M.A",
+        "field": "arts"
+    },
+    {
+        "id": "14",
+        "name": "Diploma",
+        "field": "other"
+    },
+    {
+        "id": "15",
+        "name": "B.Com",
+        "field": "business"
+    },
+    {
+        "id": "2",
+        "name": "M.Tech",
+        "field": "engineering"
+    },
+    {
+        "id": "20",
+        "name": "BBA",
+        "field": "business"
+    },
+    {
+        "id": "21",
+        "name": "MBA",
+        "field": "business"
+    },
+    {
+        "id": "3",
+        "name": "dual",
+        "field": "engineering"
+    },
+    {
+        "id": "30",
+        "name": "All Graduates",
+        "field": "other"
+    },
+    {
+        "id": "31",
+        "name": "all engineering",
+        "field": "engineering"
+    },
+    {
+        "id": "32",
+        "name": "All Business",
+        "field": "business"
+    },
+    {
+        "id": "55",
+        "name": "BCA",
+        "field": "engineering"
+    },
+    {
+        "id": "6",
+        "name": "MCA",
+        "field": "engineering"
+    },
+    {
+        "id": "7",
+        "name": "BSc",
+        "field": "engineering"
+    },
+    {
+        "id": "8",
+        "name": "MSc",
+        "field": "engineering"
+    },
+    {
+        "id": "9",
+        "name": "others",
+        "field": "engineering"
+    }
+]

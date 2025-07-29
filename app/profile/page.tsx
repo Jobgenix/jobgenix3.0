@@ -1,25 +1,21 @@
-'use client';
-import React, { useEffect, useState } from "react";
-import { Sora } from "next/font/google";
+"use client";
+
 import { useSession } from "next-auth/react";
+
 import { useRouter } from "next/navigation";
-import ProfileCard from "../components/cards/profileCard";
-import Image from "next/image";
-import Link from "next/link";
-import Nav from "../components/LandingPage-New/nav";
-import Footer from "../components/LandingPage-New/footerNew";
+import React, { useEffect, useState } from "react";
+// import Footer from "../components/LandingPage-New/footerNew";
 import Activity from "../components/cards/activity";
+import ProfileCard from "../components/cards/profileCard";
+import Footer from "../components/Footer/Footer";
+import Nav from "../components/LandingPage-New/nav";
+import YourJourneyBanner from "../components/YourJourneyBanner";
 
-
-
-const sorafont = Sora({
-  subsets: ["latin"],
-  weight: "400",
-});
-
-<div className={`${sorafont.className}`}>
-  {/* Apply the font to this div or any other element */}
-</div>
+{
+  /* <div className={`${sorafont.className}`}>
+  {/* Apply the font to this div or any other element 
+</div>; */
+}
 
 export default function Page() {
   const { status } = useSession();
@@ -40,28 +36,25 @@ export default function Page() {
 
         const data = await response.json();
         setUserDetails(data);
-        console.log("USer Data"+data);
+        console.log("USer Data" + data);
       }
     }
     fetchProfile();
   }, [status]);
 
   return (
-    <div className={`${sorafont.className}`}>
-      <Nav />
-      <div className="max-w-7xl mt-10 md:mt-5 mx-auto h-full md:flex justify-between">
-        {userDetails && <ProfileCard data={userDetails} />}
-        {userDetails && <Activity data={userDetails} />}
+    <div className={`font-sora overflow-x-hidden bg-[#F5F5F5] h-fit`}>
+      <Nav onLoginClick={() => router.push("/login")} />
+      <div className="w-full h-fit mt-16 lg:mt-28 mx-auto p-4 flex justify-center">
+        <div className="max-w-7xl w-full flex flex-col lg:flex-row  justify-center items-center gap-5 sm:px-6 mb-16 sm:mb-24 lg:m-0">
+          {userDetails && <ProfileCard data={userDetails} />}
+          {userDetails && <Activity data={userDetails} />}
+        </div>
       </div>
-      <Link href={"/"} className="w-full flex justify-center mt-16">
-        <Image
-          src={"/images3/refer.png"}
-          height={1080}
-          width={1080}
-          alt="logo"
-          className="object-cover w-full md:w-7xl"
-        />
-      </Link>
+      <div className="hidden my-28 lg:flex justify-center">
+        <YourJourneyBanner />
+      </div>
+
       <Footer />
     </div>
   );

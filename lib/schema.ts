@@ -6,6 +6,8 @@ import {
     integer,
     varchar,
     pgEnum,
+    uuid,
+    jsonb,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
@@ -15,12 +17,12 @@ export const users = pgTable("user", {
     email: text("email").notNull().unique(),
     emailVerified: timestamp("emailVerified", { mode: "date" }),
     image: text("image"),
-    gender: text("gender").notNull(), // New field for gender
+    gender: text("gender").notNull().default('male'), // ✅ match Neon default
     phoneNumber: text("phoneNumber").notNull(), // New field for phone number
     password: text("password"),
     salt: text("passwordSalt"),
     roleId: text("role_id").references(() => roles.id),
-    location: text("location"), // User's location
+    location: text("location").array(), // User's location
     university: text("university"), // User's university
     summary: text("summary"), // User's summary or bio
     resumeUrl: text("resume_url"),
@@ -111,7 +113,7 @@ export const opportunities = pgTable("opportunities", {
     experience: experienceTypeEnum("experience").notNull(),
     yearsOfExperience: text("yearsOfExperience").notNull(),
     degree: text("degree").array(), // Reference degree table
-    benfits: benefitsTypeEnum("benefitsType").array(),
+    benefits: benefitsTypeEnum("benefitsType").array(),
     salary: text("salary"),
     status: jobStatusEnum("status").notNull().default("active"),
     jobLink: text("jobLink").notNull(),
@@ -119,7 +121,7 @@ export const opportunities = pgTable("opportunities", {
     category: text("category").array(), // Add a category table and reference it here
     deadline: timestamp("deadline", { mode: "date" }).notNull(),
     postedAt: timestamp("postedAt", { mode: "date" }).notNull(),
-    requireSkils: text("requiredSkils"),
+    requiredSkils: text("requiredSkils"),
 });
 
 export const degrees = pgTable("degrees", {
@@ -127,3 +129,19 @@ export const degrees = pgTable("degrees", {
     name: text("name").notNull(),
     field: fieldEnum("field").notNull(),
 });
+
+
+export const blog = pgTable("blog", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    title: text("title").notNull(),
+    content: jsonb("content").notNull(), // Storing Editor.js data as JSON
+    tags: text("tags").array(), 
+    authorId: text("author_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }), // FK to user table
+    createdAt: timestamp("created_at").defaultNow(),
+    featuredImage: text("featured_image"), // Cloudinary image URL (nullable)
+    category: text("category")
+  });
+
+//   fetured image error see console

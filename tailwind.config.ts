@@ -83,6 +83,14 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+        sora: ["Sora", "sans-serif"],
+        Geist: ["Geist", "sans-serif"],
+        Geist_Mono: ["Geist Mono", "monospace"],
+        roboto: ["Roboto", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

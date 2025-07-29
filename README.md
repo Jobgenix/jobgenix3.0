@@ -1,14 +1,34 @@
-### Hi there.......👋.......
+# Job Genix co in
 
-merge-commit-from @Nabeel
+A Next.js project managed with [pnpm](https://pnpm.io/).
 
-merge-commit-from @bidyut
+## Getting Started
 
-merge-commit-from @Asmita
+Install dependencies:
 
-merge-commit-from @aditya
+```bash
+pnpm install
+```
 
-#
+Run the development server:
 
+```bash
+pnpm dev
+```
 
+Build for production:
 
+```bash
+pnpm build
+```
+
+## Project Structure
+
+- `pages/` – Application routes
+- `components/` – Reusable UI components
+- `public/` – Static assets
+
+## Learn More
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [pnpm Documentation](https://pnpm.io/)

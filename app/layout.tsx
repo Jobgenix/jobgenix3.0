@@ -1,9 +1,29 @@
+import { Toaster } from "@/app/components/ui/sonner";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Inter,
+  Montserrat,
+  Roboto,
+  Sora,
+} from "next/font/google";
 import "./globals.css";
 import SessionProvider from "./providers/SessionProvider";
-import { Toaster } from "@/app/components/ui/sonner"
-import {GoogleAnalytics} from "@next/third-parties/google"
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  // display: "swap",
+  variable: "--font-montserrat",
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-sora",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +33,16 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-roboto",
+});
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -28,13 +58,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${montserrat.variable} ${sora.variable} ${geistMono.variable} ${roboto.variable} ${inter.variable} antialiased`}
       >
-        <SessionProvider>
-          {children}
-        </SessionProvider>
-        <GoogleAnalytics gaId="G-SXFXE0DME9"/>
-        <Toaster expand={true} richColors/>
+        <SessionProvider>{children}</SessionProvider>
+        <GoogleAnalytics gaId="G-SXFXE0DME9" />
+        <Toaster expand={true} richColors />
       </body>
     </html>
   );
