@@ -54,7 +54,7 @@ async function getJobs(req: NextRequest) {
         jobLocation: opportunities.location,
         jobType: opportunities.workplaceType,
         jobLink: opportunities.jobLink,
-        requireskils: opportunities.requireSkils,
+        requiredSkils: opportunities.requiredSkils,
       })
       .from(opportunities)
       .innerJoin(companies, eq(opportunities.companyId, companies.id));
