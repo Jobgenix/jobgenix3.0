@@ -9,7 +9,6 @@ interface EditorBlock {
   type: string;
   data: {
     text?: string;
-    [key: string]: any;
   };
 }
 
