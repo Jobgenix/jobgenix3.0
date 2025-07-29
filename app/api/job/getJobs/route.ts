@@ -19,7 +19,7 @@ interface JobQueryResult {
   jobLocation: string[];
   jobType: "remote" | "office" | "hybrid";
   jobLink: string;
-  requireSkils: string | null;
+  requiredSkils: string | null;
   description: string | null; // Added description field
 }
 
@@ -154,7 +154,7 @@ async function getJobs(req: NextRequest) {
         );
       }
 
-      const jobdata = dbResult[0] as JobQueryRes ult;
+      const jobdata = dbResult[0] as JobQueryResult;
       const requireSkils = jobdata.requiredSkils;
       console.log("Job found in database with skills:", requireSkils);
 
