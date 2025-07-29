@@ -5,21 +5,17 @@ import { eq } from "drizzle-orm";
 
 export async function GET(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = context.params;
-
+    const { id } = await context.params;
     if (!id) {
       return NextResponse.json({ error: "Blog ID is required" }, { status: 400 });
     }
-
     const result = await db.select().from(blog).where(eq(blog.id, id));
-
     if (!result.length) {
       return NextResponse.json({ error: "Blog not found" }, { status: 404 });
     }
-
     return NextResponse.json(result[0]);
   } catch (error) {
     console.error(error);
