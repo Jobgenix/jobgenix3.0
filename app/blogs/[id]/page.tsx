@@ -27,7 +27,7 @@ const edjsParser = EditorJsHTML({
 interface Blog {
   id: string;
   title: string;
-  content: any;
+  content: unknown;
   featuredImage?: string;
   createdAt: string;
 }

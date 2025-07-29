@@ -58,16 +58,26 @@ const Grooming = () => {
           <div className="flex flex-col items-center">
             <div className="relative inline-block">
               <div className="absolute top-3/4 left-1/2 md:w-[500px] md:h-96 -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-t-full blur-2xl opacity-40"></div>
-              <img
-                src={"/grooming/middle.png"}
-                alt="JobGenix Platform"
-                className="block md:hidden"
-              />
-              <img
-                src={"/grooming/middle3.png"}
-                alt="JobGenix Platform"
-                className="hidden md:block"
-              />
+              <div className="block md:hidden">
+                <Image
+                  src="/grooming/middle.png"
+                  alt="JobGenix Platform"
+                  width={400}
+                  height={300}
+                  className="w-auto h-auto"
+                  priority
+                />
+              </div>
+              <div className="hidden md:block">
+                <Image
+                  src="/grooming/middle3.png"
+                  alt="JobGenix Platform"
+                  width={800}
+                  height={600}
+                  className="w-auto h-auto"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -197,9 +207,11 @@ const CourseCard = ({
         {/* Instructor & Button */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img
-              src="https://via.placeholder.com/32" // Replace with instructor image URL
+            <Image
+              src="/grooming/instructor.webp" // Replace with instructor image URL
               alt={instructor}
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full object-cover"
             />
             <span className="text-black text-sm font-[400] font-Montserrat leading-[20px]">
