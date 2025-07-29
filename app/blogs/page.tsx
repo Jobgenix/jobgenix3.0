@@ -5,6 +5,7 @@ import Nav from "../components/LandingPage-New/nav";
 import { useRouter } from "next/navigation";
 
 interface EditorBlock {
+  id: string;
   type: string;
   data: {
     text?: string;
@@ -12,10 +13,16 @@ interface EditorBlock {
   };
 }
 
+interface EditorContent {
+  time: number;
+  blocks: EditorBlock[];
+  version: string;
+}
+
 interface Blog {
   id: string;
   title: string;
-  content: { blocks: EditorBlock[] };
+  content: EditorContent;
   tags?: string[];
   authorId: string;
   createdAt?: string;
@@ -48,6 +55,7 @@ export default function BlogSection() {
         setBlogs((prev) => (replace ? data.data : [...prev, ...data.data]));
         setHasMore(data.data.length === 9);
         setPage(pageToFetch);
+        console.log(data);
       }
     } catch (e) {
       // handle error
@@ -113,7 +121,7 @@ export default function BlogSection() {
                 {blog.title} ↗
               </h3>
               <p className="text-gray-600 text-sm mt-2 flex-1">
-                {Array.isArray(blog.content?.blocks) &&
+                {blog.content.blocks?.length > 0 &&
                 blog.content.blocks[0]?.data?.text
                   ? blog.content.blocks[0].data.text.slice(0, 100) + "..."
                   : "No preview available"}
@@ -122,11 +130,13 @@ export default function BlogSection() {
               {/* Author */}
               <div className="flex items-center mt-4">
                 <Image
-                  src={blog.authorImage}
-                  width={0}
-                  height={0}
+                  src={blog.authorImage || "/default-author.png"}
                   alt="author"
+                  width={32}
+                  height={32}
+                  className="rounded-full object-cover"
                 />
+
                 <div className="ml-2">
                   <p className="text-gray-900 text-sm font-medium">
                     {blog.authorName}
