@@ -4,10 +4,18 @@ import Image from "next/image";
 import Nav from "../components/LandingPage-New/nav";
 import { useRouter } from "next/navigation";
 
+interface EditorBlock {
+  type: string;
+  data: {
+    text?: string;
+    [key: string]: any;
+  };
+}
+
 interface Blog {
   id: string;
   title: string;
-  content: unknown;
+  content: { blocks: EditorBlock[] };
   tags?: string[];
   authorId: string;
   createdAt?: string;
@@ -105,15 +113,12 @@ export default function BlogSection() {
                 {blog.title} ↗
               </h3>
               <p className="text-gray-600 text-sm mt-2 flex-1">
-                {/* Render a short preview from content */}
-                {typeof blog.content.blocks[0].data.text === "string"
-                  ? blog.content.blocks[0].data.text.slice(0, 100)
-                  : JSON.stringify(blog.content.blocks[0].data.text).slice(
-                      0,
-                      100
-                    )}
-                ...
+                {Array.isArray(blog.content?.blocks) &&
+                blog.content.blocks[0]?.data?.text
+                  ? blog.content.blocks[0].data.text.slice(0, 100) + "..."
+                  : "No preview available"}
               </p>
+
               {/* Author */}
               <div className="flex items-center mt-4">
                 <Image
