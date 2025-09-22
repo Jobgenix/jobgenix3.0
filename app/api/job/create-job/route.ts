@@ -30,7 +30,7 @@ async function createJob(req: NextRequest) {
       ...opportunity,
       postedAt: new Date(opportunity.postedAt),
       deadline: new Date(opportunity.deadline),
-      requireSkils: resulySkils,
+      requiredSkils: resulySkils,
     });
 
     return new NextResponse(

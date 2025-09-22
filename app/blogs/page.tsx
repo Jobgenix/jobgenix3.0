@@ -4,10 +4,24 @@ import Image from "next/image";
 import Nav from "../components/LandingPage-New/nav";
 import { useRouter } from "next/navigation";
 
+interface EditorBlock {
+  id: string;
+  type: string;
+  data: {
+    text?: string;
+  };
+}
+
+interface EditorContent {
+  time: number;
+  blocks: EditorBlock[];
+  version: string;
+}
+
 interface Blog {
   id: string;
   title: string;
-  content: any;
+  content: EditorContent;
   tags?: string[];
   authorId: string;
   createdAt?: string;
@@ -40,6 +54,7 @@ export default function BlogSection() {
         setBlogs((prev) => (replace ? data.data : [...prev, ...data.data]));
         setHasMore(data.data.length === 9);
         setPage(pageToFetch);
+        console.log(data);
       }
     } catch (e) {
       // handle error
@@ -63,10 +78,11 @@ export default function BlogSection() {
         <div className="text-center mb-8">
           <p className="text-sm text-blue-600 font-medium">Our blog</p>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">
-            Resources and insights
+            Your Career’s Not Waiting. Why Are You?
           </h2>
           <p className="text-gray-600 mt-2 text-base max-w-2xl mx-auto">
-            The latest industry news, interviews, technologies, and resources.
+            Small steps. Big impact. Learn from mistakes, follow insider tips,
+            get job ready – fast, simple, and straight to the point.
           </p>
           {/* Search Bar */}
           <div className="flex justify-center mt-6">
@@ -105,26 +121,26 @@ export default function BlogSection() {
                 {blog.title} ↗
               </h3>
               <p className="text-gray-600 text-sm mt-2 flex-1">
-                {/* Render a short preview from content */}
-                {typeof blog.content.blocks[0].data.text === "string"
-                  ? blog.content.blocks[0].data.text.slice(0, 100)
-                  : JSON.stringify(blog.content.blocks[0].data.text).slice(
-                      0,
-                      100
-                    )}
-                ...
+                {blog.content.blocks?.length > 0 &&
+                blog.content.blocks[0]?.data?.text
+                  ? blog.content.blocks[0].data.text.slice(0, 100) + "..."
+                  : "No preview available"}
               </p>
+
               {/* Author */}
               <div className="flex items-center mt-4">
                 <Image
-                  src={blog.authorImage}
-                  width={0}
-                  height={0}
+                  src={"/brand/jobGenix-black-blue.svg"}
                   alt="author"
+                  width={32}
+                  height={32}
+                  className="rounded-full object-cover"
                 />
+
                 <div className="ml-2">
                   <p className="text-gray-900 text-sm font-medium">
-                    {blog.authorName}
+                    {/* {blog.authorName} */}
+                    Team Jobgenix
                   </p>
                   <p className="text-gray-500 text-xs">
                     {blog.createdAt &&

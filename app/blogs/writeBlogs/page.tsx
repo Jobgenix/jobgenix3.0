@@ -11,18 +11,80 @@ import { toast } from "sonner";
 const EditorClient = dynamic(() => import("../../components/EditorClient"), {
   ssr: false,
 });
+
+const navItemsForblog = [
+  {
+    id: 1,
+    name: "Career Advice",
+    children: [
+      {
+        name: "Resume and Cover Letter Tips",
+      },
+      {
+        name: "Interview Preparation",
+      },
+      { name: "Job Search Strategies" },
+      {
+        name: "Personal Branding & Networking",
+      },
+      {
+        name: "Career Growth & Development",
+      },
+    ],
+  },
+
+  {
+    id: 2,
+
+    name: "Industry Insights",
+    children: [
+      {
+        name: "Job Market Trends",
+      },
+      {
+        name: "Emerging Industries",
+      },
+      {
+        name: "In-Demand Skills",
+      },
+      {
+        name: "Technology and Automation Impact",
+      },
+      {
+        name: "Sector-specific Insights",
+      },
+    ],
+  },
+
+  {
+    id: 3,
+    name: "Success Stories and Interviews",
+    children: [
+      { name: "Student Success Stories" },
+      {
+        name: "Industry Expert Interviews",
+      },
+      { name: "Job Seeker Journeys" },
+      {
+        name: "Startup Founders’ Stories",
+      },
+      {
+        name: "Inspirational Career Transformations",
+      },
+    ],
+  },
+];
 export default function NewBlogPost() {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState<File | null>(null);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<number | "">("");
+  const [subcategory, setsubcategory] = useState<string | "">("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-  const [editorData, setEditorData] = useState<any>(null);
-  const [featuredImageUrl, setFeaturedImageUrl] = useState<string>("");
-  const [imageUploading, setImageUploading] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string>("");
+  const [editorData, setEditorData] = useState<unknown>(null);
   const [loading, setLoading] = useState(false);
   const { status, data: session } = useSession();
+
   const router = useRouter();
 
   // Only show page if user has role "4"
@@ -40,9 +102,9 @@ export default function NewBlogPost() {
       setTagInput("");
     }
   };
-  // see chatgpt
-  const handleSubmit = async (publish: boolean, FeaturedImg: string) => {
-    console.log("featuredImageUrl is", FeaturedImg);
+
+  const handleSubmit = async () => {
+    setLoading(true);
     try {
       const res = await fetch("/api/blogs/write-blog", {
         method: "POST",
@@ -52,8 +114,11 @@ export default function NewBlogPost() {
           content: editorData, // store as JSON
           // status: publish ? "published" : "draft",
           tags,
-          featuredImage: FeaturedImg,
-          category: category,
+          category:
+            typeof category === "number"
+              ? navItemsForblog[category - 1].name
+              : "",
+          subcategory: subcategory,
         }),
       });
 
@@ -66,13 +131,14 @@ export default function NewBlogPost() {
         setTags([]);
         setTagInput("");
         setEditorData("");
-        setImagePreview("");
       } else {
         alert("Failed to create blog post");
       }
     } catch (error) {
       console.error("Error creating blog post:", error);
       alert("An error occurred while creating the blog post.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,58 +146,6 @@ export default function NewBlogPost() {
     alert("Preview functionality not implemented yet.");
   };
 
-  const handlePublishClick = async (publish: boolean) => {
-    if (image && !featuredImageUrl) {
-      setLoading(true);
-      console.log("clicked");
-      console.log(image);
-
-      setImageUploading(true);
-      try {
-        const res = await fetch("/api/blogs/uploadBlogImage", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ fileType: image.type }),
-        });
-        const signedData = await res.json();
-        if (!res.ok || !signedData.success) {
-          throw new Error(
-            signedData.error || "Failed to get upload credentials"
-          );
-        }
-        const uploadFormData = new FormData();
-        uploadFormData.append("file", image);
-        uploadFormData.append("api_key", signedData.api_key);
-        uploadFormData.append("timestamp", signedData.timestamp);
-        uploadFormData.append("signature", signedData.signature);
-        uploadFormData.append("folder", signedData.folder);
-        const uploadRes = await fetch(
-          `https://api.cloudinary.com/v1_1/${signedData.cloud_name}/upload`,
-          {
-            method: "POST",
-            body: uploadFormData,
-          }
-        );
-        const uploadData = await uploadRes.json();
-        if (!uploadRes.ok) {
-          throw new Error(uploadData.error?.message || "Upload failed");
-        }
-        setFeaturedImageUrl(uploadData.secure_url);
-        toast.success("Image uploaded successfully!");
-        setImageUploading(false);
-        // Now call handleSubmit
-        await handleSubmit(publish, uploadData.secure_url);
-      } catch (error: any) {
-        setImageUploading(false);
-        console.log(error);
-        toast.error(error.message || "Failed to upload image");
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      alert("upload image");
-    }
-  };
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -173,15 +187,13 @@ export default function NewBlogPost() {
               <button
                 onClick={() => alert("we are cooking this feature")}
                 className="w-1/2 bg-gray-100 text-[#1F2937] text-sm font-medium py-2 rounded-md border border-gray-300 hover:bg-gray-200 transition flex justify-center items-center"
-                disabled={imageUploading}
               >
                 <Save className="me-2" size={16} />
                 Save Draft
               </button>
               <button
-                onClick={() => handlePublishClick(true)}
+                onClick={handleSubmit}
                 className="w-1/2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-md flex justify-center items-center"
-                disabled={imageUploading}
               >
                 <Send className="me-2" size={16} />
                 Publish
@@ -205,41 +217,6 @@ export default function NewBlogPost() {
 
           <hr className="border-t border-gray-200" />
 
-          {/* Featured Image */}
-          <div>
-            <h3 className="text-[#111827] text-sm font-medium mb-2">
-              Featured Image
-            </h3>
-            <div className="border-2 border-dashed border-gray-300 rounded-md h-32 flex items-center justify-center text-gray-400 cursor-pointer hover:bg-gray-50 transition">
-              <label className="w-full h-full flex items-center justify-center cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      setImage(file);
-                      setImagePreview(URL.createObjectURL(file)); // Set local preview
-                    }
-                  }}
-                  disabled={imageUploading}
-                />
-                {imageUploading ? (
-                  "Uploading..."
-                ) : imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="h-28 object-contain"
-                  />
-                ) : (
-                  "Drag and drop or click to upload"
-                )}
-              </label>
-            </div>
-          </div>
-
           {/* Category */}
           <div>
             <h3 className="text-[#111827] text-sm font-medium mb-2">
@@ -247,18 +224,34 @@ export default function NewBlogPost() {
             </h3>
             <select
               className="w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-blue-500"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={category ?? ""}
+              onChange={(e) => setCategory(Number(e.target.value))}
             >
               <option value="">Select category</option>
-              <option value="IT & Software">IT & Software</option>
-              <option value="Marketing & Sales">Marketing & Sales</option>
-              <option value="Design & Creatives">Design & Creatives</option>
-              <option value="Business & Management">
-                Business & Management
-              </option>
-              <option value="Data Science & AI">Data Science & AI</option>
-              <option value="Internships">Internships</option>
+              {navItemsForblog?.map((cat, index) => (
+                <option key={index} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={`${category > "0" ? "block" : "hidden"}`}>
+            <h3 className="text-[#111827] text-sm font-medium mb-2">
+              Sub-category
+            </h3>
+            <select
+              className="w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-blue-500"
+              value={subcategory}
+              onChange={(e) => setsubcategory(e.target.value)}
+            >
+              <option value="">Select sub-category</option>
+              {typeof category === "number" &&
+                navItemsForblog[category - 1]?.children?.map((cat, index) => (
+                  <option key={index} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
             </select>
           </div>
 

@@ -19,7 +19,7 @@ interface JobQueryResult {
   jobLocation: string[];
   jobType: "remote" | "office" | "hybrid";
   jobLink: string;
-  requireSkils: string | null;
+  requiredSkils: string | null;
   description: string | null; // Added description field
 }
 
@@ -138,7 +138,7 @@ async function getJobs(req: NextRequest) {
           jobLocation: opportunities.location,
           jobType: opportunities.workplaceType,
           jobLink: opportunities.jobLink,
-          requireSkils: opportunities.requireSkils,
+          requiredSkils: opportunities.requiredSkils,
           description: opportunities.description, // Added description field to query
         })
         .from(opportunities)
@@ -155,7 +155,7 @@ async function getJobs(req: NextRequest) {
       }
 
       const jobdata = dbResult[0] as JobQueryResult;
-      const requireSkils = jobdata.requireSkils;
+      const requireSkils = jobdata.requiredSkils;
       console.log("Job found in database with skills:", requireSkils);
 
       let matchingSkills: string[] = [];
@@ -221,7 +221,7 @@ async function getJobs(req: NextRequest) {
         jobLocation: opportunities.location,
         jobType: opportunities.workplaceType,
         jobLink: opportunities.jobLink,
-        requireSkils: opportunities.requireSkils,
+        requiredSkils: opportunities.requiredSkils,
         description: opportunities.description, // Added description field to list query too
       })
       .from(opportunities)
@@ -236,7 +236,7 @@ async function getJobs(req: NextRequest) {
     console.log(`Found ${result.length} jobs matching criteria`);
 
     const jobsWithMatchingSkills = result.map((job) => {
-      const requireSkils = job.requireSkils;
+      const requireSkils = job.requiredSkils;
       console.log(`Job ${job.jobId} required skills:`, requireSkils);
 
       if (shouldMatchSkills && userSkills && userSkills.length > 0 && requireSkils) {

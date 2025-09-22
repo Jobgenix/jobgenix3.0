@@ -1,52 +1,142 @@
+"use client";
 import Nav from "../components/LandingPage-New/nav";
 import Footer from "../components/Footer/Footer";
 import { Button } from "../components/ui/button";
+import { AnimatePresence, delay, easeOut, motion } from "framer-motion";
 
 import { Bookmark } from "lucide-react";
 import Image from "next/image";
 import { ArrowRightCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const courses = [
   {
-    title: "Communication Skills",
-    duration: "4 weeks",
-    level: "Beginners",
+    title: "Basic Access",
     description: "Master effective communication for professional success.",
-    instructor: "John Smith",
+    instructor: "Adrika",
+    img: "/grooming/basic.jpg",
+    instructorImg: "/grooming/instructor.webp",
+    link: "https://forms.gle/tuNYawTzVAZLeoMK7",
   },
   {
-    title: "Leadership Essentials",
-    duration: "4 weeks",
-    level: "Advanced",
+    title: "Pro pass",
     description: "Master effective communication for professional success.",
-    instructor: "John Smith",
+    instructor: "Adrika",
+    img: "/grooming/propass.jpg",
+    instructorImg: "/grooming/instructor.webp",
+    link: "https://forms.gle/oY3tZtm1fUpMnjZV7",
   },
   {
-    title: "Problem Solving",
-    duration: "4 weeks",
-    level: "Beginners",
+    title: "Elite Accelerator",
     description: "Master effective communication for professional success.",
-    instructor: "John Smith",
+    instructor: "Adrika",
+    img: "/grooming/eliteacc.jpg",
+    instructorImg: "/grooming/instructor.webp",
+    link: "https://forms.gle/CJE6CycSPh1sw1uQ8",
+  },
+  {
+    title: "elite pass",
+    description: "Master effective communication for professional success.",
+    instructor: "Tilak",
+    img: "/grooming/elitepass.jpg",
+    instructorImg: "/grooming/instructor2.jpg",
+    link: "https://forms.gle/aHKvaSiaMiLCXadE7",
+  },
+  {
+    title: "Pro elite pass",
+    description: "Master effective communication for professional success.",
+    instructor: "Tilak",
+    img: "/grooming/proelite.jpg",
+    instructorImg: "/grooming/instructor2.jpg",
+    link: "https://forms.gle/DWWXsAzUwXvYRXux5",
   },
 ];
 const Grooming = () => {
+  const text = "career warmup";
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.06,
+      },
+    },
+  };
+
+  const letter = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: [1.4, 0.95, 1.05, 1],
+      transition: {
+        ease: easeOut,
+        duration: 0.4,
+      },
+    },
+  };
+  const professions = [
+    "software engineer",
+    "UI/UX designer",
+    "DevOps engineer",
+  ];
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % professions.length);
+    }, 2500); // change every 2.5s
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="bg-[#F5F5F5]">
       <Nav />
-      <section className="min-h-screen bg-hero-gradient relative overflow-hidden">
+      <section className="pb-10 bg-hero-gradient relative overflow-hidden">
         <div className="container mx-auto px-6 pt-16">
           <div className="text-center max-w-5xl mx-auto">
-            <h1 className="text-[36px] md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              Get Job-Ready, The{" "}
-              <span className="text-[#0073E6]">JobGenix</span>{" "}
-              <span className="text-[#0073E6]">Way!</span>
-            </h1>
-
+            <motion.h1
+              className="text-[36px] md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              variants={container}
+              initial="hidden"
+              animate="show"
+            >
+              {text.split("").map((char, index) => {
+                // Apply gradient to "warmup"
+                const isGradient = index >= 7;
+                return (
+                  <motion.span
+                    key={index}
+                    variants={letter}
+                    className={
+                      isGradient
+                        ? "inline-block bg-gradient-to-r from-[#F16058] to-[#0073E6] bg-clip-text text-transparent"
+                        : "inline-block text-[#6C7686]"
+                    }
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                );
+              })}
+            </motion.h1>
             <p className="text-[16px] md:text-xl text-muted-foreground md:mb-8 max-w-2xl mx-auto leading-relaxed mb-36">
-              Master skills, ace interviews & land your dream job with expert
-              guidance.
+              A quick way to level up your confidence in
+              <br />
+              <span className="text-[#0073E6] font-medium inline-block min-h-[1.5em] mt-3">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={professions[index]}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4 }}
+                    className="inline-block"
+                  >
+                    {" "}
+                    {professions[index]}.
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </p>
-
             <Button
               size="lg"
               className="bg-[#0073E6] hover:bg-brand-blue-dark text-primary-foreground px-8 py-4 text-[16px] md:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
@@ -55,21 +145,31 @@ const Grooming = () => {
             </Button>
           </div>
 
-          <div className="flex flex-col items-center">
+          {/* <div className="flex flex-col items-center">
             <div className="relative inline-block">
               <div className="absolute top-3/4 left-1/2 md:w-[500px] md:h-96 -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-t-full blur-2xl opacity-40"></div>
-              <img
-                src={"/grooming/middle.png"}
-                alt="JobGenix Platform"
-                className="block md:hidden"
-              />
-              <img
-                src={"/grooming/middle3.png"}
-                alt="JobGenix Platform"
-                className="hidden md:block"
-              />
+              <div className="block md:hidden">
+                <Image
+                  src="/grooming/middle.png"
+                  alt="JobGenix Platform"
+                  width={400}
+                  height={300}
+                  className="w-auto h-auto"
+                  priority
+                />
+              </div>
+              <div className="hidden md:block">
+                <Image
+                  src="/grooming/middle3.png"
+                  alt="JobGenix Platform"
+                  width={800}
+                  height={600}
+                  className="w-auto h-auto"
+                  priority
+                />
+              </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
       <section className="bg-[#021C2D] text-section-dark-foreground py-20">
@@ -92,11 +192,13 @@ const Grooming = () => {
               <CourseCard
                 key={index}
                 title={course.title}
-                duration={course.duration}
-                level={course.level}
                 description={course.description}
                 instructor={course.instructor}
-                isBookmarked={index === 1} // Second card is bookmarked
+                isBookmarked={index === 1}
+                idx={index}
+                img={course.img}
+                instructorImg={course.instructorImg}
+                link={course.link}
               />
             ))}
           </div>
@@ -148,43 +250,39 @@ export default Grooming;
 
 interface CourseCardProps {
   title: string;
-  duration: string;
-  level: string;
   description: string;
   instructor: string;
   isBookmarked?: boolean;
+  idx: number;
+  img: string;
+  instructorImg?: string;
+  link?: string;
 }
 
 const CourseCard = ({
   title,
-  duration,
-  level,
   description,
   instructor,
   isBookmarked = false,
+  idx,
+  img,
+  instructorImg,
+  link = "#",
 }: CourseCardProps) => {
-  const getLevelColor = (level: string) => {
-    switch (level.toLowerCase()) {
-      case "beginners":
-        return "bg-green-600 text-white";
-      case "advanced":
-        return "bg-orange-500 text-white";
-      default:
-        return "bg-green-600 text-white";
-    }
-  };
-
   return (
     <div className="bg-white rounded-[20px] shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden">
       {/* Thumbnail Section */}
-      <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-700 relative">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-
-        <div className="absolute bottom-4 left-4">
-          <h3 className="text-white font-[400] text-[20px] font-Montserrat">
-            {title}
-          </h3>
-        </div>
+      {/* Thumbnail Section */}
+      <div className="relative w-full">
+        <Image
+          src={img}
+          alt={title}
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-full h-auto object-cover rounded-t-[20px]"
+          priority
+        />
       </div>
 
       {/* Card Content */}
@@ -197,9 +295,11 @@ const CourseCard = ({
         {/* Instructor & Button */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img
-              src="https://via.placeholder.com/32" // Replace with instructor image URL
+            <Image
+              src={instructorImg ?? "/grooming/default-instructor.jpg"} // Replace with instructor image URL or fallback
               alt={instructor}
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full object-cover"
             />
             <span className="text-black text-sm font-[400] font-Montserrat leading-[20px]">
@@ -209,9 +309,11 @@ const CourseCard = ({
 
           <div className="flex items-center space-x-3">
             {" "}
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-[12px] font-bold transition-colors">
-              Apply Now !
-            </button>
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-[12px] font-bold transition-colors">
+                enroll Now !
+              </button>
+            </a>
             <Bookmark
               className={`h-5 w-5 cursor-pointer transition-colors ${
                 isBookmarked

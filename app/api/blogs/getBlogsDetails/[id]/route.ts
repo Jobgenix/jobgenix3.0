@@ -3,9 +3,12 @@ import { db } from "@/lib/db";
 import { blog } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = params;
+    const { id } = await context.params;
     if (!id) {
       return NextResponse.json({ error: "Blog ID is required" }, { status: 400 });
     }
