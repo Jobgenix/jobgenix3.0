@@ -64,9 +64,7 @@ export default function Hero() {
             <div>
               <button
                 className="hidden md:block h-8 w-28 md:size-fit md:py-3 md:px-7 bg-[#004080] rounded-xl text-white text-xs md:text-sm font-medium leading-5"
-                onClick={() =>
-                  (window.location.href = "Opportunities/internships")
-                }
+                onClick={() => (window.location.href = "/gwj")}
               >
                 Get started
               </button>
@@ -86,7 +84,7 @@ export default function Hero() {
         </div>
         <button
           className="sm:hidden py-3 px-7 mb-6 mt-14 mx-auto max-w-[10.5rem] align-middle bg-[#004080] rounded-xl text-white text-xs font-medium leading-5"
-          onClick={() => (window.location.href = "Opportunities/internships")}
+          onClick={() => (window.location.href = "/gwj")}
         >
           Get started
         </button>

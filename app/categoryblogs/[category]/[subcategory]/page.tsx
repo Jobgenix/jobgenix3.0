@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Nav from "../components/LandingPage-New/nav";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import Nav from "@/app/components/LandingPage-New/nav";
 
 interface EditorBlock {
   id: string;
@@ -35,6 +35,10 @@ export default function BlogSection() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const { category, subcategory } = useParams();
+  const decodedcategory = decodeURIComponent(category as string);
+  const decodedsubcategory = decodeURIComponent(subcategory as string);
+  console.log(decodedcategory, decodedsubcategory);
 
   useEffect(() => {
     fetchBlogs(1, true);
@@ -45,7 +49,7 @@ export default function BlogSection() {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/blogs/getAllBlogs?page=${pageToFetch}&limit=9`
+        `/api/blogs/getCategoryblogs?category=${decodedcategory}&subcategory=${decodedsubcategory}&page=${pageToFetch}&limit=9`
       );
       const data = await res.json();
       console.log(data);

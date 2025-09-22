@@ -8,12 +8,10 @@ export async function POST(req: NextRequest) {
   try {
     const session = await auth();
     if (!session || !session.user?.id) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const { title, content, tags,featuredImage,category } = await req.json();
+    const { title, content, tags, featuredImage, category, subcategory } =
+      await req.json();
     const authorId = session.user.id;
 
     // Validate input
@@ -38,10 +36,7 @@ export async function POST(req: NextRequest) {
       .where(eq(users.id, authorId));
 
     if (!userRole || userRole.length === 0) {
-      return NextResponse.json(
-        { error: "User not found!" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "User not found!" }, { status: 404 });
     }
 
     if (userRole[0].roleId !== "4") {
@@ -50,6 +45,8 @@ export async function POST(req: NextRequest) {
         { status: 403 }
       );
     }
+    const normalizedCategory = category.trim().toLowerCase();
+    const normalizedSubcategory = subcategory.trim().toLowerCase();
 
     // Insert blog
     const newBlog = await db
@@ -60,7 +57,8 @@ export async function POST(req: NextRequest) {
         tags: tags || [], // optional tags
         authorId,
         featuredImage,
-        category
+        category: normalizedCategory,
+        subcategory: normalizedSubcategory,
       })
       .returning();
 
@@ -73,5 +71,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-
