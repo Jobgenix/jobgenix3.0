@@ -41,7 +41,10 @@ export default function RegistrationForm() {
   };
 
   const saveMetaData = async (screenshotUrl: string) => {
-    const paymentid = localStorage.getItem("paymentId");
+    let paymentid: string | null = null;
+    if (typeof window !== "undefined") {
+      paymentid = localStorage.getItem("paymentId");
+    }
     const payload = {
       ...formData,
       screenshot: screenshotUrl,
@@ -72,7 +75,9 @@ export default function RegistrationForm() {
         paymentMethod: "",
       });
       setScreenshot(null);
-      localStorage.removeItem("paymentId");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("paymentId");
+      }
       // everything is ok til now
     } catch (error) {
       console.error(error);
@@ -337,27 +342,31 @@ export default function RegistrationForm() {
             </div>
           </div>
 
-          {localStorage.getItem("paymentId") === null && (
-            <div className="bg-white shadow-md rounded-lg p-6 space-y-6">
-              <div>
-                <RazorpayCheckout
-                  amount={1999}
-                  description="Jobgenix Premium"
-                  loading={loading}
-                  setLoading={setLoading}
-                  onSuccess={(d) => {
-                    console.log(d);
-                    localStorage.setItem("paymentId", String(d.paymentdetails));
-                    alert(
-                      "Payment successful, please upload the payment screenshot"
-                    );
-                  }}
-                  onFailure={(e) => {
-                    alert("Payment failed");
-                  }}
-                />
-              </div>
-              {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {typeof window !== "undefined" &&
+            localStorage.getItem("paymentId") === null && (
+              <div className="bg-white shadow-md rounded-lg p-6 space-y-6">
+                <div>
+                  <RazorpayCheckout
+                    amount={1999}
+                    description="Jobgenix Premium"
+                    loading={loading}
+                    setLoading={setLoading}
+                    onSuccess={(d) => {
+                      console.log(d);
+                      localStorage.setItem(
+                        "paymentId",
+                        String(d.paymentdetails)
+                      );
+                      alert(
+                        "Payment successful, please upload the payment screenshot"
+                      );
+                    }}
+                    onFailure={(e) => {
+                      alert("Payment failed");
+                    }}
+                  />
+                </div>
+                {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <label className="relative border rounded-lg p-4 flex flex-col items-center cursor-pointer hover:shadow-lg transition">
                 <input
                   type="radio"
@@ -415,33 +424,33 @@ export default function RegistrationForm() {
                 </p>
               </label>
             </div> */}
-              <div className="mt-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Upload your payment screenshot:{" "}
-                  <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  aria-required="true"
-                  onChange={handleFileChange}
-                  className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <div className="mt-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Upload your payment screenshot:{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    aria-required="true"
+                    onChange={handleFileChange}
+                    className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
 
-                {/* Preview */}
-                {screenshot && (
-                  <div className="mt-4">
-                    <p className="text-sm text-gray-600 mb-2">Preview:</p>
-                    <img
-                      src={URL.createObjectURL(screenshot)}
-                      alt="Payment Screenshot Preview"
-                      className="w-64 rounded-lg border shadow-md"
-                    />
-                  </div>
-                )}
+                  {/* Preview */}
+                  {screenshot && (
+                    <div className="mt-4">
+                      <p className="text-sm text-gray-600 mb-2">Preview:</p>
+                      <img
+                        src={URL.createObjectURL(screenshot)}
+                        alt="Payment Screenshot Preview"
+                        className="w-64 rounded-lg border shadow-md"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Submit Button */}
           <button
