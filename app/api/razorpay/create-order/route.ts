@@ -1,4 +1,3 @@
-// app/api/razorpay/create-order/route.ts
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { orders } from "@/lib/schema";
@@ -6,11 +5,6 @@ import { NextResponse } from "next/server";
 import Razorpay from "razorpay";
 
 export const runtime = "nodejs";
-
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_LIVE_KEY_ID!,
-  key_secret: process.env.RAZORPAY_LIVE_KEY_SECRET!,
-});
 
 export async function POST(req: Request) {
   try {
@@ -22,6 +16,10 @@ export async function POST(req: Request) {
     }
     const currency = body.currency ?? "INR";
     const amountPaise = Math.round(amount * 100);
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_LIVE_KEY_ID!,
+      key_secret: process.env.RAZORPAY_LIVE_KEY_SECRET!,
+    });
 
     const options = {
       amount: amountPaise,
