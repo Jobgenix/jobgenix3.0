@@ -1,21 +1,48 @@
 // components/RazorpayCheckout.tsx
 "use client";
-import React, { useState } from "react";
+import React from "react";
+
+type RazorpayResponse = {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+};
+
+type VerifyResponse = {
+  valid: boolean;
+  [key: string]: unknown;
+};
+
+interface RazorpayOptions {
+  key: string | undefined;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  order_id: string;
+  handler: (response: RazorpayResponse) => void;
+  prefill: {
+    name: string;
+    email: string;
+    contact: string;
+  };
+  theme: { color: string };
+}
 
 declare global {
   interface Window {
-    Razorpay?: any;
+    Razorpay?: new (options: RazorpayOptions) => { open: () => void };
   }
 }
 
 type Props = {
-  amount: number; // rupees, e.g., 499
+  amount: number;
   description?: string;
   loading?: boolean;
   setLoading?: (loading: boolean) => void;
   user?: { id?: string; name?: string; email?: string; contact?: string };
-  onSuccess?: (data: any) => void;
-  onFailure?: (err: any) => void;
+  onSuccess?: (data: VerifyResponse) => void;
+  onFailure?: (err: Error | VerifyResponse) => void;
 };
 
 export default function RazorpayCheckout({
@@ -44,15 +71,14 @@ export default function RazorpayCheckout({
       if (!res.ok) throw new Error(data.error || "Failed to create order");
 
       const order = data.order;
-      const options = {
+      const options: RazorpayOptions = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY_ID,
         amount: order.amount,
         currency: order.currency,
         name: process.env.NEXT_PUBLIC_APP_NAME || "Jobgenix",
         description: description || "Order",
         order_id: order.id,
-        handler: async function (response: any) {
-          // response: { razorpay_payment_id, razorpay_order_id, razorpay_signature }
+        handler: async function (response: RazorpayResponse) {
           console.log("verifying", response);
           try {
             const verifyRes = await fetch("/api/razorpay/verify-payment", {
@@ -60,15 +86,19 @@ export default function RazorpayCheckout({
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(response),
             });
-            const verifyData = await verifyRes.json();
+            const verifyData: VerifyResponse = await verifyRes.json();
             if (!verifyRes.ok || !verifyData.valid) {
               onFailure?.(verifyData);
             } else {
               onSuccess?.(verifyData);
             }
-          } catch (err) {
+          } catch (err: unknown) {
             console.error("verify call failed", err);
-            onFailure?.(err);
+            onFailure?.(
+              err instanceof Error
+                ? err
+                : new Error("Unknown verification error")
+            );
           }
         },
         prefill: {
@@ -79,13 +109,16 @@ export default function RazorpayCheckout({
         theme: { color: "#2563eb" },
       };
 
-      // ensure checkout script loaded
       if (!window.Razorpay) {
         const s = document.createElement("script");
         s.src = "https://checkout.razorpay.com/v1/checkout.js";
         s.onload = () => {
-          const rzp = new window.Razorpay(options);
-          rzp.open();
+          if (window.Razorpay) {
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+          } else {
+            throw new Error("Razorpay SDK not available after script load");
+          }
         };
         s.onerror = () => {
           throw new Error("Razorpay SDK load failed");
@@ -95,9 +128,9 @@ export default function RazorpayCheckout({
         const rzp = new window.Razorpay(options);
         rzp.open();
       }
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err);
-      onFailure?.(err);
+      onFailure?.(err instanceof Error ? err : new Error("Unexpected error"));
     }
   };
 
@@ -105,6 +138,7 @@ export default function RazorpayCheckout({
     <button
       onClick={createAndOpen}
       className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
+      disabled={loading}
     >
       Pay ₹{amount}
     </button>

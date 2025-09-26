@@ -34,10 +34,11 @@ export default function Section() {
 
           {/* buttons  */}
           <div className="flex flex-col sm:flex-row items-center justify-start gap-2">
-            <button className="flex items-center justify-center self-baseline gap-2 rounded-lg bg-[#004080] p-2 font-medium text-white text-xs md:text-base">
-              Talk to one of our cool mentors! <IoCallOutline />
-            </button>
-
+            <a href="tel:9830981268">
+              <button className="flex items-center justify-center self-baseline gap-2 rounded-lg bg-[#004080] p-2 font-medium text-white text-xs md:text-base">
+                Talk to one of our cool mentors! <IoCallOutline />
+              </button>
+            </a>
             <p className="p-1 font-semibold hidden sm:block">Or</p>
 
             <button

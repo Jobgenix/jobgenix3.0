@@ -36,45 +36,30 @@ export default function UsersWorkingAt({ className }: { className?: string }) {
           Users Works At
         </h1>
       </div>
-      {/* for larg screen  */}
-      <div className="items-center justify-around gap-4 sm:gap-8 px-2 sm:px-4 py-4 sm:py-8 w-[90%] mx-auto hidden lg:flex">
-        {brands.map((brand, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 bg-white h-[3.9rem] items-center rounded-sm border border-[#DEDEDE]"
-          >
-            <Image
-              src={brand}
-              alt={`Brand ${index + 1}`}
-              width={62}
-              height={62}
-              draggable={false}
-              className="object-contain w-[3.9rem] h-auto"
-            />
-          </div>
-        ))}
-      </div>
-      {/* for small screen */}
-      <div className="relative overflow-hidden block lg:hidden">
+
+      <div className="relative overflow-hidden">
         {/* Fading edges overlay */}
-        <div className="absolute inset-0 pointer-events-none z-10 w-full bg-[linear-gradient(to_right,#F6F6F7_0%,transparent_20%,transparent_80%,#F6F6F7_100%)]  opacity-8" />
+        <div className="absolute inset-0 pointer-events-none z-10 w-full bg-[linear-gradient(to_right,#F6F6F7_0%,transparent_10%,transparent_90%,#F6F6F7_100%)] opacity-90" />
 
         <Marquee
           className={twMerge(
-            `bg-transparent px-2 sm:px-4 py-4 sm:py-8 space-x-4 `,
+            `bg-transparent px-2 sm:px-4 md:px-8 py-4 sm:py-8 md:py-10 space-x-6 sm:space-x-8 md:space-x-12 lg:space-x-16`,
             className
           )}
         >
-          <div className="flex items-center justify-around gap-4 sm:gap-8 min-w-max">
+          <div className="flex items-center justify-around gap-4 sm:gap-8 md:gap-12 lg:gap-16 min-w-max">
             {brands.map((brand, index) => (
-              <div key={index} className="flex-shrink-0 bg-white">
+              <div
+                key={index}
+                className="flex-shrink-0 bg-white rounded-lg p-2"
+              >
                 <Image
                   src={brand}
                   alt={`Brand ${index + 1}`}
-                  width={62}
-                  height={62}
+                  width={80}
+                  height={80}
                   draggable={false}
-                  className="object-contain w-9 sm:w-11 md:w-[3.9rem] h-auto"
+                  className="object-contain w-10 sm:w-14 md:w-20 lg:w-24 xl:w-28 h-auto"
                 />
               </div>
             ))}

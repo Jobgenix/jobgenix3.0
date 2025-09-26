@@ -31,7 +31,7 @@ export default function StatsSection() {
         <div className="grid w-full md:w-[60%] grid-cols-2 gap-x-8 md:gap-y-4 text-gray-800">
           <div className="p-5 bg-[#C9E3FF] rounded-xl shadow-[8px_8px_16px rgba(0,0,0,0.25), -4px -4px 10px rgba(255,255,255,0.9)]">
             <p className="text-2xl md:text-3xl lg:text-[3.5rem] lg:leading-[64px] font-sora font-bold">
-              63%
+              75%
             </p>
             <p className="text-xs md:text-sm lg:text-xl font-semibold w-3/5   text-gray-600">
               Job seekers hired within 30 days
@@ -40,7 +40,7 @@ export default function StatsSection() {
 
           <div className="p-5 bg-[#C9E3FF] rounded-xl shadow-[8px_8px_16px rgba(0,0,0,0.25), -4px -4px 10px rgba(255,255,255,0.9)]">
             <p className="text-2xl md:text-3xl lg:text-[3.5rem] lg:leading-[64px] font-sora font-bold">
-              18K+
+              1.5m+
             </p>
             <p className="text-xs md:text-sm lg:text-xl font-semibold text-gray-600">
               Impressions
@@ -49,7 +49,7 @@ export default function StatsSection() {
 
           <div className="p-5 bg-[#C9E3FF] rounded-xl shadow-[8px_8px_16px rgba(0,0,0,0.25), -4px -4px 10px rgba(255,255,255,0.9)]">
             <p className="text-2xl md:text-3xl lg:text-[3.5rem] lg:leading-[64px] font-sora font-bold">
-              300+
+              2000+
             </p>
             <p className="text-xs md:text-sm lg:text-xl font-semibold text-gray-600">
               Live Jobs Posted
@@ -58,10 +58,10 @@ export default function StatsSection() {
 
           <div className="p-5 bg-[#C9E3FF] rounded-xl shadow-[8px_8px_16px rgba(0,0,0,0.25), -4px -4px 10px rgba(255,255,255,0.9)]">
             <p className="text-2xl md:text-3xl lg:text-[3.5rem] lg:leading-[64px] font-sora font-bold flex items-center">
-              4.8/5 <span className="ml-1 text-yellow-500">⭐</span>
+              9 LPA
             </p>
             <p className="text-xs md:text-sm lg:text-xl w-3/5 font-semibold text-gray-600">
-              Average satisfaction rating
+              Average salary
             </p>
           </div>
         </div>

@@ -104,6 +104,10 @@ const trendingCourses = [
       "Covers aptitude + coding round preparation",
       "Includes previous year Cognizant GenC questions",
     ],
+    companies: [
+      "/gwj/companies/accenture.webp",
+      "/gwj/companies/cognizant.webp",
+    ],
     enroll: 2239,
     rating: 4.7,
     rate: 1197,
@@ -115,6 +119,11 @@ const trendingCourses = [
     bullets: [
       "Focus on problem solving patterns in DSA",
       "Designed for clearing service-based interviews",
+    ],
+    companies: [
+      "/gwj/companies/airtel.webp",
+      "/gwj/companies/deloitte.webp",
+      "/gwj/companies/paypal.webp",
     ],
     enroll: 6439,
     rating: 4.2,
@@ -128,6 +137,7 @@ const trendingCourses = [
       "Guided roadmap for Capgemini on-campus hiring",
       "Covers logical reasoning + coding test practice",
     ],
+    companies: ["/gwj/companies/emotorod.webp", "/gwj/companies/google.webp"],
     enroll: 4239,
     rating: 4.3,
     rate: 2563,
@@ -140,6 +150,7 @@ const trendingCourses = [
       "Step-by-step preparation for TCS NQT rounds",
       "Digital specific advanced coding & aptitude",
     ],
+    companies: ["/gwj/companies/tcs.png"],
     enroll: 8539,
     rating: 4.1,
     rate: 4895,
@@ -151,6 +162,11 @@ const trendingCourses = [
     bullets: [
       "Covers technical + cognitive ability assessments",
       "Mock interview prep with IBM-specific patterns",
+    ],
+    companies: [
+      "/gwj/companies/microsoft.webp",
+      "/gwj/companies/paypal.webp",
+      "/gwj/companies/zepto.webp",
     ],
     enroll: 5439,
     rating: 4.8,
@@ -167,6 +183,11 @@ const oncampusCourses = [
       "Covers technical + cognitive ability assessments",
       "Mock interview prep with IBM-specific patterns",
     ],
+    companies: [
+      "/gwj/companies/microsoft.webp",
+      "/gwj/companies/paypal.webp",
+      "/gwj/companies/zepto.webp",
+    ],
     enroll: 5439,
     rating: 4.8,
     rate: 3147,
@@ -178,6 +199,11 @@ const oncampusCourses = [
     bullets: [
       "Focus on Jio recruitment exam patterns",
       "Includes aptitude + coding preparation",
+    ],
+    companies: [
+      "/gwj/companies/indigo.webp",
+      "/gwj/companies/jio.webp",
+      "/gwj/companies/phonepe.webp",
     ],
     enroll: 3241,
     rating: 4.5,
@@ -191,6 +217,7 @@ const oncampusCourses = [
       "Covers finance domain-specific aptitude",
       "Guidance for HSBC coding and interview rounds",
     ],
+    companies: ["/gwj/companies/emotorod.webp", "/gwj/companies/google.webp"],
     enroll: 2789,
     rating: 4.3,
     rate: 1594,
@@ -202,6 +229,11 @@ const oncampusCourses = [
     bullets: [
       "Complete roadmap for Deloitte NLA hiring",
       "Includes logical reasoning and coding practice",
+    ],
+    companies: [
+      "/gwj/companies/airtel.webp",
+      "/gwj/companies/deloitte.webp",
+      "/gwj/companies/paypal.webp",
     ],
     enroll: 4678,
     rating: 4.6,
@@ -215,6 +247,10 @@ const oncampusCourses = [
       "Focus on Tech Mahindra’s selection process",
       "Includes practice tests and mock interviews",
     ],
+    companies: [
+      "/gwj/companies/accenture.webp",
+      "/gwj/companies/cognizant.webp",
+    ],
     enroll: 3120,
     rating: 4.2,
     rate: 1756,
@@ -226,6 +262,11 @@ const oncampusCourses = [
     bullets: [
       "Step-by-step prep for Wipro WILP program",
       "Special focus on aptitude + communication skills",
+    ],
+    companies: [
+      "/gwj/companies/indigo.webp",
+      "/gwj/companies/jio.webp",
+      "/gwj/companies/phonepe.webp",
     ],
     enroll: 5291,
     rating: 4.7,
@@ -239,6 +280,11 @@ const oncampusCourses = [
       "Detailed preparation for Infosys logical reasoning",
       "Covers coding + behavioral interview questions",
     ],
+    companies: [
+      "/gwj/companies/microsoft.webp",
+      "/gwj/companies/paypal.webp",
+      "/gwj/companies/zepto.webp",
+    ],
     enroll: 6890,
     rating: 4.4,
     rate: 3682,
@@ -251,6 +297,8 @@ const oncampusCourses = [
       "HCL-specific aptitude and coding round prep",
       "Mock interviews with real HCL questions",
     ],
+    companies: ["/gwj/companies/emotorod.webp", "/gwj/companies/google.webp"],
+
     enroll: 4123,
     rating: 4.3,
     rate: 2190,
@@ -263,6 +311,11 @@ const oncampusCourses = [
       "Covers Hexaware coding test and HR interview",
       "Logical + quantitative aptitude modules included",
     ],
+    companies: [
+      "/gwj/companies/airtel.webp",
+      "/gwj/companies/deloitte.webp",
+      "/gwj/companies/paypal.webp",
+    ],
     enroll: 2890,
     rating: 4.1,
     rate: 1475,
@@ -274,6 +327,10 @@ const oncampusCourses = [
     bullets: [
       "EY-specific aptitude, coding, and case study prep",
       "Interview practice with domain-based scenarios",
+    ],
+    companies: [
+      "/gwj/companies/accenture.webp",
+      "/gwj/companies/cognizant.webp",
     ],
     enroll: 3750,
     rating: 4.5,

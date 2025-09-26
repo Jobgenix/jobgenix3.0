@@ -44,10 +44,17 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ order });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("create-order error:", err);
+
+    // Type guard for Error
+    if (err instanceof Error) {
+      return NextResponse.json({ error: err.message }, { status: 500 });
+    }
+
+    // Fallback
     return NextResponse.json(
-      { error: err.message ?? "error" },
+      { error: "An unexpected error occurred" },
       { status: 500 }
     );
   }

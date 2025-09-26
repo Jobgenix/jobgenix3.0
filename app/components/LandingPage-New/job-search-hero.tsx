@@ -9,10 +9,14 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { IoArrowRedoCircle } from "react-icons/io5";
+import { MdLocationPin } from "react-icons/md";
 
 interface CompanyCardProps {
   companyLogo: string;
+  companyName: string;
   jobTitle: string;
+  jobLocation?: string[];
   rating?: number;
   totalRatings?: number;
   description?: string;
@@ -23,62 +27,47 @@ interface CompanyCardProps {
 
 const CompanyCard = ({
   companyLogo,
+  companyName,
   jobTitle,
-  rating,
-  totalRatings,
-  description,
-  jobLink,
-  index,
   jobId,
+  jobLocation,
 }: CompanyCardProps) => {
+  const loc =
+    jobLocation && jobLocation.length > 0
+      ? jobLocation[0].split(",").slice(0, 2).join(",")
+      : ""; // Display only the first two locations
   return (
-    <Card className="flex-none h-[162px] md:h-[353px] w-[252px] md:w-[300px] mt-4 rounded-[1.9rem] bg-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105">
+    <Card className="flex-none mt-4 rounded-[1.9rem] bg-white text-black transition-all duration-300 hover:-translate-y-1 hover:scale-105">
       <CardContent className="p-0 h-full w-full ">
         <div
-          className={`p-5 md:p-6  h-full flex flex-col  items-baseline md:items-center justify-between rounded-[1.9rem] relative text-xl 
-            ${
-              index === 0
-                ? "bg-[#0A5DBC]"
-                : index === 1
-                ? "bg-[#00205b]"
-                : index === 2
-                ? "bg-[#971C26]"
-                : "bg-[#0A5DBC]"
-            }`}
+          className={`p-5 md:p-6  h-full flex flex-col justify-between items-baseline rounded-[1.9rem] relative text-xl `}
         >
-          <Image
-            src={companyLogo || "/placeholder.svg"}
-            alt={`${name} logo`}
-            width={80}
-            height={80}
-            className=" w-[6.7rem] md:w-36"
-          />
-          <div className="flex md:flex-col flex-col-reverse items-baseline md:items-center">
-            <h6 className=" text-white text-center leading-7 text-sm md:text-xl font-bold">
-              {jobTitle}
-            </h6>
-            <div className="flex items-center font-montserrat font-medium text-base">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-300 text-xl">
-                    ★
-                  </span>
-                ))}
+          <div>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col items-start">
+                <h6 className="text-center leading-7 text-sm font-medium">
+                  {jobTitle}
+                </h6>
+                <p className="text-xs">{companyName}</p>
               </div>
-              <span className="text-white ml-1 italic">
-                ({(rating || Math.random() * 1 + 3).toFixed(1)}){" "}
-                {totalRatings || Math.floor(Math.random() * 100) + 50} + Jobs
-              </span>
+              <Image
+                src={companyLogo || "/placeholder.svg"}
+                alt={`${name} logo`}
+                width={48}
+                height={48}
+              />
+            </div>
+            <div className="w-full border-t border-gray-200 my-5"></div>
+            <div className="flex gap-3 items-center">
+              <MdLocationPin />
+              <p>{loc}</p>
             </div>
           </div>
-          {/* <p className="hidden md:block text-white font-medium italic text-center text-base leading-tight min-h-[40px]">
-          {description}
-          </p> */}
           <Link href={`/jobdescription/${jobId}`}>
             <Button
               variant="secondary"
               size="sm"
-              className=" px-4 py-2 md:py-5  rounded-full font-medium text-[0.83rem] md:text-base leading-[1.4rem] "
+              className="mt-10 px-4 py-2 md:py-5  rounded-full font-medium text-[0.83rem] md:text-base leading-[1.4rem] "
             >
               Apply Now
             </Button>
@@ -207,7 +196,7 @@ export default function JobSearchHero() {
   ); // Fetch jobs when userId changes
 
   const jobs = useJobStore((state) => state.jobs); // Global state
-  // console.log(jobs); // Log the jobs data
+  console.log(jobs); // Log the jobs data
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -359,6 +348,32 @@ export default function JobSearchHero() {
             {jobs?.map((company, index) => (
               <CompanyCard key={index} {...company} index={index} />
             ))}
+
+            <Card className="flex-none mt-4 rounded-[1.9rem] bg-white text-black transition-all duration-300 hover:-translate-y-1 hover:scale-105">
+              <CardContent className="p-0 h-full w-full ">
+                <div
+                  className={`p-5 md:p-6  h-full flex flex-col justify-between items-baseline rounded-[1.9rem] relative text-xl `}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex flex-col items-start">
+                      <h6 className="text-center leading-7 text-sm font-medium">
+                        Get your dream Job
+                      </h6>
+                      <p className="text-xs">Explore more than 2,000+</p>
+                    </div>
+                  </div>
+                  <Link
+                    href={"/Opportunities/jobs"}
+                    className="flex gap-1 items-center cursor-pointer hover:underline"
+                  >
+                    <p className="text-xs text-[#0073e6] font-semibold">
+                      View jobs
+                    </p>
+                    <IoArrowRedoCircle size={12} />
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
           </div>
           {/* Right Arrow */}
           {canScrollRight && (
