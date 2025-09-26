@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaEnvelope,
   FaInstagram,
@@ -11,10 +11,17 @@ import {
 import { FiCopy } from "react-icons/fi";
 import { useXarrow } from "react-xarrows";
 import "swiper/css";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowRightFromLine,
+  Check,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import {
@@ -63,14 +70,7 @@ const VerticalSlider: React.FC<VerticalSliderProps> = ({
 };
 
 function App() {
-  const { status } = useSession();
-
   const router = useRouter();
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/login");
-    }
-  }, [status, router]);
 
   const updateXarrow = useXarrow();
   useEffect(() => {
@@ -126,6 +126,8 @@ function App() {
   const [activeIndexForSlider, setActiveIndexForSlider] = useState<
     number | null
   >(0);
+  const prevRef = useRef<HTMLButtonElement | null>(null);
+  const nextRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <div>
@@ -139,7 +141,7 @@ function App() {
                 alt="grow up with jobgenix"
                 className="md:w-[500px]"
               />
-              <p className="text-2xl text-black mb-6 flex flex-col md:flex-row items-center">
+              <p className="text-2xl text-black mb-3 flex flex-col md:flex-row items-center">
                 <span> A Mission To Level Up </span>
                 <img
                   src="/gwj/indiaLogo.png"
@@ -147,25 +149,16 @@ function App() {
                   className="w-[70px] ms-2 mb-2"
                 />
               </p>
-
-              <div className="flex items-center space-x-4">
-                <Link
-                  href="/gwj/enroll"
-                  className="inline-flex items-center gap-2 bg-blue-600 text-white text-xl px-6 py-4 rounded-full hover:bg-blue-700 transition "
-                >
-                  Enrol Now
-                </Link>
-                <p className="text-4xl text-black">OR</p>
-              </div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 my-4">
-                Need to know more?
-              </h1>
-              <p className="text-2xl text-gray-800 mb-6">
-                contact with {"   "}
-                <a className="font-medium cursor-pointer underline">
-                  +91 98309 81268
-                </a>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                {" "}
+                Get certified, Get Ahead
               </p>
+              <Link
+                href="/gwj/enroll"
+                className="inline-flex items-center gap-2 bg-blue-600 text-white text-xl px-6 py-4 rounded-full hover:bg-blue-700 transition "
+              >
+                Enrol Now
+              </Link>
             </div>
 
             {/* Video / Image */}
@@ -177,36 +170,23 @@ function App() {
         <section className="py-10 flex flex-col p-3">
           <div className="flex items-center space-x-5 md:space-x-14 md:mb-4">
             <h1 className="text-2xl md:text-5xl font-bold text-gray-900">
-              Trending courses
+              Placement Guaranted courses
             </h1>
-            <div className="h-14 md:h-28 w-[2px] bg-[#2563EB]"></div>
-            <Link
-              href="/gwj/enroll"
-              className="md:inline-flex items-center md:gap-2 bg-blue-600 text-white md:text-xl px-2 md:px-6 md:py-4 rounded-full hover:bg-blue-700 transition"
-            >
-              Enrol Now
-            </Link>
           </div>
 
           <div className="w-full">
             <Swiper
-              modules={[Autoplay]}
               spaceBetween={20}
               slidesPerView={4}
               breakpoints={{
-                320: { slidesPerView: 1, spaceBetween: 10 },
-                640: { slidesPerView: 2, spaceBetween: 15 },
-                1024: { slidesPerView: 3, spaceBetween: 20 },
-                1280: { slidesPerView: 4, spaceBetween: 20 },
+                320: { slidesPerView: 1 },
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
               }}
-              // navigation={{
-              //   enabled:
-              //     typeof window !== "undefined"
-              //       ? window.innerWidth >= 1024
-              //       : true,
-              // }}
-              autoplay={{ delay: 3000 }}
               loop={true}
+              modules={[Pagination]}
+              pagination={{ clickable: true, el: ".custom-pagination-1" }}
             >
               {trendingCourses.map((course, index) => (
                 <SwiperSlide key={index}>
@@ -223,13 +203,41 @@ function App() {
                       alt={`Slide ${index + 1}`}
                       className="w-full rounded-lg"
                     />
-                    <h2 className="text-2xl font-semibold mt-3 p-3 pt-0">
-                      {course.title}
-                    </h2>
+                    <div className=" mt-3 p-3 pt-0">
+                      <h2 className="text-2xl font-semibold ">
+                        {course.title}
+                      </h2>
+                      <div className="flex items-center gap-2 mt-3">
+                        <p>✅</p>
+                        <p>Placement guaranted course</p>
+                      </div>
+                      <div className="flex items-center gap-2 mt-3">
+                        <p>⌚</p>
+                        <p>4 months with live classes</p>
+                      </div>
+                      <div className="h-[2px] bg-gray-200 my-6 w-full"></div>
+                      <p>Our students placed at </p>
+                      <div className="flex gap-2 items-center mt-2">
+                        {course.companies?.map((company, idx) => (
+                          <img
+                            key={idx}
+                            src={company}
+                            alt="company"
+                            className="h-8 w-auto"
+                          />
+                        ))}
+                        <p>& more.</p>
+                      </div>
+                      <div className="text-[#1D4ED8] flex items-center gap-2 justify-end">
+                        <p>know more</p> <ArrowRightFromLine />
+                      </div>
+                    </div>
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
+
+            <div className="custom-pagination-1 mt-5 flex justify-center gap-2"></div>
           </div>
         </section>
         <section className="py-10 flex flex-col p-3">
@@ -237,34 +245,24 @@ function App() {
             <h1 className="text-2xl md:text-5xl font-bold text-gray-900">
               On Campus courses
             </h1>
-            <div className="h-14 md:h-28 w-[2px] bg-[#2563EB]"></div>
-            <Link
-              href="/gwj/enroll"
-              className="md:inline-flex items-center md:gap-2 bg-blue-600 text-white md:text-xl px-2 md:px-6 md:py-4 rounded-full hover:bg-blue-700 transition"
-            >
-              Enrol Now
-            </Link>
           </div>
 
           <div className="w-full">
             <Swiper
-              modules={[Autoplay]}
               spaceBetween={20}
               slidesPerView={4}
               breakpoints={{
-                320: { slidesPerView: 1, spaceBetween: 10 },
-                640: { slidesPerView: 2, spaceBetween: 15 },
-                1024: { slidesPerView: 3, spaceBetween: 20 },
-                1280: { slidesPerView: 4, spaceBetween: 20 },
+                320: { slidesPerView: 1 },
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
               }}
-              // navigation={{
-              //   enabled:
-              //     typeof window !== "undefined"
-              //       ? window.innerWidth >= 1024
-              //       : true,
-              // }}
-              autoplay={{ delay: 2500 }}
               loop={true}
+              modules={[Pagination]}
+              pagination={{
+                clickable: true,
+                el: ".custom-pagination",
+              }}
             >
               {oncampusCourses.map((course, index) => (
                 <SwiperSlide key={index}>
@@ -272,7 +270,7 @@ function App() {
                     className="group transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer rounded-xl shadow-md bg-white my-8"
                     onClick={() => {
                       router.push(
-                        `/gwj/product-details/${course.id}?page=oncampus`
+                        `/gwj/product-details/${course.id}?page=trending`
                       );
                     }}
                   >
@@ -281,13 +279,40 @@ function App() {
                       alt={`Slide ${index + 1}`}
                       className="w-full rounded-lg"
                     />
-                    <h2 className="text-2xl font-semibold mt-3 p-3 pt-0">
-                      {course.title}
-                    </h2>
+                    <div className=" mt-3 p-3 pt-0">
+                      <h2 className="text-2xl font-semibold ">
+                        {course.title}
+                      </h2>
+                      <div className="flex items-center gap-2 mt-3">
+                        <p>✅</p>
+                        <p>Placement guaranted course</p>
+                      </div>
+                      <div className="flex items-center gap-2 mt-3">
+                        <p>⌚</p>
+                        <p>4 months with live classes</p>
+                      </div>
+                      <div className="h-[2px] bg-gray-200 my-6 w-full"></div>
+                      <p>Our students placed at </p>
+                      <div className="flex gap-2 items-center mt-2">
+                        {course.companies?.map((company, idx) => (
+                          <img
+                            key={idx}
+                            src={company}
+                            alt="company"
+                            className="h-8 w-auto"
+                          />
+                        ))}
+                        <p>& more.</p>
+                      </div>
+                      <div className="text-[#1D4ED8] flex items-center gap-2 justify-end">
+                        <p>know more</p> <ArrowRightFromLine />
+                      </div>
+                    </div>
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
+            <div className="custom-pagination mt-5 flex justify-center gap-2"></div>
           </div>
         </section>
         <section className="w-full px-6 md:px-20 py-12 bg-white">
@@ -407,11 +432,9 @@ function App() {
                       }}
                     >
                       <div className="text-3xl text-blue-900 mb-2">“</div>
-                      <p className="text-gray-700 mb-4">{track.text}</p>
-                      <p className="font-semibold text-gray-900">
-                        {track.name}
-                      </p>
-                      <p className="text-sm text-gray-600">{track.rating}/5</p>
+                      <p className="text-white mb-4">{track.text}</p>
+                      <p className="font-semibold text-white">{track.name}</p>
+                      <p className="text-sm text-white">{track.rating}/5</p>
                     </div>
                   </SwiperSlide>
                 ))}

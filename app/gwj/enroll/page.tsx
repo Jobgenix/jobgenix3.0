@@ -1,9 +1,11 @@
 "use client";
 import Footer from "@/app/components/Footer/Footer";
 import Nav from "@/app/components/LandingPage-New/nav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import RazorpayCheckout from "../PaymentButton";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -19,6 +21,14 @@ export default function RegistrationForm() {
   });
   const [screenshot, setScreenshot] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/login");
+    }
+  }, [status, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -337,7 +347,7 @@ export default function RegistrationForm() {
                   setLoading={setLoading}
                   onSuccess={(d) => {
                     console.log(d);
-                    localStorage.setItem("paymentId", d.paymentdetails);
+                    localStorage.setItem("paymentId", String(d.paymentdetails));
                     alert(
                       "Payment successful, please upload the payment screenshot"
                     );
