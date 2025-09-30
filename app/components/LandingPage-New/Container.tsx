@@ -71,7 +71,7 @@ export function Container() {
               <Image
                 width={500}
                 height={500}
-                src="/jobgenixAdv/cvMatchScore.svg"
+                src="/LandingPageImages/expertA.jpeg"
                 alt="Expert Mentorship on Hover"
                 className="absolute top-0 left-0 w-full h-full object-fit opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in"
               />

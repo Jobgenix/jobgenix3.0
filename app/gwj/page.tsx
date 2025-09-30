@@ -170,7 +170,7 @@ function App() {
         <section className="py-10 flex flex-col p-3">
           <div className="flex items-center space-x-5 md:space-x-14 md:mb-4">
             <h1 className="text-2xl md:text-5xl font-bold text-gray-900">
-              Placement Guaranted courses
+              Placement Guaranteed courses
             </h1>
           </div>
 
@@ -270,7 +270,7 @@ function App() {
                     className="group transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer rounded-xl shadow-md bg-white my-8"
                     onClick={() => {
                       router.push(
-                        `/gwj/product-details/${course.id}?page=trending`
+                        `/gwj/product-details/${course.id}?page=oncampus`
                       );
                     }}
                   >
