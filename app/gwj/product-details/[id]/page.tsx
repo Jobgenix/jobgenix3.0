@@ -1,7 +1,13 @@
 "use client";
 import Footer from "@/app/components/Footer/Footer";
 import Nav from "@/app/components/LandingPage-New/nav";
-import { oncampusCourses, trendingCourses } from "@/constants/dummyData";
+import {
+  govtJobs,
+  oncampusCourses,
+  trendingCourses,
+  stats,
+  govtStats,
+} from "@/constants/dummyData";
 import {
   Brain,
   Check,
@@ -50,20 +56,26 @@ const features = [
     title: "Merit Certificate",
   },
 ];
-const stats = [
+
+const Govtfeatures = [
   {
-    value: "₹ 48 LPA",
-    label: "Highest salary offered",
+    icon: <FaFileAlt size={28} className="text-[#0073e6]" />,
+    title: "General Mental Ability",
   },
   {
-    value: "₹ 5 LPA - 9 LPA",
-    label: "Average salary offered",
+    icon: <FaUserGraduate size={28} className="text-[#0073e6]" />,
+    title: "Essential Subjects (as per qualification)",
   },
   {
-    value: "₹ 50k/month",
-    label: "Highest stipened offered",
+    icon: <FaAtom size={28} className="text-[#0073e6]" />,
+    title: "Skill Test",
+  },
+  {
+    icon: <FaCheckSquare size={28} className="text-[#0073e6]" />,
+    title: "Interview/personality Test",
   },
 ];
+
 const features2 = [
   {
     icon: <Monitor className="w-6 h-6 text-blue-600" />,
@@ -141,6 +153,10 @@ const companies = [
     name: "IBM",
     logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
   },
+  {
+    name: "TCS",
+    logo: "/gwj/companies/tcs.png",
+  },
 ];
 const faqs = [
   {
@@ -212,6 +228,10 @@ const ProductDetailsPage: React.FC = () => {
         const found = trendingCourses.find((c) => c.id === parseInt(id));
         if (found) setCourse(found);
         else setError(true);
+      } else if (page === "govt") {
+        const found = govtJobs.find((c) => c.id === parseInt(id));
+        if (found) setCourse(found);
+        else setError(true);
       } else {
         setError(true);
       }
@@ -279,18 +299,24 @@ const ProductDetailsPage: React.FC = () => {
               <div className="space-y-4 text-gray-700">
                 <div className="flex items-center justify-between">
                   <span>📅 Duration</span>
-                  <span className="font-semibold">4 months</span>
+                  {page === "trending" && parseInt(id || "0") === 1 ? (
+                    <>
+                      <span className="font-semibold">2 months</span>
+                    </>
+                  ) : (
+                    <span className="font-semibold">4 months</span>
+                  )}
                 </div>
                 <div className="flex items-center justify-between">
                   <span>💳 Registration charge</span>
                   <div>
-                    <p className="font-semibold line-through">INR 4,999*</p>
-                    <p className="font-semibold">INR 1,999*</p>
+                    <p className="font-semibold line-through">INR 7,999*</p>
+                    <p className="font-semibold">INR 4,999*</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <span>⏳ Admission Deadline</span>
-                  <span className="font-semibold">31-Sep-2025</span>
+                  <span className="font-semibold">31-oct-2025</span>
                 </div>
               </div>
 
@@ -329,17 +355,29 @@ const ProductDetailsPage: React.FC = () => {
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white border rounded-2xl shadow-sm p-6 flex flex-col items-center text-center hover:shadow-md transition"
-            >
-              <div className="bg-blue-50 p-4 rounded-full mb-4">
-                {feature.icon}
-              </div>
-              <h3 className="text-lg font-medium">{feature.title}</h3>
-            </div>
-          ))}
+          {page === "govt"
+            ? Govtfeatures.map((feature, index) => (
+                <div
+                  key={index}
+                  className="bg-white border rounded-2xl shadow-sm p-6 flex flex-col items-center text-center hover:shadow-md transition"
+                >
+                  <div className="bg-blue-50 p-4 rounded-full mb-4">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-lg font-medium">{feature.title}</h3>
+                </div>
+              ))
+            : features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="bg-white border rounded-2xl shadow-sm p-6 flex flex-col items-center text-center hover:shadow-md transition"
+                >
+                  <div className="bg-blue-50 p-4 rounded-full mb-4">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-lg font-medium">{feature.title}</h3>
+                </div>
+              ))}
         </div>
       </section>
 
@@ -371,99 +409,123 @@ const ProductDetailsPage: React.FC = () => {
 
       <div className="max-w-7xl mx-auto w-full bg-white border rounded-lg shadow-sm">
         <div className="flex flex-col md:flex-row justify-between items-center divide-y md:divide-y-0 md:divide-x divide-gray-300 text-center">
-          {stats.map((stat, index) => (
-            <div key={index} className="flex-1 py-6 px-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-blue-700">
-                {stat.value}
-              </h2>
-              <p className="text-gray-600 mt-1 text-sm md:text-base">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* next section */}
-      <div className="w-full bg-[#FBFCFF] border rounded-2xl p-6 md:p-10 shadow-sm my-20 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center gap-10">
-          {/* Left Content */}
-          <div className="flex-1">
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-900">
-              Go from{" "}
-              <span className="text-blue-600">beginner to pro in 4 months</span>
-            </h2>
-            <p className="text-gray-600 mt-3">
-              With a curriculum designed and taught by industry experts, you
-              will get the skills and mentorship for career success.
-            </p>
-
-            {/* Feature Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-              {features2.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center justify-center text-center border rounded-xl p-4 hover:shadow-md transition"
-                >
-                  <div className="bg-blue-50 rounded-lg p-3 mb-2">
-                    {feature.icon}
-                  </div>
-                  <p className="text-gray-700 text-sm md:text-base">
-                    {feature.text}
+          {page === "govt"
+            ? govtStats.map((stat, index) => (
+                <div key={index} className="flex-1 py-6 px-6">
+                  <h2 className="text-2xl md:text-3xl font-bold text-blue-700">
+                    {stat.value}
+                  </h2>
+                  <p className="text-gray-600 mt-1 text-sm md:text-base">
+                    {stat.label}
+                  </p>
+                </div>
+              ))
+            : stats.map((stat, index) => (
+                <div key={index} className="flex-1 py-6 px-6">
+                  <h2 className="text-2xl md:text-3xl font-bold text-blue-700">
+                    {stat.value}
+                  </h2>
+                  <p className="text-gray-600 mt-1 text-sm md:text-base">
+                    {stat.label}
                   </p>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Right Image */}
-          <div className="flex-1 flex justify-center">
-            <img
-              src="/gwj/product-details-1.png" // replace with your image path
-              alt="Learning illustration"
-              className="w-full max-w-md rounded-lg"
-            />
-          </div>
         </div>
       </div>
-      {/* next section */}
 
-      <div className="w-full bg-[#FBFCFF] border rounded-2xl p-6 md:p-10 shadow-sm max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center gap-10">
-          {/* Left Content */}
-          <div className="flex-1 flex justify-center">
-            <img
-              src="/gwj/product-details-2.png" // replace with your image path
-              alt="Learning illustration"
-              className="w-full max-w-md rounded-lg"
-            />
-          </div>
-          {/* Right Image */}
-          <div className="flex-1">
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-900">
-              Become <span className="text-blue-600">placement-ready</span>
-            </h2>
+      {page !== "govt" && (
+        <div>
+          {/* next section */}
+          <div className="w-full bg-[#FBFCFF] border rounded-2xl p-6 md:p-10 shadow-sm my-20 max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-10">
+              {/* Left Content */}
+              <div className="">
+                <h2 className="text-xl md:text-2xl font-semibold text-gray-900">
+                  Go from{" "}
+                  {page === "trending" && parseInt(id || "0") === 1 ? (
+                    <>
+                      <span className="text-blue-600">
+                        beginner to pro in 2 months
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-blue-600">
+                      beginner to pro in 4 months
+                    </span>
+                  )}
+                </h2>
+                <p className="text-gray-600 mt-3">
+                  With a curriculum designed and taught by industry experts, you
+                  will get the skills and mentorship for career success.
+                </p>
 
-            {/* Feature Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-              {features3.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center justify-center text-center border rounded-xl p-4 hover:shadow-md transition"
-                >
-                  <div className="bg-blue-50 rounded-lg p-3 mb-2">
-                    {feature.icon}
-                  </div>
-                  <p className="text-gray-700 text-sm md:text-base">
-                    {feature.text}
-                  </p>
+                {/* Feature Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+                  {features2.map((feature, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col items-center justify-center text-center border rounded-xl p-4 hover:shadow-md transition"
+                    >
+                      <div className="bg-blue-50 rounded-lg p-3 mb-2">
+                        {feature.icon}
+                      </div>
+                      <p className="text-gray-700 text-sm md:text-base">
+                        {feature.text}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Right Image */}
+              <div className="flex justify-center">
+                <img
+                  src="/gwj/product-details-1.png" // replace with your image path
+                  alt="Learning illustration"
+                  className="w-full max-w-md rounded-lg"
+                />
+              </div>
+            </div>
+          </div>
+          {/* next section */}
+
+          <div className="w-full bg-[#FBFCFF] border rounded-2xl p-6 md:p-10 shadow-sm max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-10">
+              {/* Left Content */}
+              <div className="flex justify-center">
+                <img
+                  src="/gwj/product-details-2.png" // replace with your image path
+                  alt="Learning illustration"
+                  className="w-full max-w-md rounded-lg"
+                />
+              </div>
+              {/* Right Image */}
+              <div>
+                <h2 className="text-xl md:text-2xl font-semibold text-gray-900">
+                  Become <span className="text-blue-600">placement-ready</span>
+                </h2>
+
+                {/* Feature Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+                  {features3.map((feature, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col items-center justify-center text-center border rounded-xl p-4 hover:shadow-md transition"
+                    >
+                      <div className="bg-blue-50 rounded-lg p-3 mb-2">
+                        {feature.icon}
+                      </div>
+                      <p className="text-gray-700 text-sm md:text-base">
+                        {feature.text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
+      )}
       <section className="w-full px-6 md:px-20 py-12">
         {/* Title */}
         <h2 className="text-2xl md:text-5xl font-semibold text-center mb-12 relative inline-block">

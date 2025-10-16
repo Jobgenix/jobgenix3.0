@@ -74,17 +74,12 @@ export default function Nav({ onLoginClick }: { onLoginClick?: () => void }) {
     { name: "Internships", route: "/Opportunities/internships" },
     { name: "Jobs", route: "/Opportunities/jobs" },
     { name: "Get-job-ready", route: "/gwj" },
-    { name: "Courses", route: "/comingsoon" },
-    { name: "Practice", route: "/comingsoon" },
-    { name: "Mentorship", route: "/comingsoon" },
-    { name: "Government Jobs", route: "/comingsoon" },
+
     { name: "Profile", route: "/profile" },
   ];
 
   const navItems = [
     { name: "Home", route: "/" },
-    { name: "About us", route: "/about-us" },
-    { name: "Roadmaps", route: "/roadmaps" },
     { name: "Internships", route: "/Opportunities/internships" },
     { name: "Jobs", route: "/Opportunities/jobs" },
     { name: "Get-job-ready", route: "/gwj" },
@@ -299,7 +294,7 @@ export default function Nav({ onLoginClick }: { onLoginClick?: () => void }) {
                         {item.children.map((child, i: number) => (
                           <li key={i}>
                             <Link
-                              href={`categoryblogs/${item.name}/${child.name}`}
+                              href={`/categoryblogs/${item.name}/${child.name}`}
                               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-500"
                             >
                               {child.name}

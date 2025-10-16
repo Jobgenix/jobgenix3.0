@@ -58,7 +58,7 @@ export default function StatsSection() {
 
           <div className="p-5 bg-[#C9E3FF] rounded-xl shadow-[8px_8px_16px rgba(0,0,0,0.25), -4px -4px 10px rgba(255,255,255,0.9)]">
             <p className="text-2xl md:text-3xl lg:text-[3.5rem] lg:leading-[64px] font-sora font-bold flex items-center">
-              9 LPA
+              5-9 LPA
             </p>
             <p className="text-xs md:text-sm lg:text-xl w-3/5 font-semibold text-gray-600">
               Average salary

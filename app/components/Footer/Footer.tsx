@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { BsWhatsapp } from "react-icons/bs";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
@@ -100,25 +101,16 @@ export default function Footer() {
                   <Link href="/">Home</Link>
                 </li>
                 <li>
-                  <Link href="/opportunities?type=jobs">Explore Jobs</Link>
+                  <Link href="/Opportunities/jobs">Explore Jobs</Link>
                 </li>
                 <li>
-                  <Link href="/comingsoon">Top Courses</Link>
+                  <Link href="/gwj">Top Courses</Link>
                 </li>
                 <li>
-                  <Link href="/comingsoon">For Employers</Link>
-                </li>
-                <li>
-                  <Link href="/comingsoon">Mentorship</Link>
+                  <Link href="/hostOpportunity">For Employers</Link>
                 </li>
                 <li>
                   <Link href="/blogs">Blog</Link>
-                </li>
-                <li>
-                  <Link href="/comingsoon">About Us</Link>
-                </li>
-                <li>
-                  <Link href="/comingsoon">Contact</Link>
                 </li>
               </ul>
             </div>
@@ -128,49 +120,38 @@ export default function Footer() {
               </h4>
               <ul className="text-sm lg:text-base font-medium text-[#CAE4FD] space-y-1">
                 <li>
-                  <Link href="/comingsoon">IT & Software</Link>
+                  <Link href="/maincategoryblogs/Career Advice">
+                    Career Advice
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/comingsoon">Marketing & Sales</Link>
+                  <Link href="/maincategoryblogs/Industry Insights">
+                    Industry Insights
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/comingsoon">Design & Creatives</Link>
-                </li>
-                <li>
-                  <Link href="/comingsoon">Business & Management</Link>
-                </li>
-                <li>
-                  <Link href="/comingsoon">Data Science & AI</Link>
-                </li>
-                <li>
-                  <Link href="/opportunities?type=internships">
-                    Internships
+                  <Link href="/maincategoryblogs/Success stories & Interviews">
+                    Success stories & Interviews
                   </Link>
                 </li>
               </ul>
             </div>
-            <div className="hidden md:block">
+            <div className="">
               <h4 className=" text-base md:text-lg lg:text-xl font-semibold mb-2 ">
-                Resources
+                About
               </h4>
               <ul className="text-sm lg:text-base font-medium text-[#CAE4FD] space-y-1">
                 <li>
-                  <Link href="/comingsoon">Resume Builder</Link>
+                  <Link href="/about-us">About Us</Link>
                 </li>
                 <li>
-                  <Link href="/comingsoon">Career Guides</Link>
+                  <Link href="/culture">Culture</Link>
                 </li>
                 <li>
-                  <Link href="/comingsoon">Interview Tips</Link>
+                  <Link href="/career">Career</Link>
                 </li>
                 <li>
-                  <Link href="/comingsoon">Success Stories</Link>
-                </li>
-                <li>
-                  <Link href="/comingsoon">FAQs</Link>
-                </li>
-                <li>
-                  <Link href="/comingsoon">Support Centre</Link>
+                  <Link href="/comingsoon">Our businesses</Link>
                 </li>
               </ul>
             </div>
@@ -184,9 +165,6 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/comingsoon">Privacy Policy</Link>
-                </li>
-                <li>
-                  <Link href="/comingsoon">Cookie Policy</Link>
                 </li>
               </ul>
             </div>
@@ -203,21 +181,21 @@ export default function Footer() {
             <div className="flex justify-center space-x-4">
               <a
                 target="_blank"
-                href="https://www.instagram.com/jobgenix.unbeatable/"
+                href="https://chat.whatsapp.com/LAMPVH8O7MS8aiagu16FTH"
                 rel="noopener noreferrer"
               >
-                <FaFacebookF className="text-gray-400 cursor-pointer hover:text-white" />
+                <BsWhatsapp className="text-gray-400 cursor-pointer hover:text-white" />
               </a>
               <a
                 target="_blank"
-                href="https://www.instagram.com/jobgenix.unbeatable/"
+                href="https://www.instagram.com/jobgenix.team"
                 rel="noopener noreferrer"
               >
                 <FaInstagram className="text-gray-400 cursor-pointer hover:text-white" />
               </a>
               <a
                 target="_blank"
-                href="https://www.linkedin.com/company/successwithjobgenix/"
+                href="https://www.linkedin.com/company/successwithjobgenix"
                 rel="noopener noreferrer"
               >
                 <FaLinkedinIn className="text-gray-400 cursor-pointer hover:text-white" />

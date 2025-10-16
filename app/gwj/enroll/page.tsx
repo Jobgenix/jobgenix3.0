@@ -319,6 +319,10 @@ export default function RegistrationForm() {
                   sub: "Crack Product - Based Companies (Crack MAANG, FMCG & MBB Companies)",
                   name: "Crack Product - Based Companies",
                 },
+                {
+                  sub: "Crack Government exams()",
+                  name: "Crack Government exams",
+                },
               ].map((subject, i) => (
                 <label
                   key={i}
@@ -347,7 +351,7 @@ export default function RegistrationForm() {
               <div className="bg-white shadow-md rounded-lg p-6 space-y-6">
                 <div>
                   <RazorpayCheckout
-                    amount={1999}
+                    amount={4999}
                     description="Jobgenix Premium"
                     loading={loading}
                     setLoading={setLoading}

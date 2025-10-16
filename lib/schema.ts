@@ -10,6 +10,7 @@ import {
   jsonb,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
+import { sql } from "drizzle-orm";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -27,6 +28,14 @@ export const users = pgTable("user", {
   summary: text("summary"), // User's summary or bio
   resumeUrl: text("resume_url"),
   skills: text("skills"),
+});
+
+export const referrals = pgTable("referrals", {
+  id: text("id").notNull().primaryKey(),
+  name: text("name").notNull(),
+  designation: text("designation").notNull(),
+  email: text("email").notNull(),
+  linkedinUrl: text("linkedin_url").notNull(),
 });
 
 export const accounts = pgTable(
@@ -175,6 +184,9 @@ export const opportunities = pgTable("opportunities", {
   deadline: timestamp("deadline", { mode: "date" }).notNull(),
   postedAt: timestamp("postedAt", { mode: "date" }).notNull(),
   requiredSkils: text("requiredSkils"),
+  referrals: text("referrals")
+    .array()
+    .default(sql`ARRAY[]::text[]`),
 });
 
 export const degrees = pgTable("degrees", {
@@ -218,6 +230,7 @@ export const gwjenrollment = pgTable("gwjenrollment", {
       "Core Subjects",
       "Management Subjects",
       "Crack Product - Based Companies",
+      "Crack Government exams",
     ],
   }).notNull(),
 

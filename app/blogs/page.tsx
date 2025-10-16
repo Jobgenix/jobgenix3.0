@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Nav from "../components/LandingPage-New/nav";
 import { useRouter } from "next/navigation";
+import Footer from "../components/Footer/Footer";
 
 interface EditorBlock {
   id: string;
@@ -162,6 +163,7 @@ export default function BlogSection() {
           </button>
         </div>
       </section>
+      <Footer />
     </>
   );
 }

@@ -15,24 +15,22 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import {
-  ArrowLeft,
-  ArrowRight,
   ArrowRightFromLine,
   Check,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import Link from "next/link";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import {
   dummyImages,
   oncampusCourses,
   testimonials,
+  govtJobs,
   trendingCourses,
 } from "../../constants/dummyData";
 import Footer from "../components/Footer/Footer";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
 
 type VerticalSliderProps = {
   images: string[];
@@ -167,6 +165,7 @@ function App() {
             </div>
           </div>
         </section>
+
         <section className="py-10 flex flex-col p-3">
           <div className="flex items-center space-x-5 md:space-x-14 md:mb-4">
             <h1 className="text-2xl md:text-5xl font-bold text-gray-900">
@@ -304,6 +303,70 @@ function App() {
                         ))}
                         <p>& more.</p>
                       </div>
+                      <div className="text-[#1D4ED8] flex items-center gap-2 justify-end">
+                        <p>know more</p> <ArrowRightFromLine />
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className="custom-pagination mt-5 flex justify-center gap-2"></div>
+          </div>
+        </section>
+
+        <section className="py-10 flex flex-col p-3">
+          <div className="flex items-center space-x-5 md:space-x-14 md:mb-4">
+            <h1 className="text-2xl md:text-5xl font-bold text-gray-900">
+              Crack govt jobs
+            </h1>
+          </div>
+
+          <div className="w-full">
+            <Swiper
+              spaceBetween={20}
+              slidesPerView={4}
+              breakpoints={{
+                320: { slidesPerView: 1 },
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
+              }}
+              loop={true}
+              modules={[Pagination]}
+              pagination={{
+                clickable: true,
+                el: ".custom-pagination",
+              }}
+            >
+              {govtJobs.map((course, index) => (
+                <SwiperSlide key={index}>
+                  <div
+                    className="group transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer rounded-xl shadow-md bg-white my-8"
+                    onClick={() => {
+                      router.push(
+                        `/gwj/product-details/${course.id}?page=govt`
+                      );
+                    }}
+                  >
+                    <img
+                      src={course.img}
+                      alt={`Slide ${index + 1}`}
+                      className="w-full rounded-lg"
+                    />
+                    <div className=" mt-3 p-3 pt-0">
+                      <h2 className="text-2xl font-semibold ">
+                        {course.title}
+                      </h2>
+                      <div className="flex items-center gap-2 mt-3">
+                        <p>✅</p>
+                        <p>Crack Government Exam</p>
+                      </div>
+                      <div className="flex items-center gap-2 mt-3">
+                        <p>⌚</p>
+                        <p>1 Month with Live classes</p>
+                      </div>
+
                       <div className="text-[#1D4ED8] flex items-center gap-2 justify-end">
                         <p>know more</p> <ArrowRightFromLine />
                       </div>
