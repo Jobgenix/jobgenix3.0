@@ -8,10 +8,17 @@ import Footer from "../../components/Footer/Footer";
 import YourJourneyBanner from "../../components/YourJourneyBanner";
 import { useParams } from "next/navigation";
 import axios from "axios";
+type ReferralInput = {
+  id: string;
+  name: string;
+  designation: string;
+  email: string;
+  linkedinUrl: string;
+};
 
 export default function ReferralCard() {
   const [open, setOpen] = useState<string | null>("tips");
-  const [referrals, setReferrals] = useState<any[]>([]);
+  const [referrals, setReferrals] = useState<ReferralInput[]>([]);
   const params = useParams();
   const id = params?.jobId as string;
 

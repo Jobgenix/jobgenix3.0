@@ -6,6 +6,13 @@ import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { ZodError } from "zod";
+type ReferralInput = {
+  firstName: string;
+  lastName: string;
+  designation: string;
+  mail: string;
+  linkedin: string;
+};
 
 async function createJob(req: NextRequest) {
   const requestBody = await req.json();
@@ -26,7 +33,7 @@ async function createJob(req: NextRequest) {
     const referralsFromDB = await db
       .insert(referrals)
       .values(
-        referralsFromBody.map((referral: any) => ({
+        referralsFromBody.map((referral: ReferralInput) => ({
           id: uuidv4(),
           name: `${referral.firstName} ${referral.lastName}`,
           designation: referral.designation,
