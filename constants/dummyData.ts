@@ -98,6 +98,19 @@ const testimonials2 = [
 const trendingCourses = [
   {
     id: 1,
+    title: "Crack TCS BPS hiring 2026",
+    img: "/gwj/tcs-bps.png",
+    bullets: [
+      "Covers aptitude + interview round preparation",
+      "Includes previous year TCS BPS questions",
+    ],
+    companies: ["/gwj/companies/tcs.png"],
+    enroll: 2239,
+    rating: 4.7,
+    rate: 1197,
+  },
+  {
+    id: 2,
     title: "Cognizant GenC",
     img: "/gwj/trending-1.png",
     bullets: [
@@ -113,7 +126,7 @@ const trendingCourses = [
     rate: 1197,
   },
   {
-    id: 2,
+    id: 3,
     title: "DSA ",
     img: "/gwj/trending-2.png",
     bullets: [
@@ -130,7 +143,7 @@ const trendingCourses = [
     rate: 3286,
   },
   {
-    id: 3,
+    id: 4,
     title: "Capgemini On Campus",
     img: "/gwj/trending-3.png",
     bullets: [
@@ -143,7 +156,7 @@ const trendingCourses = [
     rate: 2563,
   },
   {
-    id: 4,
+    id: 5,
     title: "TCS NQT Ninja/Digital",
     img: "/gwj/trending-4.png",
     bullets: [
@@ -156,7 +169,7 @@ const trendingCourses = [
     rate: 4895,
   },
   {
-    id: 5,
+    id: 6,
     title: "IBM On Campus",
     img: "/gwj/on-campus-1.png",
     bullets: [
@@ -338,11 +351,68 @@ const oncampusCourses = [
   },
 ];
 
+const govtJobs = [
+  {
+    id: 1,
+    title: "IB Junior Intelligence Officer crash course",
+    img: "/gwj/govt1.png",
+    bullets: [
+      "Comprehensive coverage of technical and analytical aptitude sections",
+      "Includes full-length mock tests and previous-year paper discussions",
+      "Personalized interview training with intelligence bureau–focused questions",
+    ],
+    companies: [
+      "/gwj/companies/microsoft.webp",
+      "/gwj/companies/paypal.webp",
+      "/gwj/companies/zepto.webp",
+    ],
+    enroll: 5439,
+    rating: 4.8,
+    rate: 3147,
+  },
+];
+
+// other constants
+const stats = [
+  {
+    value: "₹ 48 LPA",
+    label: "Highest package offered",
+  },
+  {
+    value: "₹ 5 LPA - 9 LPA",
+    label: "Average package offered",
+  },
+  {
+    value: "₹ 50k/month",
+    label: "Highest stipened offered",
+  },
+];
+const govtStats = [
+  {
+    value: "68-72",
+    label: "Genral(UR)",
+  },
+  {
+    value: "50-55",
+    label: "SC",
+  },
+  {
+    value: "42-47",
+    label: "ST",
+  },
+  {
+    value: "60-65",
+    label: "OBC",
+  },
+];
 export {
   dummyImages,
   steps,
   testimonials,
   testimonials2,
   trendingCourses,
+  govtJobs,
   oncampusCourses,
+  stats,
+  govtStats,
 };

@@ -1,3 +1,4 @@
+"use client";
 import { Bookmark, Check, MapPin, Share2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -18,8 +19,12 @@ interface Job {
   jobgenixSuggestion: boolean;
   match: string; // keep as string like "28.6%" or change to number if needed
 }
+interface JoBDetProps {
+  job: Job;
+  jobId: string;
+}
 
-export default function JoBDet({ job }: { job: Job }) {
+export default function JoBDet({ job, jobId }: JoBDetProps) {
   const { status } = useSession();
   return (
     <div className=" min-h-screen font-montserrat">
@@ -142,9 +147,11 @@ export default function JoBDet({ job }: { job: Job }) {
                 </Link>
               )}
             </button>
-            <button className="bg-blue-600 card-shadow text-white border border-blue-600 rounded-3xl py-[0.6rem] px-[0.95rem] text-base font-medium">
-              Get Referral
-            </button>
+            <Link href={"/get-referral/" + jobId}>
+              <button className="bg-blue-600 card-shadow text-white border border-blue-600 rounded-3xl py-[0.6rem] px-[0.95rem] text-base font-medium">
+                Get Referral
+              </button>
+            </Link>
           </div>
         </div>
 

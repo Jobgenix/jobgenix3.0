@@ -60,7 +60,11 @@ export default function AdvancedSettings({
       if (endDate instanceof Date && !isNaN(endDate.getTime())) {
         updatedFields.deadline = endDate.toISOString().slice(0, 10);
       }
-      if (applicationUrl && typeof applicationUrl === 'string' && applicationUrl.length) {
+      if (
+        applicationUrl &&
+        typeof applicationUrl === "string" &&
+        applicationUrl.length
+      ) {
         updatedFields.jobLink = applicationUrl;
       }
       if (Object.keys(updatedFields).length > 0) {
@@ -95,13 +99,15 @@ export default function AdvancedSettings({
               {["Website URL", "By Email"].map((platform) => (
                 <button
                   key={platform}
-                  className={`px-2 py-3 sm:px-3 sm:py-4 min-w-[8.3rem] border rounded-[3.1rem] text-sm sm:text-xl font-inter font-medium  ${applicationPlatform === platform
-                    ? "bg-blue-100 border-blue-600"
-                    : "bg-transparent border border-dashed border-black"
-                    } ${!takeApplicationsOnAnotherPlatform
+                  className={`px-2 py-3 sm:px-3 sm:py-4 min-w-[8.3rem] border rounded-[3.1rem] text-sm sm:text-xl font-inter font-medium  ${
+                    applicationPlatform === platform
+                      ? "bg-blue-100 border-blue-600"
+                      : "bg-transparent border border-dashed border-black"
+                  } ${
+                    !takeApplicationsOnAnotherPlatform
                       ? "opacity-60 cursor-not-allowed"
                       : ""
-                    }`}
+                  }`}
                   onClick={() =>
                     takeApplicationsOnAnotherPlatform &&
                     setApplicationPlatform(
@@ -121,12 +127,13 @@ export default function AdvancedSettings({
             </label>
             <input
               type="url"
-              className={`card-shadow no-shadow-mobile my-0 sm:px-7 py-2 max-w-[53rem] h-auto sm:h-[4.7rem] rounded-2xl font-montserrat font-medium appearance-none  w-full  text-gray-700 text-base sm:text-xl leading-tight focus:outline-none focus:ring-2 focus:ring-blue-300 ${!takeApplicationsOnAnotherPlatform
-                ? "opacity-60 cursor-not-allowed"
-                : ""
-                }`}
+              className={`card-shadow no-shadow-mobile my-0 sm:px-7 py-2 max-w-[53rem] h-auto sm:h-[4.7rem] rounded-2xl font-montserrat font-medium appearance-none  w-full  text-gray-700 text-base sm:text-xl leading-tight focus:outline-none focus:ring-2 focus:ring-blue-300 ${
+                !takeApplicationsOnAnotherPlatform
+                  ? "opacity-60 cursor-not-allowed"
+                  : ""
+              }`}
               value={applicationUrl}
-              onChange={e => setApplicationUrl(e.target.value)}
+              onChange={(e) => setApplicationUrl(e.target.value)}
               disabled={!takeApplicationsOnAnotherPlatform}
             />
           </div>
@@ -156,10 +163,11 @@ export default function AdvancedSettings({
               for this listing
             </h2>
             <button
-              className={` px-6 py-4 rounded-full text-sm sm:text-base font-montserrat font-medium border mb-4 ${autoCloseJob
-                ? "bg-blue-100 border-blue-500"
-                : "bg-transparent border border-dashed border-[#333333]"
-                }`}
+              className={` px-6 py-4 rounded-full text-sm sm:text-base font-montserrat font-medium border mb-4 ${
+                autoCloseJob
+                  ? "bg-blue-100 border-blue-500"
+                  : "bg-transparent border border-dashed border-[#333333]"
+              }`}
               onClick={() => setAutoCloseJob((prev) => !prev)}
             >
               After Specific Date
@@ -173,21 +181,22 @@ export default function AdvancedSettings({
                   <label className="block text-gray-700 text-sm md:text-lg font-semibold">
                     {label}
                   </label>
-                  <div className="relative card-shadow no-shadow-mobile border border-[#333333] sm:border-none rounded-[0.98rem] px-7 py-5 ">
+                  <div className="relative card-shadow no-shadow-mobile border border-[#333333] sm:border-none rounded-[0.98rem] px-7 py-5">
                     <input
                       type="datetime-local"
-                      className={`appearance-none w-full text-gray-700 text-base sm:text-xl leading-tight border-none ${!autoCloseJob ? "opacity-60 cursor-not-allowed" : ""
-                        }`}
+                      className={`appearance-none w-full text-gray-700 text-base sm:text-xl leading-tight border-none ${
+                        !autoCloseJob ? "opacity-60 cursor-not-allowed" : ""
+                      }`}
                       value={
                         idx === 0
                           ? startDate
                             ? new Date(startDate).toISOString().slice(0, 16)
                             : ""
                           : endDate
-                            ? new Date(endDate).toISOString().slice(0, 16)
-                            : ""
+                          ? new Date(endDate).toISOString().slice(0, 16)
+                          : ""
                       }
-                      onChange={e => {
+                      onChange={(e) => {
                         const val = e.target.value;
                         if (val) {
                           if (idx === 0) setStartDate(new Date(val));

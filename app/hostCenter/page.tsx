@@ -80,10 +80,10 @@ export default function HostCenter() {
         category: mergedForm.category,
         deadline: mergedForm.deadline,
         postedAt: mergedForm.postedAt,
-        degree: mergedForm.degree,           // <-- add this
+        degree: mergedForm.degree, // <-- add this
         passoutYear: mergedForm.passoutYear,
         advancedSettings,
-        additionalSettings,
+        referrals: additionalSettings.addReferrals,
       };
 
       const res = await fetch("/api/job/create-job", {

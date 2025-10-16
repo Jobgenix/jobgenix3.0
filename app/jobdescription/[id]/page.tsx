@@ -102,11 +102,13 @@ export default function JobDisplayNew() {
         {error ? (
           <p className="text-red-500">{error}</p>
         ) : job ? (
-          <JoBDet job={job} />
+          <JoBDet job={job} jobId={id} />
         ) : (
           <div className="flex flex-col items-center justify-center h-[60vh]">
             <div className="animate-spin rounded-full h-24 w-24 border-8 border-blue-500 border-t-transparent border-solid mb-6 shadow-lg"></div>
-            <p className="text-2xl font-semibold text-gray-700 mt-2">Loading...</p>
+            <p className="text-2xl font-semibold text-gray-700 mt-2">
+              Loading...
+            </p>
           </div>
         )}
       </div>

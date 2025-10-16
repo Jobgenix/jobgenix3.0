@@ -4,10 +4,7 @@ import { db } from "@/lib/db";
 import { string, z } from "zod";
 import { ZodError } from "zod";
 import { and, eq, gt, ilike, sql, desc, or } from "drizzle-orm";
-import {
-  jobTypeSchema,
-  passoutYearSchema,
-} from "@/constants/jobOpportunities";
+import { jobTypeSchema, passoutYearSchema } from "@/constants/jobOpportunities";
 // Removed Redis cache imports since we're not using them anymore
 // import { getJobsById, setJobsById } from "@/utils/jobCache";
 // Define the job result type from DB queries
@@ -49,27 +46,36 @@ const getJobsSchema = z
  * @param requireSkills String of comma-separated required skills
  * @returns Object with matching skills, suggestion flag, and match percentage
  */
-function getMatchedSkills(userSkills: string[] | undefined, requireSkills: string | null): { 
-  matchingSkills: string[], 
-  jobgenixSuggestion: boolean,
-  matchPercentage: number
+function getMatchedSkills(
+  userSkills: string[] | undefined,
+  requireSkills: string | null
+): {
+  matchingSkills: string[];
+  jobgenixSuggestion: boolean;
+  matchPercentage: number;
 } {
   // Handle empty cases
   if (!userSkills || userSkills.length === 0 || !requireSkills) {
     console.log("No skills to match: empty user skills or required skills");
-    return { matchingSkills: [], jobgenixSuggestion: false, matchPercentage: 0 };
+    return {
+      matchingSkills: [],
+      jobgenixSuggestion: false,
+      matchPercentage: 0,
+    };
   }
-  
+
   // Normalize user skills to lowercase
-  const normalizedUserSkills = userSkills.map(skill => skill.trim().toLowerCase());
+  const normalizedUserSkills = userSkills.map((skill) =>
+    skill.trim().toLowerCase()
+  );
   console.log("Normalized user skills:", normalizedUserSkills);
-  
+
   // Normalize required skills to lowercase and split by commas
   const normalizedRequiredSkills = requireSkills
-    .split(',')
-    .map(skill => skill.trim().toLowerCase());
+    .split(",")
+    .map((skill) => skill.trim().toLowerCase());
   console.log("Normalized required skills:", normalizedRequiredSkills);
-  
+
   // Find matching skills - use partial matching to be more flexible
   const matched = [];
   for (const userSkill of normalizedUserSkills) {
@@ -81,22 +87,27 @@ function getMatchedSkills(userSkills: string[] | undefined, requireSkills: strin
       }
     }
   }
-  
+
   // Remove duplicates from matched skills
   const uniqueMatched = [...new Set(matched)];
-  
+
   // Calculate match percentage based on required skills
-  const matchPercentage = normalizedRequiredSkills.length > 0 
-    ? (uniqueMatched.length / normalizedRequiredSkills.length) * 100 
-    : 0;
-  
-  console.log(`Matched ${uniqueMatched.length} out of ${normalizedRequiredSkills.length} skills (${matchPercentage.toFixed(2)}%)`);
+  const matchPercentage =
+    normalizedRequiredSkills.length > 0
+      ? (uniqueMatched.length / normalizedRequiredSkills.length) * 100
+      : 0;
+
+  console.log(
+    `Matched ${uniqueMatched.length} out of ${
+      normalizedRequiredSkills.length
+    } skills (${matchPercentage.toFixed(2)}%)`
+  );
   console.log("Matching skills:", uniqueMatched);
-  
+
   return {
     matchingSkills: uniqueMatched,
     jobgenixSuggestion: matchPercentage > 20,
-    matchPercentage: Number(matchPercentage.toFixed(1)) // Round to 1 decimal place and convert to number
+    matchPercentage: Number(matchPercentage.toFixed(1)), // Round to 1 decimal place and convert to number
   };
 }
 
@@ -139,7 +150,8 @@ async function getJobs(req: NextRequest) {
           jobType: opportunities.workplaceType,
           jobLink: opportunities.jobLink,
           requiredSkils: opportunities.requiredSkils,
-          description: opportunities.description, // Added description field to query
+          description: opportunities.description,
+          referrals: opportunities.referrals,
         })
         .from(opportunities)
         .innerJoin(companies, eq(opportunities.companyId, companies.id))
@@ -172,7 +184,9 @@ async function getJobs(req: NextRequest) {
         jobgenixSuggestion = matchResult.jobgenixSuggestion;
         matchPercentage = matchResult.matchPercentage;
       } else {
-        console.log("Skipping skill matching - missing user skills or job skills");
+        console.log(
+          "Skipping skill matching - missing user skills or job skills"
+        );
       }
 
       // Create the complete response job object
@@ -239,8 +253,15 @@ async function getJobs(req: NextRequest) {
       const requireSkils = job.requiredSkils;
       console.log(`Job ${job.jobId} required skills:`, requireSkils);
 
-      if (shouldMatchSkills && userSkills && userSkills.length > 0 && requireSkils) {
-        console.log(`Processing skills match for job: ${job.jobId} - ${job.jobTitle}`);
+      if (
+        shouldMatchSkills &&
+        userSkills &&
+        userSkills.length > 0 &&
+        requireSkils
+      ) {
+        console.log(
+          `Processing skills match for job: ${job.jobId} - ${job.jobTitle}`
+        );
         const matchResult = getMatchedSkills(userSkills, requireSkils);
         return {
           ...job,

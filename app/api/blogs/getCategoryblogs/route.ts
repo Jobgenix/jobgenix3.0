@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "9", 10);
     const offset = (page - 1) * limit;
+    console.log("category:", category);
 
     // Get total count of blogs
     const totalBlogs = await db.select().from(blog);
@@ -25,13 +26,15 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    if (subcategory) {
+    if (subcategory && subcategory !== "undefined") {
       conditions.push(
-        sql`LOWER(TRIM(${blog.subcategory})) = ${subcategory
-          .trim()
-          .toLowerCase()}`
+        eq(
+          sql`LOWER(TRIM(${blog.subcategory}))`,
+          subcategory.toLowerCase().trim()
+        )
       );
     }
+
     const query = db
       .select({
         id: blog.id,
@@ -49,7 +52,6 @@ export async function GET(req: NextRequest) {
       .orderBy(desc(blog.createdAt))
       .limit(limit)
       .offset(offset);
-
     const blogs = await query;
 
     return NextResponse.json({

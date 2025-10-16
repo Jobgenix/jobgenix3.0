@@ -1,7 +1,7 @@
 import { opportunitySchema } from "@/app/job-upload/jobFormValidator";
 import { ROLE_IDS } from "@/constants/roles";
 import { db } from "@/lib/db";
-import { opportunities, users } from "@/lib/schema";
+import { opportunities, referrals, users } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
@@ -9,29 +9,56 @@ import { ZodError } from "zod";
 
 async function createJob(req: NextRequest) {
   const requestBody = await req.json();
-  // if (!requestBody.userId)
-  //   return new NextResponse(JSON.stringify({ err: "Unauthorised request" }), {
-  //     status: 401,
-  //   });
-  try {
-    const userRole = await db
-      .select({ roleId: users.roleId })
-      .from(users)
-      .where(eq(users.id, requestBody.userId));
-    // if(userRole[0].roleId !== ROLE_IDS.EMPLOYER)
-    //     return new NextResponse(JSON.stringify({ err: "Unauthorised request" }), { status: 401 });
-    const opportunity = opportunitySchema.parse(requestBody);
-    // get jobdescription from opportunitySchema
-    const jd = opportunity.description;
-    const resulySkils = await getActSkils(jd);
 
-    await db.insert(opportunities).values({
-      id: uuidv4(),
-      ...opportunity,
-      postedAt: new Date(opportunity.postedAt),
-      deadline: new Date(opportunity.deadline),
-      requiredSkils: resulySkils,
-    });
+  const referralsFromBody = requestBody.referrals;
+  console.log("Request Body (referrals):", referralsFromBody);
+
+  try {
+    // Optional: role check logic if needed
+    // const userRole = await db
+    //   .select({ roleId: users.roleId })
+    //   .from(users)
+    //   .where(eq(users.id, requestBody.userId));
+    // if (userRole[0].roleId !== ROLE_IDS.EMPLOYER)
+    //   return new NextResponse(JSON.stringify({ err: "Unauthorised request" }), { status: 401 });
+
+    // ✅ Insert referrals
+    const referralsFromDB = await db
+      .insert(referrals)
+      .values(
+        referralsFromBody.map((referral: any) => ({
+          id: uuidv4(),
+          name: `${referral.firstName} ${referral.lastName}`,
+          designation: referral.designation,
+          email: referral.mail,
+          linkedinUrl: referral.linkedin,
+        }))
+      )
+      .returning();
+
+    // Extract referral IDs and attach them to opportunity
+    const referralIds = referralsFromDB.map((ref) => ref.id);
+    requestBody.referrals = referralIds;
+
+    // ✅ Validate the full opportunity including referralIds
+    const opportunity = opportunitySchema.parse(requestBody);
+
+    // Extract skills using your function
+    const jd = opportunity.description;
+    const resultSkills = await getActSkils(jd);
+
+    // ✅ Insert opportunity into DB
+    const data = await db
+      .insert(opportunities)
+      .values({
+        id: uuidv4(),
+        ...opportunity,
+        postedAt: new Date(opportunity.postedAt),
+        deadline: new Date(opportunity.deadline),
+        requiredSkils: resultSkills,
+      })
+      .returning();
+    console.log(data);
 
     return new NextResponse(
       JSON.stringify({ success: "Job created successfully" }),
