@@ -6,7 +6,8 @@ import { useJobStore } from "@/app/_store/oppJobStore";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // type JobType = "fullTime" | "remote" | "hybrid" | "onsite" | "other";
 
@@ -212,39 +213,53 @@ export default function Home() {
   const pathname = usePathname();
   const slug = pathname.split("Opportunities/").pop();
   const { data: session } = useSession(); // Get user session data
-
   const userId = session?.user?.id; // Get user ID from session
   const addJobs = useJobStore((state) => state.addJobs);
 
-  useEffect(
-    () => {
-      const fetchJobs = async () => {
-        try {
-          const response = await fetch("/api/job/getJobs", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userId: userId?.toString(),
-              userSkills: ["JavaScript", "React", "Node.js"],
-              stream: "1",
-              type: slug?.toString(),
-            }),
-          });
+  useEffect(() => {
+    if (!userId) return;
 
-          const data = await response.json();
-          addJobs(data.jobs); // Add jobs to global state
-        } catch (error) {
-          console.error("Failed to fetch jobs:", error);
+    const load = async () => {
+      try {
+        // 1) fetch profile info
+        const resp = await axios.get("/api/profileInfo/");
+        const resumeData = resp.data || {};
+        const skillsRaw = resumeData.skills ?? "";
+
+        // 2) normalize to array (handles array, comma string, or single string)
+        const skillsArray = Array.isArray(skillsRaw)
+          ? skillsRaw.map((s) => String(s).trim()).filter(Boolean)
+          : String(skillsRaw)
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean);
+
+        // 3) fetch jobs only after skillsArray is ready
+        const response = await fetch("/api/job/getJobs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: userId?.toString(),
+            userSkills: skillsArray, // send as array to match zod schema
+            stream: "1",
+            type: slug?.toString(),
+          }),
+        });
+
+        if (!response.ok) {
+          console.error("Failed to fetch jobs:", response.statusText);
+          return;
         }
-      };
 
-      fetchJobs();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [userId]
-  ); // Fetch jobs when userId changes
+        const data = await response.json();
+        addJobs(data.jobs);
+      } catch (error) {
+        console.error("Failed to fetch profile or jobs:", error);
+      }
+    };
+
+    load();
+  }, [userId, slug, addJobs]);
 
   const jobs = useJobStore((state) => state.jobs); // Global state
   // console.log(jobs); // Log the jobs data

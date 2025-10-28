@@ -68,13 +68,11 @@ function getMatchedSkills(
   const normalizedUserSkills = userSkills.map((skill) =>
     skill.trim().toLowerCase()
   );
-  console.log("Normalized user skills:", normalizedUserSkills);
 
   // Normalize required skills to lowercase and split by commas
   const normalizedRequiredSkills = requireSkills
     .split(",")
     .map((skill) => skill.trim().toLowerCase());
-  console.log("Normalized required skills:", normalizedRequiredSkills);
 
   // Find matching skills - use partial matching to be more flexible
   const matched = [];
@@ -97,12 +95,12 @@ function getMatchedSkills(
       ? (uniqueMatched.length / normalizedRequiredSkills.length) * 100
       : 0;
 
-  console.log(
-    `Matched ${uniqueMatched.length} out of ${
-      normalizedRequiredSkills.length
-    } skills (${matchPercentage.toFixed(2)}%)`
-  );
-  console.log("Matching skills:", uniqueMatched);
+  // console.log(
+  //   `Matched ${uniqueMatched.length} out of ${
+  //     normalizedRequiredSkills.length
+  //   } skills (${matchPercentage.toFixed(2)}%)`
+  // );
+  // console.log("Matching skills:", uniqueMatched);
 
   return {
     matchingSkills: uniqueMatched,
@@ -138,8 +136,6 @@ async function getJobs(req: NextRequest) {
 
     // If jobId is provided, fetch single job directly from database
     if (jobId) {
-      console.log("Fetching job by ID directly from database:", jobId);
-
       const dbResult = await db
         .select({
           companyName: companies.name,
@@ -168,17 +164,14 @@ async function getJobs(req: NextRequest) {
 
       const jobdata = dbResult[0] as JobQueryResult;
       const requireSkils = jobdata.requiredSkils;
-      console.log("Job found in database with skills:", requireSkils);
 
       let matchingSkills: string[] = [];
       let jobgenixSuggestion = false;
       let matchPercentage = 0;
 
       console.log("User skills:", userSkills);
-      console.log("Required Skills:", requireSkils);
 
       if (userSkills && userSkills.length > 0 && requireSkils) {
-        console.log("Processing skills match for job:", jobId);
         const matchResult = getMatchedSkills(userSkills, requireSkils);
         matchingSkills = matchResult.matchingSkills;
         jobgenixSuggestion = matchResult.jobgenixSuggestion;
@@ -251,7 +244,6 @@ async function getJobs(req: NextRequest) {
 
     const jobsWithMatchingSkills = result.map((job) => {
       const requireSkils = job.requiredSkils;
-      console.log(`Job ${job.jobId} required skills:`, requireSkils);
 
       if (
         shouldMatchSkills &&
@@ -259,9 +251,6 @@ async function getJobs(req: NextRequest) {
         userSkills.length > 0 &&
         requireSkils
       ) {
-        console.log(
-          `Processing skills match for job: ${job.jobId} - ${job.jobTitle}`
-        );
         const matchResult = getMatchedSkills(userSkills, requireSkils);
         return {
           ...job,

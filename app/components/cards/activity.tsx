@@ -8,6 +8,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import LearningActivity from "./LearningActivity";
+import * as pdfjsLib from "pdfjs-dist";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
 interface FormData {
   email: string;
@@ -139,6 +143,36 @@ export default function Activity({ data }: { data: UserDetails }) {
       fileInputRef.current.click();
     }
   };
+  async function extractTextFromPDF(file: Blob | File): Promise<string> {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+    let textContent = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const text = await page.getTextContent();
+      const textItems = (text.items as any[])
+        .map((item) => (item as any).str)
+        .join(" ");
+      textContent += textItems + "\n";
+    }
+
+    return textContent;
+  }
+
+  async function extractSkillsWithGemini(
+    resumeText: string
+  ): Promise<string[] | { skills: string }> {
+    const res = await fetch("/api/job/extract-skills", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ resumeText }),
+    });
+
+    const data = await res.json();
+    console.log(data.skills);
+    return data.skills;
+  }
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] as File;
@@ -183,12 +217,18 @@ export default function Activity({ data }: { data: UserDetails }) {
         throw new Error(uploadData.error?.message || "Upload failed");
       }
 
+      const resumeText = await extractTextFromPDF(file);
+
+      const extractedSkills = await extractSkillsWithGemini(resumeText);
+      console.log("Extracted Skills:", extractedSkills);
+
       const saveResponse = await fetch("/api/uploadcv", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id: userData.userId,
           resumeUrl: uploadData.secure_url,
+          skills: extractedSkills,
         }),
       });
 

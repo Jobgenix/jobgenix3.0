@@ -30,21 +30,52 @@ export default function JobDisplayNew() {
   const params = useParams();
   const id = params?.id as string;
   const router = useRouter();
-
+  const [userSkills, setUserSkills] = useState<string[]>([]);
   useEffect(() => {
     const fetchJobData = async () => {
-      let userSkills: string[] = [];
+      let skillsArray: string[] = [];
 
-      // ✅ If authenticated, fetch the user's skills
+      // ✅ If authenticated, fetch the user's skills and normalize to array
       if (status === "authenticated") {
         try {
           const res = await fetch("/api/profileInfo");
           if (res.ok) {
             const data = await res.json();
-            userSkills = data.skills.split(",") || [];
+            const skillsRaw = data.skills ?? "";
 
-            console.log("User skills fetched:", typeof userSkills);
-            console.log("User skills fetched:", userSkills);
+            if (Array.isArray(skillsRaw)) {
+              skillsArray = skillsRaw
+                .map((s) => String(s).trim())
+                .filter(Boolean);
+            } else if (typeof skillsRaw === "string") {
+              const trimmed = skillsRaw.trim();
+              if (trimmed.startsWith("[")) {
+                // JSON stringified array -> parse
+                try {
+                  const parsed = JSON.parse(trimmed);
+                  if (Array.isArray(parsed)) {
+                    skillsArray = parsed
+                      .map((s) => String(s).trim())
+                      .filter(Boolean);
+                  }
+                } catch {
+                  // fallback to comma-split if parse fails
+                  skillsArray = trimmed
+                    .replace(/^\[|]$/g, "") // remove brackets if any
+                    .split(",")
+                    .map((s) => s.replace(/^"+|"+$/g, "").trim())
+                    .filter(Boolean);
+                }
+              } else {
+                // comma-separated string
+                skillsArray = trimmed
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean);
+              }
+            }
+
+            setUserSkills(skillsArray);
           } else {
             console.warn("Failed to fetch skills, continuing with empty array");
           }
@@ -53,6 +84,7 @@ export default function JobDisplayNew() {
         }
       }
 
+      // Use the local skillsArray (not the state) when sending to backend
       try {
         const response = await fetch(`/api/job/getJobs`, {
           method: "POST",
@@ -60,8 +92,8 @@ export default function JobDisplayNew() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId: session?.user?.id.toString(),
-            userSkills: userSkills,
+            userId: session?.user?.id?.toString() ?? undefined,
+            userSkills: skillsArray, // <- send parsed array
             jobId: id,
           }),
         });
@@ -78,7 +110,6 @@ export default function JobDisplayNew() {
       }
     };
 
-    // Only run when login state is known
     if (status !== "loading" && id) {
       fetchJobData();
     }

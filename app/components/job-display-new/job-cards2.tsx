@@ -1,5 +1,6 @@
 "use client";
 import { useJobStore } from "@/app/_store/oppJobStore";
+import axios from "axios";
 import { ArrowRight, Clock, MapPin, Users } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -203,6 +204,7 @@ function JobCard({
 export default function Home2() {
   const pathname = usePathname();
   const slug = pathname.split("Opportunities/").pop();
+  const [userskills, setUserskills] = useState();
 
   const { data: session } = useSession(); // Get user session data
   const userId = session?.user?.id;
@@ -223,6 +225,11 @@ export default function Home2() {
 
   useEffect(
     () => {
+      const fetchUserSkills = async () => {
+        const response = await axios.get("/api/profileInfo/");
+        const resumeData = response.data;
+        setUserskills(resumeData.skills);
+      };
       const fetchJobs = async () => {
         try {
           const response = await fetch("/api/job/getJobs", {
@@ -232,7 +239,7 @@ export default function Home2() {
             },
             body: JSON.stringify({
               userId: userId?.toString(),
-              userSkills: ["JavaScript", "React", "Node.js"],
+              userSkills: userskills,
               stream: "1",
               type: slug?.toString(),
             }),
@@ -245,7 +252,7 @@ export default function Home2() {
           console.error("Failed to fetch jobs:", error);
         }
       };
-
+      fetchUserSkills();
       fetchJobs();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

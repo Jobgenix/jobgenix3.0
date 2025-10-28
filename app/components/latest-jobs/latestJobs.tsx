@@ -50,7 +50,9 @@ export default function LatestJobs() {
         const res = await fetch("/api/job/get-degree");
         const data = await res.json();
         // Correct mapping: value = id, label = name
-        setCourseOptions(data.map((deg: any) => ({ id: deg.value, name: deg.label })));
+        setCourseOptions(
+          data.map((deg: any) => ({ id: deg.value, name: deg.label }))
+        );
       } catch (err) {
         setCourseOptions([]);
       }
