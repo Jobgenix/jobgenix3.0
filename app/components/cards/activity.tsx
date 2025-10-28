@@ -147,14 +147,28 @@ export default function Activity({ data }: { data: UserDetails }) {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
+    // type-guard for PDF text items
+    function isTextItem(obj: unknown): obj is { str: string } {
+      return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "str" in obj &&
+        typeof (obj as Record<string, unknown>).str === "string"
+      );
+    }
+
     let textContent = "";
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const text = await page.getTextContent();
-      const textItems = (text.items as any[])
-        .map((item) => (item as any).str)
+
+      const items = Array.isArray(text.items) ? (text.items as unknown[]) : [];
+      const pageText = items
+        .filter(isTextItem)
+        .map((item) => item.str)
         .join(" ");
-      textContent += textItems + "\n";
+
+      textContent += pageText + "\n";
     }
 
     return textContent;
