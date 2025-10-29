@@ -20,6 +20,7 @@ interface FormData {
   profileImage: string;
   summary: string;
 }
+type PdfJsLibType = typeof import("pdfjs-dist") | null;
 
 interface ResumeFile {
   name: string;
@@ -142,7 +143,7 @@ export default function Activity({ data }: { data: UserDetails }) {
 
   async function extractTextFromPDF(file: Blob | File): Promise<string> {
     // Dynamically import pdfjs only in browser
-    let pdfjsLib: any;
+    let pdfjsLib: PdfJsLibType = null;
     try {
       pdfjsLib = await import("pdfjs-dist");
     } catch (err) {
