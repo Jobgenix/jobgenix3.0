@@ -6,7 +6,8 @@ import React, { useState } from "react";
 
 export default function ProfileCard({ data }: { data: UserDetails }) {
   const [isEditable, setIsEditable] = useState(false);
-  const [skills, setSkills] = useState(data.skills.split(","));
+  // const [skills, setSkills] = useState(data.skills.split(","));
+  const [skills, setSkills] = useState<string[]>([]);
   const [newSkill, setNewSkill] = useState("");
 
   // Function to add new skill
@@ -157,8 +158,9 @@ export default function ProfileCard({ data }: { data: UserDetails }) {
               <button
                 type="button"
                 onClick={() => setIsEditable(!isEditable)}
-                className={`${isEditable && "bg-slate-200"
-                  } px-3 rounded-md py-2 cursor-pointer text-black flex items-center gap-2 font-medium`}
+                className={`${
+                  isEditable && "bg-slate-200"
+                } px-3 rounded-md py-2 cursor-pointer text-black flex items-center gap-2 font-medium`}
               >
                 <SquarePen size={20} />
               </button>

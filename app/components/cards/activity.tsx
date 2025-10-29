@@ -8,10 +8,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import LearningActivity from "./LearningActivity";
-import * as pdfjsLib from "pdfjs-dist";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
 interface FormData {
   email: string;
@@ -143,35 +139,53 @@ export default function Activity({ data }: { data: UserDetails }) {
       fileInputRef.current.click();
     }
   };
+
   async function extractTextFromPDF(file: Blob | File): Promise<string> {
+    // Dynamically import pdfjs only in browser
+    let pdfjsLib: any;
+    try {
+      pdfjsLib = await import("pdfjs-dist");
+    } catch (err) {
+      console.error("❌ Failed to import pdfjs-dist:", err);
+      return "";
+    }
+
+    // ✅ Use the local worker copied to /public/
+    if (typeof window !== "undefined" && pdfjsLib?.GlobalWorkerOptions) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+      // 👆 This file will exist because you copied it via your package.json script
+    }
+
+    // Convert uploaded file into ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
+
+    // Load PDF document
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
-    // type-guard for PDF text items
+    // Type guard for PDF text items
     function isTextItem(obj: unknown): obj is { str: string } {
       return (
         typeof obj === "object" &&
         obj !== null &&
-        "str" in obj &&
+        "str" in (obj as Record<string, unknown>) &&
         typeof (obj as Record<string, unknown>).str === "string"
       );
     }
 
+    // Extract text from all pages
     let textContent = "";
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const text = await page.getTextContent();
-
       const items = Array.isArray(text.items) ? (text.items as unknown[]) : [];
       const pageText = items
         .filter(isTextItem)
-        .map((item) => item.str)
+        .map((it) => it.str)
         .join(" ");
-
       textContent += pageText + "\n";
     }
 
-    return textContent;
+    return textContent.trim();
   }
 
   async function extractSkillsWithGemini(
@@ -242,7 +256,6 @@ export default function Activity({ data }: { data: UserDetails }) {
         body: JSON.stringify({
           id: userData.userId,
           resumeUrl: uploadData.secure_url,
-          skills: extractedSkills,
         }),
       });
 
